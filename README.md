@@ -23,7 +23,7 @@
 
 <br>
 
-:one: 모든 커밋은 다음의 포맷을 지켜야 한다. 이때, 본문과 footer는 생략할 수 있다.
+1.  모든 커밋은 다음의 포맷을 지켜야 한다. 이때, 본문과 footer는 생략할 수 있다.
     
 ```bash
 Type: Subject
@@ -33,7 +33,7 @@ Type: Subject
 [Footer]
 ```
     
-:two: Type은 다음의 종류를 확인하여 작성한다. 
+2.  Type은 다음의 종류를 확인하여 작성한다. 
 
 | Type | Objective |
 | --- | --- |
@@ -52,13 +52,13 @@ Type: Subject
 |  :tada: Init: | 🎉 프로젝트 초기 설정 |
 | :card_file_box: Resource: | 🗃️ DB, Image 등의 추가 또는 삭제  |
 
-:three: Subject는 무슨 작업을 수행했는지 기입합니다. 영어로 하지 않아도 괜찮습니다.
+3.  Subject는 무슨 작업을 수행했는지 기입합니다. 영어로 하지 않아도 괜찮습니다.
 - 영어로 작성 할 경우에는 명령문 형태로 작성하며, 첫 글자는 대문자로 작성합니다.
         ⇒  Add, Fix, Modify …
 
-:four: Body는 왜 그 작업을 수행했는지 등의 부연 설명을 기입합니다. 영어로 하지 않아도 괜찮습니다.
+4.  Body는 왜 그 작업을 수행했는지 등의 부연 설명을 기입합니다. 영어로 하지 않아도 괜찮습니다.
     - 어떻게 구현했는지는 굳이 부연하지 않습니다. 어떻게 구현했는지가 궁금할 때는 코드를 읽으면 되기 때문입니다.
-:five: Footer는 issue tracker ID를 명시하는 용도로 사용합니다. 저희 프로젝트에서는 사용하지 않겠습니다.
+5.  Footer는 issue tracker ID를 명시하는 용도로 사용합니다. 저희 프로젝트에서는 사용하지 않겠습니다.
 
 <br>
 
@@ -66,7 +66,7 @@ Type: Subject
 
 <br>
 
-:one: Branch 생성
+1. Branch 생성
 - 이름은 `Type/Subject`와 같이 생성합니다. 예를 들어, `Feat/Validate-Join-User`입니다.
 - 기능 단위로 Branch를 만들어서 작업한다.
     
@@ -81,7 +81,7 @@ Type: Subject
     > 
     </aside>
         
-:two: PR 제목은 다음과 같이 작성합니다.
+2.  PR 제목은 다음과 같이 작성합니다.
 
 ```bash
 Type: Subject
@@ -89,7 +89,7 @@ Type: Subject
 ✨ Feat: 회원 가입 시 유효성 검사
 ```
     
-:three: PR 내용은 다음과 같이 작성합니다.
+3.  PR 내용은 다음과 같이 작성합니다.
     
 ```bash
 ## Summary
@@ -121,15 +121,15 @@ Type: Subject
 
 <br>
 
-:one: master
+1.  master
     - 기준이 되는 브랜치로 제품을 배포하는 브랜치
-:two: develop
+2.  develop
     - 개발 브랜치로 개발자들이 이 브랜치를 기준으로 각자 작업한 기능들을 Merge
-:three: feature
+3.  feature
     - 단위 기능을 개발하는 브랜치로 기능 개발이 완료되면 develop 브랜치에 Merge
-:four: release
+4.  release
     - 배포를 위해 master 브랜치로 보내기전, 먼저 QA(품질검사)를 하기위한 브랜치
-:five: hotfix
+5.  hotfix
     - master 브랜치로 배포를 했는데 버그가 생겼을 때 긴급 수정을 위한 브랜치
 
 <br>
