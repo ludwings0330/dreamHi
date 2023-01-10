@@ -2,16 +2,16 @@
 
 <br>
 
-:crown: Team Leader : 배창민
-:muscle: FrontEnd Leader : 정지은
-:clown_face: BackEnd : 이다운
-:clown_face: BackEnd : 황준현
-:smiley_cat: FrontEnd : 이여민
-:smiley_cat: FrontEnd : 정효상
+:crown: Team Leader : 배창민 <br>
+:muscle: FrontEnd Leader : 정지은 <br>
+:clown_face: BackEnd : 이다운 <br>
+:clown_face: BackEnd : 황준현 <br>
+:smiley_cat: FrontEnd : 이여민 <br>
+:smiley_cat: FrontEnd : 정효상 <br>
 
 <br><br>
 
-# <div style='background-color: #f5f0ff'>:rule: Team Rules</div>
+# <div style='background-color: #f5f0ff'>:pushpin: Team Rules</div>
 
 <br>
 
