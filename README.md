@@ -53,8 +53,8 @@ Type: Subject
 | :card_file_box: Resource: | 🗃️ DB, Image 등의 추가 또는 삭제  |
 
 3.  Subject는 무슨 작업을 수행했는지 기입합니다. 영어로 하지 않아도 괜찮습니다.
-- 영어로 작성 할 경우에는 명령문 형태로 작성하며, 첫 글자는 대문자로 작성합니다.
-        ⇒  Add, Fix, Modify …
+    - 영어로 작성 할 경우에는 명령문 형태로 작성하며, 첫 글자는 대문자로 작성합니다.  
+           ⇒  Add, Fix, Modify …
 
 4.  Body는 왜 그 작업을 수행했는지 등의 부연 설명을 기입합니다. 영어로 하지 않아도 괜찮습니다.
     - 어떻게 구현했는지는 굳이 부연하지 않습니다. 어떻게 구현했는지가 궁금할 때는 코드를 읽으면 되기 때문입니다.
@@ -67,7 +67,7 @@ Type: Subject
 <br>
 
 1. Branch 생성
-- 이름은 `Type/Subject`와 같이 생성합니다. 예를 들어, `Feat/Validate-Join-User`입니다.
+- 이름은 `type/분야/Subject`와 같이 생성합니다. 예를 들어, `feat/be/validate-join-user`입니다.
 - 기능 단위로 Branch를 만들어서 작업한다.
     
     <aside>
@@ -75,9 +75,9 @@ Type: Subject
     
     기능도 ‘대분류 - 중분류 - 소분류’로 구분될 수 있고, 대분류와 중분류에 따라서 Branch를 생성하고, 소분류에 해당되는 기능을 구현하여 Branch 내에서 Commit을 수행합니다.
     
-    > 대분류 : 회원 가입
-    중분류 : 유효성 검사  ⇒  validate-join-user
-    소분류 : 아이디 유효성 검사  ⇒  ✨ Feat: 아이디 유효성 검사 구현
+    > 대분류 : 회원 가입  
+    중분류 : 유효성 검사  ⇒  feat/be/validate-join-user  
+    소분류 : 아이디 유효성 검사  ⇒  ✨ Feat: 아이디 유효성 검사 구현  
     > 
     </aside>
         
