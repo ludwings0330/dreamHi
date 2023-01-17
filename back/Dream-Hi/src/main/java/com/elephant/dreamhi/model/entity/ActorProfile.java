@@ -18,6 +18,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Table(name = "actor_profile")
@@ -30,15 +31,24 @@ public class ActorProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @OneToOne
     @JoinColumn(name = "user_id")
+
     @NotNull
     private User user;
+
     private Integer age;
+
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
     private Double height;
+
+    @NotNull
+    @ColumnDefault("1")
     private Boolean visible;
+
     @OneToMany(mappedBy = "actorProfile", fetch = FetchType.LAZY)
     private List<ActorFigure> actorFigures = new ArrayList<>();
 
