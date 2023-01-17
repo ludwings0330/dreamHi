@@ -41,4 +41,8 @@ public class ActorProfile {
 
     private Boolean visible;
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 }
