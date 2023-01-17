@@ -1,5 +1,7 @@
 package com.elephant.dreamhi.model.entity;
 
+import java.time.LocalDateTime;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -15,12 +17,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Table(name = "follow")
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 @Builder
 public class Follow {
 
@@ -48,5 +51,10 @@ public class Follow {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "announcement_id")
     private Announcement announcement;
+
+    @Column(columnDefinition = "TIMESTAMP")
+    @ColumnDefault("now()")
+    @NotNull
+    private LocalDateTime date;
 
 }

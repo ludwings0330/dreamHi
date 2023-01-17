@@ -49,18 +49,8 @@ public class Announcement {
     @Size(max = 30)
     private String crankPeriod;
 
-    @NotNull
-    @ColumnDefault("now()")
-    @Column(name="create_date", columnDefinition = "TIMESTAMP")
-    private LocalDateTime createdDate;
-
-    @NotNull
-    @ColumnDefault("now()")
-    @Column(name="modified_date", columnDefinition = "TIMESTAMP")
-    private LocalDateTime modifiedDate;
-
-    @NotNull
     @Column(name = "end_date", columnDefinition = "TIMESTAMP")
+    @NotNull
     private LocalDateTime endDate;
 
     @Lob
@@ -70,6 +60,17 @@ public class Announcement {
     @ColumnDefault("0")
     private Integer hit;
 
+    // Foreign Key로 매핑하지 않고, 기능 구현의 편의를 위해 process_id만 따로 저장해둔 것
     private Long processId;
+
+    @Column(name="create_date", columnDefinition = "TIMESTAMP")
+    @NotNull
+    @ColumnDefault("now()")
+    private LocalDateTime createdDate;
+
+    @Column(name="modified_date", columnDefinition = "TIMESTAMP")
+    @NotNull
+    @ColumnDefault("now()")
+    private LocalDateTime modifiedDate;
 
 }

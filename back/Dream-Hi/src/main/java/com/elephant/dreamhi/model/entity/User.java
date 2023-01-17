@@ -52,8 +52,8 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
-    @NotNull
     @ColumnDefault("'ROLE_USER'")
+    @NotNull
     private UserRole role;
 
 }
