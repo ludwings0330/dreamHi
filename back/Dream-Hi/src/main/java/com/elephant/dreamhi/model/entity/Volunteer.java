@@ -1,6 +1,8 @@
 package com.elephant.dreamhi.model.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,7 +22,7 @@ import lombok.NoArgsConstructor;
         uniqueConstraints = {
                 @UniqueConstraint(
                         name = "UniqueUserApplication",
-                        columnNames = { "user", "announcement" }
+                        columnNames = { "user_id", "announcement_id" }
                 )
         }
 )
@@ -48,6 +50,7 @@ public class Volunteer {
     @JoinColumn(name = "process_id")
     private Process process;
 
+    @Enumerated(EnumType.STRING)
     private VolunteerState state;
 
 }

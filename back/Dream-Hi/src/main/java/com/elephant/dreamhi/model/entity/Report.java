@@ -51,9 +51,9 @@ public class Report {
     @NotNull
     private ReportType reportType;
 
-    @Column(name = "date")
-    @NotNull
+    @Column(name = "date", columnDefinition = "TIMESTAMP")
     @ColumnDefault("now()")
+    @NotNull
     private LocalDateTime reportDate;
 
     @Size(max = 50)

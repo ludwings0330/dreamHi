@@ -42,7 +42,7 @@ public class Announcement {
 
     @Size(max = 25)
     @NotNull
-    @ColumnDefault("협의 후 결정")
+    @ColumnDefault("'협의 후 결정'")
     private String payment;
 
     @Size(max = 30)
@@ -50,18 +50,20 @@ public class Announcement {
 
     @NotNull
     @ColumnDefault("now()")
+    @Column(name="create_date", columnDefinition = "TIMESTAMP")
     private LocalDateTime createdDate;
 
     @NotNull
     @ColumnDefault("now()")
+    @Column(name="modified_date", columnDefinition = "TIMESTAMP")
     private LocalDateTime modifiedDate;
 
     @NotNull
-    @Column(name = "end_date")
-    private LocalDate endDate;
+    @Column(name = "end_date", columnDefinition = "TIMESTAMP")
+    private LocalDateTime endDate;
 
     @Lob
-    private byte[] description;
+    private Byte[] description;
 
     @NotNull
     @ColumnDefault("0")

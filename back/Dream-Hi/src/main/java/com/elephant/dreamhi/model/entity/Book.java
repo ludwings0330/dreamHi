@@ -1,6 +1,7 @@
 package com.elephant.dreamhi.model.entity;
 
 import java.time.LocalDateTime;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,8 +29,10 @@ public class Book {
     @NotNull
     private Long volunteerId;
 
+    @Column(name="start_time", columnDefinition = "TIMESTAMP")
     private LocalDateTime startTime;
 
+    @Column(name="end_time", columnDefinition = "TIMESTAMP")
     private LocalDateTime endTime;
 
     @Size(max = 7)

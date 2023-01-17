@@ -39,7 +39,7 @@ public class Process {
     private Stage stage;
 
     @NotNull
-    @ColumnDefault("IN_PROGRESS")
+    @ColumnDefault("'IN_PROGRESS'")
     @Enumerated(EnumType.STRING)
     private ProcessState state;
 
