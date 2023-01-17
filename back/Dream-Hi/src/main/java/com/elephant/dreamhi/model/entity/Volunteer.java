@@ -1,8 +1,6 @@
 package com.elephant.dreamhi.model.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,32 +13,41 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.validator.constraints.UniqueElements;
 
 @Entity
-@Table(name = "process")
+@Table(
+        name = "volunteer",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "UniqueUserApplication",
+                        columnNames = { "user", "announcement" }
+                )
+        }
+)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Builder
-public class Process {
+public class Volunteer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
+    @NotNull
+    private User user;
+
+    @ManyToOne
     @JoinColumn(name = "announcement_id")
+    @NotNull
     private Announcement announcement;
 
     @ManyToOne
-    @JoinColumn(name = "stage_id")
-    private Stage stage;
+    @JoinColumn(name = "process_id")
+    private Process process;
 
-    @NotNull
-    @ColumnDefault("IN_PROGRESS")
-    @Enumerated(EnumType.STRING)
-    private ProcessState state;
+    private VolunteerState state;
 
 }

@@ -8,9 +8,17 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "producer")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Builder
 public class Producer {
 
     @Id

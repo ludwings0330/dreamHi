@@ -13,12 +13,20 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 @Entity
 @Table(name = "announcement")
 @DynamicInsert
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Builder
 public class Announcement {
 
     @Id
