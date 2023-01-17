@@ -11,11 +11,19 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.validator.constraints.UniqueElements;
 
 @Entity
 @Table(name = "process")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Builder
 public class Process {
 
     @Id
