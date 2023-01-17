@@ -18,9 +18,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 @Entity
 @Table(name = "follow")
+@DynamicInsert
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -31,14 +33,14 @@ public class Follow {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    @NotNull
-    private FollowType type;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "follower_id")
     @NotNull
     private User follower;
+
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private FollowType type;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "actor_id")
@@ -54,7 +56,6 @@ public class Follow {
 
     @Column(columnDefinition = "TIMESTAMP")
     @ColumnDefault("now()")
-    @NotNull
     private LocalDateTime date;
 
 }
