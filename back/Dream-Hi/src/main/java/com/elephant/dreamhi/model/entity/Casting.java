@@ -29,7 +29,7 @@ public class Casting {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(targetEntity = Announcement.class, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "announcement_id")
     @NotNull
     private Announcement announcement;
@@ -39,15 +39,15 @@ public class Casting {
     private String description;
 
     @NotNull
-    private int headcount;
+    private Integer headcount;
 
-    private int minHeight;
+    private Integer minHeight;
 
-    private int maxHeight;
+    private Integer maxHeight;
 
-    private int minAge;
+    private Integer minAge;
 
-    private int maxAge;
+    private Integer maxAge;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;

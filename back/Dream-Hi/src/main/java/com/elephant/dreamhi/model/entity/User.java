@@ -14,16 +14,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.validator.constraints.UniqueElements;
 
 @Entity
 @Table(name = "user")
+@DynamicInsert
 @NoArgsConstructor
 @AllArgsConstructor
-@DynamicInsert
 @Getter
 @Builder
 public class User {
@@ -37,12 +35,12 @@ public class User {
     @Column(unique = true)
     private String email;
 
-    @NotNull
     @Size(max = 65)
+    @NotNull
     private String password;
 
-    @NotNull
     @Size(max = 21)
+    @NotNull
     private String name;
 
     @Size(max = 11)
@@ -54,8 +52,8 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
-    @ColumnDefault("'ROLE_USER'")
     @NotNull
+    @ColumnDefault("'ROLE_USER'")
     private UserRole role;
 
 }

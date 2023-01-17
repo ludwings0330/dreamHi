@@ -49,11 +49,11 @@ public class Report {
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
     @NotNull
-    private ReportType reportType;
+    private ReportType type;
 
     @Column(name = "date", columnDefinition = "TIMESTAMP")
-    @ColumnDefault("now()")
     @NotNull
+    @ColumnDefault("now()")
     private LocalDateTime reportDate;
 
     @Size(max = 50)

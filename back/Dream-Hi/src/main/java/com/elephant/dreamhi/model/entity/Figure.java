@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Table(name = "figure")
@@ -26,6 +27,7 @@ public class Figure {
     @Size(max = 15)
     private String description;
 
-    private int count;
+    @ColumnDefault("0")
+    private Integer count;
 
 }

@@ -13,19 +13,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Getter
+@Table(name = "report_message")
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 @Builder
-@Table(name = "report_message")
 public class ReportMessage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
     @Size(max = 50)
+    @NotNull
     private String message;
 
 }

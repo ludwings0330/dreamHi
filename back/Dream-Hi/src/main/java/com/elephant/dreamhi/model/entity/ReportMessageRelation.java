@@ -14,22 +14,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Getter
+@Table(name = "report_message_relation")
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 @Builder
-@Table(name = "report_message_relation")
 public class ReportMessageRelation {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="report_id")
+    @JoinColumn(name = "report_id")
     @NotNull
     private Report report;
 
     @ManyToOne
-    @JoinColumn(name="report_message_id")
+    @JoinColumn(name = "report_message_id")
     @NotNull
     private ReportMessage reportMessage;
+
 }

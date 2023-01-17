@@ -1,6 +1,5 @@
 package com.elephant.dreamhi.model.entity;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,6 +33,8 @@ public class Announcement {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "producer_id")
+    @NotNull
     private Producer producer;
 
     @Size(max = 20)
@@ -67,7 +68,7 @@ public class Announcement {
 
     @NotNull
     @ColumnDefault("0")
-    private int hit;
+    private Integer hit;
 
     private Long processId;
 

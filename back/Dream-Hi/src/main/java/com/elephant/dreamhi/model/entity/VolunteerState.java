@@ -5,6 +5,6 @@ public enum VolunteerState {
     NONE,
     PASS,
     FAIL,
-    WAIT;
+    WAIT
 
 }

@@ -16,9 +16,9 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "actor_figure")
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 @Builder
 public class ActorFigure {
 
@@ -26,15 +26,14 @@ public class ActorFigure {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(targetEntity = ActorProfile.class, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "actor_profile_id")
     @NotNull
     private ActorProfile actorProfile;
 
-    @ManyToOne(targetEntity = Figure.class, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "figure_id")
     @NotNull
     private Figure figure;
-
 
 }

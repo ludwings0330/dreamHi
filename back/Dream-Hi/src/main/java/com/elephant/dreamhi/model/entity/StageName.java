@@ -4,6 +4,6 @@ public enum StageName {
 
     DOC,
     VIDEO,
-    OFF;
+    OFF
 
 }

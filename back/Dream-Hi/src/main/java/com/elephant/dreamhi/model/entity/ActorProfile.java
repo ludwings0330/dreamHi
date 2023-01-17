@@ -3,12 +3,10 @@ package com.elephant.dreamhi.model.entity;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -29,12 +27,12 @@ public class ActorProfile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(targetEntity = User.class)
+    @OneToOne
     @JoinColumn(name = "user_id")
     @NotNull
     private User user;
 
-    private int age;
+    private Integer age;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;

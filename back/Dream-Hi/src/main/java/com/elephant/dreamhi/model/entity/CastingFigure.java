@@ -1,6 +1,5 @@
 package com.elephant.dreamhi.model.entity;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -27,15 +26,15 @@ public class CastingFigure {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(targetEntity = Figure.class, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "figure_id")
     @NotNull
     private Figure figure;
 
 
-    @ManyToOne(targetEntity = Casting.class, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "casting_id")
     @NotNull
-    private Long castingId;
+    private Casting casting;
 
 }

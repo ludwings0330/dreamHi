@@ -18,9 +18,9 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "career")
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 @Builder
 public class Career {
 

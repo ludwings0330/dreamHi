@@ -17,11 +17,11 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 @Entity
+@Table(name = "user_producer")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Builder
-@Table(name = "user_producer")
 public class UserProducer {
 
     @Id
