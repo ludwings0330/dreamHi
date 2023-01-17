@@ -37,4 +37,19 @@ public class CastingFigure {
     @NotNull
     private Casting casting;
 
+    public void setFigure(Figure figure) {
+        this.figure = figure;
+    }
+
+    public void setCasting(Casting casting) {
+        if (this.casting != null) {
+            this.casting.getCastingFigures().remove(this);
+        }
+
+        this.casting = casting;
+        if (!this.casting.getCastingFigures().contains(this)) {
+            casting.addCastingFigure(this);
+        }
+    }
+
 }
