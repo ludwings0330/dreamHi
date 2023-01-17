@@ -39,8 +39,31 @@ public class UserProducer {
     private User user;
 
     @Enumerated(EnumType.STRING)
-    @NotNull
     @ColumnDefault("'MEMBER'")
     private ProducerRole role;
+
+    public void setProducer(Producer producer) {
+        this.producer = producer;
+        producer.getUserProducers().add(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (!(o instanceof UserProducer)) {
+            return false;
+        }
+
+        UserProducer that = (UserProducer) o;
+        return this.id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.id.hashCode();
+    }
 
 }

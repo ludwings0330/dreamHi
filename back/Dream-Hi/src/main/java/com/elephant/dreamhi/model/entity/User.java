@@ -31,8 +31,8 @@ public class User {
     private Long id;
 
     @Size(max = 45)
-    @NotNull
     @Column(unique = true)
+    @NotNull
     private String email;
 
     @Size(max = 65)
@@ -46,14 +46,11 @@ public class User {
     @Size(max = 11)
     private String phone;
 
-    @NotNull
     @ColumnDefault("1")
     private Boolean activated;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "role")
     @ColumnDefault("'ROLE_USER'")
-    @NotNull
     private UserRole role;
 
 }
