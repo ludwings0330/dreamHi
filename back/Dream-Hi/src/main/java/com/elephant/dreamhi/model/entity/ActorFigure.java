@@ -36,4 +36,19 @@ public class ActorFigure {
     @NotNull
     private Figure figure;
 
+    public void setActorProfile(ActorProfile actorProfile) {
+        if (this.actorProfile != null) {
+            this.actorProfile.getActorFigures().remove(this);
+        }
+
+        this.actorProfile = actorProfile;
+        if (!actorProfile.getActorFigures().contains(this)) {
+            actorProfile.addActorFigure(this);
+        }
+    }
+
+    public void setFigure(Figure figure) {
+        this.figure = figure;
+    }
+
 }

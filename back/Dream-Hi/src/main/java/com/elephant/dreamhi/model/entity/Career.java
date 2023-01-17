@@ -47,4 +47,14 @@ public class Career {
     @Size(max = 20)
     private String description;
 
+    public void setActorProfile(ActorProfile actorProfile) {
+        if (this.actorProfile != null) {
+            this.actorProfile.getCareers().remove(this);
+        }
+        this.actorProfile = actorProfile;
+        if (!actorProfile.getCareers().contains(this)) {
+            actorProfile.addCareer(this);
+        }
+    }
+
 }
