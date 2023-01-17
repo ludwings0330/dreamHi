@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.model.entity;
 
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -7,6 +8,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -14,48 +17,46 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.validator.constraints.UniqueElements;
 
 @Entity
-@Table(name = "user")
+@Table(name = "report")
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @DynamicInsert
-@Getter
 @Builder
-public class User {
+public class Report {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(max = 45)
     @NotNull
-    @Column(unique = true)
-    private String email;
+    @ManyToOne
+    @JoinColumn(name = "reporter_id")
+    private User reporter;
 
-    @NotNull
-    @Size(max = 65)
-    private String password;
+    @ManyToOne
+    @JoinColumn(name = "suspect_id")
+    private User suspect;
 
-    @NotNull
-    @Size(max = 21)
-    private String name;
+    @ManyToOne
+    @JoinColumn(name = "producer_id")
+    private Producer producer;
 
-    @Size(max = 11)
-    private String phone;
-
-    @NotNull
-    @ColumnDefault("1")
-    private Boolean activated;
-
+    @Column(name = "type")
     @Enumerated(EnumType.STRING)
-    @Column(name = "role")
-    @ColumnDefault("'ROLE_USER'")
     @NotNull
-    private UserRole role;
+    private ReportType reportType;
+
+    @Column(name = "date")
+    @NotNull
+    @ColumnDefault("now()")
+    private LocalDateTime reportDate;
+
+    @Size(max = 50)
+    private String detail;
 
 }
