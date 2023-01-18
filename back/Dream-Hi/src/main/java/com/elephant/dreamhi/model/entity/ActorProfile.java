@@ -2,6 +2,7 @@ package com.elephant.dreamhi.model.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,7 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -37,6 +37,15 @@ public class ActorProfile {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @Column(length = 7, nullable = false)
+    private String name;
+
+    @Column(length = 11)
+    private String phone;
+
+    @Column(length = 20, nullable = false)
+    private String title;
+
     private Integer age;
 
     @Enumerated(EnumType.STRING)
@@ -44,24 +53,19 @@ public class ActorProfile {
 
     private Double height;
 
+    @Column(length = 500)
+    private String description;
+
     @Column(nullable = false)
     @ColumnDefault("1")
     private Boolean visible;
 
-    @OneToMany(mappedBy = "actorProfile", fetch = FetchType.LAZY)
-    private List<ActorFigure> actorFigures = new ArrayList<>();
+    @OneToMany(mappedBy = "actorProfile", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ActorStyleRelation> actorStyleRelations = new ArrayList<>();
 
-    @OneToMany(mappedBy = "actorProfile", fetch = FetchType.LAZY)
-    private List<Career> careers = new ArrayList<>();
-
-    public void addActorFigure(ActorFigure actorFigure) {
-        this.actorFigures.add(actorFigure);
-        actorFigure.setActorProfile(this);
-    }
-
-    public void addCareer(Career career) {
-        this.careers.add(career);
-        career.setActorProfile(this);
+    public void addActorStyle(ActorStyleRelation actorStyleRelation) {
+        this.actorStyleRelations.add(actorStyleRelation);
+        actorStyleRelation.setActorProfile(this);
     }
 
     public void setUser(User user) {

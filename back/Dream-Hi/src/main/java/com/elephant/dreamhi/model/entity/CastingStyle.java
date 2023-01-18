@@ -1,7 +1,5 @@
 package com.elephant.dreamhi.model.entity;
 
-import java.util.Date;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -10,38 +8,45 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "career")
+@Table(name = "casting_style")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Builder
-public class Career {
+public class CastingStyle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "style_id", nullable = false)
+    private Style style;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "actor_profile_id", nullable = false)
-    private ActorProfile actorProfile;
+    @JoinColumn(name = "casting_id", nullable = false)
+    private Casting casting;
 
-    @Column(length = 20, nullable = false)
-    private String title;
+    public void setStyle(Style style) {
+        this.style = style;
+    }
 
-    @Column(length = 20, nullable = false)
-    private String description;
+    public void setCasting(Casting casting) {
+        if (this.casting != null) {
+            this.casting.getCastingStyles().remove(this);
+        }
 
-    public void setActorProfile(ActorProfile actorProfile) {
-        this.actorProfile = actorProfile;
+        this.casting = casting;
+        if (!this.casting.getCastingStyles().contains(this)) {
+            casting.addCastingStyle(this);
+        }
     }
 
 }

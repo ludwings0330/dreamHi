@@ -14,8 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -55,12 +53,12 @@ public class Casting {
     private Gender gender;
 
     @OneToMany(fetch = FetchType.LAZY)
-    private List<CastingFigure> castingFigures = new ArrayList<>();
+    private List<CastingStyle> castingStyles = new ArrayList<>();
 
-    public void addCastingFigure(CastingFigure castingFigure) {
-        this.castingFigures.add(castingFigure);
-        if (castingFigure.getCasting() != this) {
-            castingFigure.setCasting(this);
+    public void addCastingStyle(CastingStyle castingStyle) {
+        this.castingStyles.add(castingStyle);
+        if (castingStyle.getCasting() != this) {
+            castingStyle.setCasting(this);
         }
     }
 
