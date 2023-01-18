@@ -1,5 +1,7 @@
 package com.elephant.dreamhi.model.entity;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -7,6 +9,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -52,4 +56,9 @@ public class User {
     @ColumnDefault("'ROLE_USER'")
     private UserRole role;
 
+    @OneToMany(mappedBy = "reporter")
+    private List<Report> reportingHistories = new ArrayList<>();
+
+    @OneToMany(mappedBy = "suspect")
+    private List<Report> reportedHistories = new ArrayList<>();
 }
