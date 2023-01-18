@@ -26,16 +26,16 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+    @Column(nullable = false)
     private Long volunteerId;
 
-    @Column(name="start_time", columnDefinition = "TIMESTAMP")
+    @Column(columnDefinition = "TIMESTAMP", nullable = false)
     private LocalDateTime startTime;
 
-    @Column(name="end_time", columnDefinition = "TIMESTAMP")
+    @Column(columnDefinition = "TIMESTAMP", nullable = false)
     private LocalDateTime endTime;
 
-    @Size(max = 7)
+    @Column(length = 7)
     private String name;
 
 }

@@ -2,6 +2,7 @@ package com.elephant.dreamhi.model.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -33,15 +34,13 @@ public class Casting {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "announcement_id")
-    @NotNull
+    @JoinColumn(name = "announcement_id", nullable = false)
     private Announcement announcement;
 
-    @Size(max = 20)
-    @NotNull
+    @Column(length = 20, nullable = false)
     private String description;
 
-    @NotNull
+    @Column(nullable = false)
     private Integer headcount;
 
     private Integer minHeight;
@@ -55,7 +54,7 @@ public class Casting {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @OneToMany(mappedBy = "casting", fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     private List<CastingFigure> castingFigures = new ArrayList<>();
 
     public void addCastingFigure(CastingFigure castingFigure) {

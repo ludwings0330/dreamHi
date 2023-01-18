@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.model.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -29,16 +30,15 @@ public class UserProducer {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "producer_id")
-    @NotNull
+    @JoinColumn(name = "producer_id", nullable = false)
     private Producer producer;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    @NotNull
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     @ColumnDefault("'MEMBER'")
     private ProducerRole role;
 

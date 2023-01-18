@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.model.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,8 +25,7 @@ public class ReportMessage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(max = 50)
-    @NotNull
+    @Column(length = 50, nullable = false)
     private String message;
 
 }

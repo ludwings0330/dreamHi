@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.model.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -36,9 +37,9 @@ public class Process {
     @JoinColumn(name = "stage_id")
     private Stage stage;
 
-    @NotNull
-    @ColumnDefault("'IN_PROGRESS'")
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    @ColumnDefault("'IN_PROGRESS'")
     private ProcessState state;
 
 }

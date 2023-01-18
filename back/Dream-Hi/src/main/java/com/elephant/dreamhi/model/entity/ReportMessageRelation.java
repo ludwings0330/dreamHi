@@ -26,13 +26,11 @@ public class ReportMessageRelation {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "report_id")
-    @NotNull
+    @JoinColumn(name = "report_id", nullable = false)
     private Report report;
 
     @ManyToOne
-    @JoinColumn(name = "report_message_id")
-    @NotNull
+    @JoinColumn(name = "report_message_id", nullable = false)
     private ReportMessage reportMessage;
 
 }

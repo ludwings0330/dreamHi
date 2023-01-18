@@ -27,14 +27,12 @@ public class CastingFigure {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "figure_id")
-    @NotNull
+    @JoinColumn(name = "figure_id", nullable = false)
     private Figure figure;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "casting_id")
-    @NotNull
+    @JoinColumn(name = "casting_id", nullable = false)
     private Casting casting;
 
     public void setFigure(Figure figure) {

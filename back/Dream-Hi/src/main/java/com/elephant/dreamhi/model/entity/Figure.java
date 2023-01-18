@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.model.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,9 +25,10 @@ public class Figure {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(max = 15)
+    @Column(length = 15)
     private String description;
 
+    @Column(nullable = false)
     @ColumnDefault("0")
     private Integer count;
 

@@ -2,6 +2,7 @@ package com.elephant.dreamhi.model.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -32,10 +33,8 @@ public class ActorProfile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-
-    @NotNull
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     private Integer age;
@@ -45,7 +44,7 @@ public class ActorProfile {
 
     private Double height;
 
-    @NotNull
+    @Column(nullable = false)
     @ColumnDefault("1")
     private Boolean visible;
 

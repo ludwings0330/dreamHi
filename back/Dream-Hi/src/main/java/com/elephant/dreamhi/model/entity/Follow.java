@@ -34,12 +34,11 @@ public class Follow {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "follower_id")
-    @NotNull
+    @JoinColumn(name = "follower_id", nullable = false)
     private User follower;
 
     @Enumerated(EnumType.STRING)
-    @NotNull
+    @Column(nullable = false)
     private FollowType type;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -54,7 +53,7 @@ public class Follow {
     @JoinColumn(name = "announcement_id")
     private Announcement announcement;
 
-    @Column(columnDefinition = "TIMESTAMP")
+    @Column(columnDefinition = "TIMESTAMP", nullable = false)
     @ColumnDefault("now()")
     private LocalDateTime date;
 

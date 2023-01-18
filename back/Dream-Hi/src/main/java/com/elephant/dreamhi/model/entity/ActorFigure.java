@@ -27,21 +27,15 @@ public class ActorFigure {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "actor_profile_id")
-    @NotNull
+    @JoinColumn(name = "actor_profile_id", nullable = false)
     private ActorProfile actorProfile;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "figure_id")
-    @NotNull
+    @JoinColumn(name = "figure_id", nullable = false)
     private Figure figure;
 
     public void setActorProfile(ActorProfile actorProfile) {
         this.actorProfile = actorProfile;
-    }
-
-    public void setFigure(Figure figure) {
-        this.figure = figure;
     }
 
 }

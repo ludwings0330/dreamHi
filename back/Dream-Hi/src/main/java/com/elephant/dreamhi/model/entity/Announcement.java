@@ -33,38 +33,33 @@ public class Announcement {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "producer_id")
-    @NotNull
+    @JoinColumn(name = "producer_id", nullable = false)
     private Producer producer;
 
-    @Size(max = 20)
-    @NotNull
+    @Column(length = 20, nullable = false)
     private String title;
 
-    @Size(max = 25)
-    @NotNull
+    @Column(length = 25, nullable = false)
     @ColumnDefault("'협의 후 결정'")
     private String payment;
 
-    @Size(max = 30)
+    @Column(length = 30)
     private String crankPeriod;
 
-    @Column(name = "end_date", columnDefinition = "TIMESTAMP")
-    @NotNull
+    @Column(columnDefinition = "TIMESTAMP", nullable = false)
     private LocalDateTime endDate;
 
     @Lob
     private Byte[] description;
 
-    @NotNull
+    @Column(nullable = false)
     @ColumnDefault("0")
     private Integer hit;
 
     // Foreign Key로 매핑하지 않고, 기능 구현의 편의를 위해 process_id만 따로 저장해둔 것
     private Long processId;
 
-    @Column(name="create_date", columnDefinition = "TIMESTAMP")
-    @NotNull
+    @Column(columnDefinition = "TIMESTAMP", nullable = false)
     @ColumnDefault("now()")
     private LocalDateTime createdDate;
 

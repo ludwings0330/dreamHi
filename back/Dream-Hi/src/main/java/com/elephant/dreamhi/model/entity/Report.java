@@ -33,9 +33,8 @@ public class Report {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
     @ManyToOne
-    @JoinColumn(name = "reporter_id")
+    @JoinColumn(name = "reporter_id", nullable = false)
     private User reporter;
 
     @ManyToOne
@@ -46,17 +45,15 @@ public class Report {
     @JoinColumn(name = "producer_id")
     private Producer producer;
 
-    @Column(name = "type")
     @Enumerated(EnumType.STRING)
-    @NotNull
+    @Column(nullable = false)
     private ReportType type;
 
-    @Column(name = "date", columnDefinition = "TIMESTAMP")
-    @NotNull
+    @Column(name = "date", columnDefinition = "TIMESTAMP", nullable = false)
     @ColumnDefault("now()")
-    private LocalDateTime reportDate;
+    private LocalDateTime date;
 
-    @Size(max = 50)
+    @Column(length = 50)
     private String detail;
 
 }

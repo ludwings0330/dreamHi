@@ -15,6 +15,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.DynamicInsert;
 
 @Entity
@@ -30,25 +31,23 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(max = 45)
-    @Column(unique = true)
-    @NotNull
+    @Column(length = 45, nullable = false, unique = true)
     private String email;
 
-    @Size(max = 65)
-    @NotNull
+    @Column(length = 65, nullable = false)
     private String password;
 
-    @Size(max = 21)
-    @NotNull
+    @Column(length = 21, nullable = false)
     private String name;
 
-    @Size(max = 11)
+    @Column(length = 11)
     private String phone;
 
+    @Column(nullable = false)
     @ColumnDefault("1")
     private Boolean activated;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     @ColumnDefault("'ROLE_USER'")
     private UserRole role;

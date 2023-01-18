@@ -1,6 +1,7 @@
 package com.elephant.dreamhi.model.entity;
 
 import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -29,17 +30,14 @@ public class Career {
     private Long id;
 
 
-    @ManyToOne(targetEntity = ActorProfile.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "actor_profile_id")
-    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "actor_profile_id", nullable = false)
     private ActorProfile actorProfile;
 
-    @NotNull
-    @Size(max = 20)
+    @Column(length = 20, nullable = false)
     private String title;
 
-    @NotNull
-    @Size(max = 20)
+    @Column(length = 20, nullable = false)
     private String description;
 
     public void setActorProfile(ActorProfile actorProfile) {
