@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.model.entity;
 
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -18,7 +19,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.DynamicInsert;
 
 @Entity
 @Table(
@@ -30,7 +30,6 @@ import org.hibernate.annotations.DynamicInsert;
                 )
         }
 )
-@DynamicInsert
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -57,5 +56,9 @@ public class Volunteer {
     @Column(nullable = false)
     @ColumnDefault("'NONE'")
     private VolunteerState state;
+
+    @Column(name = "created_date", columnDefinition = "TIMESTAMP", nullable = false)
+    @ColumnDefault("now()")
+    private LocalDateTime createdDate;
 
 }
