@@ -11,8 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -37,6 +35,6 @@ public class Producer {
     private byte[] description;
 
     @OneToMany(mappedBy = "producer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<UserProducer> userProducers = new HashSet<>();
+    private Set<UserProducerRelation> userProducerRelations = new HashSet<>();
 
 }

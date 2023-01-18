@@ -10,20 +10,21 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 @Entity
-@Table(name = "user_producer")
+@Table(name = "user_producer_relation")
+@DynamicInsert
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Builder
-public class UserProducer {
+public class UserProducerRelation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,6 +38,10 @@ public class UserProducer {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @Column(nullable = false)
+    @ColumnDefault("'STAFF'")
+    private String position;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @ColumnDefault("'MEMBER'")
@@ -44,7 +49,7 @@ public class UserProducer {
 
     public void setProducer(Producer producer) {
         this.producer = producer;
-        producer.getUserProducers().add(this);
+        producer.getUserProducerRelations().add(this);
     }
 
     @Override
@@ -53,11 +58,11 @@ public class UserProducer {
             return true;
         }
 
-        if (!(o instanceof UserProducer)) {
+        if (!(o instanceof UserProducerRelation)) {
             return false;
         }
 
-        UserProducer that = (UserProducer) o;
+        UserProducerRelation that = (UserProducerRelation) o;
         return this.id.equals(that.id);
     }
 

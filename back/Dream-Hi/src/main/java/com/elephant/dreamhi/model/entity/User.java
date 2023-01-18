@@ -37,6 +37,12 @@ public class User {
     @Column(length = 65, nullable = false)
     private String password;
 
+    @Column(length = 7, nullable = false)
+    private String name;
+
+    @Column(length = 11)
+    private String phone;
+
     @Column(nullable = false)
     @ColumnDefault("1")
     private Boolean activated;

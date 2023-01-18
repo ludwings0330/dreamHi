@@ -37,12 +37,6 @@ public class ActorProfile {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(length = 7, nullable = false)
-    private String name;
-
-    @Column(length = 11)
-    private String phone;
-
     @Column(length = 20, nullable = false)
     private String title;
 
