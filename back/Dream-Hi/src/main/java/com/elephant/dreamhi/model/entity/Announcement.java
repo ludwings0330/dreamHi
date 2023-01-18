@@ -1,18 +1,20 @@
 package com.elephant.dreamhi.model.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,9 +25,8 @@ import org.hibernate.annotations.DynamicInsert;
 @Table(name = "announcement")
 @DynamicInsert
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
-@Builder
+//@Builder
 public class Announcement {
 
     @Id
@@ -63,9 +64,30 @@ public class Announcement {
     @ColumnDefault("now()")
     private LocalDateTime createdDate;
 
-    @Column(name="modified_date", columnDefinition = "TIMESTAMP")
-    @NotNull
+    @Column(columnDefinition = "TIMESTAMP", nullable = false)
     @ColumnDefault("now()")
     private LocalDateTime modifiedDate;
+
+    @OneToMany(mappedBy = "announcement", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Casting> castings = new ArrayList<>();
+
+    @Builder
+    public Announcement(Long id, Producer producer, String title, String payment, String crankPeriod, LocalDateTime endDate, Byte[] description,
+                        Integer hit, Long processId, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+        this.id = id;
+        this.producer = producer;
+        this.title = title;
+        this.payment = payment;
+        this.crankPeriod = crankPeriod;
+        this.endDate = endDate;
+        this.description = description;
+        this.hit = hit;
+        this.processId = processId;
+        this.createdDate = createdDate;
+        this.modifiedDate = modifiedDate;
+    }
+
+    // 편의 메소드
+
 
 }

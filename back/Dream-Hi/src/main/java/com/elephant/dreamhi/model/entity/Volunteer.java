@@ -13,12 +13,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 @Entity
 @Table(
@@ -26,10 +26,11 @@ import org.hibernate.annotations.ColumnDefault;
         uniqueConstraints = {
                 @UniqueConstraint(
                         name = "UniqueUserApplication",
-                        columnNames = { "user_id", "announcement_id" }
+                        columnNames = { "user_id", "casting_id" }
                 )
         }
 )
+@DynamicInsert
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -40,25 +41,25 @@ public class Volunteer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "announcement_id", nullable = false)
-    private Announcement announcement;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "process_id")
-    private Process process;
+    @Column(columnDefinition = "TIMESTAMP", nullable = false)
+    @ColumnDefault("now()")
+    private LocalDateTime createdDate;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @ColumnDefault("'NONE'")
     private VolunteerState state;
 
-    @Column(name = "created_date", columnDefinition = "TIMESTAMP", nullable = false)
-    @ColumnDefault("now()")
-    private LocalDateTime createdDate;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "casting_id", nullable = false)
+    private Casting casting;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "process_id")
+    private Process process;
 
 }

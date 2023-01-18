@@ -56,7 +56,7 @@ public class Casting {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "casting", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CastingStyleRelation> castingStyleRelations = new ArrayList<>();
 
     public void addCastingStyleRelation(CastingStyleRelation castingStyleRelation) {
