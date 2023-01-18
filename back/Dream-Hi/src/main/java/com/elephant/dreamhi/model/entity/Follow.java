@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,13 +32,17 @@ public class Follow {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "follower_id", nullable = false)
-    private User follower;
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private FollowType type;
+
+    @Column(columnDefinition = "TIMESTAMP", nullable = false)
+    @ColumnDefault("now()")
+    private LocalDateTime date;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "follower_id", nullable = false)
+    private User follower;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "actor_id")
@@ -52,9 +55,5 @@ public class Follow {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "announcement_id")
     private Announcement announcement;
-
-    @Column(columnDefinition = "TIMESTAMP", nullable = false)
-    @ColumnDefault("now()")
-    private LocalDateTime date;
 
 }
