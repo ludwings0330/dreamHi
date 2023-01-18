@@ -57,18 +57,12 @@ public class ActorProfile {
 
     public void addActorFigure(ActorFigure actorFigure) {
         this.actorFigures.add(actorFigure);
-
-        if (actorFigure.getActorProfile() != this) {
-            actorFigure.setActorProfile(this);
-        }
+        actorFigure.setActorProfile(this);
     }
 
     public void addCareer(Career career) {
         this.careers.add(career);
-
-        if (career.getActorProfile() != this) {
-            career.setActorProfile(this);
-        }
+        career.setActorProfile(this);
     }
 
     public void setUser(User user) {

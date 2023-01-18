@@ -35,11 +35,6 @@ public class Career {
     private ActorProfile actorProfile;
 
     @NotNull
-    private Date startDate;
-
-    private Date endDate;
-
-    @NotNull
     @Size(max = 20)
     private String title;
 
@@ -48,13 +43,7 @@ public class Career {
     private String description;
 
     public void setActorProfile(ActorProfile actorProfile) {
-        if (this.actorProfile != null) {
-            this.actorProfile.getCareers().remove(this);
-        }
         this.actorProfile = actorProfile;
-        if (!actorProfile.getCareers().contains(this)) {
-            actorProfile.addCareer(this);
-        }
     }
 
 }
