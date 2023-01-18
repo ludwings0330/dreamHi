@@ -11,9 +11,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 @Entity
 @Table(name = "style")
+@DynamicInsert
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

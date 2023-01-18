@@ -2,6 +2,7 @@ package com.elephant.dreamhi.model.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -36,6 +37,9 @@ public class Casting {
     private Announcement announcement;
 
     @Column(length = 20, nullable = false)
+    private String name;
+
+    @Column(length = 100, nullable = false)
     private String description;
 
     @Column(nullable = false)
@@ -52,13 +56,13 @@ public class Casting {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<CastingStyle> castingStyles = new ArrayList<>();
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CastingStyleRelation> castingStyleRelations = new ArrayList<>();
 
-    public void addCastingStyle(CastingStyle castingStyle) {
-        this.castingStyles.add(castingStyle);
-        if (castingStyle.getCasting() != this) {
-            castingStyle.setCasting(this);
+    public void addCastingStyleRelation(CastingStyleRelation castingStyleRelation) {
+        this.castingStyleRelations.add(castingStyleRelation);
+        if (castingStyleRelation.getCasting() != this) {
+            castingStyleRelation.setCasting(this);
         }
     }
 
