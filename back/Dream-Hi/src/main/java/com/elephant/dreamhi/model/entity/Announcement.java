@@ -27,7 +27,7 @@ import org.hibernate.annotations.DynamicInsert;
 @NoArgsConstructor
 @Getter
 //@Builder
-public class Announcement {
+public class Announcement extends BaseTimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,20 +60,12 @@ public class Announcement {
     // Foreign Key로 매핑하지 않고, 기능 구현의 편의를 위해 process_id만 따로 저장해둔 것
     private Long processId;
 
-    @Column(columnDefinition = "TIMESTAMP", nullable = false)
-    @ColumnDefault("now()")
-    private LocalDateTime createdDate;
-
-    @Column(columnDefinition = "TIMESTAMP", nullable = false)
-    @ColumnDefault("now()")
-    private LocalDateTime modifiedDate;
-
     @OneToMany(mappedBy = "announcement", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Casting> castings = new ArrayList<>();
 
     @Builder
     public Announcement(Long id, Producer producer, String title, String payment, String crankPeriod, LocalDateTime endDate, Byte[] description,
-                        Integer hit, Long processId, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+                        Integer hit, Long processId) {
         this.id = id;
         this.producer = producer;
         this.title = title;
@@ -83,8 +75,6 @@ public class Announcement {
         this.description = description;
         this.hit = hit;
         this.processId = processId;
-        this.createdDate = createdDate;
-        this.modifiedDate = modifiedDate;
     }
 
     // 편의 메소드

@@ -35,15 +35,11 @@ import org.hibernate.annotations.DynamicInsert;
 @AllArgsConstructor
 @Getter
 @Builder
-public class Volunteer {
+public class Volunteer extends BaseTimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(columnDefinition = "TIMESTAMP", nullable = false)
-    @ColumnDefault("now()")
-    private LocalDateTime createdDate;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
