@@ -25,10 +25,10 @@ import org.hibernate.annotations.DynamicInsert;
 
 @Entity
 @Table(name = "report")
+@DynamicInsert
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@DynamicInsert
 @Builder
 public class Report {
 
