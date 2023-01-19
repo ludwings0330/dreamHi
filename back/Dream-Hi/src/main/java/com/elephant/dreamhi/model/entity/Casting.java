@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.model.entity;
 
+import com.elephant.dreamhi.model.statics.Gender;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;

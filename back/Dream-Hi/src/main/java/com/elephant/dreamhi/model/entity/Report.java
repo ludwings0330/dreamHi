@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.model.entity;
 
+import com.elephant.dreamhi.model.statics.ReportType;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

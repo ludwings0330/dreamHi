@@ -1,4 +1,4 @@
-package com.elephant.dreamhi.model.entity;
+package com.elephant.dreamhi.model.statics;
 
 public enum ReportType {
 

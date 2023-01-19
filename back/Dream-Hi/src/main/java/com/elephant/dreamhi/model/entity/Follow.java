@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.model.entity;
 
+import com.elephant.dreamhi.model.statics.FollowType;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;

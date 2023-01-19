@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.model.entity;
 
+import com.elephant.dreamhi.model.statics.Gender;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -20,9 +21,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 @Entity
 @Table(name = "actor_profile")
+@DynamicInsert
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
