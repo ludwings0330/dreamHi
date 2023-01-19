@@ -1,10 +1,14 @@
 package com.elephant.dreamhi.model.entity;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,7 +38,15 @@ public class Producer {
     @Lob
     private byte[] description;
 
+    @Embedded
+    private Picture picture;
+
     @OneToMany(mappedBy = "producer", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<UserProducerRelation> userProducerRelations = new HashSet<>();
+
+    @OneToMany(mappedBy = "producer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Filmography> filmographies = new ArrayList<>();
+
+    // filmography 편의 메소드
 
 }

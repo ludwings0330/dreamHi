@@ -1,7 +1,6 @@
 package com.elephant.dreamhi.model.entity;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -10,50 +9,43 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.DynamicInsert;
 
 @Entity
-@Table(name = "user")
-@DynamicInsert
+@Table(name = "actor_profile_media_file")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Builder
-public class User {
+public class ActorProfileMediaFile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 45, nullable = false, unique = true)
-    private String email;
-
-    @Column(length = 65, nullable = false)
-    private String password;
-
-    @Column(length = 7, nullable = false)
-    private String name;
-
-    @Column(length = 11)
-    private String phone;
-
-    @Column(nullable = false)
-    @ColumnDefault("1")
-    private Boolean activated;
-
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    @ColumnDefault("'ROLE_USER'")
-    private UserRole role;
+    @Column(nullable = false)
+    private MediaType type;
 
-    @Embedded
-    private Picture picture;
+    // url
+    @Column(nullable = false)
+    private String url;
+
+    // uuid
+    @Column(nullable = false, length = 45)
+    private String savedName;
+
+    // Origin File Name
+    @Column(nullable = false)
+    private String originName;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "actor_profile_id")
+    private ActorProfile actorProfile;
 
 }

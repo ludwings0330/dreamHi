@@ -57,6 +57,12 @@ public class ActorProfile {
     @OneToMany(mappedBy = "actorProfile", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ActorStyleRelation> actorStyleRelations = new ArrayList<>();
 
+    @OneToMany(mappedBy = "actorProfile", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ActorProfileMediaFile> actorProfileMediaFiles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "actorProfile", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Filmography> filmographies = new ArrayList<>();
+
     public void addActorStyle(ActorStyleRelation actorStyleRelation) {
         this.actorStyleRelations.add(actorStyleRelation);
         actorStyleRelation.setActorProfile(this);
@@ -65,5 +71,9 @@ public class ActorProfile {
     public void setUser(User user) {
         this.user = user;
     }
+
+    // actor profile picture 편의 메소드
+
+    // filmography 편의 메소드
 
 }
