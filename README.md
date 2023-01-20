@@ -1,13 +1,12 @@
-# <div style='background-color: #f5f0ff'>:elephant: 아프리카 코끼리</div>
+# :elephant: 아프리카 코끼리
 
-<br>
 # 🌟 Dream Hi - 배우 오디션 플랫폼
 
 ---
 
-**로고 혹은 커버 추가**
+![dream-hi-banner](./output/images/dreamhi-banner.png)
 
-## ✅ DeamHigh 링크 : 링크 추가
+## ✅ Deam Hi 링크 : 링크 추가
 
 ---
 
@@ -18,6 +17,9 @@
 ## 🐘 팀소개 - 아프리카 코끼리
 
 ---
+
+![afreeca-elephant](./output/images/elephant.png)
+
 
 삼성 청년 SW 아카데미 8기 2학기 공통 프로젝트팀
 
@@ -32,9 +34,19 @@
 
 ---
 
-2022.01.09 (월) ~ **종료일자 수정**
+2023.01.09 (월) ~ **종료일자 수정**
 
-## 📝 Dream High - 배경
+- 2023.01.05(목) ~ 2023.01.09(월) 
+  - 아이디어 선정
+- 2023.01.10(화) ~ 2023.01.13(금)
+  - 기능명세서 작성
+  - 와이어프레임 제작
+- 2023.01.16(월) ~
+  - 프로토타입 제작
+  - ERD 작성
+  - 시퀀스 다이어그램 작성
+
+## 📝 Dream Hi - 배경
 
 ---
 
@@ -46,15 +58,15 @@
 
 결과적으로 우리는 소규모 제작팀과 배우를 위한 영화 오디션 플랫폼이 부재하다는 것을 문제의 원인으로 꼽았다.
 
-## 📝 Dream High - 개요
+## 📝 Dream Hi - 개요
 
 ---
 
 영화 오디션 플랫폼을 통해
 
 `제작자`가 자신의 작품에 어울리는 배우를 체계적으로, 간편하게 찾을 수 있고,
-`배우`가 더 많은 오디션에 간편하게 지원하여 기회를 얻도록
 
+`배우`가 더 많은 오디션에 간편하게 지원하여 기회를 얻도록
 도울 것 이다.
 
 ## 👍 Benefit
@@ -96,14 +108,15 @@
 
 ### Back-End
 
-- Spring Boot (Gradle groovy) 2.x.x
+- JAVA 11
+- Spring Boot (Gradle groovy) 2.7.7
 - WebRTC
 - Spring Security
 - Spring Data JPA
 - QueryDsl
 - Redis ( 고려해보기 - Token 정보 etc… )
 - Message Queue ( 변경 가능 )
-- MySQL
+- MySQL 8.0.32
 
 ### Dev-ops
 
@@ -130,7 +143,7 @@
 
 ---
 
-- 기능 명세서
+- [기능 명세서](output/기능명세서/README.md) ( updated 23.01.16 )
 - 디자인 & 컨셉기획
 - 스토리보드
 - 시퀀스 다이어그램
@@ -150,7 +163,7 @@
 
 - **발표 자료들 추가**
 
-## 💻 Dream High 서비스 화면
+## 💻 Dream Hi 서비스 화면
 
 ---
 
