@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,7 +25,15 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 @Entity
-@Table(name = "report")
+@Table(
+        name = "report",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "UniqueReportUser",
+                        columnNames = { "reporter_id", "annoucement_id", "producer_id" }
+                )
+        }
+)
 @DynamicInsert
 @Getter
 @NoArgsConstructor
@@ -41,8 +50,8 @@ public class Report {
     private User reporter;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "suspect_id")
-    private User suspect;
+    @JoinColumn(name = "annoucement_id")
+    private Announcement announcement;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "producer_id")
