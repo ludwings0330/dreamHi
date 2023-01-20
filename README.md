@@ -4,7 +4,7 @@
 
 ---
 
-**로고 혹은 커버 추가**
+![dream-hi-banner](./output/images/dreamhi-banner.png)
 
 ## ✅ Deam Hi 링크 : 링크 추가
 
@@ -17,6 +17,9 @@
 ## 🐘 팀소개 - 아프리카 코끼리
 
 ---
+
+![afreeca-elephant](./output/images/elephant.png)
+
 
 삼성 청년 SW 아카데미 8기 2학기 공통 프로젝트팀
 
