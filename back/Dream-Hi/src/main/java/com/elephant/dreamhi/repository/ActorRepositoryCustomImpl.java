@@ -4,15 +4,18 @@ import static com.elephant.dreamhi.model.entity.QActorProfile.actorProfile;
 import static com.elephant.dreamhi.model.entity.QActorStyleRelation.actorStyleRelation;
 import static com.elephant.dreamhi.model.entity.QFollow.follow;
 import static com.elephant.dreamhi.model.entity.QStyle.style;
+import static com.elephant.dreamhi.model.entity.QUser.user;
 
 import com.elephant.dreamhi.model.dto.ActorSearchCondition;
 import com.elephant.dreamhi.model.dto.ActorSimpleProfileDto;
 import com.elephant.dreamhi.model.entity.ActorProfile;
+import com.elephant.dreamhi.model.entity.QActorProfile;
 import com.elephant.dreamhi.model.statics.Gender;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -25,6 +28,16 @@ import org.springframework.util.StringUtils;
 public class ActorRepositoryCustomImpl implements ActorRepositoryCustom {
 
     private final JPAQueryFactory jpaQueryFactory;
+
+    @Override
+    public Optional<ActorProfile> findActorProfileById(Long id) {
+        final ActorProfile actorProfile;
+        actorProfile = jpaQueryFactory.selectFrom(QActorProfile.actorProfile)
+                                      .join(QActorProfile.actorProfile.user, user).fetchJoin()
+                                      .where(QActorProfile.actorProfile.id.eq(id))
+                                      .fetchOne();
+        return Optional.of(actorProfile);
+    }
 
     @Override
     public Page<ActorSimpleProfileDto> findActorSimpleProfiles(ActorSearchCondition condition, Pageable pageable) {
