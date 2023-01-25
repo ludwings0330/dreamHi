@@ -1,6 +1,5 @@
-import logo from '../logo.svg';
-import '../assests/css/Main/Main.css';
 import AppActor from "./AppActor";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function AppMain() {
   return (
