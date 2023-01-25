@@ -1,70 +1,170 @@
-# Getting Started with Create React App
+# :elephant: 아프리카 코끼리
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# 🌟 Dream Hi - 배우 오디션 플랫폼
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+![dream-hi-banner](./output/images/dreamhi-banner.png)
 
-### `npm start`
+## ✅ Deam Hi 링크 : 링크 추가
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## ✅ 소개 영상 : **링크 추가**
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🐘 팀소개 - 아프리카 코끼리
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![afreeca-elephant](./output/images/elephant.png)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+삼성 청년 SW 아카데미 8기 2학기 공통 프로젝트팀
 
-### `npm run eject`
+:crown: Team Leader : 배창민 <br>
+:muscle: FrontEnd Leader : 정지은 <br>
+:clown_face: BackEnd : 이다운 <br>
+:clown_face: BackEnd : 황준현 <br>
+:smiley_cat: FrontEnd : 이여민 <br>
+:smiley_cat: FrontEnd : 정효상 <br>
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 📅 프로젝트 기간
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+2023.01.09 (월) ~ **종료일자 수정**
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- 2023.01.05(목) ~ 2023.01.09(월) 
+  - 아이디어 선정
+- 2023.01.10(화) ~ 2023.01.13(금)
+  - 기능명세서 작성
+  - 와이어프레임 제작
+- 2023.01.16(월) ~
+  - 프로토타입 제작
+  - ERD 작성
+  - 시퀀스 다이어그램 작성
 
-## Learn More
+## 📝 Dream Hi - 배경
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+우리가 극장에서 흔히 볼 수 있는 영화의 경우 막대한 자본을 이용하여 주연 배우를 캐스팅하고, 인맥을 동원한 오디션으로 단역을 뽑으면 되기 때문에 배우를 캐스팅하는 작업에서 별다른 어려움이 없어보일 수 있다.
 
-### Code Splitting
+하지만, 대부분의 저예산 영화 또는 독립 영화는 배우를 모집하는 데 제작자(제작팀)의 상당한 에너지 소모를 필요로 한다. 오디션을 통한 캐스팅 프로세스를 **아직도 이메일과 오프라인 면접으로 진행**하고 있기 때문이다.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+게다가, 배우의 상황도 녹록치 않다. 영화 오디션 공고가 **각종 커뮤니티에 중구난방으로 게시**되고 있기 때문에, 단순히 오디션 공고를 찾는 작업 조차도 그리 간단치 못하기 때문이다.
 
-### Analyzing the Bundle Size
+결과적으로 우리는 소규모 제작팀과 배우를 위한 영화 오디션 플랫폼이 부재하다는 것을 문제의 원인으로 꼽았다.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 📝 Dream Hi - 개요
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+영화 오디션 플랫폼을 통해
 
-### Advanced Configuration
+`제작자`가 자신의 작품에 어울리는 배우를 체계적으로, 간편하게 찾을 수 있고,
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+`배우`가 더 많은 오디션에 간편하게 지원하여 기회를 얻도록
+도울 것 이다.
 
-### Deployment
+## 👍 Benefit
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+---
 
-### `npm run build` fails to minify
+`제작자(제작팀)`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- 배우 모집 공고를 쉽게 등록하고, 관리할 수 있다.
+- 오디션 프로세스를 체계적으로 진행할 수 있다.
+- 화상 오디션을 이용하면 짧은 시간 동안 더 많은 지원자를 만날 수 있다.
+
+`배우`
+
+- 배우 모집 공고를 한 곳에서 확인하고, 지원할 수 있다.
+- 자기소개를 위한 이력서, 자료 등을 간편하게 관리할 수 있다.
+
+
+## 🏗️ 서비스 아키텍처
+
+---
+
+- 추가예정
+
+## ✅ 주요 기능
+
+---
+
+- 추가예정
+
+## ✅ 기술 스택
+
+---
+
+### Front-End
+
+- React.js
+- WebRTC
+
+### Back-End
+
+- JAVA 11
+- Spring Boot (Gradle groovy) 2.7.7
+- WebRTC
+- Spring Security
+- Spring Data JPA
+- QueryDsl
+- Redis ( 고려해보기 - Token 정보 etc… )
+- Message Queue ( 변경 가능 )
+- MySQL 8.0.32
+
+### Dev-ops
+
+- Docker
+- jenkins
+- nginx
+
+## ✅ 협업 툴
+
+---
+
+- Jira
+- Gitlab
+- Mattermost
+- Notion
+
+## 📝 프로젝트 파일 구조
+
+---
+
+- 추가예정
+
+## 📝 프로젝트 산출물
+
+---
+
+- [기능 명세서](output/기능명세서/README.md) ( updated 23.01.16 )
+- 디자인 & 컨셉기획
+- 스토리보드
+- 시퀀스 다이어그램
+- 아키텍처
+- 와이어프레임
+- 컨벤션
+- API
+- ERD
+- 회의록
+- 테스트케이스
+- 시스템 기술서
+- 명세기술서
+
+## 📝 프로젝트 결과물
+
+---
+
+- **발표 자료들 추가**
+
+## 💻 Dream Hi 서비스 화면
+
+---
+
+- 추가예정
