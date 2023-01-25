@@ -55,6 +55,8 @@ public class User {
     @ColumnDefault("'ROLE_USER'")
     private UserRole role;
 
+    @OneToMany(mappedBy = "follower")
+    private List<Follow> followers = new ArrayList<>();
     @OneToMany(mappedBy = "actor", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Follow> followActors = new ArrayList<>();
 

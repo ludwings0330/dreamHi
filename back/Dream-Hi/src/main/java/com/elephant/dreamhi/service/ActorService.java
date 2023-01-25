@@ -27,8 +27,11 @@ public class ActorService {
     private final FilmographyRepository filmographyRepository;
     private final ActorProfileMediaFileRepository actorProfileMediaFileRepository;
 
-    public Page<ActorSimpleProfileDto> findActorsByFilter(ActorSearchCondition filter, Pageable pageable) {
-        return actorRepository.findActorSimpleProfiles(filter, pageable);
+    public Page<ActorSimpleProfileDto> findActorsByFilter(ActorSearchCondition condition, Pageable pageable) {
+        condition.setId(1L);
+        Page<ActorProfile> profiles = actorRepository.findActorSimpleProfiles(condition, pageable);
+        final Page<ActorSimpleProfileDto> profileDtos = profiles.map(p -> new ActorSimpleProfileDto(p, condition.getId()));
+        return profileDtos;
     }
 
     public ActorProfileDetailDto findActorProfileById(Long id) {

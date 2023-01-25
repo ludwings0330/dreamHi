@@ -10,6 +10,9 @@ import org.springframework.lang.Nullable;
 public class ActorSearchCondition {
 
     @Nullable
+    private Long id;
+
+    @Nullable
     private String name;
 
     @Nullable
