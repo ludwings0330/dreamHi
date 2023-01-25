@@ -1,22 +1,46 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-
-
+import "./Actor.css";
+import PageBar from '../Common/PageBar';
 
 const ActorList = () => {
     return (
-      <Card style={{ width: '18rem' }}>
-        <Card.Img variant="top" src="img/elephant.png" />
-        <Card.Body>
-          <Card.Title>Card Title</Card.Title>
-          <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </Card.Text>
-          <Button variant="primary">Go somewhere</Button>
-        </Card.Body>
-      </Card>
+      <div>
+      <div className="actor_container">
+        <div className="actor">
+          <div className="actor_img"><img src="/img/elephant.png" className="actor_img"/></div>
+          <h5 className="actor_title"> 배우 소개</h5>
+          <p className="actor_des"> 배우 소개 요약</p>
+        </div>
+        <div className="actor">
+          <div className="actor_img"><img src="/img/elephant.png" className="actor_img"/></div>
+          <h5 className="actor_title"> 배우 소개</h5>
+          <p className="actor_des"> 배우 소개 요약</p>
+        </div>
+        <div className="actor">
+          <div className="actor_img"><img src="/img/elephant.png" className="actor_img"/></div>
+          <h5 className="actor_title"> 배우 소개</h5>
+          <p className="actor_des"> 배우 소개 요약</p>
+        </div>
+        <div className="actor">
+          <div className="actor_img"><img src="/img/elephant.png" className="actor_img"/></div>
+          <h5 className="actor_title"> 배우 소개</h5>
+          <p className="actor_des"> 배우 소개 요약</p>
+        </div>
+        <div className="actor">
+          <div className="actor_img"><img src="/img/elephant.png" className="actor_img"/></div>
+          <h5 className="actor_title"> 배우 소개</h5>
+          <p className="actor_des"> 배우 소개 요약</p>
+        </div>
+        <div className="actor">
+          <div className="actor_img"><img src="/img/elephant.png" className="actor_img"/></div>
+          <h5 className="actor_title"> 배우 소개</h5>
+          <p className="actor_des"> 배우 소개 요약</p>
+        </div>
+      </div>
+        <div className={"page_bar"}>
+        <PageBar />
+        </div>
+      </div>
     );
 };
 
