@@ -4,7 +4,14 @@ import com.elephant.dreamhi.model.dto.ActorProfileDetailDto;
 import com.elephant.dreamhi.model.dto.ActorSearchCondition;
 import com.elephant.dreamhi.model.dto.ActorSimpleProfileDto;
 import com.elephant.dreamhi.model.entity.ActorProfile;
+import com.elephant.dreamhi.model.entity.ActorProfileMediaFile;
+import com.elephant.dreamhi.model.entity.Filmography;
+import com.elephant.dreamhi.model.entity.Follow;
+import com.elephant.dreamhi.repository.ActorProfileMediaFileRepository;
 import com.elephant.dreamhi.repository.ActorRepository;
+import com.elephant.dreamhi.repository.FilmographyRepository;
+import com.elephant.dreamhi.repository.FollowRepository;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,26 +23,30 @@ import org.springframework.stereotype.Service;
 public class ActorService {
 
     private final ActorRepository actorRepository;
+    private final FollowRepository followRepository;
+    private final FilmographyRepository filmographyRepository;
+    private final ActorProfileMediaFileRepository actorProfileMediaFileRepository;
 
     public Page<ActorSimpleProfileDto> findActorsByFilter(ActorSearchCondition filter, Pageable pageable) {
         return actorRepository.findActorSimpleProfiles(filter, pageable);
     }
 
     public ActorProfileDetailDto findActorProfileById(Long id) {
-        // user 정보 가져오기 - name, email
-        final Optional<ActorProfile> profile = actorRepository.findById(id);
 
-        final ActorProfile actorProfile = profile.orElseThrow();// nosuchelementException
+        final Long loginId = 1L;
 
-        return ActorProfileDetailDto.builder()
-                                    .id(actorProfile.getId())
-                                    .age(actorProfile.getAge())
-                                    .description(actorProfile.getDescription())
-                                    .gender(actorProfile.getGender())
-                                    .height(actorProfile.getHeight())
-                                    .title(actorProfile.getTitle())
+        final Optional<ActorProfile> profile = actorRepository.findActorProfileById(id);
+        final ActorProfile actorProfile = profile.orElseThrow();
 
-                                    .build();
+        final Optional<Follow> followInfo = followRepository.findByActor_IdAndFollower_Id(actorProfile.getUser().getId(), loginId);
+        boolean isFollow = followInfo.isPresent();
+
+        final List<Filmography> filmographies = filmographyRepository.findAllByActorProfile_Id(actorProfile.getId());
+        final List<ActorProfileMediaFile> mediaFiles = actorProfileMediaFileRepository.findAllByActorProfile_Id(actorProfile.getId());
+
+        ActorProfileDetailDto response = new ActorProfileDetailDto(actorProfile, filmographies, mediaFiles, isFollow);
+
+        return response;
     }
 
 }
