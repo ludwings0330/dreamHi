@@ -1,10 +1,14 @@
 import React from 'react';
 import "./Actor.css";
 import PageBar from '../Common/PageBar';
+import SearchBar from '../Common/SearchBar';
+import Button from '../Common/Button';
 
 const ActorList = () => {
     return (
       <div>
+        <Button>버튼</Button>
+        <SearchBar />
       <div className="actor_container">
         <div className="actor">
           <div className="actor_img"><img src="/img/elephant.png" className="actor_img"/></div>
