@@ -1,4 +1,16 @@
-.test {
-    width: 10px;
-    
+.main-body {
+    width: 70%;
+    margin: auto;
+}
+
+.main-img {
+    width: 100%;
+    display: block;
+    margin: auto;
+}
+
+.main-content {
+    display: flex;
+    justify-content: space-around;
+    margin: 40px;
 }
