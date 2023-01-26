@@ -54,23 +54,8 @@ public class UserProducerRelation {
         producer.getUserProducerRelations().add(this);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-
-        if (!(o instanceof UserProducerRelation)) {
-            return false;
-        }
-
-        UserProducerRelation that = (UserProducerRelation) o;
-        return this.id.equals(that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return this.id.hashCode();
+    public void setUser(User user) {
+        this.user = user;
     }
 
 }

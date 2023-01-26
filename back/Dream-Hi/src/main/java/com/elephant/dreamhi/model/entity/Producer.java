@@ -1,9 +1,7 @@
 package com.elephant.dreamhi.model.entity;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -41,9 +39,11 @@ public class Producer {
     @Embedded
     private Picture picture;
 
+    @Builder.Default
     @OneToMany(mappedBy = "producer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<UserProducerRelation> userProducerRelations = new HashSet<>();
+    private List<UserProducerRelation> userProducerRelations = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "producer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Filmography> filmographies = new ArrayList<>();
 
