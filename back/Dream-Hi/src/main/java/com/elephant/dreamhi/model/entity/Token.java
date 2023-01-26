@@ -27,7 +27,7 @@ public class Token {
     @Column(name = "user_id", unique = true, nullable = false)
     private Long userId;
 
-    @Column(name="access_token", length = 256)
+    @Column(name = "access_token", length = 256)
     private String accessToken;
 
     @Column(name = "refresh_token", length = 256)
@@ -41,13 +41,23 @@ public class Token {
     }
 
     /**
+     * access token 교체 메소드
+     *
+     * @param accessToken
+     */
+    public void changeAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    /**
      * 로그인 시 이미 토큰 정보가 존재 시 새로운 토큰으로 교체하기 위한 메소드
      *
-     * @param accessToken : Access Token
+     * @param accessToken  : Access Token
      * @param refreshToken : Refresh Token
-     * */
+     */
     public void regenerateToken(String accessToken, String refreshToken) {
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
     }
+
 }
