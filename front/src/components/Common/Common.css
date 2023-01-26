@@ -1,0 +1,46 @@
+.header-main {
+    flex-flow: column;
+}
+
+.header-logo {
+    width: 200px;
+    object-fit: cover;
+}
+
+.header-top {
+    flex-flow: row !important;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1px;
+}
+
+.header-top-right {
+    width: 120px;
+    display: flex;
+    margin-top: 20px;
+    justify-content: space-between;
+}
+
+.header-bottom {
+    margin-top: 20px;
+    margin-left: 30px;
+}
+
+.footer-body {
+    width: 70%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer-logo {
+    width: 120px;
+    display: block;
+}
+
+.footer-right {
+    display: flex;
+    flex-flow: column;
+    align-items: end;
+}
+
