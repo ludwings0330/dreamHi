@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.service;
 
+import com.elephant.dreamhi.model.dto.JwtResponse;
 import com.elephant.dreamhi.model.dto.TokenDto;
 import com.elephant.dreamhi.model.entity.Token;
 import com.elephant.dreamhi.repository.TokenRepository;
@@ -71,6 +72,31 @@ public class TokenServiceImpl implements TokenService {
                               .refreshToken(tokenDto.getRefreshToken())
                               .build();
         tokenRepository.save(newToken);
+    }
+
+    /**
+     * authentication을 이용해 새로운 토큰 발급, 토큰 저장
+     *
+     * @param authentication
+     * @return JwtResponse 에 Access Token만 담아서 반환한다.
+     * @throws SQLException             sql 에러
+     * @throws IllegalArgumentException 현재 유저의 토큰 정보가 존재하지 않다면 발생
+     */
+    @Override
+    @Transactional
+    public JwtResponse reissueAccessToken(Authentication authentication) throws IllegalArgumentException, SQLException {
+        String accessToken = tokenProvider.createAccessToken(authentication);
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        log.info(authentication.getName());
+        log.info(principalDetails.getName(), principalDetails.getId());
+        Token oldToken = tokenRepository.findByUserId(principalDetails.getId()).orElseThrow(() -> {
+            throw new IllegalArgumentException(principalDetails.getId() + " 유저의 토큰 정보가 존재하지 않습니다.");
+        });
+        // update access token
+        oldToken.changeAccessToken(accessToken);
+        return JwtResponse.builder()
+                          .accessToken(accessToken)
+                          .build();
     }
 
 }
