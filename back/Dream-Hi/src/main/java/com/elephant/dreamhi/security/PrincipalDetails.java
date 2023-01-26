@@ -1,4 +1,4 @@
-package com.elephant.dreamhi.model.dto;
+package com.elephant.dreamhi.security;
 
 import java.util.Collection;
 import lombok.AllArgsConstructor;
