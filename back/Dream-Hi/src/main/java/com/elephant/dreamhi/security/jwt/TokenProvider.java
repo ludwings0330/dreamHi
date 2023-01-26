@@ -1,7 +1,7 @@
 package com.elephant.dreamhi.security.jwt;
 
 import com.elephant.dreamhi.model.dto.JwtResponse;
-import com.elephant.dreamhi.model.dto.PrincipalDetails;
+import com.elephant.dreamhi.security.PrincipalDetails;
 import com.elephant.dreamhi.model.dto.TokenDto;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -12,7 +12,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import java.io.IOException;
 import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
