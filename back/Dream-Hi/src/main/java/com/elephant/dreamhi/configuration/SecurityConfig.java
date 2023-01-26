@@ -28,11 +28,15 @@ public class SecurityConfig {
 
     private final TokenProvider tokenProvider;
 
+    private final PrincipalOAuth2UserService principalOauth2UserService;
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    private final OAuth2SuccessHandler oAuth2SuccessHandler;
+
+    // PasswordEncoder 로 인한 순환 참조 발생 -> AppConfig로 따리 관리
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
@@ -59,6 +63,12 @@ public class SecurityConfig {
                    .antMatchers("/auth/**", "/oauth2/**", "/login/**").permitAll()
                    .anyRequest().authenticated()
                    .and()
-                   .addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class).build();
+                   .oauth2Login()
+                   .userInfoEndpoint()
+                   .userService(principalOauth2UserService)
+                   .and()
+                   .successHandler(oAuth2SuccessHandler);
+
+        return http.addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class).build();
     }
 }
