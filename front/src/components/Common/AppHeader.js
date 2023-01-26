@@ -4,12 +4,8 @@ import classnames from "classnames";
 // reactstrap components
 import {
   Button,
-  Collapse,
-  NavbarBrand,
   Navbar,
-  NavItem,
   NavLink,
-  Nav,
   Container,
   UncontrolledDropdown,
   DropdownToggle,
@@ -26,39 +22,11 @@ import "./Common.css"
 import "bootstrap/scss/bootstrap.scss";
 
 function MainHeader() {
-  const [navbarColor, setNavbarColor] = React.useState("navbar-transparent");
-  const [navbarCollapse, setNavbarCollapse] = React.useState(false);
 
-  const toggleNavbarCollapse = () => {
-    setNavbarCollapse(!navbarCollapse);
-    document.documentElement.classList.toggle("nav-open");
-  };
-
-  React.useEffect(() => {
-    const updateNavbarColor = () => {
-      if (
-        document.documentElement.scrollTop > 299 ||
-        document.body.scrollTop > 299
-      ) {
-        setNavbarColor("");
-      } else if (
-        document.documentElement.scrollTop < 300 ||
-        document.body.scrollTop < 300
-      ) {
-        setNavbarColor("navbar-transparent");
-      }
-    };
-
-    window.addEventListener("scroll", updateNavbarColor);
-
-    return function cleanup() {
-      window.removeEventListener("scroll", updateNavbarColor);
-    };
-  });
   return (
-    <Navbar className={classnames("fixed-top", navbarColor)} expand="lg">
+    <Navbar className="fixed-top" variant="dark" bg="dark" expand="lg">
       <Container className="header-main">
-        <div className="navbar-translate">
+        <div>
           <div className="header-top">
             <div>
               <img src="img/logo.png" alt="DreamHi logo" className="header-logo" />
