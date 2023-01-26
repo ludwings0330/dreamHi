@@ -7,11 +7,9 @@ import static com.elephant.dreamhi.model.entity.QUser.user;
 
 import com.elephant.dreamhi.model.dto.ActorSearchCondition;
 import com.elephant.dreamhi.model.entity.ActorProfile;
-import com.elephant.dreamhi.model.entity.Follow;
-import com.elephant.dreamhi.model.entity.QFollow;
 import com.elephant.dreamhi.model.statics.Gender;
-import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
@@ -56,15 +54,12 @@ public class ActorRepositoryCustomImpl implements ActorRepositoryCustom {
                                                              genderEq(condition.getGender()),
                                                              followEq(condition.getIsFollow(), condition.getId()),
                                                              stylesEq(condition.getStyles()));
+
         final List<ActorProfile> contents = query
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
-        final List<Follow> fetch = jpaQueryFactory.selectFrom(QFollow.follow)
-                                                  .join(QFollow.follow.follower, user)
-                                                  .where(QFollow.follow.follower.id.eq(condition.getId()),
-                                                         QFollow.follow.follower.)
-                                                  .fetch();
+
         return PageableExecutionUtils.getPage(contents, pageable, () -> query.fetch().size());
     }
 
@@ -73,26 +68,26 @@ public class ActorRepositoryCustomImpl implements ActorRepositoryCustom {
             return null;
         }
         return null;
-//        return user.followers.contains(
-//                JPAExpressions.selectFrom(QFollow.follow)
-//                              .join(QFollow.follow.follower)
-//                              .where(QFollow.follow.follower.id.eq(id))
-//        );
     }
 
-    private BooleanBuilder stylesEq(String[] styles) {
+    private BooleanExpression stylesEq(String[] styles) {
         if (styles == null) {
             return null;
         }
-
-        final BooleanBuilder booleanBuilder = new BooleanBuilder();
-
-        for (String style :
-                styles) {
-            booleanBuilder.or(actorStyleRelation.style.description.contains(style));
-        }
-
-        return booleanBuilder;
+        return actorProfile.id.in(
+                JPAExpressions.select(actorProfile.id)
+                              .from(actorProfile)
+                              .join(actorProfile.actorStyleRelations, actorStyleRelation)
+                              .join(actorStyleRelation.style, style)
+                              .where(style.id.in(
+                                      JPAExpressions
+                                              .select(style.id)
+                                              .from(style)
+                                              .where(style.description.in(styles)
+                                              )))
+                              .groupBy(actorProfile.id)
+                              .having(style.id.count().eq((long) styles.length))
+        );
     }
 
     private BooleanExpression genderEq(Gender gender) {
