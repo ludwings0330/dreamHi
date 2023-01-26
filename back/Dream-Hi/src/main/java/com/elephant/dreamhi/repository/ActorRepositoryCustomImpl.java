@@ -7,6 +7,7 @@ import static com.elephant.dreamhi.model.entity.QUser.user;
 
 import com.elephant.dreamhi.model.dto.ActorSearchCondition;
 import com.elephant.dreamhi.model.entity.ActorProfile;
+import com.elephant.dreamhi.model.entity.QFollow;
 import com.elephant.dreamhi.model.statics.Gender;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
@@ -67,7 +68,11 @@ public class ActorRepositoryCustomImpl implements ActorRepositoryCustom {
         if (isFollow == null || !isFollow) {
             return null;
         }
-        return null;
+        return actorProfile.id.in(
+                JPAExpressions.select(QFollow.follow.actor.id)
+                              .from(QFollow.follow)
+                              .where(QFollow.follow.follower.id.eq(id))
+        );
     }
 
     private BooleanExpression stylesEq(String[] styles) {
