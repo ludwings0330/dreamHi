@@ -1,6 +1,9 @@
 package com.elephant.dreamhi.model.entity;
 
 import com.elephant.dreamhi.model.statics.UserRole;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -9,6 +12,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -50,6 +54,11 @@ public class User {
     @Enumerated(EnumType.STRING)
     @ColumnDefault("'ROLE_USER'")
     private UserRole role;
+
+    @OneToMany(mappedBy = "follower")
+    private List<Follow> followers = new ArrayList<>();
+    @OneToMany(mappedBy = "actor", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<Follow> followActors = new ArrayList<>();
 
     @Embedded
     private Picture picture;

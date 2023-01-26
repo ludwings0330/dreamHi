@@ -3,3 +3,7 @@ spring:
     import: dbconfig.yml
   messages:
     basename: messages
+  jpa:
+    properties:
+      hibernate:
+        default_batch_fetch_size: 300
