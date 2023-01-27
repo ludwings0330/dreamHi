@@ -1,11 +1,12 @@
 import React from 'react';
 
-const Routes = () => {
+
+const DreamHiRoutes = () => {
     return (
         <div>
-            
+
         </div>
     );
 };
 
-export default Routes;
+export default DreamHiRoutes;

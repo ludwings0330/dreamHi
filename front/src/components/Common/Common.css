@@ -3,7 +3,7 @@
 }
 
 .header-logo {
-    width: 200px;
+    width: 250px;
     object-fit: cover;
 }
 
@@ -27,9 +27,10 @@
 }
 
 .footer-body {
-    width: 70%;
-    margin: auto;
+    width: 100%;
     display: flex;
+    position: relative;
+    bottom: 0;
     justify-content: space-between;
 }
 
@@ -39,8 +40,30 @@
 }
 
 .footer-right {
-    display: flex;
-    flex-flow: column;
-    align-items: end;
+    position: relative;
+    margin-top: 50px;
+    bottom: 8px;
+    right: 50px;
+    font-size: 16px;
 }
+
+.footer-left {
+    margin-left: 50px;
+    margin-bottom: 30px;
+}
+
+.header-line {
+    width : 100%;
+
+    height : 5px;
+
+    background : #7ea6f4;
+
+    border: 0;
+}
+
+.main-container {
+    max-width: 100% !important;
+}
+
 

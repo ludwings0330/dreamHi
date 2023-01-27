@@ -1,15 +1,14 @@
 import React from 'react';
 
 import "./Main.css"
+import MainBanner from '../Common/MainBanner';
 
 function MainPage() {
   return (
+
     <div className="main-body">
       <div className="main-img">
-        <img src="img/test.png" className="main-img" />
-      </div>
-      <div className="main-calendar">
-        <img src="img/test.png" className="main-img" />
+        <MainBanner />
       </div>
       <div className="main-content">
         <div className="main-best">

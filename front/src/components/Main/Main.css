@@ -1,17 +1,18 @@
 .main-body {
-    width: 70%;
-    margin-top: 100px;
-    margin: auto;
+    position: relative;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin-bottom: 15px;
 }
 
 .main-img {
     width: 100%;
-    display: block;
-    margin: auto;
 }
 
 .main-content {
     display: flex;
     justify-content: space-around;
     margin: 40px;
+    margin-bottom: fill;
 }
