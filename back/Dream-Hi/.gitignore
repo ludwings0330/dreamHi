@@ -39,6 +39,7 @@ out/
 ### Secrets ###
 **/*.yml
 !**/application.yml
-
+!**/application-local.yml
+!**/application-prod.yml
 ### queryDSL QClasses###
 /src/main/generated/
