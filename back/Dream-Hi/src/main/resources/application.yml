@@ -1,9 +1,18 @@
+server:
+  port: 80
+logging:
+  level:
+    com: debug
+
 spring:
   config:
-    import: dbconfig.yml
+    import:
+      - dbconfig.yml
+      - jwt.yml
+      - security.yml
+
   messages:
     basename: messages
-  jpa:
-    properties:
-      hibernate:
-        default_batch_fetch_size: 300
+  devtools:
+    livereload:
+      enabled: true
