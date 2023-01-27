@@ -1,6 +1,8 @@
 package com.elephant.dreamhi.service;
 
 import com.elephant.dreamhi.model.dto.ProducerInfoResponseDto;
+import com.elephant.dreamhi.model.dto.ProducerListResponseDto;
+import com.elephant.dreamhi.model.dto.ProducerSearchCondition;
 import com.elephant.dreamhi.model.dto.ProducerUpdateRequestDto;
 import com.elephant.dreamhi.model.entity.Picture;
 import com.elephant.dreamhi.model.entity.Producer;
@@ -11,10 +13,14 @@ import com.elephant.dreamhi.repository.FollowRepository;
 import com.elephant.dreamhi.repository.ProducerRepository;
 import com.elephant.dreamhi.repository.UserProducerRelationRepository;
 import com.elephant.dreamhi.repository.UserRepository;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -81,6 +87,19 @@ public class ProducerService {
                         .ifPresent(follow -> responseDto.setIsFollow(true));
 
         return responseDto;
+    }
+
+    public Page<ProducerListResponseDto> searchProducersByCondition(ProducerSearchCondition condition,
+                                                                    Pageable pageable) {
+
+        final Page<ProducerListResponseDto> producers = producerRepository.findProducersByCondition(condition, pageable);
+
+        Set<Long> producerFollowInfo = new HashSet<>(followRepository.findProducerIdByFollowerId(condition.getUserId()));
+
+        producers.getContent()
+                 .forEach(item -> item.setIsFollow(producerFollowInfo.contains(item.getId())));
+
+        return producers;
     }
 
 }

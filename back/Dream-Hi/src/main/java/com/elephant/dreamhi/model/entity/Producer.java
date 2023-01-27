@@ -41,7 +41,7 @@ public class Producer {
     private Picture picture;
 
     @Builder.Default
-    @OneToMany(mappedBy = "producer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "producer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserProducerRelation> userProducerRelations = new ArrayList<>();
 
     @Builder.Default
