@@ -1,11 +1,13 @@
 package com.elephant.dreamhi.service;
 
+import com.elephant.dreamhi.model.dto.ProducerInfoResponseDto;
 import com.elephant.dreamhi.model.dto.ProducerUpdateRequestDto;
 import com.elephant.dreamhi.model.entity.Picture;
 import com.elephant.dreamhi.model.entity.Producer;
 import com.elephant.dreamhi.model.entity.User;
 import com.elephant.dreamhi.model.entity.UserProducerRelation;
 import com.elephant.dreamhi.model.statics.ProducerRole;
+import com.elephant.dreamhi.repository.FollowRepository;
 import com.elephant.dreamhi.repository.ProducerRepository;
 import com.elephant.dreamhi.repository.UserProducerRelationRepository;
 import com.elephant.dreamhi.repository.UserRepository;
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Service;
 public class ProducerService {
 
     private final ProducerRepository producerRepository;
+    private final FollowRepository followRepository;
     private final UserProducerRelationRepository userProducerRelationRepository;
     private final UserRepository userRepository;
 
@@ -65,6 +68,19 @@ public class ProducerService {
         log.info("producer : {}, {}, {}", producer.getId(), producer.getDescription(), producer.getPicture().getUrl());
         log.info("producer Dto : {}", producerDto);
         producer.updateInfo(producerDto);
+    }
+
+    public ProducerInfoResponseDto getProducerInfoById(Long producerId, Long userId) {
+
+        ProducerInfoResponseDto responseDto = new ProducerInfoResponseDto();
+
+        final Producer producer = producerRepository.findById(producerId).orElseThrow();
+        responseDto.setInfo(producer);
+
+        followRepository.findByProducer_IdAndFollower_Id(producerId, userId)
+                        .ifPresent(follow -> responseDto.setIsFollow(true));
+
+        return responseDto;
     }
 
 }

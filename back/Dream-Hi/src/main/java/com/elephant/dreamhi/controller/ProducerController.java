@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.controller;
 
+import com.elephant.dreamhi.model.dto.ProducerInfoResponseDto;
 import com.elephant.dreamhi.model.dto.ProducerUpdateRequestDto;
 import com.elephant.dreamhi.service.ProducerService;
 import com.elephant.dreamhi.utils.Response;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,6 +22,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProducerController {
 
     private final ProducerService producerService;
+
+    @GetMapping("/api/producers/{producerId}")
+    public ResponseEntity<Body> getProducerInfoById(@PathVariable Long producerId) {
+        Long userId = 1L;
+        ProducerInfoResponseDto responseDto = producerService.getProducerInfoById(producerId, userId);
+        return Response.create(HttpStatus.OK, "ok", responseDto);
+    }
 
     @PutMapping("/api/producers/{producerId}")
     public ResponseEntity<Body> updateProducerInfo(@PathVariable Long producerId,
