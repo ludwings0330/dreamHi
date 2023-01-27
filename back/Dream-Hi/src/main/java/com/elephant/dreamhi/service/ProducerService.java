@@ -21,13 +21,11 @@ public class ProducerService {
     private final UserRepository userRepository;
 
     @Transactional
-    public Long createProducer() {
-        Long userId = 1L;
-
+    public Long createProducer(String name, Long userId) {
         // producer 엔티티만듬
         // producer 와 멤버 연결
         final Producer producer = Producer.builder()
-                                          .name("test")
+                                          .name(name)
                                           .description("제작사 소개글을 입력해주세요".getBytes())
                                           .build();
         producerRepository.save(producer);
