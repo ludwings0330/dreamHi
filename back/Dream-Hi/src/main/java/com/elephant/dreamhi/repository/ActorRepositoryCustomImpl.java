@@ -49,7 +49,8 @@ public class ActorRepositoryCustomImpl implements ActorRepositoryCustom {
                                                       .innerJoin(actorProfile.user, user).fetchJoin()
                                                       .leftJoin(actorProfile.actorStyleRelations, actorStyleRelation).fetchJoin()
                                                       .leftJoin(actorStyleRelation.style, style).fetchJoin()
-                                                      .where(nameEq(condition.getName()),
+                                                      .where(actorProfile.visible.eq(true),
+                                                             nameEq(condition.getName()),
                                                              ageEq(condition.getAge()),
                                                              heightEq(condition.getHeight()),
                                                              genderEq(condition.getGender()),
