@@ -1,9 +1,8 @@
 package com.elephant.dreamhi.model.entity;
 
+import com.elephant.dreamhi.model.dto.ProducerUpdateRequestDto;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -36,16 +35,30 @@ public class Producer {
     private String name;
 
     @Lob
-    private byte[] description;
+    private String description;
 
     @Embedded
     private Picture picture;
 
-    @OneToMany(mappedBy = "producer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<UserProducerRelation> userProducerRelations = new HashSet<>();
+    @Builder.Default
+    @OneToMany(mappedBy = "producer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserProducerRelation> userProducerRelations = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "producer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Filmography> filmographies = new ArrayList<>();
+
+    public void updateInfo(ProducerUpdateRequestDto producerDto) {
+        if (producerDto.getName() != null) {
+            this.name = producerDto.getName();
+        }
+        if (producerDto.getDescription() != null) {
+            this.description = producerDto.getDescription();
+        }
+        if (producerDto.getPictureUrl() != null) {
+            this.picture.updateUrl(producerDto.getPictureUrl());
+        }
+    }
 
     // filmography 편의 메소드
 

@@ -10,6 +10,10 @@ public class Response {
     private Response() {
     }
 
+    public static ResponseEntity<Body> create(HttpStatus httpStatus, String message) {
+        return Response.create(httpStatus, message, null);
+    }
+
     public static ResponseEntity<Body> create(HttpStatus httpStatus, String message, Object result) {
 
         return new ResponseEntity<>(

@@ -26,4 +26,8 @@ public class Picture {
     @Column(name = "picture_origin_name", nullable = true)
     private String originName;
 
+    public void updateUrl(String pictureUrl) {
+        this.url = pictureUrl;
+    }
+
 }
