@@ -46,4 +46,8 @@ public class ProducerService {
         return producer.getId();
     }
 
+    public void deleteProducer(Long producerId) {
+        producerRepository.deleteById(producerId);
+    }
+
 }
