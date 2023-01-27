@@ -54,7 +54,7 @@ public class ActorProfile {
     private String description;
 
     @Column(nullable = false)
-    @ColumnDefault("1")
+    @ColumnDefault("0")
     private Boolean visible;
 
     @OneToMany(mappedBy = "actorProfile", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
