@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.model.entity;
 
+import com.elephant.dreamhi.model.dto.ProducerUpdateRequestDto;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -34,7 +35,7 @@ public class Producer {
     private String name;
 
     @Lob
-    private byte[] description;
+    private String description;
 
     @Embedded
     private Picture picture;
@@ -46,6 +47,18 @@ public class Producer {
     @Builder.Default
     @OneToMany(mappedBy = "producer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Filmography> filmographies = new ArrayList<>();
+
+    public void updateInfo(ProducerUpdateRequestDto producerDto) {
+        if (producerDto.getName() != null) {
+            this.name = producerDto.getName();
+        }
+        if (producerDto.getDescription() != null) {
+            this.description = producerDto.getDescription();
+        }
+        if (producerDto.getPictureUrl() != null) {
+            this.picture.updateUrl(producerDto.getPictureUrl());
+        }
+    }
 
     // filmography 편의 메소드
 
