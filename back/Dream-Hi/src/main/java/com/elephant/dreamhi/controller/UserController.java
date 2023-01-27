@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserController {
 
-    private UserService userService;
+    private final UserService userService;
 
     /**
      * 회원 기본 정보 조회 메소드
@@ -26,7 +26,7 @@ public class UserController {
      * @throws org.springframework.security.core.userdetails.UsernameNotFoundException : id 조회 결과 없을 시 발생
      */
     @GetMapping("/auth/users/{id}")
-    public ResponseEntity<?> findUserDetail(@PathVariable Long id) {
+    public ResponseEntity<?> findUserDetail(@PathVariable("id") Long id) {
         UserDetailDto userDetailDto = userService.findUserDetail(id);
         return Response.create(HttpStatus.OK, HttpStatus.OK.name(), userDetailDto);
     }

@@ -27,7 +27,7 @@ public class UserDetailDto {
         this.email = user.getEmail();
         this.name = user.getName();
         this.phone = user.getPhone();
-        this.pictureUrl = user.getPicture().getUrl();
+        this.pictureUrl = user.getPicture() == null ? null : user.getPicture().getUrl();
     }
 
 }
