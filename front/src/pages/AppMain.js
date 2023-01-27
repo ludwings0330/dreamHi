@@ -1,11 +1,19 @@
-import AppActor from './AppActor';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import AppLogin from './Login/AppLogin';
+import AppHeader from '../components/Common/AppHeader';
+import AppFooter from '../components/Common/AppFooter';
+import MainPage from '../components/Main/MainPage';
+import AppActor from './AppActor';
+import Login from '../user/login/Login';
+
 
 function AppMain() {
   return (
-    <div className="App">
-      <AppLogin />
+    <div>
+      {/*<AppHeader />*/}
+      {/*<MainPage />*/}
+      {/*<AppFooter />*/}
+      <AppActor />
+      {/*<Login />*/}
     </div>
   );
 }

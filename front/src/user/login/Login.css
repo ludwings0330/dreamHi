@@ -5,9 +5,10 @@
 
 .login-content {
     background: #fff;
-    box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);
+    box-shadow: 0 1px 5px rgba(126, 166, 244, 0.47);
     border-radius: 2px;
-    width: 500px;
+    width: 800px;
+    height: 600px;
     display: inline-block;
     margin-top: 30px;
     vertical-align: middle;
@@ -16,40 +17,40 @@
 }
 
 .social-btn {
-    margin-bottom: 15px;
+    margin-bottom: 60px;
     font-weight: 400;
     font-size: 16px;
 }
 
 .social-btn img {
-    height: 32px;
+    height: 60px;
     float: left;
     margin-top: 10px;
 }
 
-.social-btn.google {
+.social-btn.google img {
     margin-top: 7px;
+    width: 230px;
+    height: 70px;
+    margin-bottom: 60px;
 }
 
-.social-btn.facebook img {
-    height: 24px;
-    margin-left: 3px;
+.social-btn.naver img {
+    margin-top: 7px;
+    margin-bottom: 60px;
 }
 
-.social-btn.github img {
-    height: 24px;
-    margin-left: 3px;
-}
-
-.signup-link {
-    color: rgba(0, 0, 0, 0.65);
-    font-size: 14px;
+.social-btn.kakao img {
+    margin-top: 7px;
+    width: 230px;
+    margin-bottom: 60px;
 }
 
 .login-title {
-    font-size: 1.5em;
+    font-size: 3rem;
     font-weight: 500;
     margin-top: 0;
     margin-bottom: 30px;
-    color: rgba(0, 0, 0, 0.65);
+    color: rgba(0, 0, 0, 0.71);
 }
+

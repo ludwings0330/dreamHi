@@ -23,6 +23,9 @@ const palette = {
     '#1098ad',
     '#0c8599',
     '#0b7285'
+  ],
+  dreamhi: [
+    '#7EA6F4'
   ]
 };
 

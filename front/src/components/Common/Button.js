@@ -3,17 +3,20 @@ import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 
 const StyledButton = styled.button`
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
+  border: rgba(7, 7, 7, 0.16);
+  border-radius: 5px;
+  font-size: 1.25rem;
   font-weight: bold;
-  padding: 0.25rem 1rem;
-  color: white;
-  outline: none;
+  padding: 0.5rem 1rem;
+  margin-left: 20px;
+  color: black;
+  outline: #e8e8e8;
   cursor: pointer;
-  background: ${palette.gray[8]};
+  background: white;
+  opacity: 80%;
+
   &:hover {
-    background: ${palette.gray[6]};
+    background: ${palette.dreamhi[0]};
   }
 `;
 

@@ -1,10 +1,14 @@
 import React from 'react';
-import ActorList from "../components/Actor/ActorList";
+import ActorWrite from '../components/Actor/resume/ActorWrite';
+
+
+
 
 const AppActor = () => {
+
     return (
         <div>
-            <ActorList />
+            <ActorWrite />
         </div>
     );
 };

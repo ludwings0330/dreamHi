@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import './Login.css';
 import { GOOGLE_AUTH_URL, NAVER_AUTH_URL, KAKAO_AUTH_URL } from '../../constants';
 import { BrowserRouter } from 'react-router-dom'
-import googleLogo from '../../img/google-logo.png';
+import googleLogo from '../../img/btn_google_signin_light_normal_web@2x.png';
 import naverLogo from "../../img/btnG_완성형.png";
-import kakaoLogo from '../../img/kakao_login_medium_narrow.png';
+import kakaoLogo from '../../img/kakao_login_large_narrow.png';
+import AppHeader from '../../components/Common/AppHeader';
+import AppFooter from '../../components/Common/AppFooter';
 
 class Login extends Component {
 
@@ -18,11 +20,15 @@ class Login extends Component {
     }
 
     return (
-      <div className="login-container">
+      <div>
+        <AppHeader />
+        <div className="login-container">
         <div className="login-content">
-          <h1 className="login-title">Login to SpringSocial</h1>
+          <h1 className="login-title">소셜로그인</h1>
           <SocialLogin />
         </div>
+      </div>
+        <AppFooter />
       </div>
     );
   }
@@ -31,6 +37,7 @@ class Login extends Component {
 
 class SocialLogin extends Component {
   render() {
+
     return (
       <div className="social-login">
         <a className="btn btn-block social-btn google" href={GOOGLE_AUTH_URL}>

@@ -128,6 +128,7 @@ const SearchBar = () => {
         {/** onChange 될때 changeSelectOptionHandler 함수가 불려지도록 바인드
          */}
         <div className="header">
+
           <input type="text" className="iptSearch" />
           <button type="button" className="search">
             <span>검색</span>
