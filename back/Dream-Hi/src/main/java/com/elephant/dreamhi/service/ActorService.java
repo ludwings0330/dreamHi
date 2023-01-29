@@ -4,6 +4,7 @@ import com.elephant.dreamhi.exception.VisibleException;
 import com.elephant.dreamhi.model.dto.ActorProfileDetailDto;
 import com.elephant.dreamhi.model.dto.ActorSearchCondition;
 import com.elephant.dreamhi.model.dto.ActorSimpleProfileDto;
+import com.elephant.dreamhi.model.dto.FilmographyDto;
 import com.elephant.dreamhi.model.entity.ActorProfile;
 import com.elephant.dreamhi.model.entity.ActorProfileMediaFile;
 import com.elephant.dreamhi.model.entity.Filmography;
@@ -15,11 +16,13 @@ import com.elephant.dreamhi.repository.FollowRepository;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ActorService {
@@ -72,6 +75,12 @@ public class ActorService {
             throw new VisibleException("비공개 프로필입니다.");
         }
         ActorProfileDetailDto response = new ActorProfileDetailDto(profile);
+        return response;
+    }
+
+    public FilmographyDto findFilmographiesByActorProfileId(Long id) {
+        List<Filmography> filmographies = filmographyRepository.findAllByActorProfile_Id(id);
+        FilmographyDto response = new FilmographyDto(id, filmographies);
         return response;
     }
 
