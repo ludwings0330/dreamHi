@@ -5,6 +5,7 @@ import com.elephant.dreamhi.model.dto.ActorProfileDetailDto;
 import com.elephant.dreamhi.model.dto.ActorSearchCondition;
 import com.elephant.dreamhi.model.dto.ActorSimpleProfileDto;
 import com.elephant.dreamhi.model.dto.FilmographyDto;
+import com.elephant.dreamhi.model.dto.MediaFileDto;
 import com.elephant.dreamhi.service.ActorService;
 import com.elephant.dreamhi.utils.Response;
 import lombok.RequiredArgsConstructor;
@@ -51,8 +52,13 @@ public class ActorController {
 
     @GetMapping("/auth/actor-filmographies/{id}")
     public ResponseEntity<?> getFilmography(@PathVariable Long id) {
-        log.info(id.toString());
         FilmographyDto responseDto = actorService.findFilmographiesByActorProfileId(id);
+        return Response.create(HttpStatus.OK, HttpStatus.OK.name(), responseDto);
+    }
+
+    @GetMapping("/auth/actor-media/{id}")
+    public ResponseEntity<?> getMediaFiles(@PathVariable Long id) {
+        MediaFileDto responseDto = actorService.findMediaFilesByActorProfileId(id);
         return Response.create(HttpStatus.OK, HttpStatus.OK.name(), responseDto);
     }
 

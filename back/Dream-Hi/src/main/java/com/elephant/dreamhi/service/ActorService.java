@@ -5,6 +5,7 @@ import com.elephant.dreamhi.model.dto.ActorProfileDetailDto;
 import com.elephant.dreamhi.model.dto.ActorSearchCondition;
 import com.elephant.dreamhi.model.dto.ActorSimpleProfileDto;
 import com.elephant.dreamhi.model.dto.FilmographyDto;
+import com.elephant.dreamhi.model.dto.MediaFileDto;
 import com.elephant.dreamhi.model.entity.ActorProfile;
 import com.elephant.dreamhi.model.entity.ActorProfileMediaFile;
 import com.elephant.dreamhi.model.entity.Filmography;
@@ -81,6 +82,12 @@ public class ActorService {
     public FilmographyDto findFilmographiesByActorProfileId(Long id) {
         List<Filmography> filmographies = filmographyRepository.findAllByActorProfile_Id(id);
         FilmographyDto response = new FilmographyDto(id, filmographies);
+        return response;
+    }
+
+    public MediaFileDto findMediaFilesByActorProfileId(Long id) {
+        List<ActorProfileMediaFile> mediaFiles = actorProfileMediaFileRepository.findAllByActorProfile_Id(id);
+        MediaFileDto response = new MediaFileDto(id, mediaFiles);
         return response;
     }
 
