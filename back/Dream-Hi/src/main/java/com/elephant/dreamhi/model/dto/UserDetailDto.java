@@ -22,6 +22,8 @@ public class UserDetailDto {
 
     private String pictureUrl;
 
+    private Long actorProfileId;
+
     public void setUserDetailDto(User user) {
         this.id = user.getId();
         this.email = user.getEmail();
@@ -30,4 +32,8 @@ public class UserDetailDto {
         this.pictureUrl = user.getPicture() == null ? null : user.getPicture().getUrl();
     }
 
+    public void setActorProfileId(Long id) {
+        this.actorProfileId = id;
+    }
+    
 }
