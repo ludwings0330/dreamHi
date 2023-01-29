@@ -24,7 +24,7 @@ public class ActorController {
 
     private final ActorService actorService;
 
-    @GetMapping("/api/actors")
+    @GetMapping("/auth/actors")
     public ResponseEntity<?> actorList(@PageableDefault(size = 8) Pageable pageable,
                                        @RequestBody ActorSearchCondition filter) {
         log.info(filter.toString());
@@ -33,7 +33,7 @@ public class ActorController {
         return Response.create(HttpStatus.OK, "success", actors);
     }
 
-    @GetMapping("/api/actors/{id}")
+    @GetMapping("/auth/actors/{id}")
     public ResponseEntity<?> getActorProfileDetail(@PathVariable Long id) {
         ActorProfileDetailDto responseDto = actorService.findActorProfileById(id);
 
