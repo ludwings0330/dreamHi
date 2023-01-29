@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface ActorRepositoryCustom {
 
-    Optional<ActorProfile> findActorProfileById(Long id);
+//    Optional<ActorProfile> findActorProfileById(Long id);
 
     Page<ActorProfile> findActorSimpleProfiles(ActorSearchCondition condition, Pageable pageable);
 

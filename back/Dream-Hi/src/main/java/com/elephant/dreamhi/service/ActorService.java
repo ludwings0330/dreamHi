@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.service;
 
+import com.elephant.dreamhi.exception.VisibleException;
 import com.elephant.dreamhi.model.dto.ActorProfileDetailDto;
 import com.elephant.dreamhi.model.dto.ActorSearchCondition;
 import com.elephant.dreamhi.model.dto.ActorSimpleProfileDto;
@@ -14,6 +15,7 @@ import com.elephant.dreamhi.repository.FollowRepository;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -36,21 +38,40 @@ public class ActorService {
         return profileDtos;
     }
 
-    public ActorProfileDetailDto findActorProfileById(Long id) {
+//    public ActorProfileDetailDto findActorProfileById(Long id) {
+//
+//        final Long loginId = 1L;
+//
+//        final Optional<ActorProfile> profile = actorRepository.findActorProfileById(id);
+//        final ActorProfile actorProfile = profile.orElseThrow();
+//
+//        final Optional<Follow> followInfo = followRepository.findByActor_IdAndFollower_Id(actorProfile.getUser().getId(), loginId);
+//        boolean isFollow = followInfo.isPresent();
+//
+//        final List<Filmography> filmographies = filmographyRepository.findAllByActorProfile_Id(actorProfile.getId());
+//        final List<ActorProfileMediaFile> mediaFiles = actorProfileMediaFileRepository.findAllByActorProfile_Id(actorProfile.getId());
+//
+//        ActorProfileDetailDto response = new ActorProfileDetailDto(actorProfile, filmographies, mediaFiles, isFollow);
+//
+//        return response;
+//    }
 
-        final Long loginId = 1L;
-
-        final Optional<ActorProfile> profile = actorRepository.findActorProfileById(id);
-        final ActorProfile actorProfile = profile.orElseThrow();
-
-        final Optional<Follow> followInfo = followRepository.findByActor_IdAndFollower_Id(actorProfile.getUser().getId(), loginId);
-        boolean isFollow = followInfo.isPresent();
-
-        final List<Filmography> filmographies = filmographyRepository.findAllByActorProfile_Id(actorProfile.getId());
-        final List<ActorProfileMediaFile> mediaFiles = actorProfileMediaFileRepository.findAllByActorProfile_Id(actorProfile.getId());
-
-        ActorProfileDetailDto response = new ActorProfileDetailDto(actorProfile, filmographies, mediaFiles, isFollow);
-
+    /**
+     * 배우 프로필 상세 정보 With  Style Tag 정보 조회
+     *
+     * @param id : ActorProfile.id
+     * @return ActorProfileDetailDto
+     * @throws NotFoundException : id에 해당하는 프로필이 존재하지 않는 경우 발생합니다.
+     * @throws VisibleException    : 해당 프로필이 비공개일 경우 예외를 발생합니다.
+     */
+    public ActorProfileDetailDto findActorProfileWithStyleById(Long id) throws NotFoundException, VisibleException {
+        ActorProfile profile = actorRepository.findActorProfileById(id).orElseThrow(() -> {
+            return new NotFoundException();
+        });
+        if (profile.getVisible() == false) {
+            throw new VisibleException("비공개 프로필입니다.");
+        }
+        ActorProfileDetailDto response = new ActorProfileDetailDto(profile);
         return response;
     }
 

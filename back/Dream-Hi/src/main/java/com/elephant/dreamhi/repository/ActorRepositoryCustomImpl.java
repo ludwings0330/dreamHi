@@ -28,18 +28,18 @@ public class ActorRepositoryCustomImpl implements ActorRepositoryCustom {
 
     private final JPAQueryFactory jpaQueryFactory;
 
-    @Override
-    public Optional<ActorProfile> findActorProfileById(Long id) {
-        final List<ActorProfile> fetch = jpaQueryFactory.selectFrom(actorProfile)
-                                                        .join(actorProfile.user, user).fetchJoin()
-                                                        .join(actorProfile.actorStyleRelations, actorStyleRelation).fetchJoin()
-                                                        .join(actorStyleRelation.style, style).fetchJoin()
-                                                        .distinct()
-                                                        .where(actorProfile.id.eq(id))
-                                                        .fetch();
-
-        return Optional.of(fetch.get(0));
-    }
+//    @Override
+//    public Optional<ActorProfile> findActorProfileById(Long id) {
+//        final List<ActorProfile> fetch = jpaQueryFactory.selectFrom(actorProfile)
+//                                                        .join(actorProfile.user, user).fetchJoin()
+//                                                        .join(actorProfile.actorStyleRelations, actorStyleRelation).fetchJoin()
+//                                                        .join(actorStyleRelation.style, style).fetchJoin()
+//                                                        .distinct()
+//                                                        .where(actorProfile.id.eq(id))
+//                                                        .fetch();
+//
+//        return Optional.of(fetch.get(0));
+//    }
 
     @Override
     public Page<ActorProfile> findActorSimpleProfiles(ActorSearchCondition condition, Pageable pageable) {
