@@ -12,21 +12,22 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class FollowRepositoryCustomImpl implements FolloweReositoryCustom {
+public class FollowRepositoryCustomImpl implements FollowRepositoryCustom {
 
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
     public List<MyFollowersDto> findAllByActor_Id(Long actorId) {
-        return jpaQueryFactory.select(Projections.constructor(
-                MyFollowersDto.class,
-                follow.id,
-                follow.date,
-                user.id,
-                user.email,
-                user.name,
-                user.picture.url
-        ))
+        return jpaQueryFactory
+                .select(Projections.constructor(
+                        MyFollowersDto.class,
+                        follow.id,
+                        follow.date,
+                        user.id,
+                        user.email,
+                        user.name,
+                        user.picture.url
+                ))
                 .from(follow).innerJoin(user).on(follow.follower.id.eq(user.id))
                 .orderBy(follow.date.desc())
                 .fetch();
