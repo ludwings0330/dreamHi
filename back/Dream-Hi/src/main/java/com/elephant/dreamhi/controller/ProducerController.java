@@ -81,4 +81,11 @@ public class ProducerController {
         return Response.ok();
     }
 
+    @DeleteMapping("/api/producers/{producerId}/users/{userId}")
+    public ResponseEntity<Body> deleteProducerMember(@PathVariable Long producerId,
+                                                     @PathVariable Long userId) {
+        producerService.deleteProducerMember(producerId, userId);
+        return Response.ok();
+    }
+
 }

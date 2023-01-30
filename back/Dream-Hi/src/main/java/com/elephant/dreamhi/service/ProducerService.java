@@ -19,12 +19,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -65,6 +65,7 @@ public class ProducerService {
         return producer.getId();
     }
 
+    @Transactional
     public void deleteProducer(Long producerId) {
         producerRepository.deleteById(producerId);
     }
@@ -112,6 +113,7 @@ public class ProducerService {
                                  .collect(Collectors.toList());
     }
 
+    @Transactional
     public void addProducerMember(Long producerId, Long userId, ProducerMemberDto member) throws Exception {
         final User user = userRepository.findById(userId).orElseThrow();
         final Producer producer = producerRepository.findById(producerId).orElseThrow();
@@ -129,6 +131,12 @@ public class ProducerService {
 
         userProducerRelationRepository.save(newMember);
 
+    }
+
+    @Transactional
+    public void deleteProducerMember(Long producerId, Long userId) {
+        log.info("producerId=[{}], userId=[{}]", producerId, userId);
+        userProducerRelationRepository.deleteByProducer_IdAndUser_Id(producerId, userId);
     }
 
 }

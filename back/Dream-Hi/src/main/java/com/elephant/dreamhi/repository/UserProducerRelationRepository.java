@@ -12,4 +12,6 @@ public interface UserProducerRelationRepository extends JpaRepository<UserProduc
 
     UserProducerRelation findByProducer_IdAndUser_Id(Long userId, Long producerId);
 
+    void deleteByProducer_IdAndUser_Id(Long producerId, Long userId);
+
 }
