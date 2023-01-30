@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.service;
 
+import com.elephant.dreamhi.model.dto.FollowRequestDto;
 import com.elephant.dreamhi.repository.FollowRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,11 @@ public class FollowService {
     @Transactional
     public Long getFollowerCount(Long id) {
         return followRepository.countByActor_Id(id);
+    }
+
+    @Transactional
+    public Boolean checkFollow(FollowRequestDto followRequestDto, Long followerId) {
+        return followRepository.checkFollow(followRequestDto, followerId).isPresent();
     }
 
 }

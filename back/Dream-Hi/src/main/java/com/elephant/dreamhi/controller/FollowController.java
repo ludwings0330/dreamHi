@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.controller;
 
+import com.elephant.dreamhi.model.dto.FollowRequestDto;
 import com.elephant.dreamhi.security.PrincipalDetails;
 import com.elephant.dreamhi.service.FollowService;
 import com.elephant.dreamhi.utils.Response;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -30,6 +32,21 @@ public class FollowController {
     public ResponseEntity<?> getFollowerCount(Authentication authentication) {
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         Long response = followService.getFollowerCount(principalDetails.getId());
+        return Response.create(HttpStatus.OK, HttpStatus.OK.name(), response);
+    }
+
+    /**
+     * 팔로우 여부 조회
+     *
+     * @param authentication   : 현재 접근중인 주체
+     * @param followRequestDto : follow 여부 조회위한 Request DTO
+     * @return 팔로우하고 있다면 true, 하지 않다면 false
+     */
+    @GetMapping("/api/follow")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<?> checkFollow(Authentication authentication, @RequestBody FollowRequestDto followRequestDto) {
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        Boolean response = followService.checkFollow(followRequestDto, principalDetails.getId());
         return Response.create(HttpStatus.OK, HttpStatus.OK.name(), response);
     }
 
