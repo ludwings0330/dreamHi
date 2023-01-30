@@ -51,4 +51,13 @@ public class Filmography {
     @JoinColumn(name = "producer_id")
     private Producer producer;
 
+    //    연관관계 메서드 추가
+    public void setActorProfile(ActorProfile actorProfile) {
+        this.actorProfile = actorProfile;
+    }
+
+    public void setProducer(Producer producer) {
+        this.producer = producer;
+    }
+
 }

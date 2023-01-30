@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,6 +24,13 @@ public class FilmographyController {
     public ResponseEntity<Body> findFilmographies(@RequestBody FilmographyRequestDto requestDto) {
         final List<FilmographyResponseDto> responseDto = filmographyService.findFilmographies(requestDto);
         return Response.create(HttpStatus.OK, "ok", responseDto);
+    }
+
+    @PostMapping("/api/filmographies")
+    public ResponseEntity<Body> addFilmography(@RequestBody FilmographyRequestDto requestDto) {
+        filmographyService.addFilmography(requestDto);
+
+        return Response.ok();
     }
 
 }

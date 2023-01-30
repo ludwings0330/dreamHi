@@ -9,4 +9,10 @@ public class FilmographyRequestDto {
     private Long producerId;
     private Long filmographyId;
 
+    private String description;
+    private String originName;
+    private String savedName;
+    private String title;
+    private String photoUrl;
+
 }
