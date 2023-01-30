@@ -49,4 +49,11 @@ public class FilmographyService {
         filmographyRepository.save(filmography);
     }
 
+    public void deleteFilmographyById(Long filmographyId) {
+        final Filmography filmography =
+                filmographyRepository.findById(filmographyId).orElseThrow();
+        // 삭제 권한 확인 로직 필요
+        filmographyRepository.delete(filmography);
+    }
+
 }
