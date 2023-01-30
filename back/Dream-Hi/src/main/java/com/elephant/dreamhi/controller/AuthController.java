@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +28,7 @@ public class AuthController {
     private final TokenService tokenService;
 
     @PostMapping("/api/logout")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> logout() {
         log.info("[LOGOUT] userId: {}", SecurityContextHolder.getContext().getAuthentication().getName());
         SecurityContextHolder.clearContext();
@@ -34,6 +36,7 @@ public class AuthController {
     }
 
     @PostMapping("/api/refresh-token")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> reissueAccessToken(Authentication authentication) throws IllegalArgumentException, SQLException {
         log.info("Authentication : {}", authentication);
         JwtResponse jwtResponse = tokenService.reissueAccessToken(authentication);
