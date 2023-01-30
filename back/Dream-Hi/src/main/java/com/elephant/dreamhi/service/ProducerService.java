@@ -114,14 +114,16 @@ public class ProducerService {
     }
 
     @Transactional
-    public void addProducerMember(Long producerId, Long userId, ProducerMemberDto member) throws Exception {
+    public void addProducerMember(Long producerId, Long userId, ProducerMemberDto member) throws RuntimeException {
         final User user = userRepository.findById(userId).orElseThrow();
         final Producer producer = producerRepository.findById(producerId).orElseThrow();
 
         // 이미 제작진에 포함 되어있음
-        if (userProducerRelationRepository.findByProducer_IdAndUser_Id(producerId, userId) != null) {
-            throw new Exception();
-        }
+        userProducerRelationRepository.findByProducer_IdAndUser_Id(producerId, userId)
+                                      .ifPresent(m -> {
+                                                     throw new RuntimeException();
+                                                 }
+                                      );
 
         final UserProducerRelation newMember = UserProducerRelation.builder()
                                                                    .position(member.getPosition())
@@ -137,6 +139,13 @@ public class ProducerService {
     public void deleteProducerMember(Long producerId, Long userId) {
         log.info("producerId=[{}], userId=[{}]", producerId, userId);
         userProducerRelationRepository.deleteByProducer_IdAndUser_Id(producerId, userId);
+    }
+
+    @Transactional
+    public void modifyProducerMemberInfo(Long producerId, Long userId, ProducerMemberDto producerMemberDto) {
+        final UserProducerRelation userProducerRelation = userProducerRelationRepository.findByProducer_IdAndUser_Id(producerId, userId)
+                                                                                        .orElseThrow();
+        userProducerRelation.changePosition(producerMemberDto.getPosition());
     }
 
 }

@@ -88,4 +88,12 @@ public class ProducerController {
         return Response.ok();
     }
 
+    @PutMapping("/api/producers/{producerId}/users/{userId}")
+    public ResponseEntity<Body> modifyProducerMemberInfo(@PathVariable Long producerId,
+                                                         @PathVariable Long userId,
+                                                         @RequestBody ProducerMemberDto requestDto) {
+        producerService.modifyProducerMemberInfo(producerId, userId, requestDto);
+        return Response.ok();
+    }
+
 }
