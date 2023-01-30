@@ -6,8 +6,11 @@ import com.elephant.dreamhi.model.dto.ActorSearchCondition;
 import com.elephant.dreamhi.model.dto.ActorSimpleProfileDto;
 import com.elephant.dreamhi.model.dto.FilmographyDto;
 import com.elephant.dreamhi.model.dto.MediaFileDto;
+import com.elephant.dreamhi.model.dto.MyFollowersDto;
+import com.elephant.dreamhi.security.PrincipalDetails;
 import com.elephant.dreamhi.service.ActorService;
 import com.elephant.dreamhi.utils.Response;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
@@ -16,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -60,6 +64,15 @@ public class ActorController {
     public ResponseEntity<?> getMediaFiles(@PathVariable Long id) {
         MediaFileDto responseDto = actorService.findMediaFilesByActorProfileId(id);
         return Response.create(HttpStatus.OK, HttpStatus.OK.name(), responseDto);
+    }
+
+    @GetMapping("/api/my-follower")
+    public ResponseEntity<?> getMyFollowers(Authentication authentication) {
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+//        int followerCount = actorService.findFollowCount(principalDetails.getId());
+//        return Response.create(HttpStatus.OK, HttpStatus.OK.name(), followerCount);
+        List<MyFollowersDto> myFollowers = actorService.findFollowCount(principalDetails.getId());
+        return Response.create(HttpStatus.OK, HttpStatus.OK.name(), myFollowers);
     }
 
 }

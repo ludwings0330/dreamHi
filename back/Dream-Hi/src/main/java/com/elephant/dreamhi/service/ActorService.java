@@ -6,6 +6,7 @@ import com.elephant.dreamhi.model.dto.ActorSearchCondition;
 import com.elephant.dreamhi.model.dto.ActorSimpleProfileDto;
 import com.elephant.dreamhi.model.dto.FilmographyDto;
 import com.elephant.dreamhi.model.dto.MediaFileDto;
+import com.elephant.dreamhi.model.dto.MyFollowersDto;
 import com.elephant.dreamhi.model.entity.ActorProfile;
 import com.elephant.dreamhi.model.entity.ActorProfileMediaFile;
 import com.elephant.dreamhi.model.entity.Filmography;
@@ -14,6 +15,7 @@ import com.elephant.dreamhi.repository.ActorProfileMediaFileRepository;
 import com.elephant.dreamhi.repository.ActorRepository;
 import com.elephant.dreamhi.repository.FilmographyRepository;
 import com.elephant.dreamhi.repository.FollowRepository;
+import com.elephant.dreamhi.repository.FolloweReositoryCustom;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +31,10 @@ import org.springframework.stereotype.Service;
 public class ActorService {
 
     private final ActorRepository actorRepository;
-    private final FollowRepository followRepository;
+
+    //    private final FollowRepository followRepository;
+
+    private final FolloweReositoryCustom followeReositoryCustom;
     private final FilmographyRepository filmographyRepository;
     private final ActorProfileMediaFileRepository actorProfileMediaFileRepository;
 
@@ -89,6 +94,15 @@ public class ActorService {
         List<ActorProfileMediaFile> mediaFiles = actorProfileMediaFileRepository.findAllByActorProfile_Id(id);
         MediaFileDto response = new MediaFileDto(id, mediaFiles);
         return response;
+    }
+
+    public List<MyFollowersDto> findFollowCount(Long id) {
+        List<MyFollowersDto> myFollowers = followeReositoryCustom.findAllByActor_Id(id);
+        myFollowers.forEach(f -> {
+            System.out.println("f = " + f);
+        });
+//        return myFollowers.size();
+        return myFollowers;
     }
 
 }
