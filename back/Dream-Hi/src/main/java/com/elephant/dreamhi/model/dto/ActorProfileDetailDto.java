@@ -17,23 +17,46 @@ import lombok.Setter;
 @Builder
 public class ActorProfileDetailDto {
 
-    private Long id;
+    private Long userId;
 
-    private String title;
+    private String email;
+
+    private String name;
+
+    private String phone;
+
+    private String picrtureUrl;
+
+    private Long actorProfileId;
 
     private Integer age;
+
+    private String description;
 
     private Gender gender;
 
     private Double height;
 
-    private String description;
+    private String title;
 
     private Boolean visible;
     private List<StyleDto> styles = new ArrayList<>();
 
     public ActorProfileDetailDto(ActorProfile actorProfile) {
-        this.id = actorProfile.getId();
+
+        User user = actorProfile.getUser();
+
+        this.userId = user.getId();
+
+        this.email = user.getEmail();
+
+        this.name = user.getName();
+
+        this.phone = user.getPhone();
+
+        this.picrtureUrl = user.getPicture() == null ? null : user.getPicture().getUrl();
+
+        this.actorProfileId = actorProfile.getId();
 
         this.title = actorProfile.getTitle();
 

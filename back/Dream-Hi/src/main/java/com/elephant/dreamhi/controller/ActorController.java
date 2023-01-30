@@ -41,16 +41,11 @@ public class ActorController {
         return Response.create(HttpStatus.OK, "success", actors);
     }
 
-//    @GetMapping("/auth/actors/{id}")
-//    public ResponseEntity<?> getActorProfileDetail(@PathVariable Long id) {
-//        ActorProfileDetailDto responseDto = actorService.findActorProfileById(id);
-//
-//        return Response.create(HttpStatus.OK, "success", responseDto);
-//    }
-
-    @GetMapping("/auth/actor-profiles/{id}")
-    public ResponseEntity<?> getActorProfileDetail(@PathVariable Long id) throws NotFoundException, VisibleException {
-        ActorProfileDetailDto responseDto = actorService.findActorProfileWithStyleById(id);
+    @GetMapping("/api/users/{id}/actor-profile")
+    public ResponseEntity<?> getActorProfileDetail(@PathVariable Long id, Authentication authentication) throws NotFoundException, VisibleException {
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        log.info("pathVariable : {} , currentUser : {}", id, principalDetails.getId());
+        ActorProfileDetailDto responseDto = actorService.findActorProfileDetail(id, principalDetails);
         return Response.create(HttpStatus.OK, HttpStatus.OK.name(), responseDto);
     }
 
