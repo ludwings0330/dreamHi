@@ -39,19 +39,8 @@ public class JwtFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         String jwt = tokenProvider.resolveToken(request);
 
-//        if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
-//            log.info("JwtFilter with Token : {}", jwt);
-//            Authentication authentication = tokenProvider.getAuthentication(jwt);
-//            SecurityContextHolder.getContext().setAuthentication(authentication);
-//            log.debug("Security Context에 {} 인증 정보를 저장했습니다. URI: {}", authentication.getName(), request.getRequestURI());
-//        } else {
-//           Authentication authentication = annoymousAuthentication();
-//           SecurityContextHolder.getContext().setAuthentication(authentication);
-//           log.debug("Security Context에 익명 사용자 정보를 저장했습니다.");
-//        }
-
-        if(StringUtils.hasText(jwt)) {
-            if(tokenProvider.validateToken(jwt)) {
+        if (StringUtils.hasText(jwt)) {
+            if (tokenProvider.validateToken(jwt)) {
                 log.info("JwtFilter with Token : {}", jwt);
                 Authentication authentication = tokenProvider.getAuthentication(jwt);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -59,8 +48,8 @@ public class JwtFilter extends OncePerRequestFilter {
             }
         } else {
             Authentication authentication = annoymousAuthentication();
-           SecurityContextHolder.getContext().setAuthentication(authentication);
-           log.debug("Security Context에 익명 사용자 정보를 저장했습니다.");
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            log.debug("Security Context에 익명 사용자 정보를 저장했습니다.");
         }
 
         filterChain.doFilter(request, response);
