@@ -10,30 +10,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserDetailDto {
+public class UserSimpleDto {
 
     private Long id;
 
-    private String email;
-
     private String name;
-
-    private String phone;
 
     private String pictureUrl;
 
-    private Long actorProfileId;
-
-    public void setUserDetailDto(User user) {
+    public void setUserSimpleDto(User user) {
         this.id = user.getId();
-        this.email = user.getEmail();
         this.name = user.getName();
-        this.phone = user.getPhone();
         this.pictureUrl = user.getPicture() == null ? null : user.getPicture().getUrl();
     }
 
-    public void setActorProfileId(Long id) {
-        this.actorProfileId = id;
-    }
-    
 }
