@@ -9,10 +9,11 @@ import Login from '../user/login/Login';
 function AppMain() {
   return (
     <div>
-      {/*<AppHeader />*/}
-      {/*<MainPage />*/}
-      {/*<AppFooter />*/}
-      <AppActor />
+      {/*<h2>main</h2>*/}
+      <AppHeader />
+      <MainPage />
+      <AppFooter />
+      {/*<AppActor />*/}
       {/*<Login />*/}
     </div>
   );
