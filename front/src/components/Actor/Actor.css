@@ -40,6 +40,20 @@
 }
 
 .actor-introduce {
-    width: 400px;
+    width: 80%;
     font-size : 1.1rem;
+}
+
+.actor-img-place{
+    float: left;
+    width: 30%;
+    height: 150px;
+    border: 1px solid black;
+}
+
+.actor-info {
+    float: right;
+    width: 65%;
+    height: 150px;
+    border: 1px solid black;
 }
