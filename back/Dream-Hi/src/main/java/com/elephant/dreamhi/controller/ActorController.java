@@ -4,13 +4,9 @@ import com.elephant.dreamhi.exception.VisibleException;
 import com.elephant.dreamhi.model.dto.ActorProfileDetailDto;
 import com.elephant.dreamhi.model.dto.ActorSearchCondition;
 import com.elephant.dreamhi.model.dto.ActorSimpleProfileDto;
-import com.elephant.dreamhi.model.dto.FilmographyDto;
-import com.elephant.dreamhi.model.dto.MediaFileDto;
-import com.elephant.dreamhi.model.dto.MyFollowersDto;
 import com.elephant.dreamhi.security.PrincipalDetails;
 import com.elephant.dreamhi.service.ActorService;
 import com.elephant.dreamhi.utils.Response;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
@@ -47,15 +43,6 @@ public class ActorController {
         log.info("pathVariable : {} , currentUser : {}", id, principalDetails.getId());
         ActorProfileDetailDto responseDto = actorService.findActorProfileDetail(id, principalDetails);
         return Response.create(HttpStatus.OK, HttpStatus.OK.name(), responseDto);
-    }
-
-    @GetMapping("/api/my-follower")
-    public ResponseEntity<?> getMyFollowers(Authentication authentication) {
-        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-//        int followerCount = actorService.findFollowCount(principalDetails.getId());
-//        return Response.create(HttpStatus.OK, HttpStatus.OK.name(), followerCount);
-        List<MyFollowersDto> myFollowers = actorService.findFollowCount(principalDetails.getId());
-        return Response.create(HttpStatus.OK, HttpStatus.OK.name(), myFollowers);
     }
 
 }

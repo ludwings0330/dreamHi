@@ -4,18 +4,9 @@ import com.elephant.dreamhi.exception.VisibleException;
 import com.elephant.dreamhi.model.dto.ActorProfileDetailDto;
 import com.elephant.dreamhi.model.dto.ActorSearchCondition;
 import com.elephant.dreamhi.model.dto.ActorSimpleProfileDto;
-import com.elephant.dreamhi.model.dto.FilmographyDto;
-import com.elephant.dreamhi.model.dto.MediaFileDto;
-import com.elephant.dreamhi.model.dto.MyFollowersDto;
 import com.elephant.dreamhi.model.entity.ActorProfile;
-import com.elephant.dreamhi.model.entity.ActorProfileMediaFile;
-import com.elephant.dreamhi.model.entity.Filmography;
-import com.elephant.dreamhi.repository.ActorProfileMediaFileRepository;
 import com.elephant.dreamhi.repository.ActorRepository;
-import com.elephant.dreamhi.repository.FilmographyRepository;
-import com.elephant.dreamhi.repository.FolloweReositoryCustom;
 import com.elephant.dreamhi.security.PrincipalDetails;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
@@ -30,9 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class ActorService {
 
     private final ActorRepository actorRepository;
-
-    private final FolloweReositoryCustom followeReositoryCustom;
-
 
     public Page<ActorSimpleProfileDto> findActorsByFilter(ActorSearchCondition condition, Pageable pageable) {
         condition.setId(1L);
@@ -78,15 +66,6 @@ public class ActorService {
             return true;
         }
         throw new VisibleException("비공개 프로필입니다.");
-    }
-
-    public List<MyFollowersDto> findFollowCount(Long id) {
-        List<MyFollowersDto> myFollowers = followeReositoryCustom.findAllByActor_Id(id);
-        myFollowers.forEach(f -> {
-            System.out.println("f = " + f);
-        });
-//        return myFollowers.size();
-        return myFollowers;
     }
 
 }
