@@ -2,6 +2,7 @@ package com.elephant.dreamhi.service;
 
 import com.elephant.dreamhi.model.dto.ProducerInfoResponseDto;
 import com.elephant.dreamhi.model.dto.ProducerListResponseDto;
+import com.elephant.dreamhi.model.dto.ProducerMemberDto;
 import com.elephant.dreamhi.model.dto.ProducerSearchCondition;
 import com.elephant.dreamhi.model.dto.ProducerUpdateRequestDto;
 import com.elephant.dreamhi.model.entity.Picture;
@@ -14,8 +15,10 @@ import com.elephant.dreamhi.repository.ProducerRepository;
 import com.elephant.dreamhi.repository.UserProducerRelationRepository;
 import com.elephant.dreamhi.repository.UserRepository;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -100,6 +103,32 @@ public class ProducerService {
                  .forEach(item -> item.setIsFollow(producerFollowInfo.contains(item.getId())));
 
         return producers;
+    }
+
+    public List<ProducerMemberDto> findMembersByProducerId(Long producerId) {
+        return producerRepository.findMembersByProducerId(producerId)
+                                 .stream()
+                                 .map(ProducerMemberDto::new)
+                                 .collect(Collectors.toList());
+    }
+
+    public void addProducerMember(Long producerId, Long userId, ProducerMemberDto member) throws Exception {
+        final User user = userRepository.findById(userId).orElseThrow();
+        final Producer producer = producerRepository.findById(producerId).orElseThrow();
+
+        // 이미 제작진에 포함 되어있음
+        if (userProducerRelationRepository.findByProducer_IdAndUser_Id(producerId, userId) != null) {
+            throw new Exception();
+        }
+
+        final UserProducerRelation newMember = UserProducerRelation.builder()
+                                                                   .position(member.getPosition())
+                                                                   .build();
+        newMember.setUser(user);
+        newMember.setProducer(producer);
+
+        userProducerRelationRepository.save(newMember);
+
     }
 
 }

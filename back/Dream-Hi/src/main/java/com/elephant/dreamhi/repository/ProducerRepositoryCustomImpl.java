@@ -2,9 +2,12 @@ package com.elephant.dreamhi.repository;
 
 import static com.elephant.dreamhi.model.entity.QFollow.follow;
 import static com.elephant.dreamhi.model.entity.QProducer.producer;
+import static com.elephant.dreamhi.model.entity.QUser.user;
+import static com.elephant.dreamhi.model.entity.QUserProducerRelation.userProducerRelation;
 
 import com.elephant.dreamhi.model.dto.ProducerListResponseDto;
 import com.elephant.dreamhi.model.dto.ProducerSearchCondition;
+import com.elephant.dreamhi.model.entity.UserProducerRelation;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
@@ -39,6 +42,14 @@ public class ProducerRepositoryCustomImpl implements ProducerRepositoryCustom {
         final List<ProducerListResponseDto> fetch = query.offset(pageable.getOffset()).limit(pageable.getPageSize()).fetch();
 
         return PageableExecutionUtils.getPage(fetch, pageable, () -> query.fetch().size());
+    }
+
+    @Override
+    public List<UserProducerRelation> findMembersByProducerId(Long producerId) {
+        return queryFactory.select(userProducerRelation)
+                           .from(userProducerRelation)
+                           .join(userProducerRelation.user, user).fetchJoin()
+                           .where(userProducerRelation.producer.id.eq(producerId)).fetch();
     }
 
     private BooleanExpression followEq(Boolean isFollow, Long userId) {

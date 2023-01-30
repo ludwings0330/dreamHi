@@ -10,4 +10,6 @@ public interface UserProducerRelationRepository extends JpaRepository<UserProduc
 
     List<UserProducerRelation> findAllByUser_Id(Long userId);
 
+    UserProducerRelation findByProducer_IdAndUser_Id(Long userId, Long producerId);
+
 }
