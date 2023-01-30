@@ -83,12 +83,6 @@ public class ActorService {
         throw new VisibleException("비공개 프로필입니다.");
     }
 
-    public FilmographyDto findFilmographiesByActorProfileId(Long id) {
-        List<Filmography> filmographies = filmographyRepository.findAllByActorProfile_Id(id);
-        FilmographyDto response = new FilmographyDto(id, filmographies);
-        return response;
-    }
-
     public MediaFileDto findMediaFilesByActorProfileId(Long id) {
         List<ActorProfileMediaFile> mediaFiles = actorProfileMediaFileRepository.findAllByActorProfile_Id(id);
         MediaFileDto response = new MediaFileDto(id, mediaFiles);

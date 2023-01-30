@@ -49,12 +49,6 @@ public class ActorController {
         return Response.create(HttpStatus.OK, HttpStatus.OK.name(), responseDto);
     }
 
-    @GetMapping("/auth/actor-filmographies/{id}")
-    public ResponseEntity<?> getFilmography(@PathVariable Long id) {
-        FilmographyDto responseDto = actorService.findFilmographiesByActorProfileId(id);
-        return Response.create(HttpStatus.OK, HttpStatus.OK.name(), responseDto);
-    }
-
     @GetMapping("/auth/actor-media/{id}")
     public ResponseEntity<?> getMediaFiles(@PathVariable Long id) {
         MediaFileDto responseDto = actorService.findMediaFilesByActorProfileId(id);
