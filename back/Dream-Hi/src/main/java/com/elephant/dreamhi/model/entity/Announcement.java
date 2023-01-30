@@ -1,11 +1,12 @@
 package com.elephant.dreamhi.model.entity;
 
 import com.elephant.dreamhi.model.dto.AnnouncementDetailDto;
+import com.elephant.dreamhi.model.dto.AnnouncementDetailDto.AnnouncementDetailDtoBuilder;
 import java.time.LocalDateTime;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,7 +32,7 @@ public class Announcement extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "producer_id", nullable = false)
     private Producer producer;
 
@@ -81,30 +82,25 @@ public class Announcement extends BaseTimeEntity {
     // 편의 메소드
 
     /**
-     * @param followedAnnouncements 현재 User가 팔로우 한 공고의 목록, isFollowed를 갱신하기 위해 사용
      * @return 공고 상세 DTO
      */
-    public AnnouncementDetailDto toAnnouncementDetailDto(List<Follow> followedAnnouncements) {
-        Boolean isFollowed = Boolean.FALSE;
-        for (Follow cur : followedAnnouncements) {
-            if (this.id.equals(cur.getAnnouncement().id)) {
-                isFollowed = Boolean.TRUE;
-                break;
-            }
+    public AnnouncementDetailDto toAnnouncementDetailDto() {
+        AnnouncementDetailDtoBuilder dtoBuilder = AnnouncementDetailDto.builder()
+                                                                     .id(this.id)
+                                                                     .title(this.title)
+                                                                     .producer(this.producer.toProducerAnnouncementDto())
+                                                                     .payment(this.payment)
+                                                                     .crankPeriod(this.crankPeriod)
+                                                                     .endDate(this.endDate)
+                                                                     .description(this.description)
+                                                                     .hit(this.hit)
+                                                                     .isFollowed(Boolean.FALSE);
+
+        if (this.picture != null) {
+            dtoBuilder.pictureUrl(this.picture.getUrl());
         }
 
-        return AnnouncementDetailDto.builder()
-                                    .id(this.id)
-                                    .title(this.title)
-                                    .producer(this.producer.toProducerAnnouncementDto())
-                                    .payment(this.payment)
-                                    .crankPeriod(this.crankPeriod)
-                                    .endDate(this.endDate)
-                                    .description(this.description)
-                                    .hit(this.hit)
-                                    .picture_url(this.picture.getUrl())
-                                    .isFollowed(isFollowed)
-                                    .build();
+        return dtoBuilder.build();
     }
 
 }

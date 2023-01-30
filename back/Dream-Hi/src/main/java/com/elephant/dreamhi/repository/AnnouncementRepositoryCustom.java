@@ -5,6 +5,6 @@ import java.util.Optional;
 
 public interface AnnouncementRepositoryCustom {
 
-    Optional<AnnouncementDetailDto> findById(Long id);
+    Optional<AnnouncementDetailDto> findByAnnouncementIdAndFollowerId(Long announcementId, Long followerId);
 
 }
