@@ -33,9 +33,6 @@ public class ActorService {
 
     private final FolloweReositoryCustom followeReositoryCustom;
 
-    private final FilmographyRepository filmographyRepository;
-
-    private final ActorProfileMediaFileRepository actorProfileMediaFileRepository;
 
     public Page<ActorSimpleProfileDto> findActorsByFilter(ActorSearchCondition condition, Pageable pageable) {
         condition.setId(1L);
@@ -81,12 +78,6 @@ public class ActorService {
             return true;
         }
         throw new VisibleException("비공개 프로필입니다.");
-    }
-
-    public MediaFileDto findMediaFilesByActorProfileId(Long id) {
-        List<ActorProfileMediaFile> mediaFiles = actorProfileMediaFileRepository.findAllByActorProfile_Id(id);
-        MediaFileDto response = new MediaFileDto(id, mediaFiles);
-        return response;
     }
 
     public List<MyFollowersDto> findFollowCount(Long id) {
