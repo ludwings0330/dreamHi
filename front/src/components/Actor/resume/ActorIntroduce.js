@@ -1,13 +1,17 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import "../Actor.css";
+import { Container } from 'react-bootstrap';
 
 const ActorIntroduce = () => {
   return (
     <div className={"actor-introduce"}>
 
+      <Container>
+        <img className={"actor-profile-img"} alt={"actor-img"} src={"/img/elephant.png"} />
 
 
+      <div  className={"actor-info"}>
       <Form>
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
           <Form.Label>이름</Form.Label>
@@ -53,6 +57,8 @@ const ActorIntroduce = () => {
 
 
       </Form>
+      </div>
+      </Container>
     </div>
   );
 };
