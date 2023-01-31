@@ -28,6 +28,18 @@ public class Response {
         return create(HttpStatus.OK, "ok", null);
     }
 
+    public static ResponseEntity<Body> noContent() {
+        return create(HttpStatus.NO_CONTENT, "no content");
+    }
+
+    public static ResponseEntity<Body> created() {
+        return create(HttpStatus.CREATED, "created");
+    }
+
+    public static ResponseEntity<Body> accepted() {
+        return create(HttpStatus.ACCEPTED, "accepted");
+    }
+
     @Builder
     @Getter
     public static class Body {

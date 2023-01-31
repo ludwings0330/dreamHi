@@ -58,4 +58,8 @@ public class UserProducerRelation {
         this.user = user;
     }
 
+    public void changePosition(String position) {
+        this.position = position;
+    }
+
 }

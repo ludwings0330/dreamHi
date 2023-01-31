@@ -2,11 +2,13 @@ package com.elephant.dreamhi.controller;
 
 import com.elephant.dreamhi.model.dto.ProducerInfoResponseDto;
 import com.elephant.dreamhi.model.dto.ProducerListResponseDto;
+import com.elephant.dreamhi.model.dto.ProducerMemberDto;
 import com.elephant.dreamhi.model.dto.ProducerSearchCondition;
 import com.elephant.dreamhi.model.dto.ProducerUpdateRequestDto;
 import com.elephant.dreamhi.service.ProducerService;
 import com.elephant.dreamhi.utils.Response;
 import com.elephant.dreamhi.utils.Response.Body;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -63,6 +65,35 @@ public class ProducerController {
         producerService.deleteProducer(producerId);
 
         return Response.create(HttpStatus.OK, "deleted");
+    }
+
+    @GetMapping("/api/producers/{producerId}/users")
+    public ResponseEntity<Body> findMembersByProducerId(@PathVariable Long producerId) {
+        List<ProducerMemberDto> result = producerService.findMembersByProducerId(producerId);
+        return Response.create(HttpStatus.OK, "ok", result);
+    }
+
+    @PostMapping("/api/producers/{producerId}/users/{userId}")
+    public ResponseEntity<Body> addProducerMember(@PathVariable Long producerId,
+                                                  @PathVariable Long userId,
+                                                  @RequestBody ProducerMemberDto member) throws Exception {
+        producerService.addProducerMember(producerId, userId, member);
+        return Response.ok();
+    }
+
+    @DeleteMapping("/api/producers/{producerId}/users/{userId}")
+    public ResponseEntity<Body> deleteProducerMember(@PathVariable Long producerId,
+                                                     @PathVariable Long userId) {
+        producerService.deleteProducerMember(producerId, userId);
+        return Response.ok();
+    }
+
+    @PutMapping("/api/producers/{producerId}/users/{userId}")
+    public ResponseEntity<Body> modifyProducerMemberInfo(@PathVariable Long producerId,
+                                                         @PathVariable Long userId,
+                                                         @RequestBody ProducerMemberDto requestDto) {
+        producerService.modifyProducerMemberInfo(producerId, userId, requestDto);
+        return Response.ok();
     }
 
 }

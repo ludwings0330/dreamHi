@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.model.entity;
 
+import com.elephant.dreamhi.model.dto.FilmographyRequestDto;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -50,5 +51,32 @@ public class Filmography {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "producer_id")
     private Producer producer;
+
+    //    연관관계 메서드 추가
+    public void setActorProfile(ActorProfile actorProfile) {
+        this.actorProfile = actorProfile;
+    }
+
+    public void setProducer(Producer producer) {
+        this.producer = producer;
+    }
+
+    public void updateInfo(FilmographyRequestDto filmographyRequestDto) {
+        if (filmographyRequestDto.getDescription() != null) {
+            this.description = filmographyRequestDto.getDescription();
+        }
+        if (filmographyRequestDto.getOriginName() != null) {
+            this.originName = filmographyRequestDto.getOriginName();
+        }
+        if (filmographyRequestDto.getSavedName() != null) {
+            this.savedName = filmographyRequestDto.getSavedName();
+        }
+        if (filmographyRequestDto.getTitle() != null) {
+            this.title = filmographyRequestDto.getTitle();
+        }
+        if (filmographyRequestDto.getPhotoUrl() != null) {
+            this.url = filmographyRequestDto.getPhotoUrl();
+        }
+    }
 
 }
