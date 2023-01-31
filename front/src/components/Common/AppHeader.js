@@ -22,7 +22,7 @@ import { CgProfile } from "react-icons/cg";
 import "./Common.css"
 import "bootstrap/scss/bootstrap.scss";
 import { Link } from 'react-router-dom';
-import AnnouncementListPage from '../../pages/AnnouncementListPage';
+import AnnouncementList from '../Announcement/AnnouncementList';
 import AppActor from '../../pages/AppActor';
 import AppMain from '../../pages/AppMain';
 import AppMaker from '../../pages/AppMaker';
@@ -116,7 +116,7 @@ function MainHeader() {
                 <Button
                   title="공고"
                   onClick={() => {
-                    navigate("/announcementlist")
+                    navigate("/announcement")
                   }} />
 
 
