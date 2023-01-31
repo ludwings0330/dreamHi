@@ -88,11 +88,9 @@ public class ProducerService {
 
     public ProducerInfoResponseDto getProducerInfoById(Long producerId, Long userId) throws NotFoundException {
 
-        ProducerInfoResponseDto responseDto = new ProducerInfoResponseDto();
-
-        producerRepository.findById(producerId)
-                          .map(responseDto::toDto)
-                          .orElseThrow(() -> new NotFoundException("존재하지 않는 제작사입니다."));
+        final ProducerInfoResponseDto responseDto = producerRepository.findById(producerId)
+                                                                      .map(ProducerInfoResponseDto::new)
+                                                                      .orElseThrow(() -> new NotFoundException("존재하지 않는 제작사입니다."));
 
         followRepository.findByProducer_IdAndFollower_Id(producerId, userId)
                         .ifPresent(follow -> responseDto.setIsFollow(true));
