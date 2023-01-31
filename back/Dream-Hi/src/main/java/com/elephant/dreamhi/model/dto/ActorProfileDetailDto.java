@@ -3,6 +3,7 @@ package com.elephant.dreamhi.model.dto;
 import com.elephant.dreamhi.model.entity.ActorProfile;
 import com.elephant.dreamhi.model.entity.ActorStyleRelation;
 import com.elephant.dreamhi.model.entity.Style;
+import com.elephant.dreamhi.model.entity.User;
 import com.elephant.dreamhi.model.statics.Gender;
 import java.util.ArrayList;
 import java.util.List;
