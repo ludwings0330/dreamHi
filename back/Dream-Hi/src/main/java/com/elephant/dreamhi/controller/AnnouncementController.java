@@ -24,9 +24,9 @@ public class AnnouncementController {
 
     /**
      * @param announcementId 공고 ID
-     * @param user 시큐리티 컨텍스트에 저장된 인증 객체로부터 얻어낸 Principal
+     * @param user           시큐리티 컨텍스트에 저장된 인증 객체로부터 얻어낸 Principal
      * @return 공고 상세 정보를 응답으로 반환
-     * @exception NotFoundException 공고 ID로 공고를 검색했는데 동시성 문제 등의 이슈로 공고를 찾을 수 없게 된 상황에 예외를 던진다.
+     * @throws NotFoundException 공고 ID로 공고를 검색했는데 동시성 문제 등의 이슈로 공고를 찾을 수 없게 된 상황에 예외를 던진다.
      */
     @GetMapping("/{announcementId}")
     public ResponseEntity<?> findDetail(@PathVariable Long announcementId, @AuthenticationPrincipal PrincipalDetails user) {
