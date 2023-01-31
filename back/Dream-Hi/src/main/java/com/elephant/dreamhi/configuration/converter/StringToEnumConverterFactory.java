@@ -20,7 +20,6 @@ public class StringToEnumConverterFactory
         }
 
         public T convert(String source) {
-            log.info("Source : {} {} {}",source ,source.toUpperCase(), (T)Enum.valueOf(this.enumType, source.toUpperCase()));
             return (T) Enum.valueOf(this.enumType, source.toUpperCase());
         }
 
