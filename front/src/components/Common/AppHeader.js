@@ -11,6 +11,7 @@ import {
 } from "reactstrap";
 
 import Button from './Button';
+import {useNavigate} from 'react-router-dom';
 
 
 // react-icons
@@ -21,12 +22,14 @@ import { CgProfile } from "react-icons/cg";
 import "./Common.css"
 import "bootstrap/scss/bootstrap.scss";
 import { Link } from 'react-router-dom';
-import AppPost from '../../pages/AppPost';
+import AnnouncementListPage from '../../pages/AnnouncementListPage';
 import AppActor from '../../pages/AppActor';
 import AppMain from '../../pages/AppMain';
 import AppMaker from '../../pages/AppMaker';
 
+
 function MainHeader() {
+  const navigate = useNavigate();
 
   return (
 
@@ -110,21 +113,28 @@ function MainHeader() {
             <Row>
               <Col md="12">
 
-                <Button>
-                  공고
-                </Button>
+                <Button
+                  title="공고"
+                  onClick={() => {
+                    navigate("/announcementlist")
+                  }} />
 
 
 
-                <Button>
-                  배우
-                </Button>
+                <Button
+                  title="배우"
+                  onClick={() => {
+                    navigate("/actor")
+                  }} />
 
 
 
-                <Button>
-                  제작사
-                </Button>
+
+                <Button 
+                  title="제작사_임시로 메인이동"
+                  onClick={() => {
+                    navigate("/")
+                  }} />
 
 
               </Col>

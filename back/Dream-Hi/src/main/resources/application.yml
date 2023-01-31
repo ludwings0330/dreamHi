@@ -1,18 +1,13 @@
-server:
-  port: 80
-logging:
-  level:
-    com: debug
-
 spring:
-  config:
-    import:
-      - dbconfig.yml
-      - jwt.yml
-      - security.yml
+  profiles:
+    active: local
+    include:
+      - dbconfig
+      - jwt
+      - security
+  #  config:
+#    import:
+#      - application-dbconfig.yml
+#      - application-jwt.yml
+#      - application-security.yml
 
-  messages:
-    basename: messages
-  devtools:
-    livereload:
-      enabled: true
