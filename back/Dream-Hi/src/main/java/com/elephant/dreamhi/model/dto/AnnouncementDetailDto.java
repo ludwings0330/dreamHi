@@ -1,5 +1,7 @@
 package com.elephant.dreamhi.model.dto;
 
+import com.elephant.dreamhi.model.entity.Announcement;
+import com.elephant.dreamhi.model.entity.Follow;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import javax.validation.constraints.NotNull;
@@ -39,11 +41,10 @@ public class AnnouncementDetailDto {
     private String pictureUrl;
 
     @NotNull
-    private Boolean isFollowed;
+    private Boolean isFollow;
 
     public AnnouncementDetailDto(Long id, String title, Long producerId, String producerName, String payment, String crankPeriod,
-                                 LocalDateTime endDate, String description, Integer hit,
-                                 String pictureUrl, Boolean isFollowed) {
+                                 LocalDateTime endDate, String description, Integer hit, String pictureUrl, Boolean isFollow) {
         this.id = id;
         this.title = title;
         this.producer = new ProducerAnnouncementDto(producerId, producerName);
@@ -53,7 +54,43 @@ public class AnnouncementDetailDto {
         this.description = description;
         this.hit = hit;
         this.pictureUrl = pictureUrl;
-        this.isFollowed = isFollowed;
+        this.isFollow = isFollow;
+    }
+
+    /**
+     * @param announcement DTO로 변경하려고 하는 공고 엔티티
+     * @param follow       현재 로그인한 유저가 공고를 팔로우 했는지에 대한 정보
+     * @return 공고 상세 DTO
+     */
+    public static AnnouncementDetailDto entityToDto(Announcement announcement, Follow follow) {
+        AnnouncementDetailDtoBuilder dtoBuilder = AnnouncementDetailDto.builder()
+                                                                       .id(announcement.getId())
+                                                                       .title(announcement.getTitle())
+                                                                       .producer(ProducerAnnouncementDto.entityToDto(announcement.getProducer()))
+                                                                       .payment(announcement.getPayment())
+                                                                       .crankPeriod(announcement.getCrankPeriod())
+                                                                       .endDate(announcement.getEndDate())
+                                                                       .description(announcement.getDescription())
+                                                                       .hit(announcement.getHit())
+                                                                       .isFollow(Boolean.FALSE);
+
+        if (announcement.getPicture() != null) {
+            dtoBuilder.pictureUrl(announcement.getPicture().getUrl());
+        }
+
+        if (follow != null) {
+            dtoBuilder.isFollow(Boolean.TRUE);
+        }
+
+        return dtoBuilder.build();
+    }
+
+    /**
+     * @param announcement DTO로 변경하려고 하는 공고 엔티티
+     * @return 공고 상세 DTO
+     */
+    public static AnnouncementDetailDto entityToDto(Announcement announcement) {
+        return entityToDto(announcement, null);
     }
 
     @Override
@@ -73,14 +110,14 @@ public class AnnouncementDetailDto {
                 getCrankPeriod(), that.getCrankPeriod()) && Objects.equals(getEndDate(), that.getEndDate()) && Objects.equals(
                 getDescription(), that.getDescription()) && Objects.equals(getHit(), that.getHit()) && Objects.equals(getPictureUrl(),
                                                                                                                       that.getPictureUrl())
-                && Objects.equals(getIsFollowed(), that.getIsFollowed());
+                && Objects.equals(getIsFollow(), that.getIsFollow());
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getTitle(), getProducer(), getPayment(), getCrankPeriod(), getEndDate(), getDescription(), getHit(),
                             getPictureUrl(),
-                            getIsFollowed());
+                            getIsFollow());
     }
 
 }

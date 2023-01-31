@@ -45,17 +45,16 @@ class AnnouncementRepositoryCustomImplTest {
         entityManager.persist(announcement);
 
         // when
-        AnnouncementDetailDto finded = announcementRepository.findByAnnouncementIdAndFollowerId(announcement.getId(), user.getId())
+        AnnouncementDetailDto actual = announcementRepository.findByAnnouncementIdAndFollowerId(announcement.getId(), user.getId())
                                                              .orElseThrow(() -> new NotFoundException("DB에 공고가 존재하지 않습니다."));
 
         entityManager.clear();
 
         // then
-        assertThat(finded).usingRecursiveComparison()
-                          .isEqualTo(
-                                  entityManager.find(Announcement.class, announcement.getId())
-                                               .toAnnouncementDetailDto(null)
-                          );
+        Announcement expectedAnnouncement = entityManager.find(Announcement.class, announcement.getId());
+
+        assertThat(actual).usingRecursiveComparison()
+                          .isEqualTo(AnnouncementDetailDto.entityToDto(expectedAnnouncement));
     }
 
     @Test
@@ -79,19 +78,17 @@ class AnnouncementRepositoryCustomImplTest {
         entityManager.persist(follow);
 
         // when
-        AnnouncementDetailDto testDto = announcementRepository.findByAnnouncementIdAndFollowerId(announcement.getId(), user.getId())
+        AnnouncementDetailDto actual = announcementRepository.findByAnnouncementIdAndFollowerId(announcement.getId(), user.getId())
                                                               .orElseThrow(() -> new NotFoundException("DB에 공고가 존재하지 않습니다."));
 
         entityManager.clear();
 
         // then
-        Follow foundFollow = entityManager.find(Follow.class, follow.getId());
+        Announcement expectedAnnouncement = entityManager.find(Announcement.class, announcement.getId());
+        Follow expectedFollow = entityManager.find(Follow.class, follow.getId());
 
-        assertThat(testDto).usingRecursiveComparison()
-                           .isEqualTo(
-                                   entityManager.find(Announcement.class, announcement.getId())
-                                                .toAnnouncementDetailDto(foundFollow)
-                           );
+        assertThat(actual).usingRecursiveComparison()
+                           .isEqualTo(AnnouncementDetailDto.entityToDto(expectedAnnouncement, expectedFollow));
     }
 
     @Test
@@ -105,17 +102,16 @@ class AnnouncementRepositoryCustomImplTest {
         entityManager.persist(announcement);
 
         // when
-        AnnouncementDetailDto testDto = announcementRepository.findByAnnouncementIdAndFollowerId(announcement.getId(), 0L)
+        AnnouncementDetailDto actual = announcementRepository.findByAnnouncementIdAndFollowerId(announcement.getId(), 0L)
                                                               .orElseThrow(() -> new NotFoundException("DB에 공고가 존재하지 않습니다."));
 
         entityManager.clear();
 
         // then
-        assertThat(testDto).usingRecursiveComparison()
-                           .isEqualTo(
-                                   entityManager.find(Announcement.class, announcement.getId())
-                                                .toAnnouncementDetailDto(null)
-                           );
+        Announcement expectedAnnouncement = entityManager.find(Announcement.class, announcement.getId());
+
+        assertThat(actual).usingRecursiveComparison()
+                           .isEqualTo(AnnouncementDetailDto.entityToDto(expectedAnnouncement));
     }
 
     private Announcement createTestAnnouncement(Producer producer) {
