@@ -4,6 +4,7 @@ import com.elephant.dreamhi.model.dto.JwtResponse;
 import com.elephant.dreamhi.service.TokenService;
 import com.elephant.dreamhi.utils.Response;
 import com.elephant.dreamhi.utils.Response.Body;
+import java.sql.SQLException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -31,7 +32,7 @@ public class AuthController {
 
     @PostMapping("/api/refresh-token")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<Body> reissueAccessToken(Authentication authentication) throws IllegalArgumentException {
+    public ResponseEntity<Body> reissueAccessToken(Authentication authentication) throws IllegalArgumentException, SQLException {
         JwtResponse jwtResponse = tokenService.reissueAccessToken(authentication);
         return Response.create(HttpStatus.OK, HttpStatus.OK.name(), jwtResponse);
     }
