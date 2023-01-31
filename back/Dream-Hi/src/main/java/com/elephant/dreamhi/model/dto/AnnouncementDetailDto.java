@@ -40,19 +40,19 @@ public class AnnouncementDetailDto {
     @NotNull
     private Boolean isFollowed;
 
-    public AnnouncementDetailDto(Long id, String title, Long producerId, String producerName, String payment, String crankPeriod, LocalDateTime endDate, String description, Integer hit,
-                                 String pictureUrl, Long followId) {
+    public AnnouncementDetailDto(Long id, String title, Long producerId, String producerName, String payment, String crankPeriod,
+                                 LocalDateTime endDate, String description, Integer hit,
+                                 String pictureUrl, Boolean isFollowed) {
         this.id = id;
         this.title = title;
+        this.producer = new ProducerAnnouncementDto(producerId, producerName);
         this.payment = payment;
         this.crankPeriod = crankPeriod;
         this.endDate = endDate;
         this.description = description;
         this.hit = hit;
         this.pictureUrl = pictureUrl;
-
-        this.producer = new ProducerAnnouncementDto(producerId, producerName);
-        this.isFollowed = (followId != null);
+        this.isFollowed = isFollowed;
     }
 
 }
