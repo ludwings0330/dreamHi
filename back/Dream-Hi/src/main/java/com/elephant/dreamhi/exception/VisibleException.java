@@ -1,7 +1,7 @@
 package com.elephant.dreamhi.exception;
 
 
-public class VisibleException extends Exception {
+public class VisibleException extends RuntimeException {
 
     public VisibleException() {
         super();
