@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.service;
 
+import com.elephant.dreamhi.exception.NotFoundException;
 import com.elephant.dreamhi.model.dto.ProducerInfoResponseDto;
 import com.elephant.dreamhi.model.dto.ProducerListResponseDto;
 import com.elephant.dreamhi.model.dto.ProducerMemberDto;
@@ -21,6 +22,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -38,9 +40,12 @@ public class ProducerService {
     private final UserRepository userRepository;
 
     @Transactional
-    public Long createProducer(String name, Long userId) {
-        // producer 엔티티만듬
-        // producer 와 멤버 연결
+    public Long createProducer(String name, Long userId) throws DuplicateKeyException, NotFoundException {
+        producerRepository.findByName(name)
+                          .ifPresent(t -> {
+                              throw new DuplicateKeyException("중복된 제작사 이름입니다.");
+                          });
+
         final Producer producer = Producer.builder()
                                           .name(name)
                                           .description("제작사 소개글을 입력해주세요")
@@ -48,11 +53,11 @@ public class ProducerService {
                                                           .url("base url")
                                                           .build())
                                           .build();
+
         producerRepository.save(producer);
 
-        final Optional<User> findUser = userRepository.findById(userId);
-
-        final User user = findUser.orElseThrow();
+        final User user = userRepository.findById(userId)
+                                        .orElseThrow(() -> new NotFoundException("존재하지 않는 유저입니다."));
 
         final UserProducerRelation relation = UserProducerRelation.builder()
                                                                   .position("STAFF")
