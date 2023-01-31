@@ -58,7 +58,7 @@ public class Report {
     private Producer producer;
 
     @OneToMany(mappedBy = "report", fetch = FetchType.LAZY)
-    private List<ReportMessageRelation> reportMessageRelations = new ArrayList<>();
+    private final List<ReportMessageRelation> reportMessageRelations = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

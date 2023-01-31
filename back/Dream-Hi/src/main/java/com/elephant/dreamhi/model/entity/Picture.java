@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.model.entity;
 
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import lombok.AllArgsConstructor;
@@ -28,6 +29,27 @@ public class Picture {
 
     public void updateUrl(String pictureUrl) {
         this.url = pictureUrl;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Picture picture = (Picture) o;
+
+        return Objects.equals(getUrl(), picture.getUrl()) && Objects.equals(getSavedName(), picture.getSavedName())
+                && Objects.equals(getOriginName(), picture.getOriginName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getUrl(), getSavedName(), getOriginName());
     }
 
 }

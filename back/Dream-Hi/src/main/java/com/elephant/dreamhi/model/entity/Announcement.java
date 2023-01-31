@@ -1,9 +1,9 @@
 package com.elephant.dreamhi.model.entity;
 
+import com.elephant.dreamhi.model.dto.AnnouncementDetailDto;
+import com.elephant.dreamhi.model.dto.AnnouncementDetailDto.AnnouncementDetailDtoBuilder;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.CascadeType;
+import java.util.Optional;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -14,7 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,13 +27,13 @@ import org.hibernate.annotations.DynamicInsert;
 @NoArgsConstructor
 @Getter
 //@Builder
-public class Announcement extends BaseTimeEntity{
+public class Announcement extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "producer_id", nullable = false)
     private Producer producer;
 
@@ -52,7 +51,7 @@ public class Announcement extends BaseTimeEntity{
     private LocalDateTime endDate;
 
     @Lob
-    private Byte[] description;
+    private String description;
 
     @Column(nullable = false)
     @ColumnDefault("0")
@@ -61,14 +60,14 @@ public class Announcement extends BaseTimeEntity{
     // Foreign Key로 매핑하지 않고, 기능 구현의 편의를 위해 process_id만 따로 저장해둔 것
     private Long processId;
 
-    @OneToMany(mappedBy = "announcement", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Casting> castings = new ArrayList<>();
+//    @OneToMany(mappedBy = "announcement", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Casting> castings = new ArrayList<>();
 
     @Embedded
     private Picture picture;
 
     @Builder
-    public Announcement(Long id, Producer producer, String title, String payment, String crankPeriod, LocalDateTime endDate, Byte[] description,
+    public Announcement(Long id, Producer producer, String title, String payment, String crankPeriod, LocalDateTime endDate, String description,
                         Integer hit, Long processId) {
         this.id = id;
         this.producer = producer;
@@ -83,5 +82,31 @@ public class Announcement extends BaseTimeEntity{
 
     // 편의 메소드
 
+    /**
+     * @param follow 현재 로그인한 유저가 이 공고를 팔로우 했는지에 대한 정보
+     * @return 공고 상세 DTO
+     */
+    public AnnouncementDetailDto toAnnouncementDetailDto(Optional<Follow> follow) {
+        AnnouncementDetailDtoBuilder dtoBuilder = AnnouncementDetailDto.builder()
+                                                                     .id(this.id)
+                                                                     .title(this.title)
+                                                                     .producer(this.producer.toProducerAnnouncementDto())
+                                                                     .payment(this.payment)
+                                                                     .crankPeriod(this.crankPeriod)
+                                                                     .endDate(this.endDate)
+                                                                     .description(this.description)
+                                                                     .hit(this.hit)
+                                                                     .isFollowed(Boolean.FALSE);
+
+        if (this.picture != null) {
+            dtoBuilder.pictureUrl(this.picture.getUrl());
+        }
+
+        if (follow.isPresent()) {
+            dtoBuilder.isFollowed(Boolean.TRUE);
+        }
+
+        return dtoBuilder.build();
+    }
 
 }

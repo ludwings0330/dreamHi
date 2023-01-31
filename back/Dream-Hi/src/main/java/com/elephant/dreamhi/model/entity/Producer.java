@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.model.entity;
 
+import com.elephant.dreamhi.model.dto.ProducerAnnouncementDto;
 import com.elephant.dreamhi.model.dto.ProducerUpdateRequestDto;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +59,13 @@ public class Producer {
         if (producerDto.getPictureUrl() != null) {
             this.picture.updateUrl(producerDto.getPictureUrl());
         }
+    }
+
+    public ProducerAnnouncementDto toProducerAnnouncementDto() {
+        return ProducerAnnouncementDto.builder()
+                                      .id(this.id)
+                                      .name(this.name)
+                                      .build();
     }
 
     // filmography 편의 메소드

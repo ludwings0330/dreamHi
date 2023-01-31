@@ -58,7 +58,7 @@ public class Casting {
     private Gender gender;
 
     @OneToMany(mappedBy = "casting", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CastingStyleRelation> castingStyleRelations = new ArrayList<>();
+    private final List<CastingStyleRelation> castingStyleRelations = new ArrayList<>();
 
     public void addCastingStyleRelation(CastingStyleRelation castingStyleRelation) {
         this.castingStyleRelations.add(castingStyleRelation);
