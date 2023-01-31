@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.controller;
 
+import com.elephant.dreamhi.exception.NotFoundException;
 import com.elephant.dreamhi.model.dto.ProducerInfoResponseDto;
 import com.elephant.dreamhi.model.dto.ProducerListResponseDto;
 import com.elephant.dreamhi.model.dto.ProducerMemberDto;
@@ -52,10 +53,12 @@ public class ProducerController {
     }
 
     @GetMapping("/api/producers/{producerId}")
-    public ResponseEntity<Body> getProducerInfoById(@PathVariable Long producerId) {
-        Long userId = 1L;
-        ProducerInfoResponseDto responseDto = producerService.getProducerInfoById(producerId, userId);
-        return Response.create(HttpStatus.OK, "ok", responseDto);
+    public ResponseEntity<Body> getProducerInfoById(@PathVariable Long producerId,
+                                                    @AuthenticationPrincipal PrincipalDetails user) throws NotFoundException {
+        log.info("제작사 상세조회 - producerId : [{}], userId : [{}]", producerId, user.getId());
+        ProducerInfoResponseDto responseDto = producerService.getProducerInfoById(producerId, user.getId());
+
+        return Response.create(HttpStatus.OK, "제작사 조회 성공", responseDto);
     }
 
     @PutMapping("/api/producers/{producerId}")

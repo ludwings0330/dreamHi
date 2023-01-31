@@ -11,10 +11,13 @@ public class ProducerInfoResponseDto {
     private String description;
     private Boolean isFollow = false;
 
-    public void setInfo(Producer producer) {
+    public static ProducerInfoResponseDto toDto(Producer producer) {
+
         this.name = producer.getName();
         this.pictureUrl = producer.getPicture().getUrl();
         this.description = producer.getDescription();
+
+        return this;
     }
 
 }
