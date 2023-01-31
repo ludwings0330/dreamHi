@@ -1,0 +1,58 @@
+.casting-body {
+    width: 70%;
+    margin: auto;
+    padding-top: 50px;
+}
+
+.casting-head {
+    padding-bottom: 20px;
+}
+
+.casting-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 0;
+    display: inline-block;
+}
+
+.casting-left {
+    float: left;
+}
+
+.casting-right {
+    float: right;
+}
+
+.casting-right span:first-child {
+    margin-right: 10px;
+}
+
+.casting-state {
+    display: inline-block;
+    margin-left: 30px;
+}
+
+.casting-state span {
+    margin-left: 8px;
+}
+
+.casting-swiper {
+    margin-top: 50px;
+}
+
+.casting-swiper-item {
+    display: flex;
+    flex-flow: column;
+}
+
+.casting-swiper img {
+    border-radius: 100px;
+}
+
+.casting-button {
+    width: 33%;
+}
+
+.casting-button-text {
+    font-size: 12px;
+}
