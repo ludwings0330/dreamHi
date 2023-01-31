@@ -14,10 +14,6 @@ public class FollowRequestDto {
 
     private FollowType type;
 
-    private Long actorId;
-
-    private Long producerId;
-
-    private Long announcementId;
+    private Long id;
 
 }

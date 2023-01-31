@@ -23,4 +23,6 @@ public interface FollowRepository extends JpaRepository<Follow, Long>, FollowRep
     @Query("select count(f.id) from Follow f where f.actor.id=:id")
     Long countByActor_Id(@Param("id") Long id);
 
+    Follow save(Follow follow);
+
 }

@@ -1,6 +1,5 @@
 package com.elephant.dreamhi.repository;
 
-import com.elephant.dreamhi.model.dto.FollowRequestDto;
 import com.elephant.dreamhi.model.dto.MyFollowersDto;
 import com.elephant.dreamhi.model.entity.Follow;
 import com.elephant.dreamhi.model.statics.FollowType;
