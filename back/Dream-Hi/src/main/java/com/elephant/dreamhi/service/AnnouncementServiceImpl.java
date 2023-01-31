@@ -1,7 +1,6 @@
 package com.elephant.dreamhi.service;
 
 import com.elephant.dreamhi.model.dto.AnnouncementDetailDto;
-import com.elephant.dreamhi.model.entity.Announcement;
 import com.elephant.dreamhi.repository.AnnouncementRepository;
 import com.elephant.dreamhi.security.PrincipalDetails;
 import java.util.Optional;
@@ -18,11 +17,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
     @Override
     public Optional<AnnouncementDetailDto> findDetail(Long announcementId, PrincipalDetails user) {
-        if (!user.getId().equals(0L)) {
-            return announcementRepository.findByAnnouncementIdAndFollowerId(announcementId, user.getId());
-        }
-
-        return announcementRepository.findById(announcementId).map(Announcement::toAnnouncementDetailDto); // fetch join 구현해야 함
+        return announcementRepository.findByAnnouncementIdAndFollowerId(announcementId, user.getId());
     }
 
 }
