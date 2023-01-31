@@ -78,8 +78,9 @@ public class ProducerController {
     }
 
     @DeleteMapping("/api/producers/{producerId}")
-    public ResponseEntity<Body> deleteProducer(@PathVariable Long producerId) {
-        // 해당 제작사에 대한 권한이 존재하는지 확인 이후 삭제
+    @PreAuthorize("@checker.hasEditorAuthority(authentication, #producerId)")
+    public ResponseEntity<Body> deleteProducer(@PathVariable Long producerId,
+                                               @AuthenticationPrincipal PrincipalDetails user) throws NotFoundException {
         producerService.deleteProducer(producerId);
 
         return Response.create(HttpStatus.OK, "deleted");

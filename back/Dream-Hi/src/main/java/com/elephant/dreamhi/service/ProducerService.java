@@ -72,8 +72,10 @@ public class ProducerService {
     }
 
     @Transactional
-    public void deleteProducer(Long producerId) {
-        producerRepository.deleteById(producerId);
+    public void deleteProducer(Long producerId) throws NotFoundException {
+        producerRepository.delete(
+                producerRepository.findById(producerId)
+                                  .orElseThrow(() -> new NotFoundException("삭제하려는 제작사가 존재하지 않습니다.")));
     }
 
     @Transactional
