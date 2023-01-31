@@ -29,16 +29,14 @@ public class ActorRepositoryCustomImpl implements ActorRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Optional<ActorProfile> findActorProfileById(Long id) {
-        final List<ActorProfile> fetch = jpaQueryFactory.selectFrom(actorProfile)
-                                                        .join(actorProfile.user, user).fetchJoin()
-                                                        .join(actorProfile.actorStyleRelations, actorStyleRelation).fetchJoin()
-                                                        .join(actorStyleRelation.style, style).fetchJoin()
-                                                        .distinct()
-                                                        .where(actorProfile.id.eq(id))
-                                                        .fetch();
-
-        return Optional.of(fetch.get(0));
+    public Optional<ActorProfile> findActorProfileByUser_Id(Long userId) {
+        return Optional.ofNullable(jpaQueryFactory.selectFrom(actorProfile)
+                                                  .join(actorProfile.user, user).fetchJoin()
+                                                  .leftJoin(actorProfile.actorStyleRelations, actorStyleRelation).fetchJoin()
+                                                  .leftJoin(actorStyleRelation.style, style).fetchJoin()
+                                                  .distinct()
+                                                  .where(actorProfile.user.id.eq(userId))
+                                                  .fetchOne());
     }
 
     @Override

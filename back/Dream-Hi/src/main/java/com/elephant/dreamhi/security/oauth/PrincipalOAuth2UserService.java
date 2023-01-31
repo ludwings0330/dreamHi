@@ -1,9 +1,11 @@
 package com.elephant.dreamhi.security.oauth;
 
+import com.elephant.dreamhi.model.entity.ActorProfile;
 import com.elephant.dreamhi.model.entity.User;
 import com.elephant.dreamhi.model.entity.UserProducerRelation;
 import com.elephant.dreamhi.model.statics.ProviderType;
 import com.elephant.dreamhi.model.statics.UserRole;
+import com.elephant.dreamhi.repository.ActorRepository;
 import com.elephant.dreamhi.repository.UserProducerRelationRepository;
 import com.elephant.dreamhi.repository.UserRepository;
 import com.elephant.dreamhi.security.PrincipalDetails;
@@ -36,6 +38,8 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
     private final UserRepository userRepository;
 
     private final UserProducerRelationRepository userProducerRelationRepository;
+
+    private final ActorRepository actorRepository;
 
     /**
      * 인증 서버로부터 Access Token을 받아 서버로부터 필요한 데이터 조회한 결과[userRequest] 이용해 회원가입/로그인 수행 메소드
@@ -78,6 +82,7 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
         } else {
             isNew = true;
             userEntity = registerUser(userInfo);
+            registerActorProfile(userEntity);
         }
 
         List<GrantedAuthority> authorities = getAuthorities(userEntity);
@@ -139,7 +144,6 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
      */
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     User registerUser(OAuth2UserInfo userInfo) {
-        log.info("없으니까 새로 가입!!");
         return userRepository.save(
                 User.builder()
                     .email(userInfo.getEmail())
@@ -148,6 +152,22 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
                     .phone(userInfo.getPhone() != null ? userInfo.getPhone() : null)
                     .role(UserRole.ROLE_USER)
                     .build()
+        );
+    }
+
+    /**
+     * 회원가입 시 자동으로 ActorProfile 생성
+     *
+     * @param user : 회원가입한 user
+     * @return 생성 후 ActorProfile 객체
+     */
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    ActorProfile registerActorProfile(User user) {
+        return actorRepository.save(
+                ActorProfile.builder()
+                        .user(user)
+                        .title("연기하는 배우 " + user.getName() + " 입니다")
+                            .build()
         );
     }
 
