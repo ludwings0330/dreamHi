@@ -11,7 +11,6 @@ import com.elephant.dreamhi.model.entity.Producer;
 import com.elephant.dreamhi.model.entity.User;
 import com.elephant.dreamhi.model.statics.FollowType;
 import java.time.LocalDateTime;
-import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.junit.jupiter.api.DisplayName;
@@ -53,7 +52,10 @@ class AnnouncementRepositoryCustomImplTest {
 
         // then
         assertThat(finded).usingRecursiveComparison()
-                          .isEqualTo(entityManager.find(Announcement.class, announcement.getId()).toAnnouncementDetailDto(Optional.empty()));
+                          .isEqualTo(
+                                  entityManager.find(Announcement.class, announcement.getId())
+                                               .toAnnouncementDetailDto(null)
+                          );
     }
 
     @Test
@@ -83,11 +85,13 @@ class AnnouncementRepositoryCustomImplTest {
         entityManager.clear();
 
         // then
-        Optional<Follow> foundFollow = Optional.ofNullable(entityManager.find(Follow.class, follow.getId()));
+        Follow foundFollow = entityManager.find(Follow.class, follow.getId());
 
         assertThat(testDto).usingRecursiveComparison()
-                           .isEqualTo(entityManager.find(Announcement.class, announcement.getId())
-                                                   .toAnnouncementDetailDto(foundFollow));
+                           .isEqualTo(
+                                   entityManager.find(Announcement.class, announcement.getId())
+                                                .toAnnouncementDetailDto(foundFollow)
+                           );
     }
 
     @Test
@@ -108,13 +112,15 @@ class AnnouncementRepositoryCustomImplTest {
 
         // then
         assertThat(testDto).usingRecursiveComparison()
-                           .isEqualTo(entityManager.find(Announcement.class, announcement.getId())
-                                                   .toAnnouncementDetailDto(Optional.empty()));
+                           .isEqualTo(
+                                   entityManager.find(Announcement.class, announcement.getId())
+                                                .toAnnouncementDetailDto(null)
+                           );
     }
 
     private Announcement createTestAnnouncement(Producer producer) {
         return Announcement.builder()
-                           .endDate(LocalDateTime.of(2023, 2, 5, 14, 34, 23))
+                           .endDate(LocalDateTime.of(2023, 2, 10, 14, 34, 23))
                            .title("더미 공고1")
                            .producer(producer)
                            .build();
