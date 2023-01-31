@@ -58,13 +58,13 @@ public class ActorProfile {
     private Boolean visible;
 
     @OneToMany(mappedBy = "actorProfile", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ActorStyleRelation> actorStyleRelations = new ArrayList<>();
+    private final List<ActorStyleRelation> actorStyleRelations = new ArrayList<>();
 
     @OneToMany(mappedBy = "actorProfile", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ActorProfileMediaFile> actorProfileMediaFiles = new ArrayList<>();
+    private final List<ActorProfileMediaFile> actorProfileMediaFiles = new ArrayList<>();
 
     @OneToMany(mappedBy = "actorProfile", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Filmography> filmographies = new ArrayList<>();
+    private final List<Filmography> filmographies = new ArrayList<>();
 
     public void addActorStyle(ActorStyleRelation actorStyleRelation) {
         this.actorStyleRelations.add(actorStyleRelation);

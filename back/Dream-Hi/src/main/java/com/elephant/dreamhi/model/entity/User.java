@@ -56,9 +56,10 @@ public class User {
     private UserRole role;
 
     @OneToMany(mappedBy = "follower")
-    private List<Follow> followers = new ArrayList<>();
+    private final List<Follow> followers = new ArrayList<>();
+
     @OneToMany(mappedBy = "actor", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<Follow> followActors = new ArrayList<>();
+    private final List<Follow> followActors = new ArrayList<>();
 
     @Embedded
     private Picture picture;

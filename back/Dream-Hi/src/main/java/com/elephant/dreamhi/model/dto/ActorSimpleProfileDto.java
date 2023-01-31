@@ -22,11 +22,10 @@ public class ActorSimpleProfileDto {
     private String url;
     private Gender gender;
     private Integer age;
-    private List<String> styles = new ArrayList<>();
+    private final List<String> styles = new ArrayList<>();
     private Boolean isFollow;
 
     public ActorSimpleProfileDto(ActorProfile profile, Long id) {
-        List<String> styles = new ArrayList<>();
         for (var actorStyleRelation :
                 profile.getActorStyleRelations()) {
             styles.add(actorStyleRelation.getStyle().getDescription());
@@ -48,7 +47,6 @@ public class ActorSimpleProfileDto {
         this.url = profile.getUser().getPicture().getUrl();
         this.gender = profile.getGender();
         this.age = profile.getAge();
-        this.styles = styles;
         this.isFollow = isFollow;
     }
 

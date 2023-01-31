@@ -25,16 +25,15 @@ public class ActorProfileDetailDto {
     private Gender gender;
     private Double height;
     private String title;
-
     private String email;
     private String name;
     private String phone;
     private String pictureUrl;
     private Boolean isFollow;
-    private List<StyleDto> styles = new ArrayList<>();
-    private List<MediaDto> pictures = new ArrayList<>();
-    private List<MediaDto> videos = new ArrayList<>();
-    private List<FilmographyDto> filmographies = new ArrayList<>();
+    private final List<StyleDto> styles = new ArrayList<>();
+    private final List<MediaDto> pictures = new ArrayList<>();
+    private final List<MediaDto> videos = new ArrayList<>();
+    private final List<FilmographyDto> filmographies = new ArrayList<>();
 
     public ActorProfileDetailDto(ActorProfile actorProfile, List<Filmography> filmographies, List<ActorProfileMediaFile> mediaFiles,
                                  boolean isFollow) {
