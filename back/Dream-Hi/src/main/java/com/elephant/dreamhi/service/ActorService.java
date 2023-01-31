@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.service;
 
+import com.elephant.dreamhi.exception.NotFoundException;
 import com.elephant.dreamhi.exception.VisibleException;
 import com.elephant.dreamhi.model.dto.ActorProfileDetailDto;
 import com.elephant.dreamhi.model.dto.ActorSearchCondition;
@@ -9,7 +10,6 @@ import com.elephant.dreamhi.repository.ActorRepository;
 import com.elephant.dreamhi.security.PrincipalDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ActorService {
 
     private final ActorRepository actorRepository;
@@ -40,16 +41,14 @@ public class ActorService {
      * @throws NotFoundException : id에 해당하는 프로필이 존재하지 않는 경우 발생합니다.
      * @throws VisibleException  : 해당 프로필이 비공개일 경우 예외를 발생합니다.
      */
-    @Transactional
     public ActorProfileDetailDto findActorProfileDetail(Long id, PrincipalDetails principalDetails) throws NotFoundException, VisibleException {
         ActorProfile profile = actorRepository.findActorProfileByUser_Id(id).orElseThrow(() -> {
-            return new NotFoundException();
+            return new NotFoundException("배우 프로필이 존재하지 않습니다.");
         });
 
         checkPrivateProfile(principalDetails, profile);
 
-        ActorProfileDetailDto response = new ActorProfileDetailDto(profile);
-        return response;
+        return new ActorProfileDetailDto(profile);
     }
 
     /**
@@ -62,7 +61,7 @@ public class ActorService {
      */
     private static boolean checkPrivateProfile(PrincipalDetails principalDetails, ActorProfile profile) throws VisibleException {
         Long principalId = principalDetails.getId();
-        if (profile.getVisible() == true || profile.getUser().getId().equals(principalId)) {
+        if (profile.getVisible() || profile.getUser().getId().equals(principalId)) {
             return true;
         }
         throw new VisibleException("비공개 프로필입니다.");

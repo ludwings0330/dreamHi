@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -27,7 +28,6 @@ public class UserServiceImpl implements UserService {
      * @throws UsernameNotFoundException : id 조회 결과 없을 경우 발생
      */
     @Override
-    @Transactional
     public UserSimpleDto findUserSimple(Long id) throws UsernameNotFoundException {
         User user = userRepository.findById(id).orElseThrow(() -> {
             return new UsernameNotFoundException(id + " 존재하지 않는 유저입니다.");
