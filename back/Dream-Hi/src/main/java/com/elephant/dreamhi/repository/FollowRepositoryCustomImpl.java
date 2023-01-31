@@ -3,9 +3,9 @@ package com.elephant.dreamhi.repository;
 import static com.elephant.dreamhi.model.entity.QFollow.follow;
 import static com.elephant.dreamhi.model.entity.QUser.user;
 
-import com.elephant.dreamhi.model.dto.FollowRequestDto;
 import com.elephant.dreamhi.model.dto.MyFollowersDto;
 import com.elephant.dreamhi.model.entity.Follow;
+import com.elephant.dreamhi.model.statics.FollowType;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -38,11 +38,11 @@ public class FollowRepositoryCustomImpl implements FollowRepositoryCustom {
     }
 
     @Override
-    public Optional<Follow> checkFollow(FollowRequestDto followRequestDto, Long followerId) {
+    public Optional<Follow> checkFollow(FollowType type, Long id, Long followerId) {
         JPAQuery<Follow> query = jpaQueryFactory.selectFrom(follow)
                                                 .where(follow.follower.id.eq(followerId));
 
-        query = followFactory(followRequestDto, query);
+        query = followFactory(type, id, query);
 
         return Optional.ofNullable(query.fetchOne());
     }
@@ -50,25 +50,26 @@ public class FollowRepositoryCustomImpl implements FollowRepositoryCustom {
     /**
      * type에 따라 쿼리문 생성 메소드
      *
-     * @param followRequestDto
+     * @param type
+     * @param id
      * @param query
      * @return JPAQuery<Follow>
      */
-    private static JPAQuery<Follow> followFactory(FollowRequestDto followRequestDto, JPAQuery<Follow> query) {
-        switch (followRequestDto.getType()) {
+    private static JPAQuery<Follow> followFactory(FollowType type, Long id, JPAQuery<Follow> query) {
+        switch (type) {
             case ACTOR:
                 query = query.where(
-                        follow.actor.id.eq(followRequestDto.getActorId())
+                        follow.actor.id.eq(id)
                 );
                 break;
             case ANNOUNCEMENT:
                 query = query.where(
-                        follow.announcement.id.eq(followRequestDto.getAnnouncementId())
+                        follow.announcement.id.eq(id)
                 );
                 break;
             case PRODUCER:
                 query = query.where(
-                        follow.producer.id.eq(followRequestDto.getProducerId())
+                        follow.producer.id.eq(id)
                 );
                 break;
             default:
