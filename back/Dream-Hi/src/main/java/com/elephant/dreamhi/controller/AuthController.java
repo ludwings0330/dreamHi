@@ -1,10 +1,9 @@
 package com.elephant.dreamhi.controller;
 
 import com.elephant.dreamhi.model.dto.JwtResponse;
-import com.elephant.dreamhi.security.jwt.TokenProvider;
 import com.elephant.dreamhi.service.TokenService;
-import com.elephant.dreamhi.service.UserService;
 import com.elephant.dreamhi.utils.Response;
+import com.elephant.dreamhi.utils.Response.Body;
 import java.sql.SQLException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,15 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final UserService userService;
-
-    private final TokenProvider tokenProvider;
-
     private final TokenService tokenService;
 
     @PostMapping("/api/logout")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<?> logout() {
+    public ResponseEntity<Body> logout() {
         log.info("[LOGOUT] userId: {}", SecurityContextHolder.getContext().getAuthentication().getName());
         SecurityContextHolder.clearContext();
         return Response.ok();
@@ -37,8 +32,7 @@ public class AuthController {
 
     @PostMapping("/api/refresh-token")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<?> reissueAccessToken(Authentication authentication) throws IllegalArgumentException, SQLException {
-        log.info("Authentication : {}", authentication);
+    public ResponseEntity<Body> reissueAccessToken(Authentication authentication) throws IllegalArgumentException, SQLException {
         JwtResponse jwtResponse = tokenService.reissueAccessToken(authentication);
         return Response.create(HttpStatus.OK, HttpStatus.OK.name(), jwtResponse);
     }
