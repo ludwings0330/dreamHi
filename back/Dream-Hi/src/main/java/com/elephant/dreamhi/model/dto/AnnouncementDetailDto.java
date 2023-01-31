@@ -1,6 +1,7 @@
 package com.elephant.dreamhi.model.dto;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -53,6 +54,33 @@ public class AnnouncementDetailDto {
         this.hit = hit;
         this.pictureUrl = pictureUrl;
         this.isFollowed = isFollowed;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        AnnouncementDetailDto that = (AnnouncementDetailDto) o;
+
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getTitle(), that.getTitle()) && Objects.equals(
+                getProducer(), that.getProducer()) && Objects.equals(getPayment(), that.getPayment()) && Objects.equals(
+                getCrankPeriod(), that.getCrankPeriod()) && Objects.equals(getEndDate(), that.getEndDate()) && Objects.equals(
+                getDescription(), that.getDescription()) && Objects.equals(getHit(), that.getHit()) && Objects.equals(getPictureUrl(),
+                                                                                                                      that.getPictureUrl())
+                && Objects.equals(getIsFollowed(), that.getIsFollowed());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getTitle(), getProducer(), getPayment(), getCrankPeriod(), getEndDate(), getDescription(), getHit(),
+                            getPictureUrl(),
+                            getIsFollowed());
     }
 
 }
