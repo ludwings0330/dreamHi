@@ -11,4 +11,6 @@ public interface FollowRepositoryCustom {
 
     Optional<Follow> checkFollow(FollowType type, Long id, Long followerId);
 
+    Integer deleteFollowWithCondition(FollowType type, Long id, Long followerId);
+
 }

@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -69,6 +70,15 @@ public class FollowController {
     public ResponseEntity<?> addFollow(Authentication authentication, @RequestBody FollowRequestDto followRequestDto) throws DuplicateKeyException {
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         Boolean response = followService.addFollow(followRequestDto.getType(), followRequestDto.getId(), principalDetails.getId());
+        return Response.create(HttpStatus.OK, HttpStatus.OK.name(), response);
+    }
+
+    /***/
+    @DeleteMapping("/api/follow")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<?> removeFollow(Authentication authentication, @RequestParam FollowType type, @RequestParam Long id) {
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        Boolean response = followService.removeFollow(type, id, principalDetails.getId());
         return Response.create(HttpStatus.OK, HttpStatus.OK.name(), response);
     }
 

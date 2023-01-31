@@ -60,6 +60,12 @@ public class FollowService {
         return true;
     }
 
+    @Transactional
+    public Boolean removeFollow(FollowType type, Long id, Long followerId) {
+        int result = followRepository.deleteFollowWithCondition(type, id, followerId);
+        return false;
+    }
+
     /**
      * Follow Entity 생성 메소드
      *
