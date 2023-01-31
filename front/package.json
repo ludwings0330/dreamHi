@@ -11,6 +11,7 @@
     "bootstrap": "^5.2.3",
     "classnames": "^2.3.2",
     "immer": "^9.0.18",
+    "mdb-react-ui-kit": "^5.1.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.0",
     "react-dom": "^18.2.0",
@@ -31,6 +32,7 @@
     "slick-carousel": "^1.8.1",
     "styled-components": "^5.3.6",
     "styled-reset": "^4.4.5",
+    "swiper": "^8.4.6",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

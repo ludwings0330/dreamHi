@@ -4,12 +4,14 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import AppMain from './pages/AppMain';
 import reportWebVitals from './reportWebVitals';
+import AppCasting from './pages/AppCasting';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-    <AppMain />
+    {/*<AppMain />*/}
+    <AppCasting />
     </BrowserRouter>
   </React.StrictMode>
 );
