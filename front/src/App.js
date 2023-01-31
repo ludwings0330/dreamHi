@@ -4,7 +4,9 @@ import AppHeader from './components/Common/AppHeader';
 import AppFooter from './components/Common/AppFooter';
 import AppMain from './pages/AppMain';
 import AppActor from './pages/AppActor';
-import AppPost from './pages/AppPost';
+import AnnouncementListPage from './pages/AnnouncementListPage';
+import AnnouncementWritePage from './pages/AnnouncementWritePage';
+import AnnouncementDetailPage from './pages/AnnouncementDetailPage';
 
 
 
@@ -27,7 +29,11 @@ function App() {
         {/*<Route path="/" element={<Layout />}>*/}
           <Route index element={<AppMain />} />
           <Route path="/actor" element={<AppActor />} />
-          <Route path="/post" element={<AppPost />} />
+          <Route path="/announcementlist" element={<AnnouncementListPage />} />
+          <Route path="/announcementwrite" element={<AnnouncementWritePage />} />
+          <Route path="/announcementdetail" element={<AnnouncementDetailPage />} />
+
+
 
         {/*</Route>*/}
       </Routes>
