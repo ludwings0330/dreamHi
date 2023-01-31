@@ -1,13 +1,9 @@
 package com.elephant.dreamhi.security.oauth;
 
-import com.elephant.dreamhi.model.dto.TokenDto;
-import com.elephant.dreamhi.security.PrincipalDetails;
 import java.io.IOException;
-import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.AuthenticationException;
