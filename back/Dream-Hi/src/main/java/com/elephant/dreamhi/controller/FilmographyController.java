@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,6 +40,14 @@ public class FilmographyController {
     public ResponseEntity<Body> deleteFilmography(@PathVariable Long filmographyId) {
         filmographyService.deleteFilmographyById(filmographyId);
 
+        return Response.ok();
+    }
+
+    @PutMapping("/api/filmographies/{filmographyId}")
+    public ResponseEntity<Body> updateFilmography(@PathVariable Long filmographyId,
+                                                  @RequestBody FilmographyRequestDto filmographyRequestDto) {
+        filmographyRequestDto.setFilmographyId(filmographyId);
+        filmographyService.updateFilmography(filmographyRequestDto);
         return Response.ok();
     }
 

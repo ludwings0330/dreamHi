@@ -12,6 +12,7 @@ import com.elephant.dreamhi.repository.ProducerRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -54,6 +55,14 @@ public class FilmographyService {
                 filmographyRepository.findById(filmographyId).orElseThrow();
         // 삭제 권한 확인 로직 필요
         filmographyRepository.delete(filmography);
+    }
+
+    @Transactional
+    public void updateFilmography(FilmographyRequestDto filmographyRequestDto) {
+        // 업데이트할 권한이 있는지 확인
+        final Filmography filmography =
+                filmographyRepository.findById(filmographyRequestDto.getFilmographyId()).orElseThrow();
+        filmography.updateInfo(filmographyRequestDto);
     }
 
 }
