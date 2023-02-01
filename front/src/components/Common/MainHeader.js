@@ -11,7 +11,7 @@ import {
 } from "reactstrap";
 
 import Button from './Button';
-import {useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 // react-icons
@@ -83,7 +83,9 @@ function MainHeader() {
                   onClick={(e) => e.preventDefault()}
                 >
                   <b className="caret d-none d-lg-block d-xl-block" />
+                  <Link to={"/login"}>
                   <CgProfile size="40" color="#7EA6F4" />
+                  </Link>
                 </DropdownToggle>
 
                 <DropdownMenu className="dropdown-navbar" right tag="ul">

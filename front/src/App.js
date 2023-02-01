@@ -12,6 +12,7 @@ import CastingDetail from './components/Casting/CastingDetail';
 import ActorList from './components/Actor/ActorList';
 import ActorDetail from './components/Actor/ActorDetail';
 import ActorWrite from './components/Actor/ActorWrite';
+import LoginPage from './pages/Login/LoginPage';
 
 
 function App() {
@@ -22,7 +23,7 @@ function App() {
           <Route index element={<MainPage />} />
           <Route path="/actor" element={<ActorPage />} />
           <Route path="/maker" element={<MakerPage />} />
-
+          <Route path={"/login"} element={<LoginPage />} />
 
         //공고페이지 관련 이동
         <Route path="/announcement" element={<AnnouncementPage/>} />
