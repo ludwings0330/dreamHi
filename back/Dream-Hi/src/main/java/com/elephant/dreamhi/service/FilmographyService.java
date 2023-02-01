@@ -49,10 +49,12 @@ public class FilmographyService {
         filmographyRepository.save(filmography);
     }
 
+    @Transactional
     public void deleteFilmographyById(Long filmographyId) {
         final Filmography filmography =
-                filmographyRepository.findById(filmographyId).orElseThrow();
-        // 삭제 권한 확인 로직 필요
+                filmographyRepository.findById(filmographyId)
+                                     .orElseThrow(() -> new NotFoundException("존재하지 않는 필모그래피입니다."));
+
         filmographyRepository.delete(filmography);
     }
 
