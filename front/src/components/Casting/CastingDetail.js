@@ -51,7 +51,6 @@ function CastingDetail(props) {
   //   setRSelected(copy)
   // }
 
-  console.log(posts)
 
 
   return (
