@@ -120,19 +120,22 @@ public class ProducerService {
     }
 
     @Transactional
-    public void addProducerMember(Long producerId, Long userId, ProducerMemberDto member) throws RuntimeException {
-        final User user = userRepository.findById(userId).orElseThrow();
-        final Producer producer = producerRepository.findById(producerId).orElseThrow();
+    public void addProducerMember(Long producerId, Long userId, ProducerMemberDto member) throws NotFoundException {
+        final User user = userRepository.findById(userId)
+                                        .orElseThrow(() -> new NotFoundException("존재하지 않는 사용자입니다."));
+
+        final Producer producer = producerRepository.findById(producerId)
+                                                    .orElseThrow(() -> new NotFoundException("존재하지 않는 제작사입니다."));
 
         // 이미 제작진에 포함 되어있음
         userProducerRelationRepository.findByProducer_IdAndUser_Id(producerId, userId)
                                       .ifPresent(m -> {
-                                                     throw new RuntimeException();
-                                                 }
-                                      );
+                                          throw new DuplicateKeyException("이미 포함된 사용자입니다.");
+                                      });
 
         final UserProducerRelation newMember = UserProducerRelation.builder()
                                                                    .position(member.getPosition())
+                                                                   .role(member.getRole())
                                                                    .build();
         newMember.setUser(user);
         newMember.setProducer(producer);

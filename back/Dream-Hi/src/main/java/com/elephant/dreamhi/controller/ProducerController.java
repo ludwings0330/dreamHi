@@ -97,11 +97,14 @@ public class ProducerController {
     }
 
     @PostMapping("/api/producers/{producerId}/users/{userId}")
+    @PreAuthorize("@checker.hasEditorAuthority(#user, #producerId)")
     public ResponseEntity<Body> addProducerMember(@PathVariable Long producerId,
                                                   @PathVariable Long userId,
-                                                  @RequestBody ProducerMemberDto member) throws Exception {
-        producerService.addProducerMember(producerId, userId, member);
-        return Response.ok();
+                                                  @RequestBody ProducerMemberDto requestDto,
+                                                  @AuthenticationPrincipal PrincipalDetails user) throws NotFoundException {
+        producerService.addProducerMember(producerId, userId, requestDto);
+
+        return Response.create(HttpStatus.CREATED, "제작사 추가 성공");
     }
 
     @DeleteMapping("/api/producers/{producerId}/users/{userId}")
