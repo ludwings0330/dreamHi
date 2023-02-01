@@ -1,26 +1,37 @@
 import React from 'react';
-import "./Actor.css";
+import "./ActorList.css";
 import PageBar from '../Common/PageBar';
 import SearchBar from '../Common/SearchBar';
-import AppHeader from '../Common/AppHeader';
-import AppFooter from '../Common/AppFooter';
+import { Link, useNavigate } from 'react-router-dom';
+import Button from '../Common/Button';
 
 const ActorList = () => {
+
+  const navigate = useNavigate();
+
+
     return (
       <div>
-        <AppHeader />
         <SearchBar />
-      <div className="actor_container">
-        <div className="actor">
-          <div className="actor_img"><img src="/img/elephant.png" className="actor_img"/></div>
-          <h5 className="actor_title"> 배우 소개</h5>
-          <p className="actor_des"> 배우 소개 요약</p>
-        </div>
-      </div>
+        <Link to={"/actor/detail"}>
+          <div className="actor">
+            <div className="actor_img">
+              <img src="/img/elephant.png" />
+            </div>
+            <h5 className="actor_title"> 배우 소개</h5>
+            <p className="actor_des"> 배우 소개 요약</p>
+          </div>
+      </Link>
+
+        <Button
+          title="글작성"
+          onClick={() => {
+            navigate("/actor/write")
+          }} />
+
         <div className={"page_bar"}>
         <PageBar />
         </div>
-        <AppFooter />
       </div>
     );
 };

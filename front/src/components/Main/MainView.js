@@ -1,9 +1,9 @@
 import React from 'react';
 
-import "./Main.css"
-import MainBanner from '../Common/MainBanner';
+import "./MainView.css"
+import MainBanner from './MainBanner';
 
-function MainPage() {
+function MainView() {
   return (
 
     <div className="main-body">
@@ -24,4 +24,4 @@ function MainPage() {
   );
 };
 
-export default MainPage;
+export default MainView;

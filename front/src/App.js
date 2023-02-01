@@ -1,48 +1,47 @@
-import React from 'react';
-import { Route, Routes } from 'react-router-dom';
-import AppHeader from './components/Common/AppHeader';
-import AppFooter from './components/Common/AppFooter';
-import AppMain from './pages/AppMain';
-import AppActor from './pages/AppActor';
+import React from "react";
+import {  Route, Routes } from "react-router-dom";
+import MainPage from './pages/MainPage';
+import ActorPage from './pages/ActorPage';
+import MakerPage from './pages/MakerPage';
+import CastingPage from './pages/CastingPage';
+import AnnouncementPage from './pages/AnnouncementPage';
 import AnnouncementList from './components/Announcement/AnnouncementList';
 import AnnouncementWrite from './components/Announcement/AnnouncementWrite';
 import AnnouncementDetail from './components/Announcement/AnnouncementDetail';
-import AnnouncementPage from './pages/AnnouncementPage';
-import AppCasting from './pages/AppCasting';
 import CastingDetail from './components/Casting/CastingDetail';
-
-
-
-const Layout = () => {
-  return(
-    <div>
-      <AppHeader />
-
-      <AppFooter />
-
-    </div>
-  );
-};
+import ActorList from './components/Actor/ActorList';
+import ActorDetail from './components/Actor/ActorDetail';
+import ActorWrite from './components/Actor/ActorWrite';
+import LoginPage from './pages/Login/LoginPage';
 
 
 function App() {
   return (
     <div className="app">
       <Routes>
-        {/*<Route path="/" element={<Layout />}>*/}
-          <Route index element={<AppMain />} />
-          <Route path="/actor" element={<AppActor />} />
-          <Route path="/announcement" element={<AnnouncementPage/>} />
-          <Route path="/announcement/list" element={<AnnouncementList />} />
-          <Route path="/announcement/write" element={<AnnouncementWrite />} />
-          <Route path="/announcement/:announcementId" element={<AnnouncementDetail />} />
-          <Route path="/casting" element={<AppCasting />} />
-          <Route path="/casting/detail" element={<CastingDetail />} />
+          //메인페이지 관련 이동
+          <Route index element={<MainPage />} />
+          <Route path="/actor" element={<ActorPage />} />
+          <Route path="/maker" element={<MakerPage />} />
+          <Route path={"/login"} element={<LoginPage />} />
+
+        //공고페이지 관련 이동
+        <Route path="/announcement" element={<AnnouncementPage/>} />
+        <Route path="/announcement/list" element={<AnnouncementList />} />
+        <Route path="/announcement/write" element={<AnnouncementWrite />} />
+        <Route path="/announcement/:announcementId" element={<AnnouncementDetail />} />
 
 
+        //채용페이지 관련 이동
+        <Route path="/casting" element={<CastingPage />} />
+        <Route path="/casting/detail" element={<CastingDetail />} />
 
 
-        {/*</Route>*/}
+        //배우페이지 관련 이동
+        <Route path={"actor/list"} element={<ActorList />} />
+        <Route path={"/actor/detail"} element={<ActorDetail />} />
+        <Route path={"/actor/write"} element={<ActorWrite />} />
+
       </Routes>
     </div>
   );

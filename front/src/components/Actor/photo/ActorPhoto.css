@@ -1,0 +1,31 @@
+.wrap{
+    width: 1000px;
+    margin: 30px auto;
+    display: flex;
+}
+.wrap .left{
+    width: 600px;
+
+}
+.wrap .left>img{
+    vertical-align: top;
+}
+.wrap .left ul{
+    display: flex;
+    flex-wrap: wrap;
+}
+.wrap .left ul li{
+    width: 120px;
+
+}
+.wrap .left ul li img{
+    width: 120px;
+    vertical-align: top;
+}
+.wrap .right{
+    width: 400px;
+    background: beige;
+    padding: 30px;
+}
+.wrap .right h3{font-size: 30px; margin-bottom: 20px;}
+.wrap .right p{ font-size: 20px;}

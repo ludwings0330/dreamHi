@@ -11,7 +11,7 @@ import {
 } from "reactstrap";
 
 import Button from './Button';
-import {useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 // react-icons
@@ -21,11 +21,6 @@ import { CgProfile } from "react-icons/cg";
 // css
 import "./Common.css"
 import "bootstrap/scss/bootstrap.scss";
-import { Link } from 'react-router-dom';
-import AnnouncementList from '../Announcement/AnnouncementList';
-import AppActor from '../../pages/AppActor';
-import AppMain from '../../pages/AppMain';
-import AppMaker from '../../pages/AppMaker';
 
 
 function MainHeader() {
@@ -38,9 +33,16 @@ function MainHeader() {
         <div>
 
           <div className="header-top">
+
+
             <div>
-              <img src='/img/logo.png' alt="DreamHi logo" className="header-logo" />
+              <img title="home"
+                   onClick={() => {
+                     navigate("/")
+                   }} src= {'/img/logo.png'} alt="DreamHi logo" className="header-logo" />
             </div>
+
+
             <div className="header-top-right">
 
 
@@ -81,7 +83,9 @@ function MainHeader() {
                   onClick={(e) => e.preventDefault()}
                 >
                   <b className="caret d-none d-lg-block d-xl-block" />
+                  <Link to={"/login"}>
                   <CgProfile size="40" color="#7EA6F4" />
+                  </Link>
                 </DropdownToggle>
 
                 <DropdownMenu className="dropdown-navbar" right tag="ul">
@@ -131,9 +135,9 @@ function MainHeader() {
 
 
                 <Button 
-                  title="제작사_임시로 메인이동"
+                  title="제작사"
                   onClick={() => {
-                    navigate("/")
+                    navigate("/maker")
                   }} />
 
 
