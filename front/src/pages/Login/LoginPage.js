@@ -3,13 +3,16 @@ import {
   Route,
   Routes
 } from 'react-router-dom';
-import AppHeader from '../../components/Common/MainHeader';
+import MainHeader from '../../components/Common/MainHeader';
 import Login from '../../user/login/Login';
 import OAuth2RedirectHandler from '../../user/oauth2/OAuth2RedirectHandler';
 import LoadingIndicator from '../../components/Common/LoadingIndicator';
 import { getCurrentUser } from '../../util/APIUtils';
 import { ACCESS_TOKEN } from '../../constants';
 import './LoginPage.css';
+import MainFooter from '../../components/Common/MainFooter';
+import Layout from '../../components/Common/Layout';
+
 
 class LoginPage extends Component {
   constructor(props) {
@@ -57,18 +60,16 @@ class LoginPage extends Component {
     }
 
     return (
-      <div className="app">
-        <div className="app-top-box">
-          <AppHeader authenticated={this.state.authenticated} onLogout={this.handleLogout} />
-        </div>
+      <Layout className="app">
+
         <div className="app-body">
+          <Login />
           <Routes>
-            {/*<Route path="/login" render={(props) => <Login authenticated={this.state.authenticated} {...props} />}></Route>>*/}
             <Route path="/login" element={<Login authenticated={this.state.authenticated} />} />
             <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
           </Routes>
         </div>
-      </div>
+      </Layout>
     );
   }
 }

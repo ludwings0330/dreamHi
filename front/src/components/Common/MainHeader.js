@@ -22,10 +22,7 @@ import { CgProfile } from "react-icons/cg";
 import "./Common.css"
 import "bootstrap/scss/bootstrap.scss";
 import { Link } from 'react-router-dom';
-import AnnouncementListPage from '../Announcement/AnnouncementListPage';
-import ActorPage from '../../pages/ActorPage';
-import AppMain from '../../pages/MainPage';
-import MakerPage from '../../pages/MakerPage';
+
 
 
 function MainHeader() {
@@ -38,9 +35,18 @@ function MainHeader() {
         <div>
 
           <div className="header-top">
+
+
+
             <div>
-              <img src="img/logo.png" alt="DreamHi logo" className="header-logo" />
+              <img title="home"
+                onClick={() => {
+                  navigate("/")
+                }} src= {'/img/logo.png'} alt="DreamHi logo" className="header-logo" />
             </div>
+
+
+
             <div className="header-top-right">
 
 
@@ -81,7 +87,9 @@ function MainHeader() {
                   onClick={(e) => e.preventDefault()}
                 >
                   <b className="caret d-none d-lg-block d-xl-block" />
+                  <Link to={"/login"}>
                   <CgProfile size="40" color="#7EA6F4" />
+                  </Link>
                 </DropdownToggle>
 
                 <DropdownMenu className="dropdown-navbar" right tag="ul">

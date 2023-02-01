@@ -1,44 +1,36 @@
 import React from "react";
-import { Outlet, Route, Routes } from "react-router-dom";
-import MainHeader from './components/Common/MainHeader';
-import MainFooter from './components/Common/MainFooter';
+import {  Route, Routes } from "react-router-dom";
 import MainPage from './pages/MainPage';
 import ActorPage from './pages/ActorPage';
-import AnnouncementListPage from './components/Announcement/AnnouncementListPage';
-import AnnouncementWritePage from './components/Announcement/AnnouncementWritePage';
-import AnnouncementDetailPage from './components/Announcement/AnnouncementDetailPage';
 import MakerPage from './pages/MakerPage';
+import LoginPage from './pages/Login/LoginPage';
+import ActorDetail from './components/Actor/ActorDetail';
+import ActorWrite from './components/Actor/ActorWrite';
+import ActorList from './components/Actor/ActorList';
 
 
 
-const Layout = () => {
-  return(
-    <div>
-      <MainHeader />
-
-      <MainFooter />
-
-    </div>
-  );
-};
 
 
 function App() {
   return (
     <div className="app">
+
       <Routes>
-        {/*<Route path="/" element={<Layout />}>*/}
+          //메인페이지 관련 이동
           <Route index element={<MainPage />} />
           <Route path="/actor" element={<ActorPage />} />
           <Route path="/maker" element={<MakerPage />} />
-          <Route path="/announcementlist" element={<AnnouncementListPage />} />
-          <Route path="/announcementwrite" element={<AnnouncementWritePage />} />
-          <Route path="/announcementdetail" element={<AnnouncementDetailPage />} />
+          <Route path="/login" element={<LoginPage />} />
 
 
+        //배우페이지 관련 이동
+        <Route path={"actor/list"} element={<ActorList />} />
+        <Route path={"/actor/detail"} element={<ActorDetail />} />
+        <Route path={"/actor/write"} element={<ActorWrite />} />
 
-        {/*</Route>*/}
       </Routes>
+
     </div>
   );
 }

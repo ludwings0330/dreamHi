@@ -8,7 +8,7 @@ function MainFooter() {
     <footer className="footer-body">
 
       <div className="footer-left">
-        <img src='img/elephant.png' alt='elephant-logo' className="footer-logo" />
+        <img src='/img/elephant.png' alt='elephant-logo' className="footer-logo" />
         <span>© 2023 All Rights Reserved</span>
       </div>
 
