@@ -17,6 +17,7 @@ import {
 function CastingDetail(props) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   const [rSelected, setRSelected] = useState();
 =======
   const [rSelected, setRSelected] = useState(null);
@@ -24,11 +25,15 @@ function CastingDetail(props) {
 =======
   const [rSelected, setRSelected] = useState();
 >>>>>>> 8a83d16 (Feat: CastingDetail.js 유저 카드 프로필, 버튼 추가)
+=======
+  const [rSelected, setRSelected] = useState();
+>>>>>>> 851bd4f2cc88a3043e7b6183fc025a1285ff47ee
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
 
   const limit = 8
   const offset = (page - 1) * limit
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   // const [buttonState, setButtonState] = useState([0]);
@@ -37,10 +42,14 @@ function CastingDetail(props) {
 =======
   // const [buttonState, setButtonState] = useState([0]);
 >>>>>>> 8a83d16 (Feat: CastingDetail.js 유저 카드 프로필, 버튼 추가)
+=======
+  // const [buttonState, setButtonState] = useState([0]);
+>>>>>>> 851bd4f2cc88a3043e7b6183fc025a1285ff47ee
 
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/posts")
       .then((res) => res.json())
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       .then((data) => setPosts(data))
@@ -84,6 +93,11 @@ function CastingDetail(props) {
 >>>>>>> 10567b6 (:sparkles: Feat: 오디션 진행 페이지 추가)
 =======
 >>>>>>> 851bd4f (:sparkles: Feat: 오디션 진행 페이지 추가)
+=======
+      .then((data) => setPosts(data))
+  }, []);
+
+>>>>>>> 851bd4f2cc88a3043e7b6183fc025a1285ff47ee
 
   //
   // for (let dataCnt = 0; dataCnt < posts.length; dataCnt++ ) {
