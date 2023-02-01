@@ -75,6 +75,10 @@ public class ActorProfile {
         this.user = user;
     }
 
+    public void changeVisible() {
+        this.visible = !this.visible;
+    }
+
     // actor profile picture 편의 메소드
 
     // filmography 편의 메소드
