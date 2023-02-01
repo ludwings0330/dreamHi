@@ -47,6 +47,7 @@ function CastingDetail(props) {
   }, []);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
   //
   // for (let dataCnt = 0; dataCnt < posts.length; dataCnt++ ) {
@@ -81,6 +82,8 @@ function CastingDetail(props) {
 =======
   console.log('11111111111')
 >>>>>>> 10567b6 (:sparkles: Feat: 오디션 진행 페이지 추가)
+=======
+>>>>>>> 851bd4f (:sparkles: Feat: 오디션 진행 페이지 추가)
 
   //
   // for (let dataCnt = 0; dataCnt < posts.length; dataCnt++ ) {
