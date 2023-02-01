@@ -16,23 +16,32 @@ import {
 
 function CastingDetail(props) {
 <<<<<<< HEAD
+<<<<<<< HEAD
   const [rSelected, setRSelected] = useState();
 =======
   const [rSelected, setRSelected] = useState(null);
 >>>>>>> d62a71c (:sparkles: Feat: 지원자 목록 페이지 map 구현 / 버튼 미작동)
+=======
+  const [rSelected, setRSelected] = useState();
+>>>>>>> 8a83d16 (Feat: CastingDetail.js 유저 카드 프로필, 버튼 추가)
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
 
   const limit = 8
   const offset = (page - 1) * limit
 <<<<<<< HEAD
+<<<<<<< HEAD
   // const [buttonState, setButtonState] = useState([0]);
 =======
 >>>>>>> d62a71c (:sparkles: Feat: 지원자 목록 페이지 map 구현 / 버튼 미작동)
+=======
+  // const [buttonState, setButtonState] = useState([0]);
+>>>>>>> 8a83d16 (Feat: CastingDetail.js 유저 카드 프로필, 버튼 추가)
 
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/posts")
       .then((res) => res.json())
+<<<<<<< HEAD
 <<<<<<< HEAD
       .then((data) => setPosts(data))
   }, []);
@@ -63,8 +72,36 @@ function CastingDetail(props) {
 
 =======
       .then((data) => setPosts(data));
+=======
+      .then((data) => setPosts(data))
+>>>>>>> 8a83d16 (Feat: CastingDetail.js 유저 카드 프로필, 버튼 추가)
   }, []);
 >>>>>>> d62a71c (:sparkles: Feat: 지원자 목록 페이지 map 구현 / 버튼 미작동)
+
+  //
+  // for (let dataCnt = 0; dataCnt < posts.length; dataCnt++ ) {
+  //   setButtonState(buttonState, [...buttonState, 0])
+  // }
+  //
+  //
+  //
+
+  //
+  //
+  // useEffect(() => {
+  //   setRSelected(buttonState)
+  //
+  // }, [buttonState]);
+  //
+  // function setButton(e, btn) {
+  //   let copy = [...rSelected]
+  //   rSelected[e] = btn
+  //
+  //   setRSelected(copy)
+  // }
+
+  console.log(posts)
+
 
   return (
     <div className="casting-body">
