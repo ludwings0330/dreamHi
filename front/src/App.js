@@ -1,24 +1,22 @@
-import React from 'react';
-import { Route, Routes } from 'react-router-dom';
-import AppHeader from './components/Common/AppHeader';
-import AppFooter from './components/Common/AppFooter';
-import AppMain from './pages/AppMain';
-import AppActor from './pages/AppActor';
-import AnnouncementList from './components/Announcement/AnnouncementList';
-import AnnouncementWrite from './components/Announcement/AnnouncementWrite';
-import AnnouncementDetail from './components/Announcement/AnnouncementDetail';
-import AnnouncementPage from './pages/AnnouncementPage';
-import AppCasting from './pages/AppCasting';
-import CastingDetail from './components/Casting/CastingDetail';
+import React from "react";
+import { Outlet, Route, Routes } from "react-router-dom";
+import MainHeader from './components/Common/MainHeader';
+import MainFooter from './components/Common/MainFooter';
+import MainPage from './pages/MainPage';
+import ActorPage from './pages/ActorPage';
+import AnnouncementListPage from './components/Announcement/AnnouncementListPage';
+import AnnouncementWritePage from './components/Announcement/AnnouncementWritePage';
+import AnnouncementDetailPage from './components/Announcement/AnnouncementDetailPage';
+import MakerPage from './pages/MakerPage';
 
 
 
 const Layout = () => {
   return(
     <div>
-      <AppHeader />
+      <MainHeader />
 
-      <AppFooter />
+      <MainFooter />
 
     </div>
   );
@@ -39,6 +37,12 @@ function App() {
           <Route path="/casting" element={<AppCasting />} />
           <Route path="/casting/detail" element={<CastingDetail />} />
 
+          <Route index element={<MainPage />} />
+          <Route path="/actor" element={<ActorPage />} />
+          <Route path="/maker" element={<MakerPage />} />
+          <Route path="/announcementlist" element={<AnnouncementListPage />} />
+          <Route path="/announcementwrite" element={<AnnouncementWritePage />} />
+          <Route path="/announcementdetail" element={<AnnouncementDetailPage />} />
 
 
 

@@ -22,6 +22,10 @@ import { CgProfile } from "react-icons/cg";
 import "./Common.css"
 import "bootstrap/scss/bootstrap.scss";
 import { Link } from 'react-router-dom';
+import AnnouncementListPage from '../Announcement/AnnouncementListPage';
+import ActorPage from '../../pages/ActorPage';
+import AppMain from '../../pages/MainPage';
+import MakerPage from '../../pages/MakerPage';
 import AnnouncementList from '../Announcement/AnnouncementList';
 import AppActor from '../../pages/AppActor';
 import AppMain from '../../pages/AppMain';
@@ -131,9 +135,9 @@ function MainHeader() {
 
 
                 <Button 
-                  title="제작사_임시로 메인이동"
+                  title="제작사"
                   onClick={() => {
-                    navigate("/")
+                    navigate("/maker")
                   }} />
 
 

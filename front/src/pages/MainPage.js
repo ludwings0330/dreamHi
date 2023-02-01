@@ -1,8 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import AppHeader from '../components/Common/AppHeader';
-import AppFooter from '../components/Common/AppFooter';
-import MainPage from '../components/Main/MainPage';
-import AppActor from './AppActor';
+import AppHeader from '../components/Common/MainHeader';
+import AppFooter from '../components/Common/MainFooter';
+import MainView from '../components/Main/MainView';
+import ActorPage from './ActorPage';
 import Login from '../user/login/Login';
 
 
@@ -11,9 +11,9 @@ function AppMain() {
     <div>
       {/*<h2>main</h2>*/}
       <AppHeader />
-      <MainPage />
+      <MainView />
       <AppFooter />
-      {/*<AppActor />*/}
+      {/*<ActorPage />*/}
       {/*<Login />*/}
     </div>
   );
