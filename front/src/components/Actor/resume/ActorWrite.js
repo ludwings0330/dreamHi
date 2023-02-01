@@ -1,8 +1,8 @@
 import React from 'react';
 import ActorIntroduce from './ActorIntroduce';
-import AppHeader from '../../Common/AppHeader';
-import AppFooter from '../../Common/AppFooter';
-import {} from '../../Main/Main.css'
+import AppHeader from '../../Common/MainHeader';
+import AppFooter from '../../Common/MainFooter';
+import {} from '../../Main/MainView.css'
 
 
 const ActorWrite = () => {

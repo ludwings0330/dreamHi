@@ -5,8 +5,8 @@ import { BrowserRouter } from 'react-router-dom'
 import googleLogo from '../../img/btn_google_signin_light_normal_web@2x.png';
 import naverLogo from "../../img/btnG_완성형.png";
 import kakaoLogo from '../../img/kakao_login_large_narrow.png';
-import AppHeader from '../../components/Common/AppHeader';
-import AppFooter from '../../components/Common/AppFooter';
+import AppHeader from '../../components/Common/MainHeader';
+import AppFooter from '../../components/Common/MainFooter';
 
 class Login extends Component {
 

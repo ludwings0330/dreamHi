@@ -1,5 +1,5 @@
 import React from 'react';
-import AnnouncementListItem from '../components/Announcement/AnnouncementListItem';
+import AnnouncementListItem from './AnnouncementListItem';
 
 const AnnouncementListPage = () => {
   return (

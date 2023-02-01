@@ -1,5 +1,5 @@
 import React from 'react';
-import AnnouncementWriteItem from '../components/Announcement/AnnouncementWriteItem';
+import AnnouncementWriteItem from './AnnouncementWriteItem';
 
 function AnnouncementWritePage(props) {
   return (

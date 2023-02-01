@@ -2,8 +2,8 @@ import React from 'react';
 import "./Actor.css";
 import PageBar from '../Common/PageBar';
 import SearchBar from '../Common/SearchBar';
-import AppHeader from '../Common/AppHeader';
-import AppFooter from '../Common/AppFooter';
+import AppHeader from '../Common/MainHeader';
+import AppFooter from '../Common/MainFooter';
 
 const ActorList = () => {
     return (

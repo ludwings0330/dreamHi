@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AppMaker = () => {
+const ErrorPage = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const AppMaker = () => {
   );
 };
 
-export default AppMaker;
+export default ErrorPage;
