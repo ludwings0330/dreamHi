@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -65,6 +66,19 @@ public class ActorService {
             return true;
         }
         throw new VisibleException("비공개 프로필입니다.");
+    }
+
+    /**
+     * 배우 프로필 공개/비공개 전환 메소드
+     *
+     * @param id : userId
+     */
+    @Transactional
+    public void changeVisibleProfile(Long id) {
+        ActorProfile actorProfile = actorRepository.findByUser_Id(id).orElseThrow(() ->
+            new UsernameNotFoundException(id + " 유저가 존재하지 않습니다.")
+        );
+        actorProfile.changeVisible();
     }
 
 }
