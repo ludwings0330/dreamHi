@@ -39,7 +39,7 @@ function MainHeader() {
 
           <div className="header-top">
             <div>
-              <img src="img/logo.png" alt="DreamHi logo" className="header-logo" />
+              <img src='/img/logo.png' alt="DreamHi logo" className="header-logo" />
             </div>
             <div className="header-top-right">
 
