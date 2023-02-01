@@ -13,6 +13,7 @@ import com.elephant.dreamhi.utils.Response.Body;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -101,17 +102,21 @@ public class ProducerController {
     public ResponseEntity<Body> addProducerMember(@PathVariable Long producerId,
                                                   @PathVariable Long userId,
                                                   @RequestBody ProducerMemberDto requestDto,
-                                                  @AuthenticationPrincipal PrincipalDetails user) throws NotFoundException {
+                                                  @AuthenticationPrincipal PrincipalDetails user) throws NotFoundException, DuplicateKeyException {
         producerService.addProducerMember(producerId, userId, requestDto);
 
         return Response.create(HttpStatus.CREATED, "제작사 추가 성공");
     }
 
     @DeleteMapping("/api/producers/{producerId}/users/{userId}")
+    @PreAuthorize("@checker.hasEditorAuthority(#user, #producerId)")
     public ResponseEntity<Body> deleteProducerMember(@PathVariable Long producerId,
-                                                     @PathVariable Long userId) {
+                                                     @PathVariable Long userId,
+                                                     @AuthenticationPrincipal PrincipalDetails user) {
+        log.info("제작진 삭제 요청 - 요청자 : [{}]", user.getId());
         producerService.deleteProducerMember(producerId, userId);
-        return Response.ok();
+
+        return Response.create(HttpStatus.ACCEPTED, "제작진 삭제 성공");
     }
 
     @PutMapping("/api/producers/{producerId}/users/{userId}")

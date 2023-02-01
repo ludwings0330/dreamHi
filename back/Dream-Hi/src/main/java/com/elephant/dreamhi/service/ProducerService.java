@@ -146,8 +146,10 @@ public class ProducerService {
 
     @Transactional
     public void deleteProducerMember(Long producerId, Long userId) {
-        log.info("producerId=[{}], userId=[{}]", producerId, userId);
-        userProducerRelationRepository.deleteByProducer_IdAndUser_Id(producerId, userId);
+        final UserProducerRelation find = userProducerRelationRepository.findByProducer_IdAndUser_Id(producerId, userId)
+                                                                        .orElseThrow(() -> new NotFoundException("존재하지 않는 제작진입니다."));
+
+        userProducerRelationRepository.delete(find);
     }
 
     @Transactional
