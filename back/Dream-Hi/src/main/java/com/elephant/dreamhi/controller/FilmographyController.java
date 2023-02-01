@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.controller;
 
+import com.elephant.dreamhi.exception.NotFoundException;
 import com.elephant.dreamhi.model.dto.FilmographyRequestDto;
 import com.elephant.dreamhi.model.dto.FilmographyResponseDto;
 import com.elephant.dreamhi.security.PrincipalDetails;
@@ -7,10 +8,12 @@ import com.elephant.dreamhi.service.FilmographyService;
 import com.elephant.dreamhi.utils.Response;
 import com.elephant.dreamhi.utils.Response.Body;
 import java.util.List;
+import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -48,7 +51,7 @@ public class FilmographyController {
                                                     @PathVariable Long actorId,
                                                     @AuthenticationPrincipal PrincipalDetails user) {
         requestDto.setActorId(actorId);
-        filmographyService.addFilmography(requestDto);
+        filmographyService.addFilmography(user.getId(), requestDto);
 
         return Response.create(HttpStatus.CREATED, "필모그래피 추가 성공");
     }
@@ -59,7 +62,7 @@ public class FilmographyController {
                                                        @PathVariable Long producerId,
                                                        @AuthenticationPrincipal PrincipalDetails user) {
         requestDto.setProducerId(producerId);
-        filmographyService.addFilmography(requestDto);
+        filmographyService.addFilmography(user.getId(), requestDto);
 
         return Response.create(HttpStatus.CREATED, "필모그래피 추가 성공");
     }
@@ -88,11 +91,49 @@ public class FilmographyController {
         return Response.create(HttpStatus.ACCEPTED, "필모그래피 삭제 성공");
     }
 
-    @PutMapping("/api/filmographies/{filmographyId}")
-    public ResponseEntity<Body> updateFilmography(@PathVariable Long filmographyId,
-                                                  @RequestBody FilmographyRequestDto filmographyRequestDto) {
+    @PutMapping("/api/actors/{actorId}/filmographies/{filmographyId}")
+    @PreAuthorize("@checker.hasActorProfileAuthority(#user, #actorId)")
+    public ResponseEntity<Body> updateActorFilmography(@PathVariable Long filmographyId,
+                                                       @PathVariable Long actorId,
+                                                       @RequestBody FilmographyRequestDto filmographyRequestDto,
+                                                       @AuthenticationPrincipal PrincipalDetails user) {
         filmographyRequestDto.setFilmographyId(filmographyId);
         filmographyService.updateFilmography(filmographyRequestDto);
+
+        return Response.create(HttpStatus.ACCEPTED, "필모그래피 정보 수정 성공");
+    }
+
+    @PutMapping("/api/producers/{producerId}/filmographies/{filmographyId}")
+    @PreAuthorize("@checker.hasEditorAuthority(#user, #producerId)")
+    public ResponseEntity<Body> updateProducerFilmography(@PathVariable Long filmographyId,
+                                                          @PathVariable Long producerId,
+                                                          @RequestBody FilmographyRequestDto filmographyRequestDto,
+                                                          @AuthenticationPrincipal PrincipalDetails user) {
+        filmographyRequestDto.setFilmographyId(filmographyId);
+        filmographyService.updateFilmography(filmographyRequestDto);
+
+        return Response.create(HttpStatus.ACCEPTED, "필모그래피 정보 수정 성공");
+    }
+
+    @PostMapping("/api/filmographies")
+    public ResponseEntity<Body> addFilmography(@RequestBody FilmographyRequestDto requestDto,
+                                               @AuthenticationPrincipal PrincipalDetails user) throws AccessDeniedException, NotFoundException {
+        filmographyService.addFilmography(user.getId(), requestDto);
+
+        return Response.create(HttpStatus.CREATED, "필모그래피 생성 성공");
+    }
+
+    @DeleteMapping("/api/filmographies/{filmographyId}")
+    public ResponseEntity<Body> deleteFilmography(@RequestBody FilmographyRequestDto requestDto,
+                                                  @PathVariable @NotNull Long filmographyId,
+                                                  @AuthenticationPrincipal PrincipalDetails user) {
+        requestDto.setFilmographyId(filmographyId);
+        filmographyService.deleteFilmography(user.getId(), requestDto);
+
+        return Response.create(HttpStatus.ACCEPTED, "필모그래피 삭제 성공");
+    }
+
+    public ResponseEntity<Body> updateFilmography() {
         return Response.ok();
     }
 
