@@ -51,26 +51,20 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
     @Override
     @Transactional
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        log.info("PrincipalOAuth2UserService : userRequest => ", userRequest);
-        OAuth2User oAuth2User = super.loadUser(userRequest);
-        log.info("oAuth2Useruser => {}\t Attr : {}", oAuth2User, oAuth2User.getAttributes());
-        log.info("registrationId = {}", userRequest.getClientRegistration().getRegistrationId());
-        log.info("usernameAttributeName = {}", userRequest.getClientRegistration()
-                                                          .getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName());
+        OAuth2User oauth2User = super.loadUser(userRequest);
+        OAuth2UserInfo userInfo = getOAuth2UserInfo(userRequest, oauth2User);
 
-        OAuth2UserInfo userInfo = getOAuth2UserInfo(userRequest, oAuth2User);
-
-        return process(oAuth2User, userInfo);
+        return process(oauth2User, userInfo);
     }
 
     /**
      * 회원가입 or 로그인 수행 메소드
      *
-     * @param oAuth2User
+     * @param oauth2User
      * @param userInfo   : 인증 서버로부터 받은 사용자 정보
      * @return 권한 정보 담긴 Principal
      */
-    private PrincipalDetails process(OAuth2User oAuth2User, OAuth2UserInfo userInfo) {
+    private PrincipalDetails process(OAuth2User oauth2User, OAuth2UserInfo userInfo) {
         Optional<User> user = userRepository.findByEmail(userInfo.getEmail());
 
         boolean isNew = false;
@@ -86,15 +80,13 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
         }
 
         List<GrantedAuthority> authorities = getAuthorities(userEntity);
-        log.info("id : {}, name : {}, email : {}, phone : {}, role : {} ,authorities : {}", userEntity.getId()
-                , userEntity.getName(), userEntity.getEmail(), userEntity.getPhone(), userEntity.getRole(), authorities);
 
         return PrincipalDetails.builder()
                                .id(userEntity.getId())
                                .email(userEntity.getEmail())
                                .password(userEntity.getPassword())
                                .authorities(authorities)
-                               .attributes(oAuth2User.getAttributes())
+                               .attributes(oauth2User.getAttributes())
                                .isNew(isNew)
                                .build();
     }
@@ -108,10 +100,6 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
     private List<GrantedAuthority> getAuthorities(User userEntity) {
         List<GrantedAuthority> authorities = new ArrayList<>();
         List<UserProducerRelation> userProducerRelations = userProducerRelationRepository.findAllByUser_Id(userEntity.getId());
-        log.info("UserProducerRelations : {} ", userProducerRelations.size());
-        userProducerRelations.forEach(u -> {
-            log.info("userProdRelation => {}, {}, {}", u.getId(), u.getPosition(), u.getRole());
-        });
         authorities.add(new SimpleGrantedAuthority(String.valueOf(userEntity.getRole())));
         userProducerRelations.forEach(u -> {
             authorities.add(
@@ -125,15 +113,15 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
      * UserInfoFactory를 이용해 provider에 맞는 UserInfo 객체 가져오기.
      *
      * @param userRequest
-     * @param oAuth2User
+     * @param oauth2User
      * @return provider에 맞는 UserInfo 객체
      */
-    private static OAuth2UserInfo getOAuth2UserInfo(OAuth2UserRequest userRequest, OAuth2User oAuth2User) {
+    private static OAuth2UserInfo getOAuth2UserInfo(OAuth2UserRequest userRequest, OAuth2User oauth2User) {
         // provider type
         ProviderType providerType =
                 ProviderType.valueOf(userRequest.getClientRegistration().getRegistrationId().toUpperCase());
         // get userInfo from Factory
-        return OAuth2UserInfoFactory.getOAuth2UserInfo(providerType, oAuth2User.getAttributes());
+        return OAuth2UserInfoFactory.getOAuth2UserInfo(providerType, oauth2User.getAttributes());
     }
 
     /**

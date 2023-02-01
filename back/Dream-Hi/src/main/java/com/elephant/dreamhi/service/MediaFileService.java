@@ -12,15 +12,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class MediaFileService {
 
     private final ActorProfileMediaFileRepository actorProfileMediaFileRepository;
 
-    @Transactional(readOnly = true)
     public MediaFileDto findMediaFilesByActorProfileId(Long id) {
         List<ActorProfileMediaFile> mediaFiles = actorProfileMediaFileRepository.findAllByActorProfile_Id(id);
-        MediaFileDto response = new MediaFileDto(id, mediaFiles);
-        return response;
+        return new MediaFileDto(id, mediaFiles);
     }
 
 }

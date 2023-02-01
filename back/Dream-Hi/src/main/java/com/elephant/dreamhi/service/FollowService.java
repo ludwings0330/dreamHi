@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class FollowService {
 
     private final FollowRepository followRepository;
@@ -27,12 +28,10 @@ public class FollowService {
 
     private final AnnouncementRepository announcementRepository;
 
-    @Transactional(readOnly = true)
     public Long getFollowerCount(Long id) {
         return followRepository.countByActor_Id(id);
     }
 
-    @Transactional(readOnly = true)
     public Boolean checkFollow(FollowType type, Long id, Long followerId) {
         return followRepository.checkFollow(type, id, followerId).isPresent();
     }
@@ -61,8 +60,11 @@ public class FollowService {
     }
 
     @Transactional
-    public Boolean removeFollow(FollowType type, Long id, Long followerId) {
+    public Boolean removeFollow(FollowType type, Long id, Long followerId) throws IllegalArgumentException {
         int result = followRepository.deleteFollowWithCondition(type, id, followerId);
+        if(result != 1) {
+            throw new IllegalArgumentException("잘못된 접근입니다.");
+        }
         return false;
     }
 

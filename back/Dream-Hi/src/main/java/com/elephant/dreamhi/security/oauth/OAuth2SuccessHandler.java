@@ -4,7 +4,6 @@ import com.elephant.dreamhi.model.dto.TokenDto;
 import com.elephant.dreamhi.security.PrincipalDetails;
 import com.elephant.dreamhi.service.TokenService;
 import java.io.IOException;
-import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,11 +42,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         log.info("redirectUri : {}", redirectUrl);
 
         TokenDto tokenDto = null;
-        try {
-            tokenDto = tokenService.generateToken(authentication);
-        } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
-        }
+        tokenDto = tokenService.generateToken(authentication);
 
         log.info("{} 번 유저 token 발행 => Access Token = {} \t Refresh Token = {}", tokenDto.getId(), tokenDto.getAccessToken(),
                  tokenDto.getRefreshToken());
