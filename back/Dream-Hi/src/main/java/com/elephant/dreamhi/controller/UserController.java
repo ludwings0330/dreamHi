@@ -14,7 +14,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,7 +32,7 @@ public class UserController {
      * @return UserSimpleDto
      * @throws org.springframework.security.core.userdetails.UsernameNotFoundException : id 조회 결과 없을 시 발생
      */
-    @GetMapping("/api/me")
+    @GetMapping("/api/my")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<Body> findUserDetail(@AuthenticationPrincipal PrincipalDetails principalDetails) {
         UserSimpleDto userSimpleDto = userService.findUserSimple(principalDetails.getId());
@@ -43,15 +42,16 @@ public class UserController {
     /**
      * 메인 프로필 사진 변경 메소드
      *
-     * @param id         : userId
-     * @param pictureDto : PictureDTO
+     * @param principalDetails : 현재 접근중인 주체
+     * @param pictureDto       : PictureDTO
      * @return 200
      * @throws UsernameNotFoundException : userId에 해당하는 유저가 존재하지않은 경우 발생합니다.
      */
-    @PutMapping("/api/users/{id}/main-profile")
-    @PreAuthorize("hasRole('ROLE_USER') and principal.id == #id")
-    public ResponseEntity<Body> changeMainProfile(@PathVariable Long id, @RequestBody PictureDto pictureDto) throws UsernameNotFoundException {
-        userService.updateMainProfile(id, pictureDto);
+    @PutMapping("/api/my/main-profile")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<Body> changeMainProfile(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody PictureDto pictureDto)
+            throws UsernameNotFoundException {
+        userService.updateMainProfile(principalDetails.getId(), pictureDto);
         return Response.ok();
     }
 
