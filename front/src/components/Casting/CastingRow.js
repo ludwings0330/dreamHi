@@ -9,8 +9,11 @@ import './Casting.css'
 
 // modules
 import { Pagination, Keyboard, Navigation } from "swiper";
+import Button from '../Common/Button';
+import { useNavigate } from 'react-router-dom';
 
 function CastingRow(props) {
+  const navigate = useNavigate()
   // const dummydata = [
   //   {
   //     castingName: '학생',
@@ -64,7 +67,12 @@ function CastingRow(props) {
         </div>
         <div className="casting-right">
           <span>목록</span>
-          <span>전체보기 ∨</span>
+          <Button
+            title="전체 보기"
+            onClick={() => {
+              navigate("/casting/detail")
+            }}
+          />
         </div>
       </div>
       <div className="casting-swiper">
