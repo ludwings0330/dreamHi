@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.service;
 
+import com.elephant.dreamhi.exception.NotFoundException;
 import com.elephant.dreamhi.model.dto.FilmographyRequestDto;
 import com.elephant.dreamhi.model.dto.FilmographyResponseDto;
 import com.elephant.dreamhi.model.entity.ActorProfile;
@@ -36,15 +37,16 @@ public class FilmographyService {
                                                    .url(requestDto.getPhotoUrl())
                                                    .description(requestDto.getDescription()).build();
 
-        // 둘다 없으면 안돼
         if (requestDto.getActorId() != null) {
-            final ActorProfile actorProfile = actorRepository.findById(requestDto.getActorId()).orElseThrow();
+            final ActorProfile actorProfile = actorRepository.findById(requestDto.getActorId())
+                                                             .orElseThrow(() -> new NotFoundException("존재하지 않는 배우프로필입니다."));
             filmography.setActorProfile(actorProfile);
         } else if (requestDto.getProducerId() != null) {
-            final Producer producer = producerRepository.findById(requestDto.getProducerId()).orElseThrow();
+            final Producer producer = producerRepository.findById(requestDto.getProducerId())
+                                                        .orElseThrow(() -> new NotFoundException("존재하지 않는 제작사입니다."));
             filmography.setProducer(producer);
         } else {
-            throw new RuntimeException();
+            throw new IllegalArgumentException("배우 프로필 혹은 제작사 아이디가 필요합니다.");
         }
 
         filmographyRepository.save(filmography);
