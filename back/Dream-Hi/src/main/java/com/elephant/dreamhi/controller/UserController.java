@@ -15,7 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -49,10 +49,9 @@ public class UserController {
      * @return 200
      * @throws UsernameNotFoundException : userId에 해당하는 유저가 존재하지않은 경우 발생합니다.
      */
-    @PostMapping("/api/users/{id}/main-profile")
+    @PutMapping("/api/users/{id}/main-profile")
     @PreAuthorize("hasRole('ROLE_USER') and principal.id == #id")
     public ResponseEntity<Body> changeMainProfile(@PathVariable Long id, @RequestBody PictureDto pictureDto) throws UsernameNotFoundException {
-        log.info("id : {} picture : {}"  , id, pictureDto);
         userService.updateMainProfile(id, pictureDto);
         return Response.ok();
     }

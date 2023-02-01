@@ -46,7 +46,6 @@ public class UserServiceImpl implements UserService {
             return new UsernameNotFoundException(id + " 존재하지 않는 유저입니다.");
         });
 
-        log.info("user : {} {} {}", user.getId(), user.getName(), user.getEmail());
         user.setMainProfile(pictureDto);
     }
 
