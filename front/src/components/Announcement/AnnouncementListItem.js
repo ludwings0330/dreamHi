@@ -1,19 +1,16 @@
 import React from 'react';
-import Button from '../Common/Button';
-import { useNavigate } from 'react-router-dom';
+
 
 
 function AnnouncementListItem(props) {
-  const navigate = useNavigate();
+  const { announcement, onClick } = props;
+  // console.log(11111111111111111)
+  // console.log(announcement.result.list[0].title)
+
   return (
-    <div>
-      <h3>공고 리스트 아이템</h3>
-      <Button
-        title="글 작성하기"
-        onClick={() => {
-          navigate("/announcementwrite")
-        }}
-      />
+    <div onClick={onClick}>
+      <p>{announcement.result.list[0].title} </p>
+
 
 
     </div>

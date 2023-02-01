@@ -4,9 +4,10 @@ import AppHeader from './components/Common/AppHeader';
 import AppFooter from './components/Common/AppFooter';
 import AppMain from './pages/AppMain';
 import AppActor from './pages/AppActor';
-import AnnouncementListPage from './pages/AnnouncementListPage';
-import AnnouncementWritePage from './pages/AnnouncementWritePage';
-import AnnouncementDetailPage from './pages/AnnouncementDetailPage';
+import AnnouncementList from './components/Announcement/AnnouncementList';
+import AnnouncementWrite from './components/Announcement/AnnouncementWrite';
+import AnnouncementDetail from './components/Announcement/AnnouncementDetail';
+import AnnouncementPage from './pages/AnnouncementPage';
 
 
 
@@ -29,9 +30,10 @@ function App() {
         {/*<Route path="/" element={<Layout />}>*/}
           <Route index element={<AppMain />} />
           <Route path="/actor" element={<AppActor />} />
-          <Route path="/announcementlist" element={<AnnouncementListPage />} />
-          <Route path="/announcementwrite" element={<AnnouncementWritePage />} />
-          <Route path="/announcementdetail" element={<AnnouncementDetailPage />} />
+          <Route path="/announcement" element={<AnnouncementPage/>} />
+          <Route path="/announcement/list" element={<AnnouncementList />} />
+          <Route path="/announcement/write" element={<AnnouncementWrite />} />
+          <Route path="/announcement/:announcementId" element={<AnnouncementDetail />} />
 
 
 

@@ -1,0 +1,42 @@
+[
+  {
+  "message": "OK",
+  "result": {
+    "list": [
+      {
+        "id": "1",
+        "title": "공고 제목",
+        "producerName": "제작사 이름",
+        "states": "모집중|진행중|모집완료",
+        "isFollow": true,
+        "createDate": "2023-01-16",
+        "hit": 135,
+        "castings": [
+          {
+            "headCount": 4,
+            "name": "배역명"
+          }
+        ],
+        "state": "IN_PROGRESS|FINISH"
+      }
+    ],
+    "pageable": {
+      "sort": { "sorted": false, "unsorted": true, "empty": true },
+      "pageNumber": 0,
+      "pageSize": 4,
+      "offset": 0,
+      "paged": true,
+      "unpaged": false
+    },
+    "totalPages": 25,
+    "totalElements": 100,
+    "last": false,
+    "numberOfElements": 4,
+    "number": 3,
+    "sort": { "sorted": false, "unsorted": true, "empty": true },
+    "size": 4,
+    "first": false,
+    "empty": false
+    }
+  }
+]
