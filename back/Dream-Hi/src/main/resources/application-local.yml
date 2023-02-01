@@ -5,6 +5,11 @@ logging:
   level:
     com: debug
 
+messages:
+  basename: messages
+devtools:
+  livereload:
+    enabled: true
 spring:
   messages:
     basename: messages
