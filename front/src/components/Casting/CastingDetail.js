@@ -29,6 +29,8 @@ function CastingDetail(props) {
       .then((data) => setPosts(data))
   }, []);
 
+  console.log('11111111111')
+
   //
   // for (let dataCnt = 0; dataCnt < posts.length; dataCnt++ ) {
   //   setButtonState(buttonState, [...buttonState, 0])
