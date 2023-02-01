@@ -112,7 +112,7 @@ public class ProducerController {
     @PreAuthorize("@checker.hasEditorAuthority(#user, #producerId)")
     public ResponseEntity<Body> deleteProducerMember(@PathVariable Long producerId,
                                                      @PathVariable Long userId,
-                                                     @AuthenticationPrincipal PrincipalDetails user) {
+                                                     @AuthenticationPrincipal PrincipalDetails user) throws NotFoundException {
         log.info("제작진 삭제 요청 - 요청자 : [{}]", user.getId());
         producerService.deleteProducerMember(producerId, userId);
 
@@ -120,11 +120,18 @@ public class ProducerController {
     }
 
     @PutMapping("/api/producers/{producerId}/users/{userId}")
+    @PreAuthorize("@checker.hasEditorAuthority(#user, #producerId)")
     public ResponseEntity<Body> modifyProducerMemberInfo(@PathVariable Long producerId,
                                                          @PathVariable Long userId,
-                                                         @RequestBody ProducerMemberDto requestDto) {
+                                                         @RequestBody ProducerMemberDto requestDto,
+                                                         @AuthenticationPrincipal PrincipalDetails user) throws NotFoundException {
+        log.info("제작진 정보 수정 요청 {}, {}, 요청자 : {}", requestDto, userId, user.getId());
+
         producerService.modifyProducerMemberInfo(producerId, userId, requestDto);
-        return Response.ok();
+
+        log.info("제작진 정보 수정 성공");
+
+        return Response.create(HttpStatus.ACCEPTED, "제작진 정보 수정 성공");
     }
 
 }

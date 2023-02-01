@@ -145,7 +145,7 @@ public class ProducerService {
     }
 
     @Transactional
-    public void deleteProducerMember(Long producerId, Long userId) {
+    public void deleteProducerMember(Long producerId, Long userId) throws NotFoundException {
         final UserProducerRelation find = userProducerRelationRepository.findByProducer_IdAndUser_Id(producerId, userId)
                                                                         .orElseThrow(() -> new NotFoundException("존재하지 않는 제작진입니다."));
 
@@ -153,10 +153,12 @@ public class ProducerService {
     }
 
     @Transactional
-    public void modifyProducerMemberInfo(Long producerId, Long userId, ProducerMemberDto producerMemberDto) {
-        final UserProducerRelation userProducerRelation = userProducerRelationRepository.findByProducer_IdAndUser_Id(producerId, userId)
-                                                                                        .orElseThrow();
-        userProducerRelation.changePosition(producerMemberDto.getPosition());
+    public void modifyProducerMemberInfo(Long producerId, Long userId, ProducerMemberDto producerMemberDto) throws NotFoundException {
+        UserProducerRelation userProducerRelation = userProducerRelationRepository.findByProducer_IdAndUser_Id(producerId, userId)
+                                                                                  .orElseThrow(() -> new NotFoundException("존재하지 않는 제작진입니다."));
+
+        userProducerRelation.changeInfo(producerMemberDto);
+
     }
 
     public boolean hasEditorAuthority(Long userId, Long producerId) {
