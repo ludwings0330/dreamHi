@@ -19,7 +19,6 @@ import com.elephant.dreamhi.repository.UserRepository;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
@@ -113,10 +112,10 @@ public class ProducerService {
     }
 
     public List<ProducerMemberDto> findMembersByProducerId(Long producerId) {
-        return producerRepository.findMembersByProducerId(producerId)
-                                 .stream()
-                                 .map(ProducerMemberDto::new)
-                                 .collect(Collectors.toList());
+        producerRepository.findById(producerId)
+                          .orElseThrow(() -> new NotFoundException("존재하지 않는 제작사입니다."));
+
+        return producerRepository.findMembersByProducerId(producerId);
     }
 
     @Transactional

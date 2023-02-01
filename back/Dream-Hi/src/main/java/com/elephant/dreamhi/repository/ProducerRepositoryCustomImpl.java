@@ -6,8 +6,8 @@ import static com.elephant.dreamhi.model.entity.QUser.user;
 import static com.elephant.dreamhi.model.entity.QUserProducerRelation.userProducerRelation;
 
 import com.elephant.dreamhi.model.dto.ProducerListResponseDto;
+import com.elephant.dreamhi.model.dto.ProducerMemberDto;
 import com.elephant.dreamhi.model.dto.ProducerSearchCondition;
-import com.elephant.dreamhi.model.entity.UserProducerRelation;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
@@ -45,10 +45,13 @@ public class ProducerRepositoryCustomImpl implements ProducerRepositoryCustom {
     }
 
     @Override
-    public List<UserProducerRelation> findMembersByProducerId(Long producerId) {
-        return queryFactory.select(userProducerRelation)
+    public List<ProducerMemberDto> findMembersByProducerId(Long producerId) {
+        return queryFactory.select(Projections.fields(ProducerMemberDto.class,
+                                                      user.name,
+                                                      user.picture.url.as("pictureUrl"),
+                                                      userProducerRelation.position))
                            .from(userProducerRelation)
-                           .join(userProducerRelation.user, user).fetchJoin()
+                           .join(userProducerRelation.user, user)
                            .where(userProducerRelation.producer.id.eq(producerId)).fetch();
     }
 

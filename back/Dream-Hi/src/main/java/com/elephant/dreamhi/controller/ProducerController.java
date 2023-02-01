@@ -93,8 +93,13 @@ public class ProducerController {
 
     @GetMapping("/api/producers/{producerId}/users")
     public ResponseEntity<Body> findMembersByProducerId(@PathVariable Long producerId) {
+        log.info("제작진 목록 조회 요청 - producerId : [{}]", producerId);
+
         List<ProducerMemberDto> result = producerService.findMembersByProducerId(producerId);
-        return Response.create(HttpStatus.OK, "ok", result);
+
+        log.info("제작진 목록 조회 성공");
+
+        return Response.create(HttpStatus.OK, "제작진 목록 조회 성공", result);
     }
 
     @PostMapping("/api/producers/{producerId}/users/{userId}")
