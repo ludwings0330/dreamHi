@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.model.entity;
 
+import com.elephant.dreamhi.model.dto.PictureDto;
 import com.elephant.dreamhi.model.statics.UserRole;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,5 +55,9 @@ public class User {
     private UserRole role;
     @Embedded
     private Picture picture;
+
+    public void setMainProfile(PictureDto pictureDto) {
+        this.picture.updatePicture(pictureDto);
+    }
 
 }
