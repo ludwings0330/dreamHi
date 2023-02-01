@@ -34,7 +34,7 @@ public class FollowController {
      * @param principalDetails : 현재 접근중인 주체
      * @return 나를 팔로우하는 사람 수
      */
-    @GetMapping("/api/my-followers")
+    @GetMapping("/api/my/followers")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<Body> getFollowerCount(@AuthenticationPrincipal PrincipalDetails principalDetails) {
         Long response = followService.getFollowerCount(principalDetails.getId());
