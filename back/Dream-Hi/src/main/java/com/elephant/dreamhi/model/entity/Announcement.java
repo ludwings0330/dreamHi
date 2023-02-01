@@ -1,9 +1,6 @@
 package com.elephant.dreamhi.model.entity;
 
-import com.elephant.dreamhi.model.dto.AnnouncementDetailDto;
-import com.elephant.dreamhi.model.dto.AnnouncementDetailDto.AnnouncementDetailDtoBuilder;
 import java.time.LocalDateTime;
-import java.util.Optional;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -81,32 +78,5 @@ public class Announcement extends BaseTimeEntity {
     }
 
     // 편의 메소드
-
-    /**
-     * @param follow 현재 로그인한 유저가 이 공고를 팔로우 했는지에 대한 정보
-     * @return 공고 상세 DTO
-     */
-    public AnnouncementDetailDto toAnnouncementDetailDto(Optional<Follow> follow) {
-        AnnouncementDetailDtoBuilder dtoBuilder = AnnouncementDetailDto.builder()
-                                                                     .id(this.id)
-                                                                     .title(this.title)
-                                                                     .producer(this.producer.toProducerAnnouncementDto())
-                                                                     .payment(this.payment)
-                                                                     .crankPeriod(this.crankPeriod)
-                                                                     .endDate(this.endDate)
-                                                                     .description(this.description)
-                                                                     .hit(this.hit)
-                                                                     .isFollowed(Boolean.FALSE);
-
-        if (this.picture != null) {
-            dtoBuilder.pictureUrl(this.picture.getUrl());
-        }
-
-        if (follow.isPresent()) {
-            dtoBuilder.isFollowed(Boolean.TRUE);
-        }
-
-        return dtoBuilder.build();
-    }
 
 }

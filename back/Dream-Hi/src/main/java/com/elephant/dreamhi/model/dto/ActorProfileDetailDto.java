@@ -10,8 +10,6 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Data
 @AllArgsConstructor
@@ -41,34 +39,22 @@ public class ActorProfileDetailDto {
     private String title;
 
     private Boolean visible;
+
     private List<StyleDto> styles = new ArrayList<>();
 
     public ActorProfileDetailDto(ActorProfile actorProfile) {
-
         User user = actorProfile.getUser();
-
         this.userId = user.getId();
-
         this.email = user.getEmail();
-
         this.name = user.getName();
-
         this.phone = user.getPhone();
-
         this.picrtureUrl = user.getPicture() == null ? null : user.getPicture().getUrl();
-
         this.actorProfileId = actorProfile.getId();
-
         this.title = actorProfile.getTitle();
-
         this.age = actorProfile.getAge();
-
         this.gender = actorProfile.getGender();
-
         this.height = actorProfile.getHeight();
-
         this.description = actorProfile.getDescription();
-
         this.visible = actorProfile.getVisible();
 
         for (ActorStyleRelation actorStyleRelation :
@@ -80,16 +66,6 @@ public class ActorProfileDetailDto {
                                          .build();
             this.styles.add(dto);
         }
-    }
-
-    @Builder
-    @Getter
-    @Setter
-    static class StyleDto {
-
-        private Long id;
-        private String description;
-
     }
 
 }

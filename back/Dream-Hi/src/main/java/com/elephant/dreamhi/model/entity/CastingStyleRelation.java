@@ -38,14 +38,8 @@ public class CastingStyleRelation {
     }
 
     public void setCasting(Casting casting) {
-        if (this.casting != null) {
-            this.casting.getCastingStyleRelations().remove(this);
-        }
-
         this.casting = casting;
-        if (!this.casting.getCastingStyleRelations().contains(this)) {
-            casting.addCastingStyleRelation(this);
-        }
+        casting.addCastingStyleRelation(this);
     }
 
 }

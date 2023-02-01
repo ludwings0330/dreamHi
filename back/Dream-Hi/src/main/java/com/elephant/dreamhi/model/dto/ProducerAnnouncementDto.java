@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.model.dto;
 
+import com.elephant.dreamhi.model.entity.Producer;
 import java.util.Objects;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -18,6 +19,13 @@ public class ProducerAnnouncementDto {
 
     @NotNull
     private String name;
+
+    public static ProducerAnnouncementDto entityToDto(Producer producer) {
+        return ProducerAnnouncementDto.builder()
+                                      .id(producer.getId())
+                                      .name(producer.getName())
+                                      .build();
+    }
 
     @Override
     public boolean equals(Object o) {
