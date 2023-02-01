@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class FilmographyService {
 
     private final ActorRepository actorRepository;
@@ -28,25 +29,21 @@ public class FilmographyService {
         return filmographyRepositoryCustom.findFilmographyByCondition(requestDto);
     }
 
+    @Transactional
     public void addFilmography(FilmographyRequestDto requestDto) {
+        // actorProfile 혹은 Producer 찾아서 넣기.
 
-        final Filmography filmography = Filmography.builder()
-                                                   .title(requestDto.getTitle())
-                                                   .originName(requestDto.getOriginName())
-                                                   .savedName(requestDto.getSavedName())
-                                                   .url(requestDto.getPhotoUrl())
-                                                   .description(requestDto.getDescription()).build();
+        Filmography filmography = new Filmography();
+        filmography.updateInfo(requestDto);
 
         if (requestDto.getActorId() != null) {
-            final ActorProfile actorProfile = actorRepository.findById(requestDto.getActorId())
-                                                             .orElseThrow(() -> new NotFoundException("존재하지 않는 배우프로필입니다."));
+            ActorProfile actorProfile = actorRepository.findById(requestDto.getActorId())
+                                                       .orElseThrow(() -> new NotFoundException("배우 프로필을 찾을 수 없습니다."));
             filmography.setActorProfile(actorProfile);
         } else if (requestDto.getProducerId() != null) {
-            final Producer producer = producerRepository.findById(requestDto.getProducerId())
-                                                        .orElseThrow(() -> new NotFoundException("존재하지 않는 제작사입니다."));
+            Producer producer = producerRepository.findById(requestDto.getProducerId())
+                                                  .orElseThrow(() -> new NotFoundException("제작사를 찾을 수 없습니다."));
             filmography.setProducer(producer);
-        } else {
-            throw new IllegalArgumentException("배우 프로필 혹은 제작사 아이디가 필요합니다.");
         }
 
         filmographyRepository.save(filmography);

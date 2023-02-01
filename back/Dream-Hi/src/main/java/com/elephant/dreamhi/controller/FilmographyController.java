@@ -10,6 +10,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,21 +25,30 @@ import org.springframework.web.bind.annotation.RestController;
 public class FilmographyController {
 
     private final FilmographyService filmographyService;
-
+    
     @GetMapping("/api/filmographies")
     public ResponseEntity<Body> findFilmographies(@RequestBody FilmographyRequestDto requestDto) {
         final List<FilmographyResponseDto> responseDto = filmographyService.findFilmographies(requestDto);
         return Response.create(HttpStatus.OK, "ok", responseDto);
     }
 
-    @PostMapping("/api/filmographies")
-    public ResponseEntity<Body> addFilmography(@RequestBody FilmographyRequestDto requestDto,
-                                               @AuthenticationPrincipal PrincipalDetails user) {
-        // 필모그래피 수정 권한이 있는지 확인
+    @PostMapping("/api/actors/{actorId}/filmographies")
+    @PreAuthorize("@checker.hasActorProfileAuthority(#user, #actorId)")
+    public ResponseEntity<Body> addActorFilmography(@RequestBody FilmographyRequestDto requestDto,
+                                                    @PathVariable Long actorId,
+                                                    @AuthenticationPrincipal PrincipalDetails user) {
+        requestDto.setActorId(actorId);
+        filmographyService.addFilmography(requestDto);
 
-        // 수정권한이 없으면 forbidden
+        return Response.create(HttpStatus.CREATED, "필모그래피 추가 성공");
+    }
 
-        // 수정 권한이 있으면 수정
+    @PostMapping("/api/producers/{producerId}/filmographies")
+    @PreAuthorize("@checker.hasEditorAuthority(#user, #producerId)")
+    public ResponseEntity<Body> addProducerFilmography(@RequestBody FilmographyRequestDto requestDto,
+                                                       @PathVariable Long producerId,
+                                                       @AuthenticationPrincipal PrincipalDetails user) {
+        requestDto.setProducerId(producerId);
         filmographyService.addFilmography(requestDto);
 
         return Response.create(HttpStatus.CREATED, "필모그래피 추가 성공");
