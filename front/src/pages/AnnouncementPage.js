@@ -3,8 +3,7 @@ import AnnouncementList from '../components/Announcement/AnnouncementList';
 import Button from '../components/Common/Button';
 import { useNavigate } from 'react-router-dom';
 import AnnouncementData from '../dummydata/announcementData.json';
-import AppHeader from '../components/Common/AppHeader';
-import AppFooter from '../components/Common/AppFooter';
+import Layout from '../components/Common/Layout';
 
 
 console.log('여기는 공고 여기는 공고')
@@ -15,8 +14,7 @@ function AnnouncementPage(props) {
   console.log(announcements[0].result.list[0].title);
   console.log(announcements[0].result.list[0].id);*/
   return (
-    <div>
-      <AppHeader />
+    <Layout>
       <Button
         title="글 작성하기"
         onClick={() => {
@@ -31,11 +29,9 @@ function AnnouncementPage(props) {
           navigate(`/announcement/${item.result.list[0].id}`);
         }}
       />
-
-      <AppFooter />
-
-    </div>
+    </Layout>
   );
 }
+
 
 export default AnnouncementPage;

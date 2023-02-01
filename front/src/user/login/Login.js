@@ -5,8 +5,6 @@ import { BrowserRouter } from 'react-router-dom'
 import googleLogo from '../../img/btn_google_signin_light_normal_web@2x.png';
 import naverLogo from "../../img/btnG_완성형.png";
 import kakaoLogo from '../../img/kakao_login_large_narrow.png';
-import AppHeader from '../../components/Common/MainHeader';
-import AppFooter from '../../components/Common/MainFooter';
 
 class Login extends Component {
 
@@ -21,14 +19,12 @@ class Login extends Component {
 
     return (
       <div>
-        <AppHeader />
         <div className="login-container">
         <div className="login-content">
           <h1 className="login-title">소셜로그인</h1>
           <SocialLogin />
         </div>
       </div>
-        <AppFooter />
       </div>
     );
   }

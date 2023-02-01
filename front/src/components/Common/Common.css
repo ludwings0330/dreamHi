@@ -28,9 +28,11 @@
 
 .footer-body {
     width: 100%;
+    height: 100px;
     display: flex;
-    position: relative;
+    position: fixed;
     bottom: 0;
+    left: 0;
     justify-content: space-between;
 }
 

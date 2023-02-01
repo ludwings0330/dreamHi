@@ -21,15 +21,6 @@ import { CgProfile } from "react-icons/cg";
 // css
 import "./Common.css"
 import "bootstrap/scss/bootstrap.scss";
-import { Link } from 'react-router-dom';
-import AnnouncementListPage from '../Announcement/AnnouncementListPage';
-import ActorPage from '../../pages/ActorPage';
-import AppMain from '../../pages/MainPage';
-import MakerPage from '../../pages/MakerPage';
-import AnnouncementList from '../Announcement/AnnouncementList';
-import AppActor from '../../pages/AppActor';
-import AppMain from '../../pages/AppMain';
-import AppMaker from '../../pages/AppMaker';
 
 
 function MainHeader() {
@@ -42,9 +33,16 @@ function MainHeader() {
         <div>
 
           <div className="header-top">
+
+
             <div>
-              <img src='/img/logo.png' alt="DreamHi logo" className="header-logo" />
+              <img title="home"
+                   onClick={() => {
+                     navigate("/")
+                   }} src= {'/img/logo.png'} alt="DreamHi logo" className="header-logo" />
             </div>
+
+
             <div className="header-top-right">
 
 

@@ -14,9 +14,6 @@
     border: 1px solid #D2E1FF;
     border-radius: 20px;
 }
-.actor_img_div{
-    text-align: center;
-}
 .actor_img{
     max-width:95%;
     max-height:100%;
@@ -37,23 +34,4 @@
     display: block;
     text-align: center;
     padding: 20%;
-}
-
-.actor-introduce {
-    width: 80%;
-    font-size : 1.1rem;
-}
-
-.actor-img-place{
-    float: left;
-    width: 30%;
-    height: 150px;
-    border: 1px solid black;
-}
-
-.actor-info {
-    float: right;
-    width: 65%;
-    height: 150px;
-    border: 1px solid black;
 }

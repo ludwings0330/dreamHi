@@ -1,10 +1,14 @@
 import React from 'react';
+import MakerList from '../components/Maker/MakerList';
+import MainHeader from '../components/Common/MainHeader';
+import MainFooter from '../components/Common/MainFooter';
+import Layout from '../components/Common/Layout';
 
 const MakerPage = () => {
   return (
-    <div>
-      <h1>제작사페이지 입니다</h1>
-    </div>
+    <Layout>
+      <MakerList />
+    </Layout>
   );
 };
 
