@@ -18,7 +18,6 @@ import com.elephant.dreamhi.repository.UserProducerRelationRepository;
 import com.elephant.dreamhi.repository.UserRepository;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -81,12 +80,10 @@ public class ProducerService {
     }
 
     @Transactional
-    public void updateProducerInfo(Long producerId, ProducerUpdateRequestDto producerDto) {
-        final Optional<Producer> byId = producerRepository.findById(producerId);
-        final Producer producer = byId.orElseThrow();
+    public void updateProducerInfo(Long producerId, ProducerUpdateRequestDto producerDto) throws NotFoundException {
+        Producer producer = producerRepository.findById(producerId)
+                                              .orElseThrow(() -> new NotFoundException("제작사가 존재하지 않습니다."));
 
-        log.info("producer : {}, {}, {}", producer.getId(), producer.getDescription(), producer.getPicture().getUrl());
-        log.info("producer Dto : {}", producerDto);
         producer.updateInfo(producerDto);
     }
 

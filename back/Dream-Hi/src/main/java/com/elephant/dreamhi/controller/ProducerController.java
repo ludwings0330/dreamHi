@@ -22,6 +22,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -37,7 +38,7 @@ public class ProducerController {
     private final ProducerService producerService;
 
     @GetMapping("/api/producers")
-    public ResponseEntity<Body> getAllProducers(@RequestBody ProducerSearchCondition condition,
+    public ResponseEntity<Body> getAllProducers(@ModelAttribute ProducerSearchCondition condition,
                                                 @AuthenticationPrincipal PrincipalDetails user,
                                                 @PageableDefault Pageable pageable) {
         condition.setUserId(user.getId());
@@ -62,10 +63,13 @@ public class ProducerController {
     }
 
     @PutMapping("/api/producers/{producerId}")
+    @PreAuthorize("@checker.hasEditorAuthority(#user, #producerId)")
     public ResponseEntity<Body> updateProducerInfo(@PathVariable Long producerId,
-                                                   @RequestBody ProducerUpdateRequestDto producerDto) {
+                                                   @RequestBody ProducerUpdateRequestDto producerDto,
+                                                   @AuthenticationPrincipal PrincipalDetails user) throws NotFoundException {
         producerService.updateProducerInfo(producerId, producerDto);
-        return Response.ok();
+
+        return Response.create(HttpStatus.ACCEPTED, "제작사 업데이트 완료");
     }
 
     @PostMapping("/api/producers")
