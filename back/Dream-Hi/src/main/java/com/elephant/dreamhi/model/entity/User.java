@@ -1,8 +1,7 @@
 package com.elephant.dreamhi.model.entity;
 
+import com.elephant.dreamhi.model.dto.PictureDto;
 import com.elephant.dreamhi.model.statics.UserRole;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -65,5 +64,9 @@ public class User {
 
     @Embedded
     private Picture picture;
+
+    public void setMainProfile(PictureDto pictureDto) {
+        this.picture.updatePicture(pictureDto);
+    }
 
 }
