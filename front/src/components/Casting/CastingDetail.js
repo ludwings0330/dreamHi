@@ -46,6 +46,7 @@ function CastingDetail(props) {
       .then((data) => setPosts(data))
   }, []);
 
+<<<<<<< HEAD
 
   //
   // for (let dataCnt = 0; dataCnt < posts.length; dataCnt++ ) {
@@ -77,6 +78,9 @@ function CastingDetail(props) {
 >>>>>>> 8a83d16 (Feat: CastingDetail.js 유저 카드 프로필, 버튼 추가)
   }, []);
 >>>>>>> d62a71c (:sparkles: Feat: 지원자 목록 페이지 map 구현 / 버튼 미작동)
+=======
+  console.log('11111111111')
+>>>>>>> 10567b6 (:sparkles: Feat: 오디션 진행 페이지 추가)
 
   //
   // for (let dataCnt = 0; dataCnt < posts.length; dataCnt++ ) {
