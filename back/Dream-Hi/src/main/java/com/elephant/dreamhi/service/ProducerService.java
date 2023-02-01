@@ -11,6 +11,7 @@ import com.elephant.dreamhi.model.entity.Producer;
 import com.elephant.dreamhi.model.entity.User;
 import com.elephant.dreamhi.model.entity.UserProducerRelation;
 import com.elephant.dreamhi.model.statics.ProducerRole;
+import com.elephant.dreamhi.repository.AuthRepository;
 import com.elephant.dreamhi.repository.FollowRepository;
 import com.elephant.dreamhi.repository.ProducerRepository;
 import com.elephant.dreamhi.repository.UserProducerRelationRepository;
@@ -36,6 +37,7 @@ public class ProducerService {
 
     private final ProducerRepository producerRepository;
     private final FollowRepository followRepository;
+    private final AuthRepository authRepository;
     private final UserProducerRelationRepository userProducerRelationRepository;
     private final UserRepository userRepository;
 
@@ -153,6 +155,12 @@ public class ProducerService {
         final UserProducerRelation userProducerRelation = userProducerRelationRepository.findByProducer_IdAndUser_Id(producerId, userId)
                                                                                         .orElseThrow();
         userProducerRelation.changePosition(producerMemberDto.getPosition());
+    }
+
+    public boolean hasEditorAuthority(Long userId, Long producerId) {
+        ProducerRole role = authRepository.findRoleByUser_IdAndProducer_Id(userId, producerId)
+                                          .orElseGet(() -> ProducerRole.MEMBER);
+        return role.equals(ProducerRole.EDITOR);
     }
 
 }

@@ -78,7 +78,7 @@ public class ProducerController {
     }
 
     @DeleteMapping("/api/producers/{producerId}")
-    @PreAuthorize("@checker.hasEditorAuthority(authentication, #producerId)")
+    @PreAuthorize("@checker.hasEditorAuthority(#user, #producerId)")
     public ResponseEntity<Body> deleteProducer(@PathVariable Long producerId,
                                                @AuthenticationPrincipal PrincipalDetails user) throws NotFoundException {
         producerService.deleteProducer(producerId);
