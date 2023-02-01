@@ -12,4 +12,6 @@ public interface ActorRepositoryCustom {
 
     Page<ActorProfile> findActorSimpleProfiles(ActorSearchCondition condition, Pageable pageable);
 
+    Optional<ActorProfile> checkValidateModify(Long id, Long userId);
+
 }
