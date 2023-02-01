@@ -160,10 +160,4 @@ public class ProducerService {
 
     }
 
-    public boolean hasEditorAuthority(Long userId, Long producerId) {
-        ProducerRole role = authRepository.findRoleByUser_IdAndProducer_Id(userId, producerId)
-                                          .orElseGet(() -> ProducerRole.MEMBER);
-        return role.equals(ProducerRole.EDITOR);
-    }
-
 }

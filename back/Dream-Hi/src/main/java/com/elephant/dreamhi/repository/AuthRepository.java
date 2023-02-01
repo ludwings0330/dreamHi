@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.repository;
 
+import static com.elephant.dreamhi.model.entity.QActorProfile.actorProfile;
 import static com.elephant.dreamhi.model.entity.QUserProducerRelation.userProducerRelation;
 
 import com.elephant.dreamhi.model.statics.ProducerRole;
@@ -21,6 +22,15 @@ public class AuthRepository {
                                                      userProducerRelation.producer.id.eq(producerId))
                                               .fetchOne();
         return Optional.ofNullable(role);
+    }
+
+    public Optional<Long> findActorProfileByUserId(Long userId) {
+        Long fetchOne = queryFactory.select(actorProfile.id)
+                                    .from(actorProfile)
+                                    .where(actorProfile.user.id.eq(userId))
+                                    .fetchOne();
+
+        return Optional.ofNullable(fetchOne);
     }
 
 }
