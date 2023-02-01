@@ -3,11 +3,13 @@ import React from 'react';
 
 
 function AnnouncementListItem(props) {
-  const { announcement } = props;
+  const { announcement, onClick } = props;
+  // console.log(11111111111111111)
+  // console.log(announcement.result.list[0].title)
 
   return (
-    <div>
-      <p>{announcement[0].result.list[0].title} </p>
+    <div onClick={onClick}>
+      <p>{announcement.result.list[0].title} </p>
 
 
 

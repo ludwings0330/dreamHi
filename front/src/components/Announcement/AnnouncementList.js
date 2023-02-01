@@ -2,19 +2,24 @@ import React from 'react';
 import AnnouncementListItem from './AnnouncementListItem';
 
 function AnnouncementList(props) {
-  const { announcements } = props;
+  const { announcements, onClickItem } = props;
 
   return (
     <div>
       <h2> 공고리스트페이지 </h2>
-      {announcements.map((announcement, index) => {
+      {announcements.map(function(announcement, index){
+        // console.log(announcements[0].result.list[0].id)
+        console.log(123455555555555555)
+        console.log(announcement.result.list[0].id)
+        console.log(123455555555555555)
         return (
+
           <AnnouncementListItem
-            key = {announcement[0].result.list[0].id}
+            key = {announcements[0].result.list[0].id}
             announcement={announcement}
-            // onClick={() => {
-            //   onClickItem(announcement);
-            // }}
+            onClick={() => {
+              onClickItem(announcement);
+            }}
           />
         )
         }

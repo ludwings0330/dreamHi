@@ -1,0 +1,18 @@
+{
+  "message": "OK",
+  "result": {
+    "id": 1,
+    "title": "작품명",
+    "producer": {
+      "id": 55,
+      "name": "제작사 이름"
+    },
+    "payment": "협의 후 결정",
+    "crankPeriod": "6개월 예정",
+    "endDate": "2023.02.28",
+    "hit": 150,
+    "description" : "상세 설명",
+    "url": "공고 대표 사진이 저장된 위치",
+    "isFollowed": false
+  }
+}
