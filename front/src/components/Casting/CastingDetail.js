@@ -15,18 +15,44 @@ import {
 } from 'reactstrap';
 
 function CastingDetail(props) {
-  const [rSelected, setRSelected] = useState(null);
+  const [rSelected, setRSelected] = useState();
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
 
   const limit = 8
   const offset = (page - 1) * limit
+  // const [buttonState, setButtonState] = useState([0]);
 
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/posts")
       .then((res) => res.json())
-      .then((data) => setPosts(data));
+      .then((data) => setPosts(data))
   }, []);
+
+  //
+  // for (let dataCnt = 0; dataCnt < posts.length; dataCnt++ ) {
+  //   setButtonState(buttonState, [...buttonState, 0])
+  // }
+  //
+  //
+  //
+
+  //
+  //
+  // useEffect(() => {
+  //   setRSelected(buttonState)
+  //
+  // }, [buttonState]);
+  //
+  // function setButton(e, btn) {
+  //   let copy = [...rSelected]
+  //   rSelected[e] = btn
+  //
+  //   setRSelected(copy)
+  // }
+
+  console.log(posts)
+
 
   return (
     <div className="casting-body">
