@@ -16,9 +16,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,4 +46,16 @@ public class ActorController {
         return Response.create(HttpStatus.OK, HttpStatus.OK.name(), responseDto);
     }
 
+    /**
+     * 배우 프로필 공개/비공개 전환 메소드
+     *
+     * @param principalDetails : 현재 접근중인 주체
+     * @return 200
+     * */
+    @PutMapping("/api/my/actor-profile/disclosure")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<Body> changeVisibleProfile(@AuthenticationPrincipal PrincipalDetails principalDetails) {
+        actorService.changeVisibleProfile(principalDetails.getId());
+        return Response.ok();
+    }
 }
