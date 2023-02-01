@@ -63,6 +63,15 @@ public class ActorRepositoryCustomImpl implements ActorRepositoryCustom {
         return PageableExecutionUtils.getPage(contents, pageable, () -> query.fetch().size());
     }
 
+    @Override
+    public Optional<ActorProfile> checkValidateModify(Long id, Long userId) {
+        return Optional.ofNullable(jpaQueryFactory.selectFrom(actorProfile)
+                                                  .where(actorProfile.id.eq(id),
+                                                         actorProfile.user.id.eq(userId))
+                                                  .fetchOne()
+        );
+    }
+
     private BooleanExpression followEq(Boolean isFollow, Long id) {
         if (isFollow == null || !isFollow) {
             return null;
