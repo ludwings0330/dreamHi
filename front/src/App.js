@@ -1,5 +1,5 @@
-import React from "react";
-import {  Route, Routes } from "react-router-dom";
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 import MainPage from './pages/MainPage';
 import ActorPage from './pages/ActorPage';
 import MakerPage from './pages/MakerPage';
@@ -16,8 +16,10 @@ import LoginPage from './pages/Login/LoginPage';
 import AuditionPage from './pages/AuditionPage';
 import AuditionMeeting from './components/Audition/AuditionMeeting';
 
-
 function App() {
+
+
+
   return (
     <div className="app">
       <Routes>
