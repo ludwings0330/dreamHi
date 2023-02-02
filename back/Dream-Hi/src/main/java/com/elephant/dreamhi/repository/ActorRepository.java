@@ -10,4 +10,6 @@ public interface ActorRepository extends JpaRepository<ActorProfile, Long>, Acto
 
     Optional<ActorProfile> findByUser_Id(Long id);
 
+    Optional<ActorProfile> findByIdAndUser_Id(Long id, Long userId);
+
 }
