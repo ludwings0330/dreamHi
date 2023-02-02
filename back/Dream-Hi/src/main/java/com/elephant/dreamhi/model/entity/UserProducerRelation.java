@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.model.entity;
 
+import com.elephant.dreamhi.model.dto.ProducerMemberDto;
 import com.elephant.dreamhi.model.statics.ProducerRole;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -58,8 +59,14 @@ public class UserProducerRelation {
         this.user = user;
     }
 
-    public void changePosition(String position) {
-        this.position = position;
+    public void changeInfo(ProducerMemberDto info) {
+        if (info.getPosition() != null) {
+            this.position = info.getPosition();
+        }
+
+        if (info.getRole() != null) {
+            this.role = info.getRole();
+        }
     }
 
 }
