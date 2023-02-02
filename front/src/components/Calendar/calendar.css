@@ -1,0 +1,15 @@
+.react-datepicker__input-container {
+    left: 50%;
+}
+
+.react-datepicker-popper {
+    left: 4% !important;
+}
+
+.calendar-text-container {
+    text-align: center;
+}
+
+.calendar-selected {
+    margin-bottom: 10px;
+}

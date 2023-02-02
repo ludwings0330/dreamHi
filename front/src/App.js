@@ -13,6 +13,7 @@ import ActorList from './components/Actor/ActorList';
 import ActorDetail from './components/Actor/ActorDetail';
 import ActorWrite from './components/Actor/ActorWrite';
 import LoginPage from './pages/Login/LoginPage';
+import AuditionPage from './pages/AuditionPage';
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
         //채용페이지 관련 이동
         <Route path="/casting" element={<CastingPage />} />
         <Route path="/casting/detail" element={<CastingDetail />} />
+        <Route path="/casting/audition" element={<AuditionPage />} />
 
 
         //배우페이지 관련 이동

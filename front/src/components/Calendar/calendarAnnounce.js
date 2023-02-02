@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import { ko } from 'date-fns/esm/locale'
+
+import './calendar.css'
 import "react-datepicker/dist/react-datepicker.css";
 
 function CalendarAnnounce(props) {
@@ -52,7 +54,7 @@ function CalendarAnnounce(props) {
 
 
   return (
-    <div>
+    <div className="calendar-body">
       <DatePicker
         locale={ko}
         selected={null}
@@ -67,10 +69,11 @@ function CalendarAnnounce(props) {
         maxTime={new Date().setHours(22, 0, 0, 0)}
         minDate={new Date()}
       />
-      <div>
+      <div className="calendar-text-container">
+        선택한 시간:
         {selectedDates.length > 0 && selectedDates.map((date, index) => (
-          <div key={index}>
-            Selected Date: {date.toLocaleString('ko-KR', {
+          <div key={index} className="calendar-selected">
+            {date.toLocaleString('ko-KR', {
             year: '2-digit',
             month: '2-digit',
             day: '2-digit',
