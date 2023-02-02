@@ -3,9 +3,11 @@ package com.elephant.dreamhi.controller;
 import com.elephant.dreamhi.exception.NotFoundException;
 import com.elephant.dreamhi.model.dto.AnnouncementDetailDto;
 import com.elephant.dreamhi.model.dto.CastingDetailDto;
+import com.elephant.dreamhi.model.dto.ProcessStageDto;
 import com.elephant.dreamhi.security.PrincipalDetails;
 import com.elephant.dreamhi.service.AnnouncementService;
 import com.elephant.dreamhi.service.CastingService;
+import com.elephant.dreamhi.service.ProcessService;
 import com.elephant.dreamhi.utils.Response;
 import com.elephant.dreamhi.utils.Response.Body;
 import java.util.List;
@@ -27,6 +29,7 @@ public class AnnouncementController {
 
     private final AnnouncementService announcementService;
     private final CastingService castingService;
+    private final ProcessService processService;
 
     /**
      * @param announcementId 공고 ID
@@ -39,11 +42,6 @@ public class AnnouncementController {
             throws NotFoundException {
         AnnouncementDetailDto announcementDetailDto = announcementService.findDetail(announcementId, user);
         return Response.create(HttpStatus.OK, "OK", announcementDetailDto);
-    }
-
-    @GetMapping("/{announcementId}/process")
-    public ResponseEntity<Body> findProcess(@PathVariable Long announcementId, @AuthenticationPrincipal PrincipalDetails user) {
-        return null;
     }
 
     /**
@@ -60,6 +58,18 @@ public class AnnouncementController {
         }
 
         return Response.create(HttpStatus.OK, "OK", castingDetailDtos);
+    }
+
+    /**
+     * 공고의 진행 상태를 유저별로 다르게 표현하기 위해 Process와 Volunteer를 조회한다.
+     * @param announcementId 공고ID
+     * @param user           현재 로그인한 유저 또는 게스트
+     * @return 공고의 process와 유저의 현재 Stage를 저장한 객체를 Body에 담아서 반환
+     */
+    @GetMapping("/{announcementId}/process")
+    public ResponseEntity<Body> findProcessAndStage(@PathVariable Long announcementId, @AuthenticationPrincipal PrincipalDetails user) {
+        ProcessStageDto userStageDto = processService.findProcessAndStage(announcementId, user);
+        return Response.create(HttpStatus.OK, "OK", userStageDto);
     }
 
 }
