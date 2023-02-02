@@ -49,4 +49,13 @@ public class ActorProfileMediaFile {
     @JoinColumn(name = "actor_profile_id")
     private ActorProfile actorProfile;
 
+    // 편의메소드
+    public void changeActorProfile(ActorProfile actorProfile) {
+        if(this.actorProfile != null) {
+            this.actorProfile.getActorProfileMediaFiles().remove(this);
+        }
+        this.actorProfile = actorProfile;
+        actorProfile.getActorProfileMediaFiles().add(this);
+    }
+
 }
