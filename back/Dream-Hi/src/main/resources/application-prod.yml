@@ -3,6 +3,10 @@ server:
 logging:
   level:
     com: info
+app:
+  image-size: 8
+  video-size: 4
+
 spring:
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
