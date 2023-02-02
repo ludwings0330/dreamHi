@@ -1,6 +1,4 @@
 import React from 'react';
-import PageBar from '../Common/PageBar';
-import SearchBar from '../Common/SearchBar';
 
 
 //css
