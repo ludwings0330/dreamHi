@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.service;
 
+import com.elephant.dreamhi.model.statics.FilmoType;
 import com.elephant.dreamhi.model.statics.ProducerRole;
 import com.elephant.dreamhi.repository.AuthRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,17 @@ public class AuthService {
 
     public boolean hasActorProfileAuthority(Long userId, Long actorId) {
         return authRepository.findActorProfileByUserId(userId).orElse(-1L).equals(actorId);
+    }
+
+    public boolean hasFilmographyModifyAuthority(Long filmographyId, FilmoType type, Long id) {
+        switch (type) {
+            case ACTOR:
+                return authRepository.findActorIdByFilmographyId(filmographyId).orElse(-1L).equals(id);
+            case PRODUCER:
+                return authRepository.findProducerIdByFilmographyId(filmographyId).orElse(-1L).equals(id);
+            default:
+                return false;
+        }
     }
 
 }

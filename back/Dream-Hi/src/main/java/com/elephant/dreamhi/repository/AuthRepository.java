@@ -1,6 +1,7 @@
 package com.elephant.dreamhi.repository;
 
 import static com.elephant.dreamhi.model.entity.QActorProfile.actorProfile;
+import static com.elephant.dreamhi.model.entity.QFilmography.filmography;
 import static com.elephant.dreamhi.model.entity.QUserProducerRelation.userProducerRelation;
 
 import com.elephant.dreamhi.model.statics.ProducerRole;
@@ -31,6 +32,23 @@ public class AuthRepository {
                                     .fetchOne();
 
         return Optional.ofNullable(fetchOne);
+    }
+
+    public Optional<Long> findProducerIdByFilmographyId(Long filmographyId) {
+        Long find = queryFactory.select(filmography.producer.id)
+                                .from(filmography)
+                                .where(filmography.id.eq(filmographyId))
+                                .fetchOne();
+
+        return Optional.ofNullable(find);
+    }
+
+    public Optional<Long> findActorIdByFilmographyId(Long filmographyId) {
+        Long find = queryFactory.select(filmography.actorProfile.id)
+                                .from(filmography)
+                                .where(filmography.id.eq(filmographyId)).fetchOne();
+
+        return Optional.ofNullable(find);
     }
 
 }
