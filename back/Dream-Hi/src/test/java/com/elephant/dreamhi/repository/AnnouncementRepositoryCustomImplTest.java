@@ -53,7 +53,7 @@ class AnnouncementRepositoryCustomImplTest {
         Announcement expectedAnnouncement = entityManager.find(Announcement.class, announcement.getId());
 
         assertThat(actual).usingRecursiveComparison()
-                          .isEqualTo(AnnouncementDetailDto.entityToDto(expectedAnnouncement));
+                          .isEqualTo(AnnouncementDetailDto.toDto(expectedAnnouncement));
     }
 
     @Test
@@ -87,7 +87,7 @@ class AnnouncementRepositoryCustomImplTest {
         Follow expectedFollow = entityManager.find(Follow.class, follow.getId());
 
         assertThat(actual).usingRecursiveComparison()
-                           .isEqualTo(AnnouncementDetailDto.entityToDto(expectedAnnouncement, expectedFollow));
+                           .isEqualTo(AnnouncementDetailDto.toDto(expectedAnnouncement, expectedFollow));
     }
 
     @Test
@@ -110,7 +110,7 @@ class AnnouncementRepositoryCustomImplTest {
         Announcement expectedAnnouncement = entityManager.find(Announcement.class, announcement.getId());
 
         assertThat(actual).usingRecursiveComparison()
-                           .isEqualTo(AnnouncementDetailDto.entityToDto(expectedAnnouncement));
+                           .isEqualTo(AnnouncementDetailDto.toDto(expectedAnnouncement));
     }
 
     private Announcement createTestAnnouncement(Producer producer) {
