@@ -15,23 +15,23 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MediaFileDto {
+public class MediaFileResponseDto {
 
     private Long id;
 
-    private List<MediaDto> videos = new ArrayList<>();
+    private List<MediaResponseDto> videos = new ArrayList<>();
 
-    private List<MediaDto> pictures = new ArrayList<>();
+    private List<MediaResponseDto> pictures = new ArrayList<>();
 
 
-    public MediaFileDto(Long id, List<ActorProfileMediaFile> mediaFiles) {
+    public MediaFileResponseDto(Long id, List<ActorProfileMediaFile> mediaFiles) {
         this.id = id;
 
         for (ActorProfileMediaFile mediaFile : mediaFiles) {
-            final MediaDto dto = MediaDto.builder()
-                                         .id(mediaFile.getId())
-                                         .url(mediaFile.getUrl())
-                                         .build();
+            final MediaResponseDto dto = MediaResponseDto.builder()
+                                                         .id(mediaFile.getId())
+                                                         .url(mediaFile.getUrl())
+                                                         .build();
 
             if (mediaFile.getType() == MediaType.PICTURE) {
                 this.pictures.add(dto);
@@ -44,7 +44,7 @@ public class MediaFileDto {
     @Builder
     @Getter
     @Setter
-    static class MediaDto {
+    static class MediaResponseDto {
 
         private Long id;
         private String url;
