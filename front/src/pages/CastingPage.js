@@ -2,11 +2,12 @@ import React from 'react';
 import MainHeader from '../components/Common/MainHeader';
 import MainFooter from '../components/Common/MainFooter';
 import Layout from '../components/Common/Layout';
+import CastingRow from '../components/Casting/CastingRow';
 
 const CastingPage = () => {
   return (
     <Layout>
-      <h1>채용페이지</h1>
+      <CastingRow />
     </Layout>
   );
 };
