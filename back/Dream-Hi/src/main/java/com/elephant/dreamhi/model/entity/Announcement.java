@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,8 +23,9 @@ import org.hibernate.annotations.DynamicInsert;
 @Table(name = "announcement")
 @DynamicInsert
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
-//@Builder
+@Builder
 public class Announcement extends BaseTimeEntity {
 
     @Id
@@ -54,29 +56,7 @@ public class Announcement extends BaseTimeEntity {
     @ColumnDefault("0")
     private Integer hit;
 
-    // Foreign Key로 매핑하지 않고, 기능 구현의 편의를 위해 process_id만 따로 저장해둔 것
-    private Long processId;
-
-//    @OneToMany(mappedBy = "announcement", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Casting> castings = new ArrayList<>();
-
     @Embedded
     private Picture picture;
-
-    @Builder
-    public Announcement(Long id, Producer producer, String title, String payment, String crankPeriod, LocalDateTime endDate, String description,
-                        Integer hit, Long processId) {
-        this.id = id;
-        this.producer = producer;
-        this.title = title;
-        this.payment = payment;
-        this.crankPeriod = crankPeriod;
-        this.endDate = endDate;
-        this.description = description;
-        this.hit = hit;
-        this.processId = processId;
-    }
-
-    // 편의 메소드
 
 }
