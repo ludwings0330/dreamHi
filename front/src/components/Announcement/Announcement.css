@@ -1,0 +1,18 @@
+.announcement-list-castings {
+    display: flex;
+}
+
+.announcement-list-castings span:nth-child(n) {
+    position: relative;
+    margin-left: 5px;
+    padding-left: 10px;
+}
+.announcement-list-castings span:nth-child(n+2)::after {
+    position:absolute;
+    left: 0;
+    top: 3px;
+    content: "";
+    width: 1px;
+    height: 15px;
+    background-color: black;
+}

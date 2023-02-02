@@ -6,7 +6,9 @@ import AnnouncementData from '../dummydata/announcementData.json';
 import Layout from '../components/Common/Layout';
 
 
+
 console.log('여기는 공고 여기는 공고')
+
 function AnnouncementPage(props) {
   const navigate = useNavigate();
  /* const announcements = AnnouncementData
