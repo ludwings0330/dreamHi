@@ -83,4 +83,16 @@ public class ActorService {
         actorProfile.changeVisible();
     }
 
+    /**
+     * User, Actor 프로필 정보 변경 메소드
+     */
+    @Transactional
+    public void updateActorProfile(Long userId, ActorProfileRequestDto actorProfileRequestDto) throws AccessDeniedException {
+        ActorProfile actorProfile = actorRepository.findByIdAndUser_Id(actorProfileRequestDto.getActorProfileId(), userId)
+                                                   .orElseThrow(() -> new AccessDeniedException("수정 권한이 없습니다."));
+        User user = actorProfile.getUser();
+        user.changeName(actorProfileRequestDto.getName());
+        actorProfile.changeActorProfileInfo(actorProfileRequestDto);
+    }
+
 }
