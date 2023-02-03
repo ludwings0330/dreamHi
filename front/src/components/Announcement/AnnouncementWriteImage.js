@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import Button from '../Common/Button';
+import ImageUpload from '../../imageup/ImageUpload';
 
 function AnnouncementWriteImage() {
   const [image, setImage] = useState('');
@@ -31,6 +32,8 @@ function AnnouncementWriteImage() {
       title = "이미지 변경"
       onClick = {clickImageInput}
       />
+
+      <ImageUpload />
     </div>
   )
 }
