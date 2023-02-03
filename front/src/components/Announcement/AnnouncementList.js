@@ -7,7 +7,7 @@ function AnnouncementList(props) {
   const { announcements, onClickItem } = props;
 
   return (
-    <div>
+    <div className="announcement-post-container">
       <h2> 공고리스트페이지 </h2>
       <SearchBar />
 

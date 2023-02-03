@@ -1,19 +1,17 @@
 import React from 'react';
 
-
 //css
 import './Announcement.css';
-
 
 function AnnouncementListItem(props) {
   const { announcement, onClick } = props;
   const casts = announcement.result.list[0].castings;
   console.log(casts);
-  console.log(announcement.result.list[0].state)
+  console.log(announcement.result.list[0].state);
 
   return (
     <div>
-      <div onClick={onClick}>
+      <div className="announcement-list-item-wrapper" onClick={onClick}>
         <p>
           {' '}
           {announcement.result.list[0].title} - {announcement.result.list[0].producerName}{' '}
@@ -29,17 +27,10 @@ function AnnouncementListItem(props) {
         </div>
         <p>{announcement.result.list[0].createDate}</p>
         <p>{announcement.result.list[0].hit}</p>
-        <div>
-          {announcement.result.list[0].isFollow === true ? '💙' : '🖤'}
-        </div>
+        <div>{announcement.result.list[0].isFollow === true ? '💙' : '🖤'}</div>
 
-        <div>
-          {announcement.result.list[0].state === '모집중' ? '⭕' : '❌'}
-        </div>
-
-
+        <div>{announcement.result.list[0].state === '모집중' ? '⭕' : '❌'}</div>
       </div>
-
     </div>
   );
 }
