@@ -33,4 +33,12 @@ public class Style {
     @ColumnDefault("0")
     private Integer count;
 
+    public void disCount() {
+        this.count--;
+    }
+
+    public void addCount(){
+        this.count++;
+    }
+
 }

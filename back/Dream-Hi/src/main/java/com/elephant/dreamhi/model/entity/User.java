@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
@@ -29,6 +30,7 @@ import org.hibernate.annotations.DynamicInsert;
 @AllArgsConstructor
 @Getter
 @Builder
+@EqualsAndHashCode
 public class User {
 
     @OneToMany(mappedBy = "follower")
@@ -58,6 +60,10 @@ public class User {
 
     public void setMainProfile(PictureDto pictureDto) {
         this.picture.updatePicture(pictureDto);
+    }
+
+    public void changeName(String name) {
+        this.name = name;
     }
 
 }
