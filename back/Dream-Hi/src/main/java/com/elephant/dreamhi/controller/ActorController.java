@@ -36,10 +36,12 @@ public class ActorController {
     private final ActorService actorService;
     private final StyleService styleService;
 
-    @GetMapping("/auth/actors")
+    @GetMapping("/api/actors")
     public ResponseEntity<Body> actorList(@PageableDefault(size = 8) Pageable pageable,
                                           @RequestBody ActorSearchCondition filter) {
         log.info(filter.toString());
+        log.info(pageable.toString());
+        log.info(String.valueOf(pageable.getPageNumber()));
         Page<ActorSimpleProfileDto> actors = actorService.findActorsByFilter(filter, pageable);
 
         return Response.create(HttpStatus.OK, "success", actors);
