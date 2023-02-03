@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.model.entity;
 
+import com.elephant.dreamhi.model.dto.ActorProfileRequestDto;
 import com.elephant.dreamhi.model.statics.Gender;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +59,7 @@ public class ActorProfile {
     private Boolean visible;
 
     @OneToMany(mappedBy = "actorProfile", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private final List<ActorStyleRelation> actorStyleRelations = new ArrayList<>();
+    private List<ActorStyleRelation> actorStyleRelations = new ArrayList<>();
 
     @OneToMany(mappedBy = "actorProfile", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<ActorProfileMediaFile> actorProfileMediaFiles = new ArrayList<>();
@@ -66,13 +67,29 @@ public class ActorProfile {
     @OneToMany(mappedBy = "actorProfile", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<Filmography> filmographies = new ArrayList<>();
 
-    public void addActorStyle(ActorStyleRelation actorStyleRelation) {
-        this.actorStyleRelations.add(actorStyleRelation);
-        actorStyleRelation.setActorProfile(this);
-    }
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public void changeVisible() {
+        this.visible = !this.visible;
+    }
+
+    public void changeActorProfileInfo(ActorProfileRequestDto actorProfileRequestDto) {
+        this.title = actorProfileRequestDto.getTitle();
+        this.gender = actorProfileRequestDto.getGender();
+        this.age = actorProfileRequestDto.getAge();
+        this.height = actorProfileRequestDto.getHeight();
+        this.description = actorProfileRequestDto.getDescription();
+    }
+
+    // ActorStyle 추가 편의 메소드
+    public void addActorStyle(ActorStyleRelation actorStyleRelation) {
+        this.actorStyleRelations.add(actorStyleRelation);
+        if(actorStyleRelation.getActorProfile() != this) {
+            actorStyleRelation.setActorProfile(this);
+        }
     }
 
     // actor profile picture 편의 메소드

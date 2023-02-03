@@ -3,15 +3,19 @@ package com.elephant.dreamhi.service;
 import com.elephant.dreamhi.exception.NotFoundException;
 import com.elephant.dreamhi.exception.VisibleException;
 import com.elephant.dreamhi.model.dto.ActorProfileDetailDto;
+import com.elephant.dreamhi.model.dto.ActorProfileRequestDto;
 import com.elephant.dreamhi.model.dto.ActorSearchCondition;
 import com.elephant.dreamhi.model.dto.ActorSimpleProfileDto;
 import com.elephant.dreamhi.model.entity.ActorProfile;
+import com.elephant.dreamhi.model.entity.User;
 import com.elephant.dreamhi.repository.ActorRepository;
 import com.elephant.dreamhi.security.PrincipalDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,7 +46,7 @@ public class ActorService {
      * @throws VisibleException  : 해당 프로필이 비공개일 경우 예외를 발생합니다.
      */
     public ActorProfileDetailDto findActorProfileDetail(Long id, PrincipalDetails principalDetails) throws NotFoundException, VisibleException {
-        ActorProfile profile = actorRepository.findActorProfileByUser_Id(id).orElseThrow(() -> {
+        ActorProfile profile = actorRepository.findActorProfileDetailByUser_Id(id).orElseThrow(() -> {
             return new NotFoundException("배우 프로필이 존재하지 않습니다.");
         });
 
@@ -65,6 +69,30 @@ public class ActorService {
             return true;
         }
         throw new VisibleException("비공개 프로필입니다.");
+    }
+
+    /**
+     * 배우 프로필 공개/비공개 전환 메소드
+     *
+     * @param id : userId
+     */
+    @Transactional
+    public void changeVisibleProfile(Long id) {
+        ActorProfile actorProfile = actorRepository.findByUser_Id(id)
+                                                   .orElseThrow(() -> new UsernameNotFoundException(id + " 유저가 존재하지 않습니다."));
+        actorProfile.changeVisible();
+    }
+
+    /**
+     * User, Actor 프로필 정보 변경 메소드
+     */
+    @Transactional
+    public void updateActorProfile(Long userId, ActorProfileRequestDto actorProfileRequestDto) throws AccessDeniedException {
+        ActorProfile actorProfile = actorRepository.findByIdAndUser_Id(actorProfileRequestDto.getActorProfileId(), userId)
+                                                   .orElseThrow(() -> new AccessDeniedException("수정 권한이 없습니다."));
+        User user = actorProfile.getUser();
+        user.changeName(actorProfileRequestDto.getName());
+        actorProfile.changeActorProfileInfo(actorProfileRequestDto);
     }
 
 }
