@@ -6,6 +6,7 @@ logging:
 app:
   image-size: 8
   video-size: 4
+  style-tag-size: 5
 
 spring:
   jpa:
