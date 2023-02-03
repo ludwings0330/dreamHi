@@ -16,7 +16,7 @@ function AnnouncementPage(props) {
   console.log(announcements[0].result.list[0].title);
   console.log(announcements[0].result.list[0].id);*/
   return (
-    <Layout>
+    <>
       <Button
         title="글 작성하기"
         onClick={() => {
@@ -31,7 +31,7 @@ function AnnouncementPage(props) {
           navigate(`/announcement/${item.result.list[0].id}`);
         }}
       />
-    </Layout>
+    </>
   );
 }
 

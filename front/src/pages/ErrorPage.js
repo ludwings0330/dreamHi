@@ -5,9 +5,9 @@ import Layout from '../components/Common/Layout';
 
 const ErrorPage = () => {
   return (
-    <Layout>
+    <>
       <h1>에러발생</h1>
-    </Layout>
+    </>
   );
 };
 

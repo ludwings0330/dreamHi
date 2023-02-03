@@ -7,12 +7,12 @@ import ActorVideo from './video/ActorVideo';
 
 const ActorDetail = () => {
     return (
-        <Layout>
+        <>
           <ActorIntroduce />
           <ActorFilmo />
           <ActorPhoto />
           <ActorVideo />
-        </Layout>
+        </>
     );
 };
 

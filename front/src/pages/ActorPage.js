@@ -6,9 +6,9 @@ import Layout from '../components/Common/Layout';
 const ActorPage = () => {
 
     return (
-        <Layout>
+        <>
           <ActorList />
-        </Layout>
+        </>
     );
 };
 

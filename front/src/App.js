@@ -13,21 +13,20 @@ import ActorList from './components/Actor/ActorList';
 import ActorDetail from './components/Actor/ActorDetail';
 import ActorWrite from './components/Actor/ActorWrite';
 import LoginPage from './pages/Login/LoginPage';
+import Layout from './components/Common/Layout';
 import AuditionPage from './pages/AuditionPage';
 import AuditionMeeting from './components/Audition/AuditionMeeting';
 
 function App() {
 
-
-
   return (
-    <div className="app">
+    <Layout>
       <Routes>
-          //메인페이지 관련 이동
-          <Route index element={<MainPage />} />
-          <Route path="/actor" element={<ActorPage />} />
-          <Route path="/maker" element={<MakerPage />} />
-          <Route path={"/login"} element={<LoginPage />} />
+        //메인페이지 관련 이동
+        <Route index element={<MainPage />} />
+        <Route path="/actor" element={<ActorPage />} />
+        <Route path="/maker" element={<MakerPage />} />
+        <Route path={"/login"} element={<LoginPage />} />
 
         //공고페이지 관련 이동
         <Route path="/announcement" element={<AnnouncementPage/>} />
@@ -42,7 +41,7 @@ function App() {
 
 
         //배우페이지 관련 이동
-        <Route path={"actor/list"} element={<ActorList />} />
+        <Route path={"/actor/list"} element={<ActorList />} />
         <Route path={"/actor/detail"} element={<ActorDetail />} />
         <Route path={"/actor/write"} element={<ActorWrite />} />
 
@@ -54,7 +53,7 @@ function App() {
 
 
       </Routes>
-    </div>
+    </Layout>
   );
 }
 
