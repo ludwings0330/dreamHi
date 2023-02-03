@@ -1,0 +1,215 @@
+.body-frame {
+  width: 1090px;
+  height: 600px;
+  margin: 27px auto;
+  padding: 16px;
+}
+.body-frame .back-to-recruit {
+  margin-left: 10px;
+
+  display: inline-block;
+  width: 160px;
+  height: 46px;
+  border: 1px solid #c2c6cc;
+  border-radius: 20px;
+
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 46px;
+  text-align: center;
+}
+
+.body-frame .form-frame {
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+}
+
+.form-frame .room-image {
+  width: 279px;
+  height: 500px;
+  background: #eff0f2;
+  border-radius: 8px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.room-image .room-image__upload {
+  margin: 50px 0 30px 0;
+
+  width: 160px;
+  height: 160px;
+  background: #d9d9d9;
+  text-indent: -10000px;
+
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.room-image__upload::file-selector-button {
+  display: none;
+}
+
+.room-image__message {
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: -1px;
+}
+
+/* 배치 */
+.form-frame .room-infor {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding-left: 42px;
+}
+
+.room-infor .input-type {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.input-type .line input,
+.input-type .line select {
+  border: 0;
+  padding: 7px 0;
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+}
+.input-type .line:first-child input {
+  height: 34px;
+}
+.input-type .line:first-child input::placeholder {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 34px;
+  color: #000;
+}
+
+.input-type .line:nth-child(3) {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.input-type .line:nth-child(3) input,
+.input-type .line:nth-child(3) select {
+  width: 47.5%;
+}
+
+select option[value=""][disabled] {
+  display: none;
+}
+
+:focus {
+  outline: none;
+}
+.endTime {
+  font-size: 12px;
+  margin-right: 20px;
+}
+.input-type .line:nth-child(4) {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+.input-type .line:nth-child(4) input {
+  width: 170px;
+  margin-left: 10px;
+}
+
+/* 슬라이더 구현 */
+/* The switch - the box around the slider */
+.input-type .switch {
+  position: relative;
+  display: inline-block;
+  width: 28px;
+  height: 16px;
+  margin-left: 10px;
+}
+
+/* Hide default HTML checkbox */
+.input-type .switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.input-type .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.input-type .slider:before {
+  position: absolute;
+  content: "";
+  height: 15px;
+  width: 15px;
+  left: 0.5px;
+  bottom: 0.5px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.input-type input:checked + .slider {
+  background-color: #2196f3;
+}
+
+.input-type input:focus + .slider {
+  box-shadow: 0 0 1px #2196f3;
+}
+
+.input-type input:checked + .slider:before {
+  -webkit-transform: translateX(12px);
+  -ms-transform: translateX(12px);
+  transform: translateX(12px);
+}
+
+/* Rounded sliders */
+.input-type .slider.round {
+  border-radius: 15px;
+}
+
+.input-type .slider.round:before {
+  border-radius: 50%;
+}
+
+.input-rules .rules-title {
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 27px;
+  margin-bottom: 15px;
+}
+.input-rules .rules-box {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.room-infor > button {
+  align-self: flex-end;
+  margin-top: auto;
+
+  display: inline-block;
+  width: 147px;
+  height: 46px;
+  border: 1px solid #c2c6cc;
+  border-radius: 20px;
+
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 46px;
+  text-align: center;
+}

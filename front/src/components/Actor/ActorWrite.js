@@ -11,13 +11,13 @@ import ActorVideo from './video/ActorVideo';
 
 const ActorWrite = () => {
     return (
-            <Layout>
+            <>
               <h1 className={"main-title"}>이력서 작성</h1>
                <ActorIntroduce />
               <ActorFilmo />
               <ActorPhoto />
               <ActorVideo />
-            </Layout>
+            </>
     );
 };
 

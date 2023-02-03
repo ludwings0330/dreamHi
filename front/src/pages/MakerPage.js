@@ -6,9 +6,9 @@ import Layout from '../components/Common/Layout';
 
 const MakerPage = () => {
   return (
-    <Layout>
+    <>
       <MakerList />
-    </Layout>
+    </>
   );
 };
 

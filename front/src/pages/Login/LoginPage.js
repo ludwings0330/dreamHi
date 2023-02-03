@@ -60,7 +60,7 @@ class LoginPage extends Component {
     }
 
     return (
-      <Layout className="app">
+      <>
 
         <div className="app-body">
           <Login />
@@ -69,7 +69,7 @@ class LoginPage extends Component {
             <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
           </Routes>
         </div>
-      </Layout>
+      </>
     );
   }
 }

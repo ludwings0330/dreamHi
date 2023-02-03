@@ -4,11 +4,11 @@ import Layout from '../components/Common/Layout';
 
 function MainPage() {
   return (
-      <Layout>
+      <>
 
       <MainView />
 
-      </Layout>
+      </>
   );
 }
 
