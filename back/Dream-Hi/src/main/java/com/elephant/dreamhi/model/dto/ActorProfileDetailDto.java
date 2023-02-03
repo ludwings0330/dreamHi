@@ -41,7 +41,7 @@ public class ActorProfileDetailDto {
     private String title;
 
     private Boolean visible;
-    private List<StyleDto> styles = new ArrayList<>();
+    private final List<StyleDto> styles = new ArrayList<>();
 
     public ActorProfileDetailDto(ActorProfile actorProfile) {
 
