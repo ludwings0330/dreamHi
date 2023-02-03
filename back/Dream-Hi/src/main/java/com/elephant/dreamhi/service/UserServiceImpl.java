@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.service;
 
+import com.elephant.dreamhi.model.dto.PictureDto;
 import com.elephant.dreamhi.model.dto.UserSimpleDto;
 import com.elephant.dreamhi.model.entity.User;
 import com.elephant.dreamhi.repository.ActorRepository;
@@ -36,6 +37,16 @@ public class UserServiceImpl implements UserService {
         userDetailDto.setUserSimpleDto(user);
 
         return userDetailDto;
+    }
+
+    @Override
+    @Transactional
+    public void updateMainProfile(Long id, PictureDto pictureDto) throws UsernameNotFoundException {
+        User user = userRepository.findById(id).orElseThrow(() -> {
+            return new UsernameNotFoundException(id + " 존재하지 않는 유저입니다.");
+        });
+
+        user.setMainProfile(pictureDto);
     }
 
 }

@@ -29,7 +29,7 @@ public class ActorRepositoryCustomImpl implements ActorRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Optional<ActorProfile> findActorProfileByUser_Id(Long userId) {
+    public Optional<ActorProfile> findActorProfileDetailByUser_Id(Long userId) {
         return Optional.ofNullable(jpaQueryFactory.selectFrom(actorProfile)
                                                   .join(actorProfile.user, user).fetchJoin()
                                                   .leftJoin(actorProfile.actorStyleRelations, actorStyleRelation).fetchJoin()
@@ -61,6 +61,15 @@ public class ActorRepositoryCustomImpl implements ActorRepositoryCustom {
                 .fetch();
 
         return PageableExecutionUtils.getPage(contents, pageable, () -> query.fetch().size());
+    }
+
+    @Override
+    public Optional<ActorProfile> checkValidateModify(Long id, Long userId) {
+        return Optional.ofNullable(jpaQueryFactory.selectFrom(actorProfile)
+                                                  .where(actorProfile.id.eq(id),
+                                                         actorProfile.user.id.eq(userId))
+                                                  .fetchOne()
+        );
     }
 
     private BooleanExpression followEq(Boolean isFollow, Long id) {

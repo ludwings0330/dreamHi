@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ActorRepository extends JpaRepository<ActorProfile, Long>, ActorRepositoryCustom {
 
-    Optional<ActorProfile> findActorProfileById(Long id);
+    Optional<ActorProfile> findByUser_Id(Long id);
+
+    Optional<ActorProfile> findByIdAndUser_Id(Long id, Long userId);
 
 }

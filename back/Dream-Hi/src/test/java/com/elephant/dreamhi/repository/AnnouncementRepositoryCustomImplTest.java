@@ -11,12 +11,11 @@ import com.elephant.dreamhi.model.entity.Producer;
 import com.elephant.dreamhi.model.entity.User;
 import com.elephant.dreamhi.model.statics.FollowType;
 import java.time.LocalDateTime;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 
 @DataJpaTest
@@ -24,8 +23,8 @@ import org.springframework.context.annotation.Import;
 @Import(QueryDslTestConfig.class)
 class AnnouncementRepositoryCustomImplTest {
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    @Autowired
+    private TestEntityManager entityManager;
 
     @Autowired
     private AnnouncementRepository announcementRepository;
@@ -53,7 +52,7 @@ class AnnouncementRepositoryCustomImplTest {
         Announcement expectedAnnouncement = entityManager.find(Announcement.class, announcement.getId());
 
         assertThat(actual).usingRecursiveComparison()
-                          .isEqualTo(AnnouncementDetailDto.entityToDto(expectedAnnouncement));
+                          .isEqualTo(AnnouncementDetailDto.toDto(expectedAnnouncement));
     }
 
     @Test
@@ -87,7 +86,7 @@ class AnnouncementRepositoryCustomImplTest {
         Follow expectedFollow = entityManager.find(Follow.class, follow.getId());
 
         assertThat(actual).usingRecursiveComparison()
-                           .isEqualTo(AnnouncementDetailDto.entityToDto(expectedAnnouncement, expectedFollow));
+                           .isEqualTo(AnnouncementDetailDto.toDto(expectedAnnouncement, expectedFollow));
     }
 
     @Test
@@ -110,7 +109,7 @@ class AnnouncementRepositoryCustomImplTest {
         Announcement expectedAnnouncement = entityManager.find(Announcement.class, announcement.getId());
 
         assertThat(actual).usingRecursiveComparison()
-                           .isEqualTo(AnnouncementDetailDto.entityToDto(expectedAnnouncement));
+                           .isEqualTo(AnnouncementDetailDto.toDto(expectedAnnouncement));
     }
 
     private Announcement createTestAnnouncement(Producer producer) {

@@ -10,26 +10,22 @@ import com.elephant.dreamhi.model.entity.Casting;
 import com.elephant.dreamhi.model.entity.CastingStyleRelation;
 import com.elephant.dreamhi.model.entity.Producer;
 import com.elephant.dreamhi.model.entity.Style;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+//@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import(QueryDslTestConfig.class)
 class CastingRepositoryCustomImplTest {
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    @Autowired
+    private TestEntityManager entityManager;
 
     @Autowired
     private CastingRepository castingRepository;
@@ -41,28 +37,28 @@ class CastingRepositoryCustomImplTest {
     @DisplayName("공고ID로 배역 정보와 각 배역별 스타일 정보 조회")
     void findByAnnouncementId() {
         //given
-        Producer producer = createTestProducer();
+        Producer producer = TestEntityGenerator.createTestProducer();
         entityManager.persist(producer);
 
-        Announcement announcement = createTestAnnouncement(producer);
+        Announcement announcement = TestEntityGenerator.createTestAnnouncement(producer);
         entityManager.persist(announcement);
 
-        Casting casting1 = createTestCasting1(announcement);
+        Casting casting1 = TestEntityGenerator.createTestCasting(announcement, 1);
         entityManager.persist(casting1);
 
-        List<Style> styles1 = createTestStyles1();
+        List<Style> styles1 = TestEntityGenerator.createTestStyles(1, 4);
         styles1.forEach(entityManager::persist);
 
-        List<CastingStyleRelation> castingStyleRelations1 = createTestCastingStyleRelations(casting1, styles1);
+        List<CastingStyleRelation> castingStyleRelations1 = TestEntityGenerator.createTestCastingStyleRelations(casting1, styles1);
         castingStyleRelations1.forEach(entityManager::persist);
 
-        Casting casting2 = createTestCasting2(announcement);
+        Casting casting2 = TestEntityGenerator.createTestCasting(announcement, 2);
         entityManager.persist(casting2);
 
-        List<Style> styles2 = createTestStyles2();
+        List<Style> styles2 = TestEntityGenerator.createTestStyles(3, 5);
         styles2.forEach(entityManager::persist);
 
-        List<CastingStyleRelation> castingStyleRelations2 = createTestCastingStyleRelations(casting2, styles2);
+        List<CastingStyleRelation> castingStyleRelations2 = TestEntityGenerator.createTestCastingStyleRelations(casting2, styles2);
         castingStyleRelations2.forEach(entityManager::persist);
 
         entityManager.clear();
@@ -90,64 +86,6 @@ class CastingRepositoryCustomImplTest {
 
         assertThat(actual).usingRecursiveComparison()
                           .isEqualTo(expected);
-    }
-
-    private Producer createTestProducer() {
-        return Producer.builder()
-                       .name("더미 제작사")
-                       .build();
-    }
-
-    private Announcement createTestAnnouncement(Producer producer) {
-        return Announcement.builder()
-                           .endDate(LocalDateTime.of(2023, 2, 10, 14, 34, 23))
-                           .title("더미 공고")
-                           .producer(producer)
-                           .build();
-    }
-
-    private Casting createTestCasting1(Announcement announcement) {
-        return Casting.builder()
-                      .name("더미 배역1")
-                      .announcement(announcement)
-                      .description("더미 배역1 역할을 수행합니다.")
-                      .headcount(3)
-                      .build();
-    }
-
-    private Casting createTestCasting2(Announcement announcement) {
-        return Casting.builder()
-                      .name("더미 배역2")
-                      .announcement(announcement)
-                      .description("더미 배역2 역할을 수행합니다.")
-                      .headcount(5)
-                      .build();
-    }
-
-    private List<Style> createTestStyles1() {
-        Style style1 = Style.builder().description("더미 스타일1").build();
-        Style style2 = Style.builder().description("더미 스타일2").build();
-        Style style3 = Style.builder().description("더미 스타일3").build();
-        return List.of(style1, style2, style3);
-    }
-
-    private List<Style> createTestStyles2() {
-        Style style1 = Style.builder().description("더미 스타일1").build();
-        Style style2 = Style.builder().description("더미 스타일4").build();
-        return List.of(style1, style2);
-    }
-
-    private List<CastingStyleRelation> createTestCastingStyleRelations(Casting castings, List<Style> styles) {
-        List<CastingStyleRelation> castingStyleRelations = new ArrayList<>();
-
-        for (int size = styles.size(), i = 0; i < size; i++) {
-            CastingStyleRelation castingStyleRelation = new CastingStyleRelation();
-            castingStyleRelation.setStyle(styles.get(i));
-            castingStyleRelation.setCasting(castings);
-            castingStyleRelations.add(castingStyleRelation);
-        }
-
-        return castingStyleRelations;
     }
 
 }

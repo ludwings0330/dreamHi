@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,8 +33,9 @@ public class Process {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "announcement_id")
+    @NotNull
     private Announcement announcement;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -42,7 +44,7 @@ public class Process {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    @ColumnDefault("'IN_PROGRESS'")
+    @ColumnDefault("'RECRUITING'")
     private ProcessState state;
 
 }

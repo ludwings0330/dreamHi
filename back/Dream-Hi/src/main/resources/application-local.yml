@@ -5,11 +5,11 @@ logging:
   level:
     com: debug
 
-messages:
-  basename: messages
-devtools:
-  livereload:
-    enabled: true
+app:
+  image-size: 8
+  video-size: 4
+  style-tag-size: 5
+
 spring:
   messages:
     basename: messages

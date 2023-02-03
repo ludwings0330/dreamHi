@@ -62,7 +62,7 @@ public class AnnouncementDetailDto {
      * @param follow       현재 로그인한 유저가 공고를 팔로우 했는지에 대한 정보
      * @return 공고 상세 DTO
      */
-    public static AnnouncementDetailDto entityToDto(Announcement announcement, Follow follow) {
+    public static AnnouncementDetailDto toDto(Announcement announcement, Follow follow) {
         AnnouncementDetailDtoBuilder dtoBuilder = AnnouncementDetailDto.builder()
                                                                        .id(announcement.getId())
                                                                        .title(announcement.getTitle())
@@ -89,8 +89,8 @@ public class AnnouncementDetailDto {
      * @param announcement DTO로 변경하려고 하는 공고 엔티티
      * @return 공고 상세 DTO
      */
-    public static AnnouncementDetailDto entityToDto(Announcement announcement) {
-        return entityToDto(announcement, null);
+    public static AnnouncementDetailDto toDto(Announcement announcement) {
+        return toDto(announcement, null);
     }
 
     @Override

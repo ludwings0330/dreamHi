@@ -10,6 +10,8 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
 @AllArgsConstructor
@@ -39,8 +41,7 @@ public class ActorProfileDetailDto {
     private String title;
 
     private Boolean visible;
-
-    private List<StyleDto> styles = new ArrayList<>();
+    private final List<StyleDto> styles = new ArrayList<>();
 
     public ActorProfileDetailDto(ActorProfile actorProfile) {
         User user = actorProfile.getUser();
