@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.model.dto;
 
+import com.elephant.dreamhi.model.entity.Picture;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.validation.constraints.NotEmpty;
@@ -34,9 +35,14 @@ public class AnnouncementSaveDto {
 
     private String description;
 
+    @NotNull
     private String pictureUrl;
 
     @NotEmpty
     private List<CastingSaveDto> castings;
+
+    public Picture getPictureUrl() {
+        return new Picture(pictureUrl, null, null);
+    }
 
 }
