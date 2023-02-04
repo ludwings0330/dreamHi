@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.model.entity;
 
+import com.elephant.dreamhi.model.dto.AnnouncementSaveDto;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,5 +66,17 @@ public class Announcement extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "announcement", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private final List<Casting> castings = new ArrayList<>();
+
+    public static Announcement toEntity(AnnouncementSaveDto announcementSaveDto, Producer producer) {
+        return Announcement.builder()
+                           .producer(producer)
+                           .title(announcementSaveDto.getTitle())
+                           .payment(announcementSaveDto.getTitle())
+                           .crankPeriod(announcementSaveDto.getCrankPeriod())
+                           .endDate(announcementSaveDto.getEndDate())
+                           .description(announcementSaveDto.getDescription())
+                           .picture(announcementSaveDto.getPictureUrl())
+                           .build();
+    }
 
 }
