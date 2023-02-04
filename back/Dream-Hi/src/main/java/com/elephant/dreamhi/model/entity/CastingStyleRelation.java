@@ -26,12 +26,12 @@ public class CastingStyleRelation {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "style_id", nullable = false)
-    private Style style;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "casting_id", nullable = false)
     private Casting casting;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "style_id", nullable = false)
+    private Style style;
 
     public void setStyle(Style style) {
         this.style = style;
@@ -40,6 +40,13 @@ public class CastingStyleRelation {
     public void setCasting(Casting casting) {
         this.casting = casting;
         casting.addCastingStyleRelation(this);
+    }
+
+    public static CastingStyleRelation toEntity(Casting casting, Style style) {
+        return CastingStyleRelation.builder()
+                                   .style(style)
+                                   .casting(casting)
+                                   .build();
     }
 
 }
