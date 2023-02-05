@@ -2,6 +2,7 @@ package com.elephant.dreamhi.service;
 
 import com.elephant.dreamhi.exception.NotFoundException;
 import com.elephant.dreamhi.model.dto.VolunteerApplyRequestDto;
+import com.elephant.dreamhi.model.dto.VolunteerManageRequestDto;
 import com.elephant.dreamhi.model.entity.Announcement;
 import com.elephant.dreamhi.model.entity.Casting;
 import com.elephant.dreamhi.model.entity.Process;
@@ -36,7 +37,7 @@ public class VolunteerService {
     private final ProcessRepository processRepository;
 
     @Transactional
-    public void userApplyOnAnnouncement(VolunteerApplyRequestDto requestDto) {
+    public void userApplyOnAnnouncement(VolunteerApplyRequestDto requestDto) throws NotFoundException, IllegalArgumentException {
         log.info("공고지원 시작 : {}", requestDto);
         if (authService.isAnonymous(requestDto.getUserId())) {
             throw new AccessDeniedException("익명 사용자는 지원할 수 없습니다.");
@@ -66,6 +67,17 @@ public class VolunteerService {
         }
 
         volunteerRepository.saveAll(volunteers);
+    }
+
+    @Transactional
+    public void manageVolunteer(VolunteerManageRequestDto requestDto) throws NotFoundException {
+        // volunteerId 존재여부 확인
+        Volunteer volunteer = volunteerRepository.findById(requestDto.getVolunteerId())
+                                                 .orElseThrow(() -> new NotFoundException("지원자가 존재하지 않습니다."));
+
+        // 상태 업데이트
+        // setter 이름을 뭘로해야 합리적일까? reflectProcessResult? 일단 setter로 두자
+        volunteer.setState(requestDto.getState());
     }
 
 }
