@@ -66,7 +66,7 @@ public class AnnouncementDetailDto {
         AnnouncementDetailDtoBuilder dtoBuilder = AnnouncementDetailDto.builder()
                                                                        .id(announcement.getId())
                                                                        .title(announcement.getTitle())
-                                                                       .producer(ProducerAnnouncementDto.entityToDto(announcement.getProducer()))
+                                                                       .producer(ProducerAnnouncementDto.toDto(announcement.getProducer()))
                                                                        .payment(announcement.getPayment())
                                                                        .crankPeriod(announcement.getCrankPeriod())
                                                                        .endDate(announcement.getEndDate())

@@ -22,7 +22,7 @@ public class AnnouncementSaveDto {
     private String title;
 
     @NotNull
-    private ProducerAnnouncementDto producer;
+    private Long producerId;
 
     @Size(max = 25)
     private String payment;
