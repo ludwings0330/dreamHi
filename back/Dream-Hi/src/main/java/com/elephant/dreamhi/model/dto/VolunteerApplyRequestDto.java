@@ -6,6 +6,8 @@ import lombok.Data;
 @Data
 public class VolunteerApplyRequestDto {
 
-    List<Long> castingIds;
+    private List<Long> castingIds;
+    private Long announcementId;
+    private Long userId;
 
 }

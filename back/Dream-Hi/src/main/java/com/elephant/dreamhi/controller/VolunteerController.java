@@ -26,7 +26,11 @@ public class VolunteerController {
     public ResponseEntity<Body> apply(@PathVariable Long announcementId,
                                       @RequestBody VolunteerApplyRequestDto requestDto,
                                       @AuthenticationPrincipal PrincipalDetails user) {
-        volunteerService.userApplyOnAnnouncement(user.getId(), requestDto);
+        requestDto.setUserId(user.getId());
+        requestDto.setAnnouncementId(announcementId);
+        log.info("지원 요청 : {}", requestDto);
+        volunteerService.userApplyOnAnnouncement(requestDto);
+
         return Response.create(HttpStatus.CREATED, "지원이 완료되었습니다");
     }
 
