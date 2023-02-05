@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.model.entity;
 
+import com.elephant.dreamhi.model.dto.AnnouncementDto;
 import com.elephant.dreamhi.model.dto.AnnouncementSaveDto;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -77,6 +78,15 @@ public class Announcement extends BaseTimeEntity {
                            .description(announcementSaveDto.getDescription())
                            .picture(announcementSaveDto.getPictureUrl())
                            .build();
+    }
+
+    public void changeAnnouncement(AnnouncementDto announcementDto) {
+        this.title = announcementDto.getTitle();
+        this.payment = announcementDto.getPayment();
+        this.crankPeriod = announcementDto.getCrankPeriod();
+        this.endDate = announcementDto.getEndDate();
+        this.description = announcementDto.getDescription();
+        this.picture = announcementDto.getPictureUrl();
     }
 
 }
