@@ -62,4 +62,8 @@ public class Volunteer extends BaseTimeEntity {
     @JoinColumn(name = "announcement_id")
     private Announcement announcement;
 
+    public void setState(VolunteerState state) {
+        this.state = state;
+    }
+
 }
