@@ -4,6 +4,7 @@ import static com.elephant.dreamhi.model.entity.QActorProfile.actorProfile;
 import static com.elephant.dreamhi.model.entity.QFilmography.filmography;
 import static com.elephant.dreamhi.model.entity.QUserProducerRelation.userProducerRelation;
 
+import com.elephant.dreamhi.model.entity.QAnnouncement;
 import com.elephant.dreamhi.model.statics.ProducerRole;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.Optional;
@@ -47,6 +48,14 @@ public class AuthRepository {
         Long find = queryFactory.select(filmography.actorProfile.id)
                                 .from(filmography)
                                 .where(filmography.id.eq(filmographyId)).fetchOne();
+
+        return Optional.ofNullable(find);
+    }
+
+    public Optional<Long> findProducerIdByAnnouncementId(Long announcementId) {
+        Long find = queryFactory.select(QAnnouncement.announcement.producer.id)
+                                .from(QAnnouncement.announcement)
+                                .where(QAnnouncement.announcement.id.eq(announcementId)).fetchOne();
 
         return Optional.ofNullable(find);
     }
