@@ -101,4 +101,15 @@ public class StyleService {
         castingStyleRelationRepository.saveAll(castingStyleRelations);
     }
 
+    /**
+     * @param casting  DB에 저장된 배역
+     * @param styleIds 배역을 설명하는 스타일들의 ID
+     * @throws NotFoundException 존재하지 않는 스타일 ID를 전달받은 경우 발생하는 예외
+     */
+    @Transactional
+    public void updateStyleRelations(Casting casting, List<Long> styleIds) {
+        castingStyleRelationRepository.deleteAllByCastingId(casting.getId());
+        saveStyleRelations(casting, styleIds);
+    }
+
 }
