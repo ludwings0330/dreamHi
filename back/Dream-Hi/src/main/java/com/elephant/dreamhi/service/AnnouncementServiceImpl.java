@@ -5,6 +5,7 @@ import com.elephant.dreamhi.model.dto.AnnouncementDetailDto;
 import com.elephant.dreamhi.model.dto.AnnouncementSaveDto;
 import com.elephant.dreamhi.model.dto.AnnouncementSearchCondition;
 import com.elephant.dreamhi.model.dto.AnnouncementSimpleDto;
+import com.elephant.dreamhi.model.dto.AnnouncementUpdateDto;
 import com.elephant.dreamhi.model.dto.ProcessStageDto;
 import com.elephant.dreamhi.model.entity.Announcement;
 import com.elephant.dreamhi.model.entity.Process;
@@ -76,9 +77,23 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         // 공고를 처음 등록할 때, Process도 함께 설정한다.
         processRepository.save(Process.getInstanceForRecruiting(announcement));
 
-        announcementSaveDto.getCastings().forEach(castingSaveDto -> {
-            castingService.saveCasting(announcement, castingSaveDto);
-        });
+        announcementSaveDto.getCastings()
+                           .forEach(castingSaveDto -> castingService.saveCasting(announcement, castingSaveDto));
+    }
+
+    /**
+     * @param announcementUpdateDto 수정할 공고의 정보
+     * @throws NotFoundException 존재하지 않는 스타일 ID를 전달받은 경우 발생하는 예외
+     */
+    @Override
+    @Transactional
+    public void updateAnnouncement(AnnouncementUpdateDto announcementUpdateDto) throws NotFoundException {
+        Announcement announcement = announcementRepository.findById(announcementUpdateDto.getId())
+                                                          .orElseThrow(() -> new NotFoundException("해당 공고를 찾을 수 없습니다."));
+        announcement.changeAnnouncement(announcementUpdateDto);
+
+        announcementUpdateDto.getCastings()
+                             .forEach(castingUpdateDto -> castingService.updateCasting(announcement, castingUpdateDto));
     }
 
 }
