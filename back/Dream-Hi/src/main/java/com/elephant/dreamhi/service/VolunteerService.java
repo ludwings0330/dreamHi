@@ -3,6 +3,8 @@ package com.elephant.dreamhi.service;
 import com.elephant.dreamhi.exception.NotFoundException;
 import com.elephant.dreamhi.model.dto.VolunteerApplyRequestDto;
 import com.elephant.dreamhi.model.dto.VolunteerManageRequestDto;
+import com.elephant.dreamhi.model.dto.VolunteerSearchCondition;
+import com.elephant.dreamhi.model.dto.VolunteerSearchResponseDto;
 import com.elephant.dreamhi.model.entity.Announcement;
 import com.elephant.dreamhi.model.entity.Casting;
 import com.elephant.dreamhi.model.entity.Process;
@@ -17,6 +19,7 @@ import com.elephant.dreamhi.repository.UserRepository;
 import com.elephant.dreamhi.repository.VolunteerRepository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
@@ -78,6 +81,30 @@ public class VolunteerService {
         // 상태 업데이트
         // setter 이름을 뭘로해야 합리적일까? reflectProcessResult? 일단 setter로 두자
         volunteer.setState(requestDto.getState());
+    }
+
+    public void findVolunteersByCondition(VolunteerSearchCondition condition) {
+        // 존재하는 공고인지 확인
+        //
+    }
+
+    public VolunteerSearchResponseDto findVolunteersByCastingIdAndCondition(VolunteerSearchCondition condition) {
+//        announcementId, castingId, state
+        VolunteerSearchResponseDto responseDto = new VolunteerSearchResponseDto();
+
+        // 현재 공고의 프로세스 id 구함
+        Process process = processRepository.findLastProcessByAnnouncementId(condition.getAnnouncementId()).orElseThrow();
+        condition.setProcessId(process.getId());
+        // 해당 프로세스 id 를 가지고있는 지원자들 구함 -> 필터링 추가
+        // 현재 프로세스 id 를 가지고 있느 지원자들의 간략한 상태를 구함
+
+        // 해당 castingId의 보류, 합격, 미결정, 탈락자의 숫자를 구한다
+        Map<VolunteerState, Long> stateSummary = volunteerRepository.getVolunteerStateSummary(condition);
+        responseDto.setStateSummary(stateSummary);
+
+        volunteerRepository.getVolunteersByCondition(condition);
+
+        return responseDto;
     }
 
 }
