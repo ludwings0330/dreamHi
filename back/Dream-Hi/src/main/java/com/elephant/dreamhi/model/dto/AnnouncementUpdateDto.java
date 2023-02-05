@@ -2,7 +2,7 @@ package com.elephant.dreamhi.model.dto;
 
 import java.util.List;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,12 +12,12 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @Getter
 @SuperBuilder
-public class AnnouncementSaveDto extends AnnouncementDto {
+public class AnnouncementUpdateDto extends AnnouncementDto {
 
-    @Size.List({
-            @Size(min = 1),
-            @Size(max = 5)
-    })
-    private List<CastingSaveDto> castings;
+    @NotNull
+    private Long id;
+
+    @NotEmpty
+    private List<CastingUpdateDto> castings;
 
 }
