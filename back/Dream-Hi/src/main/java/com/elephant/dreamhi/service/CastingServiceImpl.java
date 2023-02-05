@@ -42,4 +42,17 @@ public class CastingServiceImpl implements CastingService {
         styleService.saveStyleRelations(casting, castingSaveDto.getStyles());
     }
 
+    /**
+     * @param announcement     DB에 저장된 공고
+     * @param castingUpdateDto 수정할 배역 정보
+     * @throws NotFoundException 존재하지 않는 스타일 ID를 전달받은 경우 발생하는 예외
+     */
+    @Override
+    public void updateCasting(Announcement announcement, CastingUpdateDto castingUpdateDto) throws NotFoundException {
+        Casting casting = castingRepository.findById(castingUpdateDto.getId())
+                                           .orElseThrow(() -> new NotFoundException("해당 배역을 찾을 수 없습니다."));
+        casting.changeCasting(castingUpdateDto);
+        styleService.updateStyleRelations(casting, castingUpdateDto.getStyles());
+    }
+
 }
