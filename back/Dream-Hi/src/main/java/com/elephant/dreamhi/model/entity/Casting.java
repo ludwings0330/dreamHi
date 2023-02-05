@@ -1,6 +1,7 @@
 package com.elephant.dreamhi.model.entity;
 
 import com.elephant.dreamhi.model.dto.CastingSaveDto;
+import com.elephant.dreamhi.model.dto.CastingUpdateDto;
 import com.elephant.dreamhi.model.statics.Gender;
 import java.util.ArrayList;
 import java.util.List;
@@ -80,6 +81,17 @@ public class Casting {
                       .maxAge(castingSaveDto.getMaxAge())
                       .gender(castingSaveDto.getGender())
                       .build();
+    }
+
+    public void changeCasting(CastingUpdateDto castingUpdateDto) {
+        this.name = castingUpdateDto.getName();
+        this.description = castingUpdateDto.getDescription();
+        this.headcount = castingUpdateDto.getHeadcount();
+        this.minHeight = castingUpdateDto.getMinHeight();
+        this.maxHeight = castingUpdateDto.getMaxHeight();
+        this.minAge = castingUpdateDto.getMinAge();
+        this.maxAge = castingUpdateDto.getMaxAge();
+        this.gender = castingUpdateDto.getGender();
     }
 
 }
