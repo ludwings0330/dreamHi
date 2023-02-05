@@ -18,6 +18,8 @@ function AnnouncementWriteImage() {
     const formData = new FormData()
     formData.append('image', image)
   }
+  console.log(78787878)
+  console.log()
   return (
     <div>
       <h4>공고 사진 업로드</h4>
@@ -33,7 +35,8 @@ function AnnouncementWriteImage() {
       onClick = {clickImageInput}
       />
 
-      <ImageUpload />
+      {/*<ImageUpload  />*/}
+
     </div>
   )
 }
