@@ -5,6 +5,7 @@ import com.elephant.dreamhi.model.dto.AnnouncementDetailDto;
 import com.elephant.dreamhi.model.dto.AnnouncementSaveDto;
 import com.elephant.dreamhi.model.dto.AnnouncementSearchCondition;
 import com.elephant.dreamhi.model.dto.AnnouncementSimpleDto;
+import com.elephant.dreamhi.model.dto.AnnouncementUpdateDto;
 import com.elephant.dreamhi.model.dto.CastingDetailDto;
 import com.elephant.dreamhi.model.dto.ProcessStageDto;
 import com.elephant.dreamhi.security.PrincipalDetails;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -110,13 +112,23 @@ public class AnnouncementController {
      * @throws NotFoundException 저장하려는 배역의 스타일이 DB에 존재하지 않는 경우 발생하는 예외
      */
     @PostMapping
-    @PreAuthorize("@checker.hasEditorAuthority(#user, #announcementSaveDto.producer.id)")
+    @PreAuthorize("@checker.hasEditorAuthority(#user, #announcementSaveDto.producerId)")
     public ResponseEntity<Body> saveAnnouncement(
             @RequestBody @Valid AnnouncementSaveDto announcementSaveDto,
             @AuthenticationPrincipal PrincipalDetails user
     ) throws NotFoundException {
-        announcementService.saveAnnouncementDetail(announcementSaveDto);
+        announcementService.saveAnnouncement(announcementSaveDto);
         return Response.create(HttpStatus.CREATED, "CREATED");
+    }
+
+    @PutMapping
+    @PreAuthorize("@checker.hasEditorAuthority(#user, #announcementUpdateDto.producerId)")
+    public ResponseEntity<Body> updateAnnouncement(
+            @RequestBody @Valid AnnouncementUpdateDto announcementUpdateDto,
+            @AuthenticationPrincipal PrincipalDetails user
+    ) {
+        announcementService.updateAnnouncement(announcementUpdateDto);
+        return Response.create(HttpStatus.ACCEPTED, "ACCEPTED");
     }
 
 }

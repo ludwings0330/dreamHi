@@ -2,8 +2,8 @@ package com.elephant.dreamhi.model.dto;
 
 import com.elephant.dreamhi.model.statics.Gender;
 import java.util.List;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -34,7 +34,10 @@ public class CastingSaveDto {
 
     private Gender gender;
 
-    @NotEmpty
-    private List<StyleDto> styles;
+    @Size.List({
+            @Size(min = 1),
+            @Size(max = 5)
+    })
+    private List<Long> styles;
 
 }
