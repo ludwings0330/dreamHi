@@ -75,8 +75,8 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
     @Override
     @Transactional
-    public void saveAnnouncementDetail(AnnouncementSaveDto announcementSaveDto) {
-        Producer producer = producerRepository.getReferenceById(announcementSaveDto.getProducer().getId());
+    public void saveAnnouncement(AnnouncementSaveDto announcementSaveDto) {
+        Producer producer = producerRepository.getReferenceById(announcementSaveDto.getProducerId());
         Announcement announcement = Announcement.toEntity(announcementSaveDto, producer);
         announcementRepository.save(announcement);
         processRepository.save(Process.getInstanceForRecruiting(announcement));
