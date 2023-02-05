@@ -7,20 +7,12 @@ import com.elephant.dreamhi.model.dto.AnnouncementSearchCondition;
 import com.elephant.dreamhi.model.dto.AnnouncementSimpleDto;
 import com.elephant.dreamhi.model.dto.ProcessStageDto;
 import com.elephant.dreamhi.model.entity.Announcement;
-import com.elephant.dreamhi.model.entity.Casting;
-import com.elephant.dreamhi.model.entity.CastingStyleRelation;
 import com.elephant.dreamhi.model.entity.Process;
 import com.elephant.dreamhi.model.entity.Producer;
-import com.elephant.dreamhi.model.entity.Style;
 import com.elephant.dreamhi.repository.AnnouncementRepository;
-import com.elephant.dreamhi.repository.CastingRepository;
-import com.elephant.dreamhi.repository.CastingStyleRelationRepository;
 import com.elephant.dreamhi.repository.ProcessRepository;
 import com.elephant.dreamhi.repository.ProducerRepository;
-import com.elephant.dreamhi.repository.StyleRepository;
 import com.elephant.dreamhi.security.PrincipalDetails;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -29,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Slf4j
 public class AnnouncementServiceImpl implements AnnouncementService {
@@ -36,13 +29,10 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     private final ProcessRepository processRepository;
     private final ProducerRepository producerRepository;
     private final AnnouncementRepository announcementRepository;
-    private final CastingRepository castingRepository;
-    private final StyleRepository styleRepository;
-    private final CastingStyleRelationRepository castingStyleRelationRepository;
     private final ProcessService processService;
+    private final CastingService castingService;
 
     /**
-     *
      * @param searchCondition 필터, 검색어 등의 검색 조건
      * @param pageable        페이지네이션을 위한 정보
      * @param user            현재 유저
@@ -61,7 +51,6 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     }
 
     /**
-     *
      * @param announcementId 공고ID
      * @param user           인증 객체로부터 얻은 유저 정보
      * @return 공고의 상세 내용을 반환
@@ -73,27 +62,22 @@ public class AnnouncementServiceImpl implements AnnouncementService {
                                      .orElseThrow(() -> new NotFoundException("해당 공고를 찾을 수 없습니다."));
     }
 
+    /**
+     * @param announcementSaveDto 등록할 공고의 정보
+     * @throws NotFoundException 잘못된 스타일 ID를 전달받은 경우 발생하는 예외
+     */
     @Override
     @Transactional
-    public void saveAnnouncement(AnnouncementSaveDto announcementSaveDto) {
+    public void saveAnnouncement(AnnouncementSaveDto announcementSaveDto) throws NotFoundException {
         Producer producer = producerRepository.getReferenceById(announcementSaveDto.getProducerId());
         Announcement announcement = Announcement.toEntity(announcementSaveDto, producer);
         announcementRepository.save(announcement);
+
+        // 공고를 처음 등록할 때, Process도 함께 설정한다.
         processRepository.save(Process.getInstanceForRecruiting(announcement));
 
         announcementSaveDto.getCastings().forEach(castingSaveDto -> {
-            Casting casting = Casting.toEntity(announcement, castingSaveDto);
-            castingRepository.save(casting);
-
-            List<CastingStyleRelation> castingStyleRelations = new ArrayList<>();
-            castingSaveDto.getStyles().forEach(styleDto -> {
-                Style style = styleRepository.findById(styleDto.getId())
-                                             .orElseThrow(() -> new NotFoundException("해당 스타일을 찾을 수 없습니다."));
-                style.addCount();
-                castingStyleRelations.add(CastingStyleRelation.toEntity(casting, style));
-            });
-
-            castingStyleRelationRepository.saveAll(castingStyleRelations);
+            castingService.saveCasting(announcement, castingSaveDto);
         });
     }
 
