@@ -3,15 +3,15 @@ package com.elephant.dreamhi.service;
 import com.elephant.dreamhi.exception.NotFoundException;
 import com.elephant.dreamhi.model.dto.AnnouncementDetailDto;
 import com.elephant.dreamhi.model.dto.AnnouncementSaveDto;
+import com.elephant.dreamhi.model.dto.AnnouncementSearchCondition;
+import com.elephant.dreamhi.model.dto.AnnouncementSimpleDto;
+import com.elephant.dreamhi.model.dto.ProcessStageDto;
 import com.elephant.dreamhi.model.entity.Announcement;
 import com.elephant.dreamhi.model.entity.Casting;
 import com.elephant.dreamhi.model.entity.CastingStyleRelation;
 import com.elephant.dreamhi.model.entity.Process;
 import com.elephant.dreamhi.model.entity.Producer;
 import com.elephant.dreamhi.model.entity.Style;
-import com.elephant.dreamhi.model.dto.AnnouncementSearchCondition;
-import com.elephant.dreamhi.model.dto.AnnouncementSimpleDto;
-import com.elephant.dreamhi.model.dto.ProcessStageDto;
 import com.elephant.dreamhi.repository.AnnouncementRepository;
 import com.elephant.dreamhi.repository.CastingRepository;
 import com.elephant.dreamhi.repository.CastingStyleRelationRepository;
@@ -34,7 +34,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class AnnouncementServiceImpl implements AnnouncementService {
 
     private final ProcessRepository processRepository;
-
     private final ProducerRepository producerRepository;
     private final AnnouncementRepository announcementRepository;
     private final CastingRepository castingRepository;
