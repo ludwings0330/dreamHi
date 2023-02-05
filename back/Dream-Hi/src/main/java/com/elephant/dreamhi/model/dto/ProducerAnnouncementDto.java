@@ -20,7 +20,7 @@ public class ProducerAnnouncementDto {
     @NotNull
     private String name;
 
-    public static ProducerAnnouncementDto entityToDto(Producer producer) {
+    public static ProducerAnnouncementDto toDto(Producer producer) {
         return ProducerAnnouncementDto.builder()
                                       .id(producer.getId())
                                       .name(producer.getName())
