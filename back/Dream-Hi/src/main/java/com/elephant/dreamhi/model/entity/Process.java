@@ -34,8 +34,7 @@ public class Process {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "announcement_id")
-    @NotNull
+    @JoinColumn(name = "announcement_id", nullable = false)
     private Announcement announcement;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -46,5 +45,11 @@ public class Process {
     @Column(nullable = false)
     @ColumnDefault("'RECRUITING'")
     private ProcessState state;
+
+    public static Process getInstanceForRecruiting(Announcement announcement) {
+        return Process.builder()
+                      .announcement(announcement)
+                      .build();
+    }
 
 }
