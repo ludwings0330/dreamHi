@@ -9,6 +9,8 @@ public class VolunteerSearchCondition {
 
     private Long announcementId;
 
+    private Long userId;
+
     private Long processId;
 
     private Long castingId;

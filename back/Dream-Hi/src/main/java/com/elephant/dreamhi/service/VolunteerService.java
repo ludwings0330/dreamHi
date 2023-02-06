@@ -5,6 +5,7 @@ import com.elephant.dreamhi.model.dto.VolunteerApplyRequestDto;
 import com.elephant.dreamhi.model.dto.VolunteerManageRequestDto;
 import com.elephant.dreamhi.model.dto.VolunteerSearchCondition;
 import com.elephant.dreamhi.model.dto.VolunteerSearchResponseDto;
+import com.elephant.dreamhi.model.dto.VolunteerSearchResponseDto.VolunteerSimpleInfo;
 import com.elephant.dreamhi.model.entity.Announcement;
 import com.elephant.dreamhi.model.entity.Casting;
 import com.elephant.dreamhi.model.entity.Process;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -95,8 +97,16 @@ public class VolunteerService {
         // 현재 공고의 프로세스 id 구함
         Process process = processRepository.findLastProcessByAnnouncementId(condition.getAnnouncementId()).orElseThrow();
         condition.setProcessId(process.getId());
-        // 해당 프로세스 id 를 가지고있는 지원자들 구함 -> 필터링 추가
-        // 현재 프로세스 id 를 가지고 있느 지원자들의 간략한 상태를 구함
+        // 만약 이미 끝난 프로세스면 불가능
+
+        // 배역이름 구하기
+        responseDto.setCastingId(condition.getCastingId());
+        Casting casting = castingRepository.findById(condition.getCastingId()).orElseThrow(() -> new NotFoundException("존재하지 않는 배역입니다."));
+        responseDto.setCastingName(casting.getName());
+
+        // 해당 배역에 지원한 유저들 모두 구하기 (필터링 -> state)
+        final Page<VolunteerSimpleInfo> volunteersByCondition = volunteerRepository.findVolunteersByCondition(condition);
+        responseDto.setVolunteers(volunteersByCondition);
 
         // 해당 castingId의 보류, 합격, 미결정, 탈락자의 숫자를 구한다
         Map<VolunteerState, Long> stateSummary = volunteerRepository.getVolunteerStateSummary(condition);

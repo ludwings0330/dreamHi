@@ -2,11 +2,10 @@ package com.elephant.dreamhi.model.dto;
 
 import com.elephant.dreamhi.model.statics.VolunteerState;
 import com.querydsl.core.annotations.QueryProjection;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.data.domain.Page;
 
 @Data
 public class VolunteerSearchResponseDto {
@@ -19,13 +18,13 @@ public class VolunteerSearchResponseDto {
     private Map<VolunteerState, Long> stateSummary;
 
     @Builder.Default
-    private List<VolunteerSimpleInfo> volunteers = new ArrayList<>();
+    private Page<VolunteerSimpleInfo> volunteers;
 
     public VolunteerSearchResponseDto() {
     }
 
     @QueryProjection
-    public VolunteerSearchResponseDto(Long castingId, String castingName, List<VolunteerSimpleInfo> volunteers) {
+    public VolunteerSearchResponseDto(Long castingId, String castingName, Page<VolunteerSimpleInfo> volunteers) {
         this.castingId = castingId;
         this.castingName = castingName;
         this.volunteers = volunteers;
