@@ -44,9 +44,9 @@ public class User {
     private String email;
     @Column(length = 65, nullable = false)
     private String password;
-    @Column(length = 20, nullable = false)
+    @Column(length = 50, nullable = false)
     private String name;
-    @Column(length = 11)
+    @Column(length = 20)
     private String phone;
     @Column(nullable = false)
     @ColumnDefault("1")
