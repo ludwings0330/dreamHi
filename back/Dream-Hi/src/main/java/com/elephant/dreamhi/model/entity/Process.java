@@ -1,6 +1,8 @@
 package com.elephant.dreamhi.model.entity;
 
+import com.elephant.dreamhi.model.dto.ProcessSaveDto;
 import com.elephant.dreamhi.model.statics.ProcessState;
+import com.elephant.dreamhi.model.statics.StageName;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -37,18 +39,25 @@ public class Process {
     @JoinColumn(name = "announcement_id", nullable = false)
     private Announcement announcement;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "stage_id")
-    private Stage stage;
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @ColumnDefault("'RECRUITING'")
     private ProcessState state;
 
+    @Enumerated(EnumType.STRING)
+    private StageName stage;
+
     public static Process getInstanceForRecruiting(Announcement announcement) {
         return Process.builder()
                       .announcement(announcement)
+                      .build();
+    }
+
+    public static Process toEntity(Announcement announcement, ProcessSaveDto processSaveDto) {
+        return Process.builder()
+                      .announcement(announcement)
+                      .stage(processSaveDto.getStage())
+                      .state(processSaveDto.getState())
                       .build();
     }
 
