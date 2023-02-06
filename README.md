@@ -6,9 +6,13 @@
 
 ![dream-hi-banner](./output/images/dreamhi-banner.png)
 
-## ✅ Deam Hi 링크 : 링크 추가
+## ✅ Deam Hi 링크
 
 ---
+
+[DREAM HI 링크](http://dreamhi.p-e.kr)
+
+http://dreamhi.p-e.kr
 
 ## ✅ 소개 영상 : **링크 추가**
 
@@ -146,13 +150,13 @@
 - [기능 명세서](output/기능명세서/README.md) ( updated 23.01.16 )
 - 디자인 & 컨셉기획
 - 스토리보드
-- 시퀀스 다이어그램
+- [시퀀스 다이어그램](output/시퀀스 다이어그램/README.md) ( updated 23.01.23 )
 - 아키텍처
-- 와이어프레임
-- 컨벤션
+- [와이어프레임](output/와이어프레임/README.md)
+- [컨벤션](output/docs/README.md)
 - API
 - ERD
-- 회의록
+- [회의록](output/meeting-log)
 - 테스트케이스
 - 시스템 기술서
 - 명세기술서
