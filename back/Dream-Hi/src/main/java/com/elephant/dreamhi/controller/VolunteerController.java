@@ -71,7 +71,7 @@ public class VolunteerController {
         condition.setAnnouncementId(announcementId);
         condition.setCastingId(castingId);
         condition.setPageable(pageable);
-
+        condition.setUserId(user.getId());
         log.info("배역으로 지원자 목록 조회, {}", condition);
 
         final VolunteerSearchResponseDto responseDto = volunteerService.findVolunteersByCastingIdAndCondition(condition);
