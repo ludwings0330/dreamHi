@@ -101,7 +101,7 @@ public class ActorRepositoryCustomImpl implements ActorRepositoryCustom {
                                      ageEq(condition.getAge()),
                                      genderEq(condition.getGender()),
                                      followEq(condition.getIsFollow(), condition.getId()),
-                                     style.id.in(condition.getStyles())
+                                     stylesEq(condition.getStyles())
                               )
                               .distinct()
                               .orderBy(actorProfile.id.asc());
@@ -128,7 +128,7 @@ public class ActorRepositoryCustomImpl implements ActorRepositoryCustom {
     }
 
     private BooleanExpression stylesEq(List<Long> styles) {
-        if (styles == null) {
+        if (styles == null || styles.size() == 0) {
             return null;
         }
 
@@ -139,10 +139,7 @@ public class ActorRepositoryCustomImpl implements ActorRepositoryCustom {
                               .join(actorStyleRelation.style, style)
                               .where(style.id.in(
                                       styles
-                              ))
-                              .groupBy(actorProfile.id)
-                              .having(style.id.count().eq((long) styles.size()))
-        );
+                              )));
     }
 
     private BooleanExpression genderEq(Gender gender) {
