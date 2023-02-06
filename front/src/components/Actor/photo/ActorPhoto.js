@@ -10,7 +10,7 @@ const products = [
   {
     id: 2,
     name: 'Basic Tee',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
+    imageSrc: 'https://i.ibb.co/FmTym4n/555.png',
   },
   {
     id: 3,
@@ -20,9 +20,12 @@ const products = [
   {
     id: 4,
     name: 'Basic Tee',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
+    imageSrc: 'https://cdn.pixabay.com/photo/2022/10/16/13/17/road-7525092_640.jpg',
   },
 ]
+const setSelected = (idx) => {
+  document.querySelector('.actor-photo-main').innerHTML=`<img src=${products[idx].imageSrc} alt=${products[idx].imageAlt}/>`
+};
 
 
 const ActorPhoto = () => {
@@ -33,7 +36,7 @@ const ActorPhoto = () => {
         <h1>프로필사진</h1>
 
         <div className="list-container">
-          <div className='photo-main'>
+          <div className='actor-photo-main'>
             <img src={products[0].imageSrc} alt={products[0].imageAlt}/>
           </div>
 
@@ -47,6 +50,7 @@ const ActorPhoto = () => {
                     width={"200px"}
                     height={"200px"}
                     className="object-center"
+                    onClick={() => setSelected(idx)}
                   />
                 </div>
             ))}
