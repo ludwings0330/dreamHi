@@ -15,6 +15,7 @@ import com.elephant.dreamhi.repository.FollowRepository;
 import com.elephant.dreamhi.repository.ProcessRepository;
 import com.elephant.dreamhi.repository.ProducerRepository;
 import com.elephant.dreamhi.security.PrincipalDetails;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -49,6 +50,16 @@ public class AnnouncementServiceImpl implements AnnouncementService {
             ProcessStageDto state = processService.findProcessAndStage(dto.getId(), user);
             dto.setState(state);
         });
+
+        if (!searchCondition.getIsFollow()) {
+            Set<Long> followedAnnouncementIds = followRepository.findAnnouncementIdsByFollowerId(user.getId());
+
+            announcementSimpleDtos.forEach(dto -> {
+                if (followedAnnouncementIds.contains(dto.getId())) {
+                    dto.setIsFollow(Boolean.TRUE);
+                }
+            });
+        }
 
         return announcementSimpleDtos;
     }
