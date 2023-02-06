@@ -1,9 +1,9 @@
 import React from 'react';
 import AnnouncementList from '../components/Announcement/AnnouncementList';
-import Button from '../components/Common/Button';
+import Button from '../components/Common/CommonComponent/Button';
 import { useNavigate } from 'react-router-dom';
 import AnnouncementData from '../dummydata/announcementData.json';
-import Layout from '../components/Common/Layout';
+import Layout from '../components/Common/MainLayout/Layout';
 
 
 

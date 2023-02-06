@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import Button from '../Common/Button';
+import Button from '../Common/CommonComponent/Button';
 import ImageUpload from '../../imageup/ImageUpload';
 
 function AnnouncementWriteImage() {

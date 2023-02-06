@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import Button from '../components/Common/Button';
+import Button from '../components/Common/CommonComponent/Button';
 import CalendarAnnounce from '../components/Calendar/calendarAnnounce';
 
 import Notice from '../components/Audition/Notice';

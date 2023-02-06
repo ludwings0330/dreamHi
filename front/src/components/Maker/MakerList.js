@@ -1,8 +1,8 @@
 import React from 'react';
-import SearchBar from '../Common/SearchBar';
-import PageBar from '../Common/PageBar';
+import SearchBar from '../Common/CommonComponent/SearchBar';
+import PageBar from '../Common/CommonComponent/PageBar';
 import {} from './MakerList.css'
-import Button from '../Common/Button';
+import Button from '../Common/CommonComponent/Button';
 import { Link, useNavigate } from 'react-router-dom';
 
 const MakerList = () => {

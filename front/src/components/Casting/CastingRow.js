@@ -9,7 +9,7 @@ import './Casting.css'
 
 // modules
 import { Pagination, Keyboard, Navigation } from "swiper";
-import Button from '../Common/Button';
+import Button from '../Common/CommonComponent/Button';
 import { useNavigate } from 'react-router-dom';
 
 function CastingRow(props) {

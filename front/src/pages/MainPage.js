@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MainView from '../components/Main/MainView';
-import Layout from '../components/Common/Layout';
+import Layout from '../components/Common/MainLayout/Layout';
 
 function MainPage() {
   return (

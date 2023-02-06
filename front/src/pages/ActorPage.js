@@ -1,6 +1,6 @@
 import React from 'react';
 import ActorList from '../components/Actor/ActorList';
-import Layout from '../components/Common/Layout';
+import Layout from '../components/Common/MainLayout/Layout';
 
 
 const ActorPage = () => {

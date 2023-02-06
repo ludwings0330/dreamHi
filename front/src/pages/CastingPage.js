@@ -1,5 +1,5 @@
 import React from 'react';
-import Layout from '../components/Common/Layout';
+import Layout from '../components/Common/MainLayout/Layout';
 import CastingRow from '../components/Casting/CastingRow';
 
 const CastingPage = () => {

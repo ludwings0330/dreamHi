@@ -1,5 +1,5 @@
 import React from 'react';
-import Layout from '../Common/Layout';
+import Layout from '../Common/MainLayout/Layout';
 import ActorIntroduce from './info/ActorIntroduce';
 import {} from './ActorWrite.css';
 import ActorFilmo from './filmo/ActorFilmo';
