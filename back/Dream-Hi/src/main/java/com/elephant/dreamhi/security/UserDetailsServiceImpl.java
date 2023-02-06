@@ -2,8 +2,8 @@ package com.elephant.dreamhi.security;
 
 
 import com.elephant.dreamhi.model.entity.User;
-import com.elephant.dreamhi.model.entity.UserProducerRelation;
-import com.elephant.dreamhi.repository.UserProducerRelationRepository;
+//import com.elephant.dreamhi.model.entity.UserProducerRelation;
+//import com.elephant.dreamhi.repository.UserProducerRelationRepository;
 import com.elephant.dreamhi.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserRepository userRepository;
 
-    private final UserProducerRelationRepository userProducerRelationRepository;
+//    private final UserProducerRelationRepository userProducerRelationRepository;
 
     /**
      * - authenticate 실행 시 수행되는 로직 - role 들을 조회해 Authorities 정의
@@ -36,17 +36,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
         User user = userRepository.findByEmail(email).orElseThrow(
-                () -> new UsernameNotFoundException(email + " 유저 정보가 없습니다.")
+                () -> new UsernameNotFoundException("[" + UserDetailsService.class.getName() + "] " + email + " 유저 정보가 없습니다.")
         );
-        List<UserProducerRelation> userProducerRelations = userProducerRelationRepository.findAllByUser_Id(user.getId());
+//        List<UserProducerRelation> userProducerRelations = userProducerRelationRepository.findAllByUser_Id(user.getId());
 
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(String.valueOf(user.getRole())));
-        userProducerRelations.forEach(u -> {
-            authorities.add(
-                    new SimpleGrantedAuthority(u.getRole() + "_" + String.valueOf(u.getId()))
-            );
-        });
+//        userProducerRelations.forEach(u -> {
+//            authorities.add(
+//                    new SimpleGrantedAuthority(u.getRole() + "_" + String.valueOf(u.getId()))
+//            );
+//        });
         return PrincipalDetails.builder()
                                .id(user.getId())
                                .email(user.getEmail())
