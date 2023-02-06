@@ -50,7 +50,7 @@ public class ActorController {
                                           @RequestBody ActorSearchCondition filter,
                                           @AuthenticationPrincipal PrincipalDetails principalDetails) {
         Page<ActorListResponseDto> actors = actorService.findActorsByFilter(filter, pageable, principalDetails);
-
+        if(actors.getContent().size() == 0) return Response.noContent();
         return Response.create(HttpStatus.OK, "success", actors);
     }
 
