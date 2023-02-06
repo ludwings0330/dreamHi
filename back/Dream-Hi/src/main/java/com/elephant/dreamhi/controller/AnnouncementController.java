@@ -46,7 +46,6 @@ public class AnnouncementController {
     private final ProcessService processService;
 
     /**
-     *
      * @param searchCondition 필터, 검색어 등의 검색 조건
      * @param pageable        페이지네이션을 위한 정보
      * @param user            현재 유저
@@ -59,6 +58,11 @@ public class AnnouncementController {
             @AuthenticationPrincipal PrincipalDetails user
     ) {
         Page<AnnouncementSimpleDto> announcementSimpleDtos = announcementService.findList(searchCondition, pageable, user);
+
+        if (announcementSimpleDtos.isEmpty()) {
+            return Response.create(HttpStatus.NO_CONTENT, "NO_CONTENT");
+        }
+
         return Response.create(HttpStatus.OK, "OK", announcementSimpleDtos);
     }
 
@@ -106,7 +110,6 @@ public class AnnouncementController {
     }
 
     /**
-     *
      * @param announcementSaveDto 공고를 저장할 때 필요한 데이터를 Request Body로 입력받는다.
      * @param user                현재 로그인한 유저
      * @return 저장에 성공한 경우 201, CREATED 반환
@@ -140,7 +143,7 @@ public class AnnouncementController {
             @AuthenticationPrincipal PrincipalDetails user
     ) {
         announcementService.deleteAnnouncement(announcementId);
-        return null;
+        return Response.create(HttpStatus.ACCEPTED, "ACCEPTED");
     }
 
 }
