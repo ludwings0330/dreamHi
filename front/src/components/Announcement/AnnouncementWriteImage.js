@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import Button from '../Common/Button';
+import ImageUpload from '../../imageup/ImageUpload';
 
 function AnnouncementWriteImage() {
   const [image, setImage] = useState('');
@@ -17,6 +18,8 @@ function AnnouncementWriteImage() {
     const formData = new FormData()
     formData.append('image', image)
   }
+  console.log(78787878)
+  console.log()
   return (
     <div>
       <h4>공고 사진 업로드</h4>
@@ -31,6 +34,9 @@ function AnnouncementWriteImage() {
       title = "이미지 변경"
       onClick = {clickImageInput}
       />
+
+      {/*<ImageUpload  />*/}
+
     </div>
   )
 }
