@@ -8,8 +8,12 @@ import com.elephant.dreamhi.model.dto.ActorProfileRequestDto;
 import com.elephant.dreamhi.model.dto.ActorSearchCondition;
 import com.elephant.dreamhi.model.entity.ActorProfile;
 import com.elephant.dreamhi.model.entity.User;
+import com.elephant.dreamhi.model.statics.FollowType;
 import com.elephant.dreamhi.repository.ActorRepository;
+import com.elephant.dreamhi.repository.FollowRepository;
 import com.elephant.dreamhi.security.PrincipalDetails;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -25,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class ActorService {
 
+    private final FollowRepository followRepository;
     private final ActorRepository actorRepository;
 
 
@@ -37,13 +42,20 @@ public class ActorService {
      * @return Page<ActorListResponseDto> with follow 정보
      */
     public Page<ActorListResponseDto> findActorsByFilter(ActorSearchCondition condition, Pageable pageable, PrincipalDetails principalDetails) {
-        condition.setId(principalDetails.getId());
+//        condition.setId(principalDetails.getId());
+        condition.setId(1L);
         Page<ActorListResponseDto> actorListResponseDto = actorRepository.findActorsWithFiltering(condition, pageable);
-        log.info("{}", actorListResponseDto);
-        if ((condition.getId() != 0L && condition.getIsFollow()) || condition.getId() == 0L) {
-            return actorListResponseDto;
+
+        if (condition.getId() != 0L && Boolean.TRUE.equals(condition.getIsFollow())) {
+            actorListResponseDto.getContent()
+                                .forEach(item -> item.setIsFollow(true));
+        } else if (condition.getId() != 0L && Boolean.FALSE.equals(condition.getIsFollow())) {
+            Set<Long> actorFollowInfo = new HashSet<>(followRepository.findActorIdByFollowerId(condition.getId(), FollowType.ACTOR));
+            actorListResponseDto.getContent()
+                                .forEach(item -> item.setIsFollow(actorFollowInfo.contains(item.getUserId())));
         }
 
+        log.info("{}", actorListResponseDto);
         return actorListResponseDto;
     }
 
@@ -106,4 +118,8 @@ public class ActorService {
         actorProfile.changeActorProfileInfo(actorProfileRequestDto);
     }
 
+    private static boolean checkDoFollowProcess(ActorSearchCondition condition) {
+        return condition.getId() == 0L || Boolean.TRUE.equals(condition.getIsFollow());
+    }
+    
 }
