@@ -6,23 +6,23 @@
 
 }
 
-.video-main {
+.photo-main {
     flex:1;
 }
-.video-main > img {aspect-ratio: 1; max-width: 250px; max-height: 250px; }
+.photo-main > img {aspect-ratio: 1; max-width: 250px; max-height: 250px; }
 
-.video-list {
+.photo-list {
     flex: 2;
     display: inline-block;
 
 }
-.video{
+.photo{
     display: inline-block;
     padding-right: 20px;
     padding-bottom: 20px;
 }
 
-.video > img {
+.photo > img {
     max-width: 125px;
     max-height: 125px;
     aspect-ratio: 1;

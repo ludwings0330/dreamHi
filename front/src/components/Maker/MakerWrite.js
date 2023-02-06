@@ -4,10 +4,10 @@ import MakerFilmo from './Filmo/MakerFilmo';
 import MakerPeopleList from './MakerPeopleList/MakerPeopleList';
 import MakerAnnouncementList from './AnnouncementList/MakerAnnouncementList';
 
-const MakerDetail = () => {
+const MakerWrite = () => {
   return (
     <>
-      <MakerIntroduce />
+    <MakerIntroduce />
       <MakerFilmo />
       <MakerPeopleList />
       <MakerAnnouncementList />
@@ -15,4 +15,4 @@ const MakerDetail = () => {
   );
 };
 
-export default MakerDetail;
+export default MakerWrite;

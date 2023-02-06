@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import Layout from '../components/Common/Layout';
 import Button from '../components/Common/Button';
 import CalendarAnnounce from '../components/Calendar/calendarAnnounce';
 
@@ -11,7 +10,7 @@ import styled, { css } from 'styled-components'
 function AuditionPage(props) {
   const navigate = useNavigate()
   return (
-    <Layout>
+    <>
       <Button
         title="면접보기"
         onClick={() => {
@@ -27,7 +26,7 @@ function AuditionPage(props) {
         </AuditionContentRight>
       </AuditionContent>
 
-    </Layout>
+    </>
   );
 }
 
