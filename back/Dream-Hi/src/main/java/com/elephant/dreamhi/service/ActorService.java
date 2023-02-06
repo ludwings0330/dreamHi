@@ -42,8 +42,7 @@ public class ActorService {
      * @return Page<ActorListResponseDto> with follow 정보
      */
     public Page<ActorListResponseDto> findActorsByFilter(ActorSearchCondition condition, Pageable pageable, PrincipalDetails principalDetails) {
-//        condition.setId(principalDetails.getId());
-        condition.setId(1L);
+        condition.setId(principalDetails.getId());
         Page<ActorListResponseDto> actorListResponseDto = actorRepository.findActorsWithFiltering(condition, pageable);
 
         if (condition.getId() != 0L && Boolean.TRUE.equals(condition.getIsFollow())) {
