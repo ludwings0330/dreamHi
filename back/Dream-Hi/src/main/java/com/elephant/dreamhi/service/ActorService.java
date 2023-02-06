@@ -2,10 +2,10 @@ package com.elephant.dreamhi.service;
 
 import com.elephant.dreamhi.exception.NotFoundException;
 import com.elephant.dreamhi.exception.VisibleException;
+import com.elephant.dreamhi.model.dto.ActorListResponseDto;
 import com.elephant.dreamhi.model.dto.ActorProfileDetailDto;
 import com.elephant.dreamhi.model.dto.ActorProfileRequestDto;
 import com.elephant.dreamhi.model.dto.ActorSearchCondition;
-import com.elephant.dreamhi.model.dto.ActorSimpleProfileDto;
 import com.elephant.dreamhi.model.entity.ActorProfile;
 import com.elephant.dreamhi.model.entity.User;
 import com.elephant.dreamhi.repository.ActorRepository;
@@ -27,13 +27,24 @@ public class ActorService {
 
     private final ActorRepository actorRepository;
 
-    public Page<ActorSimpleProfileDto> findActorsByFilter(ActorSearchCondition condition, Pageable pageable) {
-        condition.setId(1L);
 
-        final Page<ActorProfile> profiles = actorRepository.findActorSimpleProfiles(condition, pageable);
-        final Page<ActorSimpleProfileDto> profileDtos = profiles.map(p -> new ActorSimpleProfileDto(p, condition.getId()));
+    /**
+     * ActorList 조회 - With Filtering 메소드
+     *
+     * @param condition        : filtering 조건 Dto
+     * @param pageable         : paging 정보
+     * @param principalDetails : 현재 접근중인 주체
+     * @return Page<ActorListResponseDto> with follow 정보
+     */
+    public Page<ActorListResponseDto> findActorsByFilter(ActorSearchCondition condition, Pageable pageable, PrincipalDetails principalDetails) {
+        condition.setId(principalDetails.getId());
+        Page<ActorListResponseDto> actorListResponseDto = actorRepository.findActorsWithFiltering(condition, pageable);
+        log.info("{}", actorListResponseDto);
+        if ((condition.getId() != 0L && condition.getIsFollow()) || condition.getId() == 0L) {
+            return actorListResponseDto;
+        }
 
-        return profileDtos;
+        return actorListResponseDto;
     }
 
     /**
