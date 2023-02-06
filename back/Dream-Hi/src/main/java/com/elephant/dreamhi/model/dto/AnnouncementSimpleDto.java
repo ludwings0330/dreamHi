@@ -1,9 +1,7 @@
 package com.elephant.dreamhi.model.dto;
 
-import com.elephant.dreamhi.model.entity.Casting;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,7 +21,7 @@ public class AnnouncementSimpleDto {
 
     private ProcessStageDto state;
 
-    private Boolean isFollow = Boolean.FALSE;
+    private Boolean isFollow;
 
     private LocalDateTime createDate;
 
@@ -31,15 +29,14 @@ public class AnnouncementSimpleDto {
 
     private List<CastingSimpleDto> castings;
 
-    public AnnouncementSimpleDto(Long id, String title, String producerName, LocalDateTime createDate, Integer hit, List<Casting> castings) {
+    public AnnouncementSimpleDto(Long id, String title, String producerName, Boolean isFollow, LocalDateTime createDate, Integer hit, List<CastingSimpleDto> castings) {
         this.id = id;
         this.title = title;
         this.producerName = producerName;
+        this.isFollow = isFollow;
         this.createDate = createDate;
         this.hit = hit;
-        this.castings = castings.stream()
-                                .map(CastingSimpleDto::toDto)
-                                .collect(Collectors.toList());
+        this.castings = castings;
     }
 
     public void setIsFollow(Boolean isFollow) {
