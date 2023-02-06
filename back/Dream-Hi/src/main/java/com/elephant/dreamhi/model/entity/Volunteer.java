@@ -35,7 +35,7 @@ import org.hibernate.annotations.DynamicInsert;
 @AllArgsConstructor
 @Getter
 @Builder
-public class Volunteer extends BaseTimeEntity{
+public class Volunteer extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,5 +57,13 @@ public class Volunteer extends BaseTimeEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "process_id")
     private Process process;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "announcement_id")
+    private Announcement announcement;
+
+    public void setState(VolunteerState state) {
+        this.state = state;
+    }
 
 }

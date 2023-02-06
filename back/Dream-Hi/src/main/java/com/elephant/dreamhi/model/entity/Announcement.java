@@ -1,6 +1,11 @@
 package com.elephant.dreamhi.model.entity;
 
+import com.elephant.dreamhi.model.dto.AnnouncementDto;
+import com.elephant.dreamhi.model.dto.AnnouncementSaveDto;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -11,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -58,5 +64,29 @@ public class Announcement extends BaseTimeEntity {
 
     @Embedded
     private Picture picture;
+
+    @OneToMany(mappedBy = "announcement", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private final List<Casting> castings = new ArrayList<>();
+
+    public static Announcement toEntity(AnnouncementSaveDto announcementSaveDto, Producer producer) {
+        return Announcement.builder()
+                           .producer(producer)
+                           .title(announcementSaveDto.getTitle())
+                           .payment(announcementSaveDto.getTitle())
+                           .crankPeriod(announcementSaveDto.getCrankPeriod())
+                           .endDate(announcementSaveDto.getEndDate())
+                           .description(announcementSaveDto.getDescription())
+                           .picture(announcementSaveDto.getPictureUrl())
+                           .build();
+    }
+
+    public void changeAnnouncement(AnnouncementDto announcementDto) {
+        this.title = announcementDto.getTitle();
+        this.payment = announcementDto.getPayment();
+        this.crankPeriod = announcementDto.getCrankPeriod();
+        this.endDate = announcementDto.getEndDate();
+        this.description = announcementDto.getDescription();
+        this.picture = announcementDto.getPictureUrl();
+    }
 
 }

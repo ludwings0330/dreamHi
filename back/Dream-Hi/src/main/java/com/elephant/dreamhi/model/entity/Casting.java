@@ -1,5 +1,7 @@
 package com.elephant.dreamhi.model.entity;
 
+import com.elephant.dreamhi.model.dto.CastingSaveDto;
+import com.elephant.dreamhi.model.dto.CastingUpdateDto;
 import com.elephant.dreamhi.model.statics.Gender;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +67,31 @@ public class Casting {
         if (castingStyleRelation.getCasting() != this) {
             castingStyleRelation.setCasting(this);
         }
+    }
+
+    public static Casting toEntity(Announcement announcement, CastingSaveDto castingSaveDto) {
+        return Casting.builder()
+                      .announcement(announcement)
+                      .name(castingSaveDto.getName())
+                      .description(castingSaveDto.getDescription())
+                      .headcount(castingSaveDto.getHeadcount())
+                      .minHeight(castingSaveDto.getMinHeight())
+                      .maxHeight(castingSaveDto.getMaxHeight())
+                      .minAge(castingSaveDto.getMinAge())
+                      .maxAge(castingSaveDto.getMaxAge())
+                      .gender(castingSaveDto.getGender())
+                      .build();
+    }
+
+    public void changeCasting(CastingUpdateDto castingUpdateDto) {
+        this.name = castingUpdateDto.getName();
+        this.description = castingUpdateDto.getDescription();
+        this.headcount = castingUpdateDto.getHeadcount();
+        this.minHeight = castingUpdateDto.getMinHeight();
+        this.maxHeight = castingUpdateDto.getMaxHeight();
+        this.minAge = castingUpdateDto.getMinAge();
+        this.maxAge = castingUpdateDto.getMaxAge();
+        this.gender = castingUpdateDto.getGender();
     }
 
 }

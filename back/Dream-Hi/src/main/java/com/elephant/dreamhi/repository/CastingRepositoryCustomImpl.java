@@ -32,4 +32,12 @@ public class CastingRepositoryCustomImpl implements CastingRepositoryCustom {
                        .collect(Collectors.toList());
     }
 
+    @Override
+    public List<Long> findIdByAnnouncementId(Long announcementId) {
+        return queryFactory.select(casting.id)
+                           .from(casting)
+                           .where(casting.announcement.id.eq(announcementId))
+                           .fetch();
+    }
+
 }

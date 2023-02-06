@@ -1,12 +1,16 @@
 package com.elephant.dreamhi.service;
 
 import com.elephant.dreamhi.exception.FullResourceException;
+import com.elephant.dreamhi.exception.NotFoundException;
 import com.elephant.dreamhi.model.dto.ActorProfileRequestDto;
 import com.elephant.dreamhi.model.entity.ActorProfile;
 import com.elephant.dreamhi.model.entity.ActorStyleRelation;
+import com.elephant.dreamhi.model.entity.Casting;
+import com.elephant.dreamhi.model.entity.CastingStyleRelation;
 import com.elephant.dreamhi.model.entity.Style;
 import com.elephant.dreamhi.repository.ActorRepository;
 import com.elephant.dreamhi.repository.ActorStyleRelationRepository;
+import com.elephant.dreamhi.repository.CastingStyleRelationRepository;
 import com.elephant.dreamhi.repository.StyleRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +31,7 @@ public class StyleService {
     private Integer styleTagSize;
     private final ActorRepository actorRepository;
     private final ActorStyleRelationRepository actorStyleRelationRepository;
+    private final CastingStyleRelationRepository castingStyleRelationRepository;
     private final StyleRepository styleRepository;
 
     /**
@@ -75,6 +80,36 @@ public class StyleService {
         if (originSize + insertSize - deleteSize > styleTagSize) {
             throw new FullResourceException("최대 저장 개수를 초과했습니다.");
         }
+    }
+
+    /**
+     * @param casting  DB에 저장된 배역
+     * @param styleIds 배역을 설명하는 스타일들의 ID
+     * @throws NotFoundException 존재하지 않는 스타일 ID를 전달받은 경우 발생하는 예외
+     */
+    @Transactional
+    public void saveStyleRelations(Casting casting, List<Long> styleIds) throws NotFoundException {
+        List<CastingStyleRelation> castingStyleRelations = new ArrayList<>();
+
+        styleIds.forEach(styleId -> {
+            Style style = styleRepository.findById(styleId)
+                                         .orElseThrow(() -> new NotFoundException("해당 스타일을 찾을 수 없습니다."));
+            style.addCount();
+            castingStyleRelations.add(CastingStyleRelation.toEntity(casting, style));
+        });
+
+        castingStyleRelationRepository.saveAll(castingStyleRelations);
+    }
+
+    /**
+     * @param casting  DB에 저장된 배역
+     * @param styleIds 배역을 설명하는 스타일들의 ID
+     * @throws NotFoundException 존재하지 않는 스타일 ID를 전달받은 경우 발생하는 예외
+     */
+    @Transactional
+    public void updateStyleRelations(Casting casting, List<Long> styleIds) {
+        castingStyleRelationRepository.deleteAllByCastingId(casting.getId());
+        saveStyleRelations(casting, styleIds);
     }
 
 }
