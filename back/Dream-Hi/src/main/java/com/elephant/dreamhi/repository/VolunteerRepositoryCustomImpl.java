@@ -10,6 +10,7 @@ import com.elephant.dreamhi.model.dto.QVolunteerSearchResponseDto_VolunteerSimpl
 import com.elephant.dreamhi.model.dto.VolunteerSearchCondition;
 import com.elephant.dreamhi.model.dto.VolunteerSearchResponseDto;
 import com.elephant.dreamhi.model.dto.VolunteerSearchResponseDto.VolunteerSimpleInfo;
+import com.elephant.dreamhi.model.entity.Process;
 import com.elephant.dreamhi.model.entity.QFollow;
 import com.elephant.dreamhi.model.entity.Volunteer;
 import com.elephant.dreamhi.model.statics.VolunteerState;
@@ -79,6 +80,15 @@ public class VolunteerRepositoryCustomImpl implements VolunteerRepositoryCustom 
                                                      .fetch();
 
         return PageableExecutionUtils.getPage(fetch, condition.getPageable(), () -> query.fetch().size());
+    }
+
+    @Override
+    public Long countPassVolunteersByCastingId(Long castingId) {
+        return queryFactory.select(volunteer.count())
+                           .from(volunteer)
+                           .where(volunteer.casting.id.eq(castingId),
+                                  volunteer.state.eq(VolunteerState.PASS))
+                           .fetchOne();
     }
 
     private BooleanExpression stateEq(VolunteerState state) {

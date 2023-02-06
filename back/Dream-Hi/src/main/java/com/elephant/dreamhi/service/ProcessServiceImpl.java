@@ -59,7 +59,7 @@ public class ProcessServiceImpl implements ProcessService {
 
         // 모집 완료인 경우
         announcement.getCastings().forEach(casting -> {
-            int volunteerCount = volunteerRepository.countByCastingId(casting.getId()).intValue();
+            int volunteerCount = volunteerRepository.countPassVolunteersByCastingId(casting.getId()).intValue();
 
             if (volunteerCount > casting.getHeadcount()) {
                 throw new IllegalStateException("[ProcessServiceImpl.saveProcess] 배역에 지정한 캐스팅 인원보다 더 많은 인원을 채용하고 있습니다.");
