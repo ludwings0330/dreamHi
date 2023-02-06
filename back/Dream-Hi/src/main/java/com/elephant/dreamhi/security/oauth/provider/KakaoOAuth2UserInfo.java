@@ -29,8 +29,10 @@ public class KakaoOAuth2UserInfo implements OAuth2UserInfo{
             return null;
         }
         String originPhone =  (String) account.get("phone_number");
-        String[] numbers = originPhone.split("-");
-        return numbers[0].substring(4,7) + numbers[1] + numbers[2];
+        String regex = originPhone.contains("-") ? "-" : " ";
+        String[] numbers = originPhone.split(regex);
+        StringBuilder phone = new StringBuilder("010");
+        return phone.append(numbers[1]).append(numbers[2]).toString();
     }
 
     @Override
