@@ -8,18 +8,23 @@ import static com.elephant.dreamhi.model.entity.QProducer.producer;
 import static com.elephant.dreamhi.model.entity.QStyle.style;
 import static com.elephant.dreamhi.model.entity.QUser.user;
 import static com.elephant.dreamhi.model.entity.QVolunteer.volunteer;
+import static com.querydsl.core.group.GroupBy.groupBy;
+import static com.querydsl.core.group.GroupBy.list;
 
 import com.elephant.dreamhi.model.dto.AnnouncementDetailDto;
 import com.elephant.dreamhi.model.dto.AnnouncementSearchCondition;
 import com.elephant.dreamhi.model.dto.AnnouncementSimpleDto;
-import com.elephant.dreamhi.model.entity.Announcement;
+import com.elephant.dreamhi.model.dto.CastingSimpleDto;
 import com.elephant.dreamhi.model.statics.Gender;
+import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.CaseBuilder;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -38,50 +43,94 @@ public class AnnouncementRepositoryCustomImpl implements AnnouncementRepositoryC
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Optional<Announcement> findAnnouncementById(Long id) {
-        return Optional.ofNullable(
-                queryFactory.selectFrom(announcement)
-                            .join(producer).on(announcement.producer.id.eq(producer.id))
-                            .where(announcement.id.eq(id))
-                            .fetchOne()
-        );
+    public Page<AnnouncementSimpleDto> findAllByCondition(AnnouncementSearchCondition condition, Pageable pageable, Long userId) {
+        JPAQuery<Long> query = getQueryToFindAnnouncementIdsByCondition(condition, userId);
+        long totalCount = query.fetch().size();
+        List<Long> announcementIds = query.orderBy(announcement.id.desc())
+                                          .offset(pageable.getOffset())
+                                          .limit(pageable.getPageSize())
+                                          .fetch();
+
+        if (announcementIds.isEmpty()) {
+            return PageableExecutionUtils.getPage(Collections.emptyList(), pageable, () -> totalCount);
+        }
+
+        List<AnnouncementSimpleDto> contents = queryFactory.selectFrom(announcement)
+                                                           .join(announcement.producer, producer).fetchJoin()
+                                                           .join(announcement.castings, casting).fetchJoin()
+                                                           .where(announcement.id.in(announcementIds))
+                                                           .distinct()
+                                                           .transform(
+                                                                   groupBy().list(Projections.constructor(
+                                                                           AnnouncementSimpleDto.class,
+                                                                           announcement.id,
+                                                                           announcement.title,
+                                                                           producer.name,
+                                                                           Expressions.asBoolean(condition.getIsFollow()),
+                                                                           announcement.createdDate,
+                                                                           announcement.hit,
+                                                                           list(Projections.constructor(
+                                                                                   CastingSimpleDto.class,
+                                                                                   casting.headcount,
+                                                                                   casting.name
+                                                                           ))
+                                                                   ))
+                                                           );
+
+        return PageableExecutionUtils.getPage(contents, pageable, () -> totalCount);
     }
 
     @Override
-    public Page<AnnouncementSimpleDto> findAllByCondition(AnnouncementSearchCondition condition, Pageable pageable, Long userId) {
-        JPAQuery<AnnouncementSimpleDto> query = queryFactory.select(Projections.constructor(
-                                                                    AnnouncementSimpleDto.class,
-                                                                    announcement.id,
-                                                                    announcement.title,
-                                                                    producer.name.as("producerName"),
-                                                                    announcement.createdDate,
-                                                                    announcement.hit,
-                                                                    announcement.castings
-                                                            ))
-                                                            .from(announcement)
-                                                            .join(announcement.producer, producer).fetchJoin()
-                                                            .join(casting.announcement, announcement).fetchJoin()
-                                                            .where(
-                                                                    heightBetween(condition.getMinHeight(), condition.getMaxHeight()),
-                                                                    ageBetween(condition.getMinAge(), condition.getMaxAge()),
-                                                                    genderEq(condition.getGender()),
-                                                                    keywordLike(condition.getKeyword()),
-                                                                    styleIn(condition.getStyles()),
-                                                                    followEq(condition.getIsFollow(), userId),
-                                                                    volunteerEq(condition.getIsVolunteer(), userId)
-                                                            )
-                                                            .distinct();
+    public Optional<AnnouncementDetailDto> findByAnnouncementIdAndFollowerId(Long announcementId, Long followerId) {
+        AnnouncementDetailDto findedAnnouncementDetailDto = queryFactory.select(Projections.constructor(
+                                                                                AnnouncementDetailDto.class,
+                                                                                announcement.id,
+                                                                                announcement.title,
+                                                                                producer.id.as("producerId"),
+                                                                                producer.name.as("producerName"),
+                                                                                announcement.payment,
+                                                                                announcement.crankPeriod,
+                                                                                announcement.endDate,
+                                                                                announcement.description,
+                                                                                announcement.hit,
+                                                                                announcement.picture.url.as("pictureUrl"),
+                                                                                ExpressionUtils.as(
+                                                                                        new CaseBuilder()
+                                                                                                .when(
+                                                                                                        JPAExpressions.select(follow.count())
+                                                                                                                      .from(follow)
+                                                                                                                      .where(
+                                                                                                                              follow.announcement.id.eq(announcementId),
+                                                                                                                              follow.follower.id.eq(followerId)
+                                                                                                                      ).eq(1L)
+                                                                                                )
+                                                                                                .then(Boolean.TRUE)
+                                                                                                .otherwise(Boolean.FALSE),
+                                                                                        "isFollow"
+                                                                                )
+                                                                        ))
+                                                                        .from(announcement)
+                                                                        .join(announcement.producer, producer)
+                                                                        .where(announcement.id.eq(announcementId))
+                                                                        .fetchOne();
 
-        List<AnnouncementSimpleDto> contents = query.orderBy(announcement.id.desc())
-                                                    .offset(pageable.getOffset())
-                                                    .limit(pageable.getPageSize())
-                                                    .fetch();
+        return Optional.ofNullable(findedAnnouncementDetailDto);
+    }
 
-        if (condition.getIsFollow()) {
-            contents.forEach(dto -> dto.setIsFollow(Boolean.TRUE));
-        }
-
-        return PageableExecutionUtils.getPage(contents, pageable, () -> query.fetch().size());
+    private JPAQuery<Long> getQueryToFindAnnouncementIdsByCondition(AnnouncementSearchCondition condition, Long userId) {
+        return queryFactory.select(announcement.id)
+                           .from(announcement)
+                           .join(announcement.producer, producer)
+                           .join(announcement.castings, casting)
+                           .where(
+                                   heightBetween(condition.getMinHeight(), condition.getMaxHeight()),
+                                   ageBetween(condition.getMinAge(), condition.getMaxAge()),
+                                   genderEq(condition.getGender()),
+                                   keywordLike(condition.getKeyword()),
+                                   styleIn(condition.getStyles()),
+                                   followEq(condition.getIsFollow(), userId),
+                                   volunteerEq(condition.getIsVolunteer(), userId)
+                           );
     }
 
     private BooleanExpression heightBetween(Integer minHeight, Integer maxHeight) {
@@ -130,7 +179,8 @@ public class AnnouncementRepositoryCustomImpl implements AnnouncementRepositoryC
         }
 
         String likeKeyword = "%" + keyword + "%";
-        return announcement.title.like(likeKeyword).or(producer.name.like(likeKeyword));
+        return announcement.title.like(likeKeyword)
+                                 .or(producer.name.like(likeKeyword));
     }
 
     private BooleanExpression styleIn(Long[] styles) {
@@ -141,25 +191,23 @@ public class AnnouncementRepositoryCustomImpl implements AnnouncementRepositoryC
         return casting.id.in(
                 JPAExpressions.select(casting.id)
                               .from(casting)
-                              .join(castingStyleRelation.casting, casting).fetchJoin()
-                              .join(castingStyleRelation.style, style).fetchJoin()
+                              .join(casting.castingStyleRelations, castingStyleRelation)
+                              .join(castingStyleRelation.style, style)
                               .where(style.id.in(styles))
-                              .distinct()
         );
     }
 
     private BooleanExpression followEq(Boolean isFollow, Long followerId) {
-        if (isFollow == null || !isFollow) {
+        if (isFollow == null || !isFollow || followerId == 0L) {
             return null;
         }
 
         return announcement.id.in(
                 JPAExpressions.select(announcement.id)
                               .from(announcement)
-                              .join(follow.announcement, announcement).fetchJoin()
-                              .join(follow.follower, user).fetchJoin()
+                              .join(follow.announcement, announcement)
+                              .join(follow.follower, user)
                               .where(user.id.eq(followerId))
-                              .distinct()
         );
     }
 
@@ -176,37 +224,6 @@ public class AnnouncementRepositoryCustomImpl implements AnnouncementRepositoryC
                               .where(user.id.eq(userId))
                               .distinct()
         );
-    }
-
-    @Override
-    public Optional<AnnouncementDetailDto> findByAnnouncementIdAndFollowerId(Long announcementId, Long followerId) {
-        AnnouncementDetailDto findedAnnouncementDetailDto = queryFactory.select(Projections.constructor(
-                                                                                AnnouncementDetailDto.class,
-                                                                                announcement.id,
-                                                                                announcement.title,
-                                                                                producer.id.as("producerId"),
-                                                                                producer.name.as("producerName"),
-                                                                                announcement.payment,
-                                                                                announcement.crankPeriod,
-                                                                                announcement.endDate,
-                                                                                announcement.description,
-                                                                                announcement.hit,
-                                                                                announcement.picture.url.as("pictureUrl"),
-                                                                                new CaseBuilder()
-                                                                                        .when(JPAExpressions.select(follow.count()).from(follow).where(
-                                                                                                follow.announcement.id.eq(announcementId),
-                                                                                                follow.follower.id.eq(followerId)
-                                                                                        ).eq(1L))
-                                                                                        .then(Boolean.TRUE)
-                                                                                        .otherwise(Boolean.FALSE)
-                                                                                        .as("isFollowed")
-                                                                        )).from(announcement)
-                                                                        .join(producer).on(announcement.producer.id.eq(producer.id))
-                                                                        .where(
-                                                                                announcement.id.eq(announcementId)
-                                                                        ).fetchOne();
-
-        return Optional.ofNullable(findedAnnouncementDetailDto);
     }
 
 }

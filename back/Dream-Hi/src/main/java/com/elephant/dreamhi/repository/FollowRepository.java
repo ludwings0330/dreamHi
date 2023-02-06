@@ -3,6 +3,7 @@ package com.elephant.dreamhi.repository;
 import com.elephant.dreamhi.model.entity.Follow;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -24,5 +25,8 @@ public interface FollowRepository extends JpaRepository<Follow, Long>, FollowRep
     Long countByActor_Id(@Param("id") Long id);
 
     Follow save(Follow follow);
+
+    @Query("SELECT f.announcement.id FROM Follow f WHERE f.follower.id = :followerId AND f.type = 'ANNOUNCEMENT'")
+    Set<Long> findAnnouncementIdsByFollowerId(Long followerId);
 
 }
