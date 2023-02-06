@@ -25,6 +25,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -126,9 +127,20 @@ public class AnnouncementController {
     public ResponseEntity<Body> updateAnnouncement(
             @RequestBody @Valid AnnouncementUpdateDto announcementUpdateDto,
             @AuthenticationPrincipal PrincipalDetails user
-    ) {
+    ) throws NotFoundException {
         announcementService.updateAnnouncement(announcementUpdateDto);
         return Response.create(HttpStatus.ACCEPTED, "ACCEPTED");
+    }
+
+    @DeleteMapping("/{producerId}/{announcementId}")
+    @PreAuthorize("@checker.hasEditorAuthority(#user, #producerId)")
+    public ResponseEntity<Body> deleteAnnouncement(
+            @PathVariable Long producerId,
+            @PathVariable Long announcementId,
+            @AuthenticationPrincipal PrincipalDetails user
+    ) {
+        announcementService.deleteAnnouncement(announcementId);
+        return null;
     }
 
 }
