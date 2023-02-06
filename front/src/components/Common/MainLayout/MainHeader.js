@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
   Navbar,
@@ -10,7 +10,7 @@ import {
   DropdownMenu, Col, Row
 } from "reactstrap";
 
-import Button from './Button';
+import Button from '../CommonComponent/Button';
 import { Link, useNavigate } from 'react-router-dom';
 
 
@@ -19,22 +19,24 @@ import { AiOutlineBell } from 'react-icons/ai'
 import { CgProfile } from "react-icons/cg";
 
 // css
-import "./Common.css"
+import './MainHeader.css';
 import "bootstrap/scss/bootstrap.scss";
 
 
 function MainHeader() {
   const navigate = useNavigate();
 
+
   return (
 
     <Navbar>
       <Container className={"main-container"}>
-        <div>
+
 
           <div className="header-top">
 
 
+            {/*메인로고 이미지*/}
             <div>
               <img title="home"
                    onClick={() => {
@@ -45,36 +47,19 @@ function MainHeader() {
 
             <div className="header-top-right">
 
-
-              <UncontrolledDropdown>
-                <DropdownToggle
-                  caret
-                  color="default"
-                  data-toggle="dropdown"
-                  nav
-                >
-                  <div className="notification d-none d-lg-block d-xl-block"/>
-                  <AiOutlineBell size="40" color="#7EA6F4" />
-                </DropdownToggle>
-
-                <DropdownMenu className="dropdown-navbar" right tag="ul">
-
-                  <NavLink tag="li">
-                    <DropdownItem className="nav-item">
-                      공고 진행 중
-                    </DropdownItem>
-                  </NavLink>
-
-                  <NavLink tag="li">
-                    <DropdownItem className="nav-item">
-                      채용 완료
-                    </DropdownItem>
-                  </NavLink>
-
-                </DropdownMenu>
-              </UncontrolledDropdown>
+              {/*로그인 전에 보이는 버튼*/}
+              <Button
+                title="로그인"
+                onClick={() => {
+                  navigate("/login")
+                }} />
 
 
+              {/*공백부분*/}
+              <div className="space-y-6 bg-white px-4 py-5 sm:p-6">
+              </div>
+
+              {/*로그인 시 보이는 토글버튼*/}
               <UncontrolledDropdown>
                 <DropdownToggle
                   caret
@@ -83,36 +68,41 @@ function MainHeader() {
                   onClick={(e) => e.preventDefault()}
                 >
                   <b className="caret d-none d-lg-block d-xl-block" />
-                  <Link to={"/login"}>
                   <CgProfile size="40" color="#7EA6F4" />
-                  </Link>
                 </DropdownToggle>
 
                 <DropdownMenu className="dropdown-navbar" right tag="ul">
 
-                  <NavLink tag="li">
+
+                  <Link to={"/actor/detail"} tag="li">
                     <DropdownItem className="nav-item">내 이력서</DropdownItem>
-                  </NavLink>
+                  </Link>
 
-                  <NavLink tag="li">
+                  <Link to={"/maker/detail"} tag="li">
                     <DropdownItem className="nav-item">내 제작사</DropdownItem>
-                  </NavLink>
+                  </Link>
 
-                  <NavLink tag="li">
+                  <Link to={"/collection"} tag="li">
                     <DropdownItem className="nav-item">모아보기</DropdownItem>
-                  </NavLink>
+                  </Link>
 
-                  <DropdownItem divider tag="li" />
-
-                  <NavLink tag="li">
+                  <Link to={"/"} tag="li">
                     <DropdownItem className="nav-item">로그아웃</DropdownItem>
-                  </NavLink>
+                  </Link>
 
                 </DropdownMenu>
               </UncontrolledDropdown>
+
+              
             </div>
+
+
           </div>
 
+
+
+
+          {/*공고 배우 제작사 버튼 구현 부분*/}
           <div className="header-bottom">
             <Row>
               <Col md="12">
@@ -132,8 +122,6 @@ function MainHeader() {
                   }} />
 
 
-
-
                 <Button 
                   title="제작사"
                   onClick={() => {
@@ -146,7 +134,7 @@ function MainHeader() {
           </div>
 
           <hr  className={"header-line"}/>
-        </div>
+
 
 
       </Container>

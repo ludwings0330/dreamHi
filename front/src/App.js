@@ -16,16 +16,24 @@ import LoginPage from './pages/Login/LoginPage';
 import AuditionPage from './pages/AuditionPage';
 import AuditionMeeting from './components/Audition/AuditionMeeting';
 
+import Layout from './components/Common/MainLayout/Layout';
+import MakerList from './components/Maker/MakerList';
+import MakerDetail from './components/Maker/MakerDetail';
+import MakerWrite from './components/Maker/MakerWrite';
+import Collection from './components/Collection/Collection';
+
+
 
 function App() {
+
   return (
-    <div className="app">
+    <Layout>
       <Routes>
-          //메인페이지 관련 이동
-          <Route index element={<MainPage />} />
-          <Route path="/actor" element={<ActorPage />} />
-          <Route path="/maker" element={<MakerPage />} />
-          <Route path={"/login"} element={<LoginPage />} />
+        //메인페이지 관련 이동
+        <Route index element={<MainPage />} />
+        <Route path="/actor" element={<ActorPage />} />
+        <Route path="/maker" element={<MakerPage />} />
+        <Route path={"/login"} element={<LoginPage />} />
 
         //공고페이지 관련 이동
         <Route path="/announcement" element={<AnnouncementPage/>} />
@@ -40,7 +48,7 @@ function App() {
 
 
         //배우페이지 관련 이동
-        <Route path={"actor/list"} element={<ActorList />} />
+        <Route path={"/actor/list"} element={<ActorList />} />
         <Route path={"/actor/detail"} element={<ActorDetail />} />
         <Route path={"/actor/write"} element={<ActorWrite />} />
 
@@ -48,11 +56,17 @@ function App() {
         <Route path={"/audition"} element={<AuditionPage />} />
         <Route path={"/audition/meeting"} element={<AuditionMeeting />} />
 
+        //제작사페이지 관련 이동
+        <Route path={"/maker/list"} element={<MakerList />}/>
+        <Route path={"/maker/detail"} element={<MakerDetail />}/>
+        <Route path={"/maker/write"} element={<MakerWrite />}/>
 
+        //모아보기페이지 관련 이동
+        <Route path={"/collection"} element={<Collection />}/>
 
 
       </Routes>
-    </div>
+    </Layout>
   );
 }
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import AnnouncementList from '../components/Announcement/AnnouncementList';
-import Button from '../components/Common/Button';
+import Button from '../components/Common/CommonComponent/Button';
 import { useNavigate } from 'react-router-dom';
 import AnnouncementData from '../dummydata/announcementData.json';
-import Layout from '../components/Common/Layout';
+import Layout from '../components/Common/MainLayout/Layout';
 
 
 
@@ -16,7 +16,7 @@ function AnnouncementPage(props) {
   console.log(announcements[0].result.list[0].title);
   console.log(announcements[0].result.list[0].id);*/
   return (
-    <Layout>
+    <>
       <Button
         title="글 작성하기"
         onClick={() => {
@@ -31,7 +31,7 @@ function AnnouncementPage(props) {
           navigate(`/announcement/${item.result.list[0].id}`);
         }}
       />
-    </Layout>
+    </>
   );
 }
 

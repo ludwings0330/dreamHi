@@ -1,7 +1,7 @@
 import React from 'react';
 import AnnouncementListItem from './AnnouncementListItem';
-import SearchBar from '../Common/SearchBar';
-import PageBar from '../Common/PageBar';
+import SearchBar from '../Common/CommonComponent/SearchBar';
+import PageBar from '../Common/CommonComponent/PageBar';
 
 function AnnouncementList(props) {
   const { announcements, onClickItem } = props;

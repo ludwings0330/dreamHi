@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import palette from '../../lib/styles/palette';
+import palette from '../../../lib/styles/palette';
+
 
 const StyledButton = styled.button`
   border: rgba(7, 7, 7, 0.16);
