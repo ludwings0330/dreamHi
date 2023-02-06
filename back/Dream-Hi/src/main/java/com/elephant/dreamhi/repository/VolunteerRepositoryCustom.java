@@ -20,6 +20,8 @@ public interface VolunteerRepositoryCustom {
 
     Page<VolunteerSimpleInfo> findVolunteersByCondition(VolunteerSearchCondition condition);
 
+    void updatePassVolunteers(Long announcementId, Process process);
+
     Long countPassVolunteersByCastingId(Long castingId);
 
 }

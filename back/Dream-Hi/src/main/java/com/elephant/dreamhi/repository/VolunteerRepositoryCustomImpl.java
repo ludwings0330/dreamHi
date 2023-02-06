@@ -83,6 +83,16 @@ public class VolunteerRepositoryCustomImpl implements VolunteerRepositoryCustom 
     }
 
     @Override
+    public void updatePassVolunteers(Long announcementId, Process process) {
+        queryFactory.update(volunteer)
+                    .set(volunteer.process, process)
+                    .set(volunteer.state, VolunteerState.NONE)
+                    .where(volunteer.announcement.id.eq(announcementId),
+                           volunteer.state.eq(VolunteerState.PASS))
+                    .execute();
+    }
+
+    @Override
     public Long countPassVolunteersByCastingId(Long castingId) {
         return queryFactory.select(volunteer.count())
                            .from(volunteer)
