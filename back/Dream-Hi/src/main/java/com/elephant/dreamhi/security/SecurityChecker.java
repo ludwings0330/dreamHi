@@ -62,4 +62,9 @@ public class SecurityChecker {
         return false;
     }
 
+    public boolean hasAnnouncementAuthority(PrincipalDetails user, Long announcementId) {
+        // announcementId 로 producerId 를 찾음 -> producerId 로 hasEditor
+        return authService.hasAnnouncementAuthority(user, announcementId);
+    }
+
 }

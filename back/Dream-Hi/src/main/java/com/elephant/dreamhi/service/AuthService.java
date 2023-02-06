@@ -3,6 +3,7 @@ package com.elephant.dreamhi.service;
 import com.elephant.dreamhi.model.statics.FilmoType;
 import com.elephant.dreamhi.model.statics.ProducerRole;
 import com.elephant.dreamhi.repository.AuthRepository;
+import com.elephant.dreamhi.security.PrincipalDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,10 @@ public class AuthService {
         return role.equals(ProducerRole.EDITOR);
     }
 
+    public boolean isAnonymous(Long userId) {
+        return userId == 0;
+    }
+
     public boolean hasActorProfileAuthority(Long userId, Long actorId) {
         return authRepository.findActorProfileByUserId(userId).orElse(-1L).equals(actorId);
     }
@@ -31,6 +36,12 @@ public class AuthService {
             default:
                 return false;
         }
+    }
+
+    public boolean hasAnnouncementAuthority(PrincipalDetails user, Long announcementId) {
+        Long producerId = authRepository.findProducerIdByAnnouncementId(announcementId).orElse(-1L);
+
+        return hasEditorAuthority(user.getId(), producerId);
     }
 
 }
