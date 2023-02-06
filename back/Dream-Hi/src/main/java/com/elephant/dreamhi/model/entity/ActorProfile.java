@@ -33,40 +33,29 @@ import org.hibernate.annotations.DynamicInsert;
 @Builder
 public class ActorProfile {
 
+    @OneToMany(mappedBy = "actorProfile", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<ActorProfileMediaFile> actorProfileMediaFiles = new ArrayList<>();
+    @OneToMany(mappedBy = "actorProfile", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<Filmography> filmographies = new ArrayList<>();
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-
-    @Column(length = 20, nullable = false)
+    @Column(length = 40, nullable = false)
     private String title;
-
     private Integer age;
-
     @Enumerated(EnumType.STRING)
     private Gender gender;
-
     private Double height;
-
     @Column(length = 500)
     private String description;
-
     @Column(nullable = false)
     @ColumnDefault("0")
     private Boolean visible;
-
     @OneToMany(mappedBy = "actorProfile", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ActorStyleRelation> actorStyleRelations = new ArrayList<>();
-
-    @OneToMany(mappedBy = "actorProfile", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private final List<ActorProfileMediaFile> actorProfileMediaFiles = new ArrayList<>();
-
-    @OneToMany(mappedBy = "actorProfile", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private final List<Filmography> filmographies = new ArrayList<>();
-
 
     public void setUser(User user) {
         this.user = user;
@@ -87,7 +76,7 @@ public class ActorProfile {
     // ActorStyle 추가 편의 메소드
     public void addActorStyle(ActorStyleRelation actorStyleRelation) {
         this.actorStyleRelations.add(actorStyleRelation);
-        if(actorStyleRelation.getActorProfile() != this) {
+        if (actorStyleRelation.getActorProfile() != this) {
             actorStyleRelation.setActorProfile(this);
         }
     }

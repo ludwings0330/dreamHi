@@ -40,11 +40,11 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 45, nullable = false, unique = true)
+    @Column(length = 60, nullable = false, unique = true)
     private String email;
     @Column(length = 65, nullable = false)
     private String password;
-    @Column(length = 7, nullable = false)
+    @Column(length = 20, nullable = false)
     private String name;
     @Column(length = 11)
     private String phone;
