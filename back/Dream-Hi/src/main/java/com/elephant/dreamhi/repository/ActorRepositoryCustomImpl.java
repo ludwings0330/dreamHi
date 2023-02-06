@@ -4,15 +4,23 @@ import static com.elephant.dreamhi.model.entity.QActorProfile.actorProfile;
 import static com.elephant.dreamhi.model.entity.QActorStyleRelation.actorStyleRelation;
 import static com.elephant.dreamhi.model.entity.QStyle.style;
 import static com.elephant.dreamhi.model.entity.QUser.user;
+import static com.querydsl.core.group.GroupBy.groupBy;
+import static com.querydsl.core.group.GroupBy.list;
 
+import com.elephant.dreamhi.model.dto.ActorListResponseDto;
 import com.elephant.dreamhi.model.dto.ActorSearchCondition;
+import com.elephant.dreamhi.model.dto.StyleDto;
 import com.elephant.dreamhi.model.entity.ActorProfile;
 import com.elephant.dreamhi.model.entity.QFollow;
 import com.elephant.dreamhi.model.statics.Gender;
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -40,27 +48,63 @@ public class ActorRepositoryCustomImpl implements ActorRepositoryCustom {
     }
 
     @Override
-    public Page<ActorProfile> findActorSimpleProfiles(ActorSearchCondition condition, Pageable pageable) {
-        // 이름, 나이, 성별, 키, 스타일, 팔로우 여부
-        JPAQuery<ActorProfile> query = jpaQueryFactory.select(actorProfile)
-                                                      .from(actorProfile)
-                                                      .innerJoin(actorProfile.user, user).fetchJoin()
-                                                      .leftJoin(actorProfile.actorStyleRelations, actorStyleRelation).fetchJoin()
-                                                      .leftJoin(actorStyleRelation.style, style).fetchJoin()
-                                                      .where(actorProfile.visible.eq(true),
-                                                             nameEq(condition.getName()),
-                                                             ageEq(condition.getAge()),
-                                                             heightEq(condition.getHeight()),
-                                                             genderEq(condition.getGender()),
-                                                             followEq(condition.getIsFollow(), condition.getId()),
-                                                             stylesEq(condition.getStyles()));
+    public Page<ActorListResponseDto> findActorsWithFiltering(ActorSearchCondition condition, Pageable pageable) {
+        JPAQuery<Long> query = findActorsIndexWithFiltering(condition, pageable);
+        HashSet<Long> actorIds = new HashSet<>(query.offset(pageable.getOffset()).limit(pageable.getPageSize()).fetch());
 
-        final List<ActorProfile> contents = query
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .fetch();
+        Long totalSize = Long.valueOf(query.fetch().size());
+        if (actorIds.isEmpty()) {
+            return PageableExecutionUtils.getPage(new ArrayList<>(), pageable, () -> totalSize);
+        }
 
-        return PageableExecutionUtils.getPage(contents, pageable, () -> query.fetch().size());
+        List<ActorListResponseDto> actorListResponseDto = jpaQueryFactory
+                .selectFrom(actorProfile)
+                .join(actorProfile.user, user)
+                .leftJoin(actorStyleRelation)
+                .on(actorStyleRelation.actorProfile.id.eq(actorProfile.id))
+                .leftJoin(actorStyleRelation.style, style)
+                .where(actorProfile.id.in(actorIds))
+                .transform(
+                        groupBy(actorProfile.id).list(
+                                Projections.constructor(
+                                        ActorListResponseDto.class,
+                                        user.id.as("userId"),
+                                        user.name,
+                                        user.picture.url.as("pictureUrl"),
+                                        actorProfile.id.as("actorProfileId"),
+                                        actorProfile.title,
+                                        actorProfile.gender,
+                                        actorProfile.age,
+                                        actorProfile.height,
+                                        list(
+                                                Projections.constructor(StyleDto.class,
+                                                                        style.id,
+                                                                        style.description
+                                                )
+                                        ),
+                                        Expressions.asBoolean(false).as("isFollow")
+                                )
+                        )
+                );
+
+        return PageableExecutionUtils.getPage(actorListResponseDto, pageable, () -> totalSize);
+    }
+
+    private JPAQuery<Long> findActorsIndexWithFiltering(ActorSearchCondition condition, Pageable pageable) {
+        return jpaQueryFactory.selectDistinct(actorProfile.id)
+                              .from(actorProfile)
+                              .join(actorProfile.user, user).on(actorProfile.visible.isTrue())
+                              .leftJoin(actorStyleRelation).on(actorStyleRelation.actorProfile.id.eq(actorProfile.id))
+                              .leftJoin(actorStyleRelation.style, style)
+                              .where(nameEq(condition.getName()),
+                                     heightEq(condition.getHeight()),
+                                     ageEq(condition.getAge()),
+                                     genderEq(condition.getGender()),
+                                     followEq(condition.getIsFollow(), condition.getId()),
+                                     stylesEq(condition.getStyles())
+                              )
+                              .distinct()
+                              .orderBy(actorProfile.id.asc());
     }
 
     @Override
@@ -73,34 +117,29 @@ public class ActorRepositoryCustomImpl implements ActorRepositoryCustom {
     }
 
     private BooleanExpression followEq(Boolean isFollow, Long id) {
-        if (isFollow == null || !isFollow) {
+        if (id == 0L || isFollow == null || !isFollow) {
             return null;
         }
-        return actorProfile.id.in(
+        return user.id.in(
                 JPAExpressions.select(QFollow.follow.actor.id)
                               .from(QFollow.follow)
                               .where(QFollow.follow.follower.id.eq(id))
         );
     }
 
-    private BooleanExpression stylesEq(String[] styles) {
-        if (styles == null) {
+    private BooleanExpression stylesEq(List<Long> styles) {
+        if (styles == null || styles.size() == 0) {
             return null;
         }
+
         return actorProfile.id.in(
                 JPAExpressions.select(actorProfile.id)
                               .from(actorProfile)
                               .join(actorProfile.actorStyleRelations, actorStyleRelation)
                               .join(actorStyleRelation.style, style)
                               .where(style.id.in(
-                                      JPAExpressions
-                                              .select(style.id)
-                                              .from(style)
-                                              .where(style.description.in(styles)
-                                              )))
-                              .groupBy(actorProfile.id)
-                              .having(style.id.count().eq((long) styles.length))
-        );
+                                      styles
+                              )));
     }
 
     private BooleanExpression genderEq(Gender gender) {

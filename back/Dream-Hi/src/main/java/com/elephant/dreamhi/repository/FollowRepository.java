@@ -1,6 +1,7 @@
 package com.elephant.dreamhi.repository;
 
 import com.elephant.dreamhi.model.entity.Follow;
+import com.elephant.dreamhi.model.statics.FollowType;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -23,6 +24,9 @@ public interface FollowRepository extends JpaRepository<Follow, Long>, FollowRep
 
     @Query("select count(f.id) from Follow f where f.actor.id=:id")
     Long countByActor_Id(@Param("id") Long id);
+
+    @Query("select f.actor.id from Follow f where f.follower.id=:userId and f.type=:type")
+    List<Long> findActorIdByFollowerId(@Param("userId") Long userId, @Param("type") FollowType type);
 
     Follow save(Follow follow);
 

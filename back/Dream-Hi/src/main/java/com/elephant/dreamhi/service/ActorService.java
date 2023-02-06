@@ -2,14 +2,18 @@ package com.elephant.dreamhi.service;
 
 import com.elephant.dreamhi.exception.NotFoundException;
 import com.elephant.dreamhi.exception.VisibleException;
+import com.elephant.dreamhi.model.dto.ActorListResponseDto;
 import com.elephant.dreamhi.model.dto.ActorProfileDetailDto;
 import com.elephant.dreamhi.model.dto.ActorProfileRequestDto;
 import com.elephant.dreamhi.model.dto.ActorSearchCondition;
-import com.elephant.dreamhi.model.dto.ActorSimpleProfileDto;
 import com.elephant.dreamhi.model.entity.ActorProfile;
 import com.elephant.dreamhi.model.entity.User;
+import com.elephant.dreamhi.model.statics.FollowType;
 import com.elephant.dreamhi.repository.ActorRepository;
+import com.elephant.dreamhi.repository.FollowRepository;
 import com.elephant.dreamhi.security.PrincipalDetails;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -25,15 +29,34 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class ActorService {
 
+    private final FollowRepository followRepository;
     private final ActorRepository actorRepository;
 
-    public Page<ActorSimpleProfileDto> findActorsByFilter(ActorSearchCondition condition, Pageable pageable) {
+
+    /**
+     * ActorList 조회 - With Filtering 메소드
+     *
+     * @param condition        : filtering 조건 Dto
+     * @param pageable         : paging 정보
+     * @param principalDetails : 현재 접근중인 주체
+     * @return Page<ActorListResponseDto> with follow 정보
+     */
+    public Page<ActorListResponseDto> findActorsByFilter(ActorSearchCondition condition, Pageable pageable, PrincipalDetails principalDetails) {
+//        condition.setId(principalDetails.getId());
         condition.setId(1L);
+        Page<ActorListResponseDto> actorListResponseDto = actorRepository.findActorsWithFiltering(condition, pageable);
 
-        final Page<ActorProfile> profiles = actorRepository.findActorSimpleProfiles(condition, pageable);
-        final Page<ActorSimpleProfileDto> profileDtos = profiles.map(p -> new ActorSimpleProfileDto(p, condition.getId()));
+        if (condition.getId() != 0L && Boolean.TRUE.equals(condition.getIsFollow())) {
+            actorListResponseDto.getContent()
+                                .forEach(item -> item.setIsFollow(true));
+        } else if (condition.getId() != 0L && Boolean.FALSE.equals(condition.getIsFollow())) {
+            Set<Long> actorFollowInfo = new HashSet<>(followRepository.findActorIdByFollowerId(condition.getId(), FollowType.ACTOR));
+            actorListResponseDto.getContent()
+                                .forEach(item -> item.setIsFollow(actorFollowInfo.contains(item.getUserId())));
+        }
 
-        return profileDtos;
+        log.info("{}", actorListResponseDto);
+        return actorListResponseDto;
     }
 
     /**
@@ -95,4 +118,8 @@ public class ActorService {
         actorProfile.changeActorProfileInfo(actorProfileRequestDto);
     }
 
+    private static boolean checkDoFollowProcess(ActorSearchCondition condition) {
+        return condition.getId() == 0L || Boolean.TRUE.equals(condition.getIsFollow());
+    }
+    
 }

@@ -3,10 +3,10 @@ package com.elephant.dreamhi.controller;
 import com.elephant.dreamhi.exception.FullResourceException;
 import com.elephant.dreamhi.exception.NotFoundException;
 import com.elephant.dreamhi.exception.VisibleException;
+import com.elephant.dreamhi.model.dto.ActorListResponseDto;
 import com.elephant.dreamhi.model.dto.ActorProfileDetailDto;
 import com.elephant.dreamhi.model.dto.ActorProfileRequestDto;
 import com.elephant.dreamhi.model.dto.ActorSearchCondition;
-import com.elephant.dreamhi.model.dto.ActorSimpleProfileDto;
 import com.elephant.dreamhi.security.PrincipalDetails;
 import com.elephant.dreamhi.service.ActorService;
 import com.elephant.dreamhi.service.StyleService;
@@ -36,12 +36,21 @@ public class ActorController {
     private final ActorService actorService;
     private final StyleService styleService;
 
-    @GetMapping("/auth/actors")
+    /**
+     * ActorList 조회 - With Filtering 메소드
+     *
+     * @param filter           : filtering 조건 Dto
+     * @param pageable         : paging 정보
+     * @param principalDetails : 현재 접근중인 주체
+     * @return 200 : ActorListResponseDto
+     * @return 204 : 빈 리스트일 경우 반환
+     */
+    @GetMapping("/api/actors")
     public ResponseEntity<Body> actorList(@PageableDefault(size = 8) Pageable pageable,
-                                          @RequestBody ActorSearchCondition filter) {
-        log.info(filter.toString());
-        Page<ActorSimpleProfileDto> actors = actorService.findActorsByFilter(filter, pageable);
-
+                                          @RequestBody ActorSearchCondition filter,
+                                          @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        Page<ActorListResponseDto> actors = actorService.findActorsByFilter(filter, pageable, principalDetails);
+        if(actors.getContent().size() == 0) return Response.noContent();
         return Response.create(HttpStatus.OK, "success", actors);
     }
 
