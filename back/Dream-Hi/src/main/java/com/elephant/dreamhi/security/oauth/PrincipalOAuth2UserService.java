@@ -2,11 +2,11 @@ package com.elephant.dreamhi.security.oauth;
 
 import com.elephant.dreamhi.model.entity.ActorProfile;
 import com.elephant.dreamhi.model.entity.User;
-import com.elephant.dreamhi.model.entity.UserProducerRelation;
+//import com.elephant.dreamhi.model.entity.UserProducerRelation;
 import com.elephant.dreamhi.model.statics.ProviderType;
 import com.elephant.dreamhi.model.statics.UserRole;
 import com.elephant.dreamhi.repository.ActorRepository;
-import com.elephant.dreamhi.repository.UserProducerRelationRepository;
+//import com.elephant.dreamhi.repository.UserProducerRelationRepository;
 import com.elephant.dreamhi.repository.UserRepository;
 import com.elephant.dreamhi.security.PrincipalDetails;
 import com.elephant.dreamhi.security.oauth.provider.OAuth2UserInfo;
@@ -37,7 +37,7 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
 
     private final UserRepository userRepository;
 
-    private final UserProducerRelationRepository userProducerRelationRepository;
+//    private final UserProducerRelationRepository userProducerRelationRepository;
 
     private final ActorRepository actorRepository;
 
@@ -71,6 +71,7 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
         User userEntity;
 
         if (user.isPresent()) {
+            log.info("[{}] {} 유저 소셜 로그인 요청", PrincipalOAuth2UserService.class.getName(), userInfo.getEmail());
             userEntity = user.get();
             // 존재한다면 수정 로직 추가 가능
         } else {
@@ -99,13 +100,13 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
      */
     private List<GrantedAuthority> getAuthorities(User userEntity) {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        List<UserProducerRelation> userProducerRelations = userProducerRelationRepository.findAllByUser_Id(userEntity.getId());
+//        List<UserProducerRelation> userProducerRelations = userProducerRelationRepository.findAllByUser_Id(userEntity.getId());
         authorities.add(new SimpleGrantedAuthority(String.valueOf(userEntity.getRole())));
-        userProducerRelations.forEach(u -> {
-            authorities.add(
-                    new SimpleGrantedAuthority(u.getRole() + "_" + String.valueOf(u.getId()))
-            );
-        });
+//        userProducerRelations.forEach(u -> {
+//            authorities.add(
+//                    new SimpleGrantedAuthority(u.getRole() + "_" + String.valueOf(u.getId()))
+//            );
+//        });
         return authorities;
     }
 
@@ -132,6 +133,7 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
      */
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     User registerUser(OAuth2UserInfo userInfo) {
+        log.info("[{}] {} 유저 신규 회원 가입 절차 진행", PrincipalOAuth2UserService.class.getName(), userInfo.getEmail());
         return userRepository.save(
                 User.builder()
                     .email(userInfo.getEmail())

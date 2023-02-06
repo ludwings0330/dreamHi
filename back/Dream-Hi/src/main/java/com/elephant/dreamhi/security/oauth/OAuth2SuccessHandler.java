@@ -26,7 +26,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private final TokenService tokenService;
 
     /**
-     * 소셜 로그인 성공적으로 수행된 후 수행되는 SuccessHandler 메소드
+     * 소셜 로그인 성공적으로 수행된 후 수행되는 SuccessHandler 메소드 - Implicit Grant 방식
      *
      * @param request
      * @param response
