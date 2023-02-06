@@ -41,26 +41,26 @@ public class Volunteer extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    @ColumnDefault("'NONE'")
-    private VolunteerState state;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false, updatable = false)
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "casting_id", nullable = false)
+    @JoinColumn(name = "announcement_id", nullable = false, updatable = false)
+    private Announcement announcement;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "casting_id", nullable = false, updatable = false)
     private Casting casting;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "process_id")
     private Process process;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "announcement_id")
-    private Announcement announcement;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    @ColumnDefault("'NONE'")
+    private VolunteerState state;
 
     public void setState(VolunteerState state) {
         this.state = state;
