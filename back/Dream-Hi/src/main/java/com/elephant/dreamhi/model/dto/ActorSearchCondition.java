@@ -1,6 +1,8 @@
 package com.elephant.dreamhi.model.dto;
 
 import com.elephant.dreamhi.model.statics.Gender;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
@@ -25,7 +27,7 @@ public class ActorSearchCondition {
     private Gender gender;
 
     @Nullable
-    private String[] styles;
+    private List<Long> styles = new ArrayList<>();
 
     @Nullable
     private Boolean isFollow = false;
