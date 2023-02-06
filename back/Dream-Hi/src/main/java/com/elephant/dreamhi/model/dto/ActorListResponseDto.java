@@ -2,6 +2,7 @@ package com.elephant.dreamhi.model.dto;
 
 import com.elephant.dreamhi.model.statics.Gender;
 import java.util.List;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +23,7 @@ public class ActorListResponseDto {
     private Integer age;
     private Double height;
     private List<StyleDto> styles;
+    @NotNull
     private Boolean isFollow;
 
 }
