@@ -20,4 +20,6 @@ public interface AnnouncementService {
 
     void updateAnnouncement(AnnouncementUpdateDto announcementUpdateDto) throws NotFoundException;
 
+    void deleteAnnouncement(Long announcementId);
+
 }

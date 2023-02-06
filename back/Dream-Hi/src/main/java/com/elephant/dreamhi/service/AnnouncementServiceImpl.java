@@ -11,6 +11,7 @@ import com.elephant.dreamhi.model.entity.Announcement;
 import com.elephant.dreamhi.model.entity.Process;
 import com.elephant.dreamhi.model.entity.Producer;
 import com.elephant.dreamhi.repository.AnnouncementRepository;
+import com.elephant.dreamhi.repository.FollowRepository;
 import com.elephant.dreamhi.repository.ProcessRepository;
 import com.elephant.dreamhi.repository.ProducerRepository;
 import com.elephant.dreamhi.security.PrincipalDetails;
@@ -27,11 +28,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class AnnouncementServiceImpl implements AnnouncementService {
 
+    private final ProcessService processService;
+    private final CastingService castingService;
+    private final FollowRepository followRepository;
     private final ProcessRepository processRepository;
     private final ProducerRepository producerRepository;
     private final AnnouncementRepository announcementRepository;
-    private final ProcessService processService;
-    private final CastingService castingService;
 
     /**
      * @param searchCondition 필터, 검색어 등의 검색 조건
@@ -52,15 +54,19 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     }
 
     /**
+     * 공고 상세 조회 전에 공고의 조회수를 1 증가시킨다.
+     *
      * @param announcementId 공고ID
      * @param user           인증 객체로부터 얻은 유저 정보
      * @return 공고의 상세 내용을 반환
      * @throws NotFoundException 공고가 존재하지 않는 경우
      */
     @Override
+    @Transactional
     public AnnouncementDetailDto findDetail(Long announcementId, PrincipalDetails user) throws NotFoundException {
+        announcementRepository.plusHitByAnnouncementId(announcementId);
         return announcementRepository.findByAnnouncementIdAndFollowerId(announcementId, user.getId())
-                                     .orElseThrow(() -> new NotFoundException("해당 공고를 찾을 수 없습니다."));
+                                                                            .orElseThrow(() -> new NotFoundException("해당 공고를 찾을 수 없습니다."));
     }
 
     /**
@@ -94,6 +100,12 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
         announcementUpdateDto.getCastings()
                              .forEach(castingUpdateDto -> castingService.updateCasting(announcement, castingUpdateDto));
+    }
+
+    @Override
+    @Transactional
+    public void deleteAnnouncement(Long announcementId) {
+        announcementRepository.deleteById(announcementId);
     }
 
 }
