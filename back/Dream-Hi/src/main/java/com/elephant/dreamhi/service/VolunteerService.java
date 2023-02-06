@@ -117,4 +117,17 @@ public class VolunteerService {
         return responseDto;
     }
 
+    public List<VolunteerSearchResponseDto> findAllVolunteers(VolunteerSearchCondition condition) {
+        List<VolunteerSearchResponseDto> result = new ArrayList<>();
+        List<Long> castingIds = castingRepository.findIdByAnnouncementId(condition.getAnnouncementId());
+
+        for (Long castingId :
+                castingIds) {
+            condition.setCastingId(castingId);
+            result.add(findVolunteersByCastingIdAndCondition(condition));
+        }
+
+        return result;
+    }
+
 }

@@ -9,6 +9,7 @@ import com.elephant.dreamhi.security.PrincipalDetails;
 import com.elephant.dreamhi.service.VolunteerService;
 import com.elephant.dreamhi.utils.Response;
 import com.elephant.dreamhi.utils.Response.Body;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -63,11 +64,11 @@ public class VolunteerController {
 
     @GetMapping("/api/announcements/{announcementId}/casting/{castingId}/volunteers")
     @PreAuthorize("@checker.hasAnnouncementAuthority(#user, #announcementId)")
-    public ResponseEntity<Body> findVolunteers(@PathVariable Long announcementId,
-                                               @PathVariable Long castingId,
-                                               @PageableDefault Pageable pageable,
-                                               @ModelAttribute VolunteerSearchCondition condition,
-                                               @AuthenticationPrincipal PrincipalDetails user) {
+    public ResponseEntity<Body> findVolunteersByCasting(@PathVariable Long announcementId,
+                                                        @PathVariable Long castingId,
+                                                        @PageableDefault Pageable pageable,
+                                                        @ModelAttribute VolunteerSearchCondition condition,
+                                                        @AuthenticationPrincipal PrincipalDetails user) {
         condition.setAnnouncementId(announcementId);
         condition.setCastingId(castingId);
         condition.setPageable(pageable);
@@ -76,6 +77,20 @@ public class VolunteerController {
 
         final VolunteerSearchResponseDto responseDto = volunteerService.findVolunteersByCastingIdAndCondition(condition);
         return Response.create(HttpStatus.OK, "조회 성공", responseDto);
+    }
+
+    @GetMapping("/api/announcements/{announcementId}/volunteers")
+    @PreAuthorize("@checker.hasAnnouncementAuthority(#user, #announcementId)")
+    public ResponseEntity<Body> findAllVolunteers(@PathVariable Long announcementId,
+                                                  @PageableDefault Pageable pageable,
+                                                  @ModelAttribute VolunteerSearchCondition condition,
+                                                  @AuthenticationPrincipal PrincipalDetails user) {
+        condition.setAnnouncementId(announcementId);
+        condition.setUserId(user.getId());
+        condition.setPageable(pageable);
+
+        List<VolunteerSearchResponseDto> contents = volunteerService.findAllVolunteers(condition);
+        return Response.create(HttpStatus.OK, "조회 성공", contents);
     }
 
 }
