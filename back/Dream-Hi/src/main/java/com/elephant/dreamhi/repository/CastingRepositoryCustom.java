@@ -7,4 +7,6 @@ public interface CastingRepositoryCustom {
 
     List<CastingDetailDto> findByAnnouncementId(Long announcementId);
 
+    List<Long> findIdByAnnouncementId(Long announcementId);
+
 }
