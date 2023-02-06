@@ -15,6 +15,7 @@ import com.elephant.dreamhi.model.dto.AnnouncementDetailDto;
 import com.elephant.dreamhi.model.dto.AnnouncementSearchCondition;
 import com.elephant.dreamhi.model.dto.AnnouncementSimpleDto;
 import com.elephant.dreamhi.model.dto.CastingSimpleDto;
+import com.elephant.dreamhi.model.entity.Announcement;
 import com.elephant.dreamhi.model.statics.Gender;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
@@ -41,6 +42,16 @@ import org.springframework.util.StringUtils;
 public class AnnouncementRepositoryCustomImpl implements AnnouncementRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
+
+    @Override
+    public Optional<Announcement> findByAnnouncementId(Long announcementId) {
+        return Optional.ofNullable(
+                queryFactory.selectFrom(announcement)
+                            .join(announcement.castings, casting).fetchJoin()
+                            .where(announcement.id.eq(announcementId))
+                            .fetchOne()
+        );
+    }
 
     @Override
     public Page<AnnouncementSimpleDto> findAllByCondition(AnnouncementSearchCondition condition, Pageable pageable, Long userId) {
