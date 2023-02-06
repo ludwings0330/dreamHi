@@ -14,8 +14,7 @@ import ActorDetail from './components/Actor/ActorDetail';
 import ActorWrite from './components/Actor/ActorWrite';
 import LoginPage from './pages/Login/LoginPage';
 import Layout from './components/Common/Layout';
-import AuditionPage from './pages/AuditionPage';
-import AuditionMeeting from './components/Audition/AuditionMeeting';
+import RoomDetail from './components/Room/WebRTC/RoomDetail';
 
 function App() {
 
@@ -48,8 +47,6 @@ function App() {
         //오디션페이지 관련 이동
         <Route path={"/audition"} element={<AuditionPage />} />
         <Route path={"/audition/meeting"} element={<AuditionMeeting />} />
-
-
 
 
       </Routes>
