@@ -12,7 +12,7 @@ import lombok.ToString;
 @Getter
 @Builder
 @ToString
-public class AnnouncementWeeklyDto {
+public class AnnouncementNameDto {
 
     @NotNull
     private Long id;
