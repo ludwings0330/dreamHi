@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ACCESS_TOKEN } from '../../../constants';
 
 import {
   Navbar,
@@ -25,41 +26,37 @@ import "bootstrap/scss/bootstrap.scss";
 
 function MainHeader() {
   const navigate = useNavigate();
-
-
+  console.log(ACCESS_TOKEN,2512515123123)
+  const token = localStorage.getItem(ACCESS_TOKEN);
+  console.log(token,"token1111111111")
   return (
 
     <Navbar>
       <Container className={"main-container"}>
 
 
-          <div className="header-top">
+        <div className="header-top">
 
 
-            {/*메인로고 이미지*/}
-            <div>
-              <img title="home"
-                   onClick={() => {
-                     navigate("/")
-                   }} src= {'/img/logo.png'} alt="DreamHi logo" className="header-logo" />
-            </div>
+          {/*메인로고 이미지*/}
+          <div>
+            <img title="home"
+                 onClick={() => {
+                   navigate("/")
+                 }} src= {'/img/logo.png'} alt="DreamHi logo" className="header-logo" />
+          </div>
 
 
-            <div className="header-top-right">
+          <div className="header-top-right">
 
-              {/*로그인 전에 보이는 버튼*/}
+            {/*로그인 전에 보이는 버튼*/}
+            {token == null ?
               <Button
                 title="로그인"
                 onClick={() => {
                   navigate("/login")
-                }} />
+                }} /> :
 
-
-              {/*공백부분*/}
-              <div className="space-y-6 bg-white px-4 py-5 sm:p-6">
-              </div>
-
-              {/*로그인 시 보이는 토글버튼*/}
               <UncontrolledDropdown>
                 <DropdownToggle
                   caret
@@ -87,53 +84,66 @@ function MainHeader() {
                   </Link>
 
                   <Link to={"/"} tag="li">
-                    <DropdownItem className="nav-item">로그아웃</DropdownItem>
+                    <DropdownItem className="nav-item" onClick={() => {
+                      localStorage.removeItem(ACCESS_TOKEN)
+                      navigate("/")
+                    }}
+                    >로그아웃</DropdownItem>
                   </Link>
 
                 </DropdownMenu>
               </UncontrolledDropdown>
+            }
 
-              
+
+
+            {/*공백부분*/}
+            <div className="space-y-6 bg-white px-4 py-5 sm:p-6">
             </div>
 
+            {/*로그인 시 보이는 토글버튼*/}
+
 
           </div>
 
 
-
-
-          {/*공고 배우 제작사 버튼 구현 부분*/}
-          <div className="header-bottom">
-            <Row>
-              <Col md="12">
-
-                <Button
-                  title="공고"
-                  onClick={() => {
-                    navigate("/announcement")
-                  }} />
+        </div>
 
 
 
-                <Button
-                  title="배우"
-                  onClick={() => {
-                    navigate("/actor")
-                  }} />
+
+        {/*공고 배우 제작사 버튼 구현 부분*/}
+        <div className="header-bottom">
+          <Row>
+            <Col md="12">
+
+              <Button
+                title="공고"
+                onClick={() => {
+                  navigate("/announcement")
+                }} />
 
 
-                <Button 
-                  title="제작사"
-                  onClick={() => {
-                    navigate("/maker")
-                  }} />
+
+              <Button
+                title="배우"
+                onClick={() => {
+                  navigate("/actor")
+                }} />
 
 
-              </Col>
-            </Row>
-          </div>
+              <Button
+                title="제작사"
+                onClick={() => {
+                  navigate("/maker")
+                }} />
 
-          <hr  className={"header-line"}/>
+
+            </Col>
+          </Row>
+        </div>
+
+        <hr  className={"header-line"}/>
 
 
 
@@ -144,4 +154,3 @@ function MainHeader() {
 }
 
 export default MainHeader;
-
