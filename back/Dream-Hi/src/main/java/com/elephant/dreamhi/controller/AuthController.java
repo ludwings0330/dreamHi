@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -25,9 +25,9 @@ public class AuthController {
 
     @PostMapping("/api/logout")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<Body> logout() {
-        SecurityContextHolder.clearContext();
-        return Response.ok();
+    public ResponseEntity<Body> logout(@AuthenticationPrincipal PrincipalDetails principalDetails) {
+        tokenService.deleteToken(principalDetails.getId());
+        return Response.accepted();
     }
 
     @PostMapping("/auth/refresh-token")

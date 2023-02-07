@@ -37,10 +37,7 @@ public class TokenServiceImpl implements TokenService {
         String accessToken = tokenProvider.createAccessToken(authentication);
 
         Optional<Token> oldToken = tokenRepository.findByUserId(userId);
-        TokenDto tokenDto = TokenDto.builder()
-                                    .id(userId)
-                                    .accessToken(accessToken)
-                                    .build();
+        TokenDto tokenDto = TokenDto.builder().id(userId).accessToken(accessToken).build();
         if (oldToken.isEmpty()) {
             String refreshToken = tokenProvider.createRefreshToken(authentication);
             createToken(tokenDto, refreshToken);
@@ -54,8 +51,7 @@ public class TokenServiceImpl implements TokenService {
     /**
      * authentication을 이용해 새로운 토큰 발급, 토큰 저장
      *
-     * @param userId      : 현재 접근중인 주체 userId
-     * @param accessToken
+     * @param authorization : Header에 담긴 Token 정보
      * @return JwtResponse 에 Access Token만 담아서 반환한다.
      * @throws IllegalArgumentException 현재 유저의 토큰 정보가 존재하지 않다면 발생
      */
@@ -75,10 +71,7 @@ public class TokenServiceImpl implements TokenService {
         // update access token
         token.changeAccessToken(newAccessToken);
 
-        return JwtResponse.builder()
-                          .id(((PrincipalDetails) authentication.getPrincipal()).getId())
-                          .accessToken(newAccessToken)
-                          .build();
+        return JwtResponse.builder().id(((PrincipalDetails) authentication.getPrincipal()).getId()).accessToken(newAccessToken).build();
     }
 
     /**
@@ -93,16 +86,26 @@ public class TokenServiceImpl implements TokenService {
     }
 
     /**
+     * 로그아웃 시 DB에 Token data 삭제 메소드
+     *
+     * @param userId : 현재 접근중인 주체 userId
+     * @throws IllegalArgumentException : 올바르지 않은 경우 발생합니다.
+     */
+    @Override
+    @Transactional
+    public void deleteToken(Long userId) throws IllegalArgumentException {
+        if (tokenRepository.deleteByUserId(userId) != 1) {
+            throw new IllegalArgumentException("잘못된 접근입니다.");
+        }
+    }
+
+    /**
      * 새로운 토큰 Insert 메소드
      *
      * @param tokenDto : 새로 만든 토큰 DTO
      */
     private void createToken(TokenDto tokenDto, String refreshToken) {
-        Token newToken = Token.builder()
-                              .userId(tokenDto.getId())
-                              .accessToken(tokenDto.getAccessToken())
-                              .refreshToken(refreshToken)
-                              .build();
+        Token newToken = Token.builder().userId(tokenDto.getId()).accessToken(tokenDto.getAccessToken()).refreshToken(refreshToken).build();
         tokenRepository.save(newToken);
     }
 

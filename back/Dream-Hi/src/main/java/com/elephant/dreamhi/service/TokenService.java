@@ -10,4 +10,6 @@ public interface TokenService {
 
     JwtResponse reissueAccessToken(String accessToken) throws IllegalArgumentException;
 
+    void deleteToken(Long id);
+
 }
