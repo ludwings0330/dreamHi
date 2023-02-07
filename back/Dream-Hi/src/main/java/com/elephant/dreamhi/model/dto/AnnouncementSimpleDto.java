@@ -6,11 +6,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Builder
+@ToString
 public class AnnouncementSimpleDto {
 
     private Long id;
@@ -23,18 +26,19 @@ public class AnnouncementSimpleDto {
 
     private Boolean isFollow;
 
-    private LocalDateTime createDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createdDate;
 
     private Integer hit;
 
     private List<CastingSimpleDto> castings;
 
-    public AnnouncementSimpleDto(Long id, String title, String producerName, Boolean isFollow, LocalDateTime createDate, Integer hit, List<CastingSimpleDto> castings) {
+    public AnnouncementSimpleDto(Long id, String title, String producerName, Boolean isFollow, LocalDateTime createdDate, Integer hit, List<CastingSimpleDto> castings) {
         this.id = id;
         this.title = title;
         this.producerName = producerName;
         this.isFollow = isFollow;
-        this.createDate = createDate;
+        this.createdDate = createdDate;
         this.hit = hit;
         this.castings = castings;
     }

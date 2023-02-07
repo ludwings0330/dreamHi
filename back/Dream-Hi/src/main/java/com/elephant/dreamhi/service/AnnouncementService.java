@@ -6,7 +6,11 @@ import com.elephant.dreamhi.model.dto.AnnouncementSaveDto;
 import com.elephant.dreamhi.model.dto.AnnouncementSearchCondition;
 import com.elephant.dreamhi.model.dto.AnnouncementSimpleDto;
 import com.elephant.dreamhi.model.dto.AnnouncementUpdateDto;
+import com.elephant.dreamhi.model.dto.AnnouncementWeeklyDto;
 import com.elephant.dreamhi.security.PrincipalDetails;
+import java.time.DayOfWeek;
+import java.util.List;
+import java.util.Map;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -21,5 +25,7 @@ public interface AnnouncementService {
     void updateAnnouncement(AnnouncementUpdateDto announcementUpdateDto) throws NotFoundException;
 
     void deleteAnnouncement(Long announcementId);
+
+    Map<DayOfWeek, List<AnnouncementWeeklyDto>> findWeeklyAnnouncements();
 
 }

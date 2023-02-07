@@ -2,19 +2,25 @@ package com.elephant.dreamhi.model.dto;
 
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import lombok.experimental.SuperBuilder;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@SuperBuilder
-@ToString(callSuper = true)
-public class CastingUpdateDto extends CastingSaveDto {
+@Builder
+@ToString
+public class AnnouncementWeeklyDto {
 
     @NotNull
     private Long id;
+
+    @NotNull
+    private String title;
+
+    @NotNull
+    private String producerName;
 
 }

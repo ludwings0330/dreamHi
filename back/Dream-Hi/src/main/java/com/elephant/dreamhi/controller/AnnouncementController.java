@@ -6,6 +6,7 @@ import com.elephant.dreamhi.model.dto.AnnouncementSaveDto;
 import com.elephant.dreamhi.model.dto.AnnouncementSearchCondition;
 import com.elephant.dreamhi.model.dto.AnnouncementSimpleDto;
 import com.elephant.dreamhi.model.dto.AnnouncementUpdateDto;
+import com.elephant.dreamhi.model.dto.AnnouncementWeeklyDto;
 import com.elephant.dreamhi.model.dto.CastingDetailDto;
 import com.elephant.dreamhi.model.dto.ProcessStageDto;
 import com.elephant.dreamhi.security.PrincipalDetails;
@@ -14,7 +15,9 @@ import com.elephant.dreamhi.service.CastingService;
 import com.elephant.dreamhi.service.ProcessService;
 import com.elephant.dreamhi.utils.Response;
 import com.elephant.dreamhi.utils.Response.Body;
+import java.time.DayOfWeek;
 import java.util.List;
+import java.util.Map;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -60,10 +63,10 @@ public class AnnouncementController {
         Page<AnnouncementSimpleDto> announcementSimpleDtos = announcementService.findList(searchCondition, pageable, user);
 
         if (announcementSimpleDtos.isEmpty()) {
-            return Response.create(HttpStatus.NO_CONTENT, "NO_CONTENT");
+            return Response.create(HttpStatus.NO_CONTENT, "조회된 공고가 없습니다.");
         }
 
-        return Response.create(HttpStatus.OK, "OK", announcementSimpleDtos);
+        return Response.create(HttpStatus.OK, "공고 목록을 조회했습니다.", announcementSimpleDtos);
     }
 
     /**
@@ -76,7 +79,7 @@ public class AnnouncementController {
     public ResponseEntity<Body> findDetail(@PathVariable Long announcementId, @AuthenticationPrincipal PrincipalDetails user)
             throws NotFoundException {
         AnnouncementDetailDto announcementDetailDto = announcementService.findDetail(announcementId, user);
-        return Response.create(HttpStatus.OK, "OK", announcementDetailDto);
+        return Response.create(HttpStatus.OK, "공고 상세 정보를 조회했습니다.", announcementDetailDto);
     }
 
     /**
@@ -90,10 +93,10 @@ public class AnnouncementController {
         List<CastingDetailDto> castingDetailDtos = castingService.findCastingDetails(annoucementId);
 
         if (castingDetailDtos.isEmpty()) {
-            return Response.create(HttpStatus.NO_CONTENT, "NO_CONTENT");
+            return Response.create(HttpStatus.NO_CONTENT, "공고에 등록된 배역이 없습니다. 이런 일은 일어나서는 안 됩니다.");
         }
 
-        return Response.create(HttpStatus.OK, "OK", castingDetailDtos);
+        return Response.create(HttpStatus.OK, "공고에 등록된 배역을 조회했습니다.", castingDetailDtos);
     }
 
     /**
@@ -106,7 +109,13 @@ public class AnnouncementController {
     @GetMapping("/{announcementId}/process")
     public ResponseEntity<Body> findProcessAndStage(@PathVariable Long announcementId, @AuthenticationPrincipal PrincipalDetails user) {
         ProcessStageDto userStageDto = processService.findProcessAndStage(announcementId, user);
-        return Response.create(HttpStatus.OK, "OK", userStageDto);
+        return Response.create(HttpStatus.OK, "회원별 공고 상태를 조회했습니다.", userStageDto);
+    }
+
+    @GetMapping("/weekly")
+    public ResponseEntity<Body> findWeeklyAnnouncements() {
+        Map<DayOfWeek, List<AnnouncementWeeklyDto>> weeklyDtos = announcementService.findWeeklyAnnouncements();
+        return Response.create(HttpStatus.OK, "주간 공고 목록을 조회했습니다.", weeklyDtos);
     }
 
     /**
@@ -122,7 +131,7 @@ public class AnnouncementController {
             @AuthenticationPrincipal PrincipalDetails user
     ) throws NotFoundException {
         announcementService.saveAnnouncement(announcementSaveDto);
-        return Response.create(HttpStatus.CREATED, "CREATED");
+        return Response.create(HttpStatus.CREATED, "공고를 등록했습니다.");
     }
 
     @PutMapping
@@ -132,7 +141,7 @@ public class AnnouncementController {
             @AuthenticationPrincipal PrincipalDetails user
     ) throws NotFoundException {
         announcementService.updateAnnouncement(announcementUpdateDto);
-        return Response.create(HttpStatus.ACCEPTED, "ACCEPTED");
+        return Response.create(HttpStatus.ACCEPTED, "공고를 수정했습니다.");
     }
 
     @DeleteMapping("/{producerId}/{announcementId}")
@@ -143,7 +152,7 @@ public class AnnouncementController {
             @AuthenticationPrincipal PrincipalDetails user
     ) {
         announcementService.deleteAnnouncement(announcementId);
-        return Response.create(HttpStatus.ACCEPTED, "ACCEPTED");
+        return Response.create(HttpStatus.ACCEPTED, "공고를 삭제했습니다. 이제 돌이킬 수 없습니다.");
     }
 
 }
