@@ -1,7 +1,9 @@
 package com.elephant.dreamhi.model.dto;
 
 import com.elephant.dreamhi.model.statics.Gender;
+import java.util.Objects;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -9,6 +11,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Builder
 @ToString
 public class AnnouncementSearchCondition {
 
@@ -31,19 +34,11 @@ public class AnnouncementSearchCondition {
     private Boolean isVolunteer = Boolean.FALSE;
 
     public Boolean getIsFollow() {
-        if (this.isFollow == null) {
-            return Boolean.FALSE;
-        }
-
-        return this.isFollow;
+        return Objects.requireNonNullElse(this.isFollow, Boolean.FALSE);
     }
 
     public Boolean getIsVolunteer() {
-        if (this.isVolunteer == null) {
-            return Boolean.FALSE;
-        }
-
-        return this.isVolunteer;
+        return Objects.requireNonNullElse(this.isVolunteer, Boolean.FALSE);
     }
 
 }

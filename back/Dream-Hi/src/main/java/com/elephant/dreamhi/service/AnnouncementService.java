@@ -6,7 +6,7 @@ import com.elephant.dreamhi.model.dto.AnnouncementSaveDto;
 import com.elephant.dreamhi.model.dto.AnnouncementSearchCondition;
 import com.elephant.dreamhi.model.dto.AnnouncementSimpleDto;
 import com.elephant.dreamhi.model.dto.AnnouncementUpdateDto;
-import com.elephant.dreamhi.model.dto.AnnouncementWeeklyDto;
+import com.elephant.dreamhi.model.dto.AnnouncementNameDto;
 import com.elephant.dreamhi.security.PrincipalDetails;
 import java.time.DayOfWeek;
 import java.util.List;
@@ -26,6 +26,8 @@ public interface AnnouncementService {
 
     void deleteAnnouncement(Long announcementId);
 
-    Map<DayOfWeek, List<AnnouncementWeeklyDto>> findWeeklyAnnouncements();
+    Map<DayOfWeek, List<AnnouncementNameDto>> findWeeklyAnnouncements();
+
+    List<AnnouncementNameDto> findTopAnnouncementsWithRecruiting(final int N);
 
 }
