@@ -2,8 +2,8 @@ import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import AnnouncementData from '../../dummydata/announcementData.json'
 import AnnouncementDetailData from '../../dummydata/announcementDetailData.json'
-import Button from '../Common/Button';
 import AnnouncementDetailItem from './AnnouncementDetailItem';
+import Button from '../Common/CommonComponent/Button';
 
 
 function AnnouncementDetail(props) {

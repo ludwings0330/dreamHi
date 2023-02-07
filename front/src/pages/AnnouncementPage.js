@@ -3,9 +3,7 @@ import AnnouncementList from '../components/Announcement/AnnouncementList';
 import Button from '../components/Common/CommonComponent/Button';
 import { useNavigate } from 'react-router-dom';
 import AnnouncementData from '../dummydata/announcementData.json';
-import Layout from '../components/Common/Layout';
 import axios from 'axios';
-import Layout from '../components/Common/MainLayout/Layout';
 import AxiosTry from '../components/Announcement/AxiosTry';
 
 
@@ -51,9 +49,7 @@ function AnnouncementPage(props) {
         }}
       />
     </>
-      {/*<button onClick={getData}> Getdata </button>*/}
 
-    </Layout>
   );
 }
 

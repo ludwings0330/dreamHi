@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import AnnouncementWriteItem from './AnnouncementWriteItem';
 import Button from '../Common/CommonComponent/Button';
 import { useNavigate } from 'react-router-dom';
-import Layout from '../Common/Layout';
 import axios from 'axios';
 import Layout from '../Common/MainLayout/Layout';
 
