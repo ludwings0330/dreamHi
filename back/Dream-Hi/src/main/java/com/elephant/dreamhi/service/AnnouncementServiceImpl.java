@@ -6,6 +6,7 @@ import com.elephant.dreamhi.model.dto.AnnouncementSaveDto;
 import com.elephant.dreamhi.model.dto.AnnouncementSearchCondition;
 import com.elephant.dreamhi.model.dto.AnnouncementSimpleDto;
 import com.elephant.dreamhi.model.dto.AnnouncementUpdateDto;
+import com.elephant.dreamhi.model.dto.AnnouncementWeeklyDto;
 import com.elephant.dreamhi.model.dto.ProcessStageDto;
 import com.elephant.dreamhi.model.entity.Announcement;
 import com.elephant.dreamhi.model.entity.Process;
@@ -15,6 +16,11 @@ import com.elephant.dreamhi.repository.FollowRepository;
 import com.elephant.dreamhi.repository.ProcessRepository;
 import com.elephant.dreamhi.repository.ProducerRepository;
 import com.elephant.dreamhi.security.PrincipalDetails;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -62,6 +68,19 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         }
 
         return announcementSimpleDtos;
+    }
+
+    @Override
+    public Map<DayOfWeek, List<AnnouncementWeeklyDto>> findWeeklyAnnouncements() {
+        Map<DayOfWeek, List<AnnouncementWeeklyDto>> weeklyDtos = new EnumMap<>(DayOfWeek.class);
+
+        for (int i = 1; i <= 7; i++) {
+            LocalDate endDate = LocalDate.now().with(DayOfWeek.of(i));
+            List<AnnouncementWeeklyDto> dtos = announcementRepository.findWeeklyAnnouncements(endDate);
+            weeklyDtos.put(DayOfWeek.of(i), dtos);
+        }
+
+        return weeklyDtos;
     }
 
     /**
