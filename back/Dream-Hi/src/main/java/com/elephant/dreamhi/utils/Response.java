@@ -1,6 +1,7 @@
 package com.elephant.dreamhi.utils;
 
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +43,7 @@ public class Response {
 
     @Builder
     @Getter
+    @Data
     public static class Body {
 
         private String message;
