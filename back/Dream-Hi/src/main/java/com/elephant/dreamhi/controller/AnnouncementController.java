@@ -2,11 +2,11 @@ package com.elephant.dreamhi.controller;
 
 import com.elephant.dreamhi.exception.NotFoundException;
 import com.elephant.dreamhi.model.dto.AnnouncementDetailDto;
+import com.elephant.dreamhi.model.dto.AnnouncementNameDto;
 import com.elephant.dreamhi.model.dto.AnnouncementSaveDto;
 import com.elephant.dreamhi.model.dto.AnnouncementSearchCondition;
 import com.elephant.dreamhi.model.dto.AnnouncementSimpleDto;
 import com.elephant.dreamhi.model.dto.AnnouncementUpdateDto;
-import com.elephant.dreamhi.model.dto.AnnouncementNameDto;
 import com.elephant.dreamhi.model.dto.CastingDetailDto;
 import com.elephant.dreamhi.model.dto.ProcessStageDto;
 import com.elephant.dreamhi.security.PrincipalDetails;
@@ -98,6 +98,11 @@ public class AnnouncementController {
     @GetMapping("/top/{N}")
     public ResponseEntity<Body> findTopAnnouncementsWithRecruiting(@PathVariable final int N) {
         List<AnnouncementNameDto> announcementNameDtos = announcementService.findTopAnnouncementsWithRecruiting(N);
+
+        if (announcementNameDtos.isEmpty()) {
+            return Response.noContent();
+        }
+
         return Response.create(HttpStatus.OK, "Top N 공고 목록을 조회했습니다.", announcementNameDtos);
     }
 

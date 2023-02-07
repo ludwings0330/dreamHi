@@ -30,7 +30,7 @@ public class Response {
     }
 
     public static ResponseEntity<Body> noContent() {
-        return create(HttpStatus.NO_CONTENT, "no content");
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     public static ResponseEntity<Body> created() {
