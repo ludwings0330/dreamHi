@@ -21,6 +21,7 @@ import MakerList from './components/Maker/MakerList';
 import MakerDetail from './components/Maker/MakerDetail';
 import MakerWrite from './components/Maker/MakerWrite';
 import Collection from './components/Collection/Collection';
+import OAuth2RedirectHandler from './user/oauth2/OAuth2RedirectHandler';
 
 
 
@@ -64,6 +65,8 @@ function App() {
         //모아보기페이지 관련 이동
         <Route path={"/collection"} element={<Collection />}/>
 
+        //로그인 관련 이동
+        <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
 
       </Routes>
     </Layout>
