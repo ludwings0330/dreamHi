@@ -35,7 +35,7 @@ function AnnouncementWriteImage() {
       onClick = {clickImageInput}
       />
 
-      {/*<ImageUpload  />*/}
+      <ImageUpload  />
 
     </div>
   )
