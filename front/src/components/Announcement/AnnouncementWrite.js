@@ -11,6 +11,8 @@ import { announcementImageUrl } from '../../recoil/announcement';
 
 function AnnouncementWrite(props) {
   const navigate = useNavigate();
+
+  // const ImgUrl = useRecoilValue()
   const announcementImg = useRecoilValue(announcementImageUrl)
 
   const sendData = {
@@ -122,7 +124,6 @@ function AnnouncementWrite(props) {
       <img src={announcementImg} />
       {/*<p> { ImgUrl} </p>*/}
       <AnnouncementWriteItem />
-
     </Layout>
   );
 }
