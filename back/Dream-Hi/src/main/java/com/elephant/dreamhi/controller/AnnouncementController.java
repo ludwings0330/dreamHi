@@ -70,6 +70,31 @@ public class AnnouncementController {
     }
 
     /**
+     * @param pageable 2개의 공고를 조회하는 설정을 기본으로 하는 페이지네이션을 위한 정보이다.
+     * @param user     현재 로그인한 유저
+     * @return 팔로우한 공고 중 가장 최근에 생성된 2개의 공고를 Response의 Body에 담아서 반환한다.
+     */
+    @GetMapping("/my/follows")
+    @PreAuthorize("@checker.isLoginUser(#user)")
+    public ResponseEntity<Body> findFollowList(
+            @PageableDefault(size = 2) Pageable pageable,
+            @AuthenticationPrincipal PrincipalDetails user
+    ) {
+        AnnouncementSearchCondition condition = AnnouncementSearchCondition.builder()
+                                                                           .isFollow(Boolean.TRUE)
+                                                                           .build();
+
+        Page<AnnouncementSimpleDto> announcementSimpleDtos = announcementService.findList(condition, pageable, user);
+
+        if (announcementSimpleDtos.isEmpty()) {
+            return Response.noContent();
+        }
+
+        return Response.create(HttpStatus.OK, "2개의 팔로우한 공고를 조회했습니다.", announcementSimpleDtos);
+    }
+
+
+    /**
      * @param announcementId 공고 ID
      * @param user           시큐리티 컨텍스트에 저장된 인증 객체로부터 얻어낸 Principal
      * @return 공고 상세 정보를 응답으로 반환
