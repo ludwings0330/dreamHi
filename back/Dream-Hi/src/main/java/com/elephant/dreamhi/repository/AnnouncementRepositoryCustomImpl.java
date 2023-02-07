@@ -61,14 +61,15 @@ public class AnnouncementRepositoryCustomImpl implements AnnouncementRepositoryC
                                           .offset(pageable.getOffset())
                                           .limit(pageable.getPageSize())
                                           .fetch();
+        log.debug("조회할 공고 ID: {}", announcementIds);
 
         if (announcementIds.isEmpty()) {
             return PageableExecutionUtils.getPage(Collections.emptyList(), pageable, () -> totalCount);
         }
 
         List<AnnouncementSimpleDto> contents = queryFactory.selectFrom(announcement)
-                                                           .join(announcement.producer, producer).fetchJoin()
-                                                           .join(announcement.castings, casting).fetchJoin()
+                                                           .join(announcement.producer, producer)
+                                                           .join(announcement.castings, casting)
                                                            .where(announcement.id.in(announcementIds))
                                                            .distinct()
                                                            .transform(
@@ -87,6 +88,7 @@ public class AnnouncementRepositoryCustomImpl implements AnnouncementRepositoryC
                                                                            ))
                                                                    ))
                                                            );
+        log.debug("조회된 공고 목록 : {}", contents);
 
         return PageableExecutionUtils.getPage(contents, pageable, () -> totalCount);
     }
@@ -129,7 +131,7 @@ public class AnnouncementRepositoryCustomImpl implements AnnouncementRepositoryC
     }
 
     private JPAQuery<Long> getQueryToFindAnnouncementIdsByCondition(AnnouncementSearchCondition condition, Long userId) {
-        return queryFactory.select(announcement.id)
+        return queryFactory.selectDistinct(announcement.id)
                            .from(announcement)
                            .join(announcement.producer, producer)
                            .join(announcement.castings, casting)
