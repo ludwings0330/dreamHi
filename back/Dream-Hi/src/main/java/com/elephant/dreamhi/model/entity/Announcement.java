@@ -2,7 +2,7 @@ package com.elephant.dreamhi.model.entity;
 
 import com.elephant.dreamhi.model.dto.AnnouncementRequestDto;
 import com.elephant.dreamhi.model.dto.AnnouncementSaveDto;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -53,7 +53,7 @@ public class Announcement extends BaseTimeEntity {
     private String crankPeriod;
 
     @Column(columnDefinition = "TIMESTAMP", nullable = false)
-    private LocalDateTime endDate;
+    private LocalDate endDate;
 
     @Lob
     private String description;

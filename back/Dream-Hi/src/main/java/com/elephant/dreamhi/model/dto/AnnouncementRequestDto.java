@@ -1,7 +1,7 @@
 package com.elephant.dreamhi.model.dto;
 
 import com.elephant.dreamhi.model.entity.Picture;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -29,7 +29,7 @@ public class AnnouncementRequestDto {
     private String crankPeriod;
 
     @NotNull
-    private LocalDateTime endDate;
+    private LocalDate endDate;
 
     private String description;
 

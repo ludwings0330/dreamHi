@@ -5,7 +5,7 @@ import com.elephant.dreamhi.model.entity.Casting;
 import com.elephant.dreamhi.model.entity.CastingStyleRelation;
 import com.elephant.dreamhi.model.entity.Producer;
 import com.elephant.dreamhi.model.entity.Style;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +23,7 @@ public final class TestEntityGenerator {
 
     public static Announcement createTestAnnouncement(Producer producer, int index) {
         return Announcement.builder()
-                           .endDate(LocalDateTime.of(2023, 2, 10, 14, 34, 23))
+                           .endDate(LocalDate.of(2023, 2, 10))
                            .title("더미 공고" + index)
                            .producer(producer)
                            .build();
