@@ -1,6 +1,6 @@
 import React from 'react';
 import annoumcementdetail from 'dummydata/announcementDetailData.json';
-import Button from '../Common/Button';
+import Button from "../Common/CommonComponent/Button";
 import AnnouncementDetailCasting from './AnnouncementDetailCasting';
 
 function AnnouncementDetailItem(props) {
