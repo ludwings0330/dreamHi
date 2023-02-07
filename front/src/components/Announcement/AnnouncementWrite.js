@@ -4,7 +4,9 @@ import Button from '../Common/CommonComponent/Button';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../Common/Layout';
 import axios from 'axios';
-import Layout from '../Common/MainLayout/Layout';
+
+
+import { useRecoilState } from 'recoil';
 
 function AnnouncementWrite(props) {
   const navigate = useNavigate();

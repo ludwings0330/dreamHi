@@ -1,10 +1,13 @@
-import { useState, useEffect } from 'react';
-import { ref, uploadBytes, getDownloadURL, listAll } from 'firebase/storage';
+import { useEffect, useState } from 'react';
+import { getDownloadURL, listAll, ref, uploadBytes } from 'firebase/storage';
 
 import { storage } from './firebase';
 import { v4 } from 'uuid';
 
 import '../components/Casting/Casting.css';
+import { useRecoilState, atom } from 'recoil';
+import '../recoil/announcement';
+
 
 function ImageUpload(props) {
   const [imageUpload, setImageUpload] = useState(null);
@@ -18,11 +21,19 @@ function ImageUpload(props) {
       getDownloadURL(snapshot.ref).then((url) => {
         // setImageUrls((prev) => [...prev, url]);
         setImageUrls((prev) => [url]);
-        console.log(setImageUrls)
-        console.log(imageUrls)
+        console.log(setImageUrls);
+        console.log(imageUrls);
+        const annoumcementImg = atom({
+          key: 'annoumcementImg',
+          default: 'https://firebasestorage.googleapis.com/v0/b/dreamhi-17f24.appspot.com/o/logo.png?alt=media&token=a3ff4d49-9210-44d1-94e3-6d9d2dd64f22'
+        })
+
+
       });
     });
   };
+  console.log(1242535);
+  console.log(imageUrls);
 
   // const onChange = event => {
   //   const { value } = event.target;
@@ -110,3 +121,14 @@ function ImageUpload(props) {
 }
 
 export default ImageUpload;
+// export const announcementImg = selector({
+//   key: 'announcementImg',
+//   get: ({ get }) => {
+//     const announcementImgUrl = get(announcementImageUrl);
+//     return announcementImgUrl
+//   },
+//   set: ( {set, get} ) => {
+//     const announcementImgUrl = get(announcementImageUrl);
+//     return set(announcementImageUrl , image )
+//   }
+// })
