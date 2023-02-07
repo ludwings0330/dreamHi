@@ -8,6 +8,8 @@ public interface ProcessService {
 
     ProcessStageDto findProcessAndStage(Long announcementId, PrincipalDetails user);
 
-    void saveProcess(ProcessSaveDto processSaveDto);
+    void saveProcessWithRecruiting(Long announcementId);
+
+    void saveProcessWithoutRecruiting(ProcessSaveDto processSaveDto);
 
 }

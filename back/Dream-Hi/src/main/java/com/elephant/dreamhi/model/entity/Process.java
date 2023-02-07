@@ -14,7 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -50,6 +49,14 @@ public class Process {
     public static Process getInstanceForRecruiting(Announcement announcement) {
         return Process.builder()
                       .announcement(announcement)
+                      .state(ProcessState.RECRUITING)
+                      .build();
+    }
+
+    public static Process getInstanceForInProgress(Announcement announcement) {
+        return Process.builder()
+                      .announcement(announcement)
+                      .state(ProcessState.IN_PROGRESS)
                       .build();
     }
 
