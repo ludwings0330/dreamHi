@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,6 +26,7 @@ public class AnnouncementSimpleDto {
 
     private Boolean isFollow;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdDate;
 
     private Integer hit;
