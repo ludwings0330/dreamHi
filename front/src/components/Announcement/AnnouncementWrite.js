@@ -6,10 +6,35 @@ import Layout from '../Common/Layout';
 import axios from 'axios';
 
 
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { announcementImageUrl } from '../../recoil/announcement';
 
 function AnnouncementWrite(props) {
   const navigate = useNavigate();
+  const announcementImg = useRecoilValue(announcementImageUrl)
+
+  const sendData = {
+    title: 'title',
+    producerId: 1001,
+    payment: '협의 후 결정',
+    crankPeriod: '6개월',
+    endDate: '2023-02-27T10:00:00',
+    description: '공고설명',
+    pictureUrl: { announcementImg },
+    castings: [
+      {
+        name: '배역명',
+        description: '배역설명',
+        headcount: 1,
+        minHeight: 130,
+        maxHeight: 150,
+        minAge: 5,
+        maxAge: 10,
+        gender: 'MALE',
+        styles: [1],
+      },
+    ],
+  };
 
 
 
@@ -94,7 +119,10 @@ function AnnouncementWrite(props) {
         }}
       />
       {/*<button onClick={postClick}>Post</button>*/}
+      <img src={announcementImg} />
+      {/*<p> { ImgUrl} </p>*/}
       <AnnouncementWriteItem />
+
     </Layout>
   );
 }

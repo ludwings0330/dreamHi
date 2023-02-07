@@ -7,11 +7,12 @@ import { v4 } from 'uuid';
 import '../components/Casting/Casting.css';
 import { useRecoilState, atom } from 'recoil';
 import '../recoil/announcement';
+import { announcementImageUrl } from '../recoil/announcement';
 
 
 function ImageUpload(props) {
   const [imageUpload, setImageUpload] = useState(null);
-  const [imageUrls, setImageUrls] = useState();
+  const [imageUrls, setImageUrls] = useRecoilState(announcementImageUrl);
 
   const imagesListRef = ref(storage, 'images/');
   const uploadFile = () => {
