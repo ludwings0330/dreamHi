@@ -1,5 +1,8 @@
 import React from 'react';
 import './ActorPhoto.css';
+import ActorPhotoUpload from './ActorPhotoUpload';
+import { ActorId, ActorPhotoUrl } from '../recoilActorState'
+import { useRecoilValue, useRecoilState } from 'recoil'
 
 const products = [
   {
@@ -29,6 +32,10 @@ const setSelected = (idx) => {
 
 
 const ActorPhoto = () => {
+  const test = useRecoilValue(ActorId)
+  const [testUrl, setTestUrl] = useRecoilState(ActorPhotoUrl)
+  setTestUrl(`images/${test}/photo`)
+  console.log(testUrl, '됐으면 좋겠다')
   return (
     <div className="bg-white">
 
@@ -59,6 +66,10 @@ const ActorPhoto = () => {
         </div>
 
       </div>
+      <ActorPhotoUpload />
+
+      { testUrl }
+
     </div>
 
   );
