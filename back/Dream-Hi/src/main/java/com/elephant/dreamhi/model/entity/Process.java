@@ -35,7 +35,7 @@ public class Process {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "announcement_id", nullable = false)
+    @JoinColumn(name = "announcement_id", nullable = false, updatable = false)
     private Announcement announcement;
 
     @Enumerated(EnumType.STRING)
