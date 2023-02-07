@@ -3,7 +3,7 @@ package com.elephant.dreamhi.repository;
 import com.elephant.dreamhi.model.dto.AnnouncementDetailDto;
 import com.elephant.dreamhi.model.dto.AnnouncementSearchCondition;
 import com.elephant.dreamhi.model.dto.AnnouncementSimpleDto;
-import com.elephant.dreamhi.model.dto.AnnouncementWeeklyDto;
+import com.elephant.dreamhi.model.dto.AnnouncementNameDto;
 import com.elephant.dreamhi.model.entity.Announcement;
 import java.time.LocalDate;
 import java.util.List;
@@ -17,8 +17,10 @@ public interface AnnouncementRepositoryCustom {
 
     Page<AnnouncementSimpleDto> findAllByCondition(AnnouncementSearchCondition condition, Pageable pageable, Long id);
 
-    List<AnnouncementWeeklyDto> findWeeklyAnnouncements(LocalDate endDate);
+    List<AnnouncementNameDto> findWeeklyAnnouncements(LocalDate endDate);
 
     Optional<AnnouncementDetailDto> findByAnnouncementIdAndFollowerId(Long announcementId, Long followerId);
+
+    List<AnnouncementNameDto> findTopAnnouncementsWithRecruiting(final int N);
 
 }

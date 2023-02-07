@@ -4,6 +4,7 @@ import static com.elephant.dreamhi.model.entity.QAnnouncement.announcement;
 import static com.elephant.dreamhi.model.entity.QCasting.casting;
 import static com.elephant.dreamhi.model.entity.QCastingStyleRelation.castingStyleRelation;
 import static com.elephant.dreamhi.model.entity.QFollow.follow;
+import static com.elephant.dreamhi.model.entity.QProcess.process;
 import static com.elephant.dreamhi.model.entity.QProducer.producer;
 import static com.elephant.dreamhi.model.entity.QStyle.style;
 import static com.elephant.dreamhi.model.entity.QUser.user;
@@ -12,12 +13,13 @@ import static com.querydsl.core.group.GroupBy.groupBy;
 import static com.querydsl.core.group.GroupBy.list;
 
 import com.elephant.dreamhi.model.dto.AnnouncementDetailDto;
+import com.elephant.dreamhi.model.dto.AnnouncementNameDto;
 import com.elephant.dreamhi.model.dto.AnnouncementSearchCondition;
 import com.elephant.dreamhi.model.dto.AnnouncementSimpleDto;
-import com.elephant.dreamhi.model.dto.AnnouncementWeeklyDto;
 import com.elephant.dreamhi.model.dto.CastingSimpleDto;
 import com.elephant.dreamhi.model.entity.Announcement;
 import com.elephant.dreamhi.model.statics.Gender;
+import com.elephant.dreamhi.model.statics.ProcessState;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -96,9 +98,9 @@ public class AnnouncementRepositoryCustomImpl implements AnnouncementRepositoryC
     }
 
     @Override
-    public List<AnnouncementWeeklyDto> findWeeklyAnnouncements(LocalDate endDate) {
+    public List<AnnouncementNameDto> findWeeklyAnnouncements(LocalDate endDate) {
         return queryFactory.select(Projections.constructor(
-                                   AnnouncementWeeklyDto.class,
+                                   AnnouncementNameDto.class,
                                    announcement.id,
                                    announcement.title,
                                    producer.name
@@ -146,6 +148,23 @@ public class AnnouncementRepositoryCustomImpl implements AnnouncementRepositoryC
                                                                         .fetchOne();
 
         return Optional.ofNullable(findedAnnouncementDetailDto);
+    }
+
+    @Override
+    public List<AnnouncementNameDto> findTopAnnouncementsWithRecruiting(final int N) {
+        return queryFactory.select(Projections.constructor(
+                                   AnnouncementNameDto.class,
+                                   announcement.id,
+                                   announcement.title,
+                                   producer.name
+                           ))
+                           .from(announcement)
+                           .join(announcement.producer, producer)
+                           .join(process.announcement, announcement)
+                           .where(process.state.eq(ProcessState.RECRUITING))
+                           .orderBy(announcement.hit.desc())
+                           .limit(N)
+                           .fetch();
     }
 
     private JPAQuery<Long> getQueryToFindAnnouncementIdsByCondition(AnnouncementSearchCondition condition, Long userId) {
