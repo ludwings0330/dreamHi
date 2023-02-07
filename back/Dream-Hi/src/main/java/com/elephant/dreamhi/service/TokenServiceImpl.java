@@ -42,7 +42,7 @@ public class TokenServiceImpl implements TokenService {
         if (oldToken.isEmpty()) {
             createToken(tokenDto);
         } else {
-            updateToken(tokenDto, oldToken);
+            updateToken(tokenDto, oldToken.get());
         }
 
         return tokenDto;
@@ -62,9 +62,8 @@ public class TokenServiceImpl implements TokenService {
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         log.info(authentication.getName());
         log.info(principalDetails.getName(), principalDetails.getId());
-        Token oldToken = tokenRepository.findByUserId(principalDetails.getId()).orElseThrow(() -> {
-            throw new IllegalArgumentException(principalDetails.getId() + " 유저의 토큰 정보가 존재하지 않습니다.");
-        });
+        Token oldToken = tokenRepository.findByUserId(principalDetails.getId())
+                                        .orElseThrow(() -> new IllegalArgumentException(principalDetails.getId() + " 유저의 토큰 정보가 존재하지 않습니다."));
         // update access token
         oldToken.changeAccessToken(accessToken);
         return JwtResponse.builder()
@@ -78,8 +77,8 @@ public class TokenServiceImpl implements TokenService {
      * @param tokenDto : 새로 만든 토큰 DTO
      * @param oldToken : 기존에 저장된 토큰
      */
-    private static void updateToken(TokenDto tokenDto, Optional<Token> oldToken) {
-        Token newToken = oldToken.get();
+    private static void updateToken(TokenDto tokenDto, Token oldToken) {
+        Token newToken = oldToken;
         newToken.regenerateToken(tokenDto.getAccessToken(), tokenDto.getRefreshToken());
     }
 

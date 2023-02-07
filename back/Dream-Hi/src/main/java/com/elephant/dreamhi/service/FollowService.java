@@ -47,25 +47,18 @@ public class FollowService {
      * @throws org.springframework.dao.DataIntegrityViolationException : db 제약사항 위반
      */
     @Transactional
-    public Boolean addFollow(FollowType type, Long id, Long followerId) throws DuplicateKeyException {
+    public void addFollow(FollowType type, Long id, Long followerId) throws DuplicateKeyException {
         Optional<Follow> follow = followRepository.checkFollow(type, id, followerId);
-        if (follow.isPresent()) {
-            throw new DuplicateKeyException("이미 팔로우 중입니다.");
-        }
+        if (follow.isPresent()) throw new DuplicateKeyException(id + "번 유저를 이미 팔로우 중입니다.");
 
         Follow newFollow = buildFollowEntity(type, id, followerId);
-
         followRepository.save(newFollow);
-        return true;
     }
 
     @Transactional
-    public Boolean removeFollow(FollowType type, Long id, Long followerId) throws IllegalArgumentException {
+    public void removeFollow(FollowType type, Long id, Long followerId) throws IllegalArgumentException {
         int result = followRepository.deleteFollowWithCondition(type, id, followerId);
-        if(result != 1) {
-            throw new IllegalArgumentException("잘못된 접근입니다.");
-        }
-        return false;
+        if(result != 1) throw new IllegalArgumentException("잘못된 접근입니다.");
     }
 
     /**

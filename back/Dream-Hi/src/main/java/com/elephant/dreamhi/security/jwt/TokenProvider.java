@@ -111,7 +111,6 @@ public class TokenProvider implements InitializingBean {
      */
     public boolean validateToken(String token) {
         try {
-            log.info("Validation Check Token : {}", token);
             getClaims(token);
             return true;
         } catch (SecurityException | MalformedJwtException e) {
@@ -190,10 +189,7 @@ public class TokenProvider implements InitializingBean {
     private String createToken(Authentication authentication, long validityTime) {
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         String authorities = getAuthorities(principalDetails);
-        log.info("authorities of token: {}", authorities);
-
         Date expirationTime = new Date(System.currentTimeMillis() + validityTime);
-        log.info("expiration time of token: {}", expirationTime);
 
         return Jwts.builder()
                    .setSubject(String.valueOf(principalDetails.getId()))

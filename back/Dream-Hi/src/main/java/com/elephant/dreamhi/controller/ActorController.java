@@ -23,6 +23,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,18 +48,19 @@ public class ActorController {
      */
     @GetMapping("/api/actors")
     public ResponseEntity<Body> actorList(@PageableDefault(size = 8) Pageable pageable,
-                                          @RequestBody ActorSearchCondition filter,
+                                          @ModelAttribute ActorSearchCondition filter,
                                           @AuthenticationPrincipal PrincipalDetails principalDetails) {
-        Page<ActorListResponseDto> actors = actorService.findActorsByFilter(filter, pageable, principalDetails);
+        filter.setId(principalDetails.getId());
+        Page<ActorListResponseDto> actors = actorService.findActorsByFilter(filter, pageable);
         if(actors.getContent().size() == 0) return Response.noContent();
-        return Response.create(HttpStatus.OK, "success", actors);
+        return Response.create(HttpStatus.OK, "배우 목록 조회 성공", actors);
     }
 
     @GetMapping("/api/users/{id}/actor-profile")
     public ResponseEntity<Body> getActorProfileDetail(@PathVariable Long id, @AuthenticationPrincipal PrincipalDetails principalDetails)
             throws NotFoundException, VisibleException {
-        ActorProfileDetailDto responseDto = actorService.findActorProfileDetail(id, principalDetails);
-        return Response.create(HttpStatus.OK, HttpStatus.OK.name(), responseDto);
+        ActorProfileDetailDto responseDto = actorService.findActorProfileDetail(id, principalDetails.getId());
+        return Response.create(HttpStatus.OK, "배우 프로필 상세 조회 성공", responseDto);
     }
 
     /**
@@ -71,7 +73,7 @@ public class ActorController {
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<Body> changeVisibleProfile(@AuthenticationPrincipal PrincipalDetails principalDetails) {
         actorService.changeVisibleProfile(principalDetails.getId());
-        return Response.ok();
+        return Response.accepted();
     }
 
     /**
@@ -90,7 +92,7 @@ public class ActorController {
             throws FullResourceException, DataIntegrityViolationException {
         actorService.updateActorProfile(principalDetails.getId(), actorProfileRequestDto);
         styleService.updateActorStyleTags(actorProfileRequestDto);
-        return Response.ok();
+        return Response.accepted();
     }
 
 }

@@ -25,7 +25,6 @@ public class AuthController {
     @PostMapping("/api/logout")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<Body> logout() {
-        log.info("[LOGOUT] userId: {}", SecurityContextHolder.getContext().getAuthentication().getName());
         SecurityContextHolder.clearContext();
         return Response.ok();
     }
@@ -34,7 +33,7 @@ public class AuthController {
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<Body> reissueAccessToken(Authentication authentication) throws IllegalArgumentException, SQLException {
         JwtResponse jwtResponse = tokenService.reissueAccessToken(authentication);
-        return Response.create(HttpStatus.OK, HttpStatus.OK.name(), jwtResponse);
+        return Response.create(HttpStatus.OK, "토큰 재발급 성공", jwtResponse);
     }
 
 }
