@@ -1,28 +1,42 @@
-import { useState, useEffect } from 'react';
-import { ref, uploadBytes, getDownloadURL, listAll } from 'firebase/storage';
+import { useEffect, useState } from 'react';
+import { getDownloadURL, listAll, ref, uploadBytes } from 'firebase/storage';
 
 import { storage } from './firebase';
 import { v4 } from 'uuid';
 
 import '../components/Casting/Casting.css';
+import { useRecoilState, atom } from 'recoil';
+import '../recoil/announcement';
+import { announcementImageUrl } from '../recoil/announcement';
+
 
 function ImageUpload(props) {
   const [imageUpload, setImageUpload] = useState(null);
-  const [imageUrls, setImageUrls] = useState();
+  const [imageUrls, setImageUrls] = useRecoilState(announcementImageUrl);
 
-  const imagesListRef = ref(storage, 'images/');
+  // const imagesListRef = ref(storage, 'images/');
   const uploadFile = () => {
     if (imageUpload == null) return;
     const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
     uploadBytes(imageRef, imageUpload).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
         // setImageUrls((prev) => [...prev, url]);
-        setImageUrls((prev) => [url]);
-        console.log(setImageUrls)
-        console.log(imageUrls)
+        setImageUrls((prev) => (url));
+        console.log(23242525)
+        console.log(url)
+        console.log(232323)
+        console.log(imageUrls, 'imimimimage');
+        // const annoumcementImg = atom({
+        //   key: 'annoumcementImg',
+        //   default: 'https://firebasestorage.googleapis.com/v0/b/dreamhi-17f24.appspot.com/o/logo.png?alt=media&token=a3ff4d49-9210-44d1-94e3-6d9d2dd64f22'
+        // })
+
+
       });
     });
   };
+  console.log(1242535);
+  console.log(imageUrls);
 
   // const onChange = event => {
   //   const { value } = event.target;
@@ -46,19 +60,33 @@ function ImageUpload(props) {
   //   });
   // }, []);
 
-  useEffect(() => {
-    listAll(imagesListRef).then((response) => {
-      console.log(3434343434);
-      console.log(response.items[response.items.length - 1]);
 
-      getDownloadURL(response.items[response.items.length - 1]).then((url) => {
-        console.log(3333333333333333333);
-        console.log(url);
-        // setImageUrls((prev) => [...prev, url]);
-        setImageUrls((prev) => [url]);
-      });
-    });
-  }, []);
+
+
+
+
+
+  // useEffect(() => {
+  //   listAll(imagesListRef).then((response) => {
+  //     console.log(3434343434);
+  //     console.log(response.items[response.items.length - 1]);
+  //
+  //     getDownloadURL(response.items[response.items.length - 1]).then((url) => {
+  //       console.log(3333333333333333333);
+  //       console.log(url);
+  //       // setImageUrls((prev) => [...prev, url]);
+  //       setImageUrls((prev) => [url]);
+  //     });
+  //   });
+  // }, []);
+
+
+
+
+
+
+
+
 
   // console.log(1414141141);
   // console.log(imageUrls);
@@ -110,3 +138,14 @@ function ImageUpload(props) {
 }
 
 export default ImageUpload;
+// export const announcementImg = selector({
+//   key: 'announcementImg',
+//   get: ({ get }) => {
+//     const announcementImgUrl = get(announcementImageUrl);
+//     return announcementImgUrl
+//   },
+//   set: ( {set, get} ) => {
+//     const announcementImgUrl = get(announcementImageUrl);
+//     return set(announcementImageUrl , image )
+//   }
+// })

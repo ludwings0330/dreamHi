@@ -22,6 +22,7 @@ const ActorIntroduce = () => {
                             <div className="px-4 sm:px-0">
                               <h1 className="text-lg font-medium leading-6 text-gray-900">기본 정보 입력</h1>
                             </div>
+
                             {/*공백부분*/}
                             <div className="space-y-6 bg-white py-3">
                             </div>
