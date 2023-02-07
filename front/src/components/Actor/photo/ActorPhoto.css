@@ -31,3 +31,21 @@
 img {
     border-radius: 10px;
 }
+
+.file-box {
+    display: inline-block;
+}
+
+.file-box label {
+
+}
+
+.file-box input[type="file"] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    display: none;
+}
