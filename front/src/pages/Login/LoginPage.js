@@ -3,15 +3,12 @@ import {
   Route,
   Routes
 } from 'react-router-dom';
-import MainHeader from '../../components/Common/MainHeader';
 import Login from '../../user/login/Login';
 import OAuth2RedirectHandler from '../../user/oauth2/OAuth2RedirectHandler';
-import LoadingIndicator from '../../components/Common/LoadingIndicator';
+import LoadingIndicator from '../../components/Common/CommonComponent/LoadingIndicator';
 import { getCurrentUser } from '../../util/APIUtils';
 import { ACCESS_TOKEN } from '../../constants';
 import './LoginPage.css';
-import MainFooter from '../../components/Common/MainFooter';
-import Layout from '../../components/Common/Layout';
 
 
 class LoginPage extends Component {
@@ -60,7 +57,7 @@ class LoginPage extends Component {
     }
 
     return (
-      <Layout className="app">
+      <>
 
         <div className="app-body">
           <Login />
@@ -69,7 +66,7 @@ class LoginPage extends Component {
             <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
           </Routes>
         </div>
-      </Layout>
+      </>
     );
   }
 }

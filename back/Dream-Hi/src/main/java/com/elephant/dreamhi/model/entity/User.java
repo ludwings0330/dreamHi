@@ -30,8 +30,7 @@ import org.hibernate.annotations.DynamicInsert;
 @AllArgsConstructor
 @Getter
 @Builder
-@EqualsAndHashCode
-public class User {
+public class User extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "follower")
     private final List<Follow> followers = new ArrayList<>();

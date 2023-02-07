@@ -4,7 +4,10 @@ import "slick-carousel/slick/slick.css";
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-  width: 100%;
+  width: 90%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto
 `;
 
 const Image = styled.img`
@@ -28,16 +31,16 @@ export default function MainBanner() {
       {/* ...settings: 위의 객체 내용이 들어옴 */}
       <Slider {...settings}>
         <div>
-          <Image src="img/test.png" alt="banner"></Image>
+          <Image src="/img/test.png" alt="banner"></Image>
         </div>
         <div>
-          <Image src="img/test.png" alt="banner"></Image>
+          <Image src="/img/test.png" alt="banner"></Image>
         </div>
         <div>
-          <Image src="img/test.png" alt="banner"></Image>
+          <Image src="/img/test.png" alt="banner"></Image>
         </div>
         <div>
-          <Image src="img/test.png" alt="banner"></Image>
+          <Image src="/img/test.png" alt="banner"></Image>
         </div>
       </Slider>
     </Wrapper>

@@ -35,7 +35,6 @@ public class CastingSaveDto {
     private Gender gender;
 
     @Size.List({
-            @Size(min = 1),
             @Size(max = 5)
     })
     private List<Long> styles;

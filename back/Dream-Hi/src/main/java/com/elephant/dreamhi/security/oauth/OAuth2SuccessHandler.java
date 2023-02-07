@@ -26,7 +26,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private final TokenService tokenService;
 
     /**
-     * 소셜 로그인 성공적으로 수행된 후 수행되는 SuccessHandler 메소드
+     * 소셜 로그인 성공적으로 수행된 후 수행되는 SuccessHandler 메소드 - Implicit Grant 방식
      *
      * @param request
      * @param response
@@ -38,17 +38,14 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
             throws IOException, ServletException {
 
-        log.info("Authentication : {}, Principal : {}", authentication, authentication.getPrincipal());
-        log.info("redirectUri : {}", redirectUrl);
 
-        TokenDto tokenDto = null;
-        tokenDto = tokenService.generateToken(authentication);
+        TokenDto tokenDto = tokenService.generateToken(authentication);
 
-        log.info("{} 번 유저 token 발행 => Access Token = {} \t Refresh Token = {}", tokenDto.getId(), tokenDto.getAccessToken(),
-                 tokenDto.getRefreshToken());
+        log.info("{}번 유저에게 토큰 발행", tokenDto.getId());
 
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
         String targetUrl = getTargetUrl(principal, tokenDto);
+        log.info("[{}] Success OAuthLogin~! - redirectUrl : {} Principal : {}",this.getClass().getName(), redirectUrl,  principal);
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
     }
 

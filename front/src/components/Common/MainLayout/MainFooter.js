@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./Common.css"
+import "./MainFooter.css";
 
 function MainFooter() {
   return (
