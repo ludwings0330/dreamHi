@@ -35,12 +35,17 @@ public class TokenServiceImpl implements TokenService {
     @Override
     @Transactional
     public TokenDto generateToken(Authentication authentication) {
-        TokenDto tokenDto = tokenProvider.createNewToken(authentication);
         Long userId = ((PrincipalDetails) authentication.getPrincipal()).getId();
+        String accessToken = tokenProvider.createAccessToken(authentication);
 
         Optional<Token> oldToken = tokenRepository.findByUserId(userId);
+        TokenDto tokenDto = TokenDto.builder()
+                                    .id(userId)
+                                    .accessToken(accessToken)
+                                    .build();
         if (oldToken.isEmpty()) {
-            createToken(tokenDto);
+            String refreshToken = tokenProvider.createRefreshToken(authentication);
+            createToken(tokenDto, refreshToken);
         } else {
             updateToken(tokenDto, oldToken.get());
         }
@@ -79,7 +84,7 @@ public class TokenServiceImpl implements TokenService {
      */
     private static void updateToken(TokenDto tokenDto, Token oldToken) {
         Token newToken = oldToken;
-        newToken.regenerateToken(tokenDto.getAccessToken(), tokenDto.getRefreshToken());
+        newToken.updateAccessToken(tokenDto.getAccessToken());
     }
 
     /**
@@ -87,11 +92,11 @@ public class TokenServiceImpl implements TokenService {
      *
      * @param tokenDto : 새로 만든 토큰 DTO
      */
-    private void createToken(TokenDto tokenDto) {
+    private void createToken(TokenDto tokenDto, String refreshToken) {
         Token newToken = Token.builder()
                               .userId(tokenDto.getId())
                               .accessToken(tokenDto.getAccessToken())
-                              .refreshToken(tokenDto.getRefreshToken())
+                              .refreshToken(refreshToken)
                               .build();
         tokenRepository.save(newToken);
     }
