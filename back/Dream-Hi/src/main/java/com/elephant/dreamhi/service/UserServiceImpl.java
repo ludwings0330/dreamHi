@@ -19,7 +19,6 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    private final ActorRepository actorRepository;
 
     /**
      * User 기본 정보 조회 메소드
@@ -30,21 +29,14 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public UserSimpleDto findUserSimple(Long id) throws UsernameNotFoundException {
-        User user = userRepository.findById(id).orElseThrow(() -> {
-            return new UsernameNotFoundException(id + " 존재하지 않는 유저입니다.");
-        });
-        UserSimpleDto userDetailDto = new UserSimpleDto();
-        userDetailDto.setUserSimpleDto(user);
-
-        return userDetailDto;
+        User user = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException(id + "번은 존재하지 않는 유저입니다."));
+        return new UserSimpleDto(user);
     }
 
     @Override
     @Transactional
     public void updateMainProfile(Long id, PictureDto pictureDto) throws UsernameNotFoundException {
-        User user = userRepository.findById(id).orElseThrow(() -> {
-            return new UsernameNotFoundException(id + " 존재하지 않는 유저입니다.");
-        });
+        User user = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException(id + "번은 존재하지 않는 유저입니다."));
 
         user.setMainProfile(pictureDto);
     }

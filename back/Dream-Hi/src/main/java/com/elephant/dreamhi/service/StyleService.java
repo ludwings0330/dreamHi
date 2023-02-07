@@ -44,8 +44,8 @@ public class StyleService {
     @Transactional
     public void updateActorStyleTags(ActorProfileRequestDto actorProfileRequestDto) throws FullResourceException, DataIntegrityViolationException {
         List<ActorStyleRelation> actorStyleRelations = actorStyleRelationRepository.findByActorProfileId(actorProfileRequestDto.getActorProfileId());
-        checkFullResource(actorStyleRelations.size(), actorProfileRequestDto.getDeleteStyles().size(),
-                          actorProfileRequestDto.getInsertStyles().size());
+        if( actorStyleRelations.size() + actorProfileRequestDto.getDeleteStyles().size() - actorProfileRequestDto.getInsertStyles().size() > styleTagSize )
+            throw new FullResourceException("최대 저장 개수를 초과했습니다.");
         actorStyleRelationRepository.deleteAllInStlyeIdQuery(actorProfileRequestDto.getActorProfileId(), actorProfileRequestDto.getDeleteStyles());
         insertAllStyles(actorProfileRequestDto);
     }
@@ -66,20 +66,6 @@ public class StyleService {
             newStyleRelations.add(asr);
         });
         actorStyleRelationRepository.saveAll(newStyleRelations);
-    }
-
-    /**
-     * 저장 가능 여부 체크 메소드
-     *
-     * @param originSize : 기존 태그 개수
-     * @param deleteSize : 삭제할 태그 개수
-     * @param insertSize : 추가할 태그 개수
-     * @throws FullResourceException : 저장 공간 부족 예외
-     */
-    private void checkFullResource(Integer originSize, Integer deleteSize, Integer insertSize) {
-        if (originSize + insertSize - deleteSize > styleTagSize) {
-            throw new FullResourceException("최대 저장 개수를 초과했습니다.");
-        }
     }
 
     /**
