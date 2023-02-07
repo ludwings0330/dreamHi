@@ -57,6 +57,7 @@ public class Process {
         return Process.builder()
                       .announcement(announcement)
                       .state(ProcessState.IN_PROGRESS)
+                      .stage(StageName.DOC)
                       .build();
     }
 
