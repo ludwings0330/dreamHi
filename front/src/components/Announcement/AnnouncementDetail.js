@@ -2,8 +2,12 @@ import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import AnnouncementData from '../../dummydata/announcementData.json'
 import AnnouncementDetailData from '../../dummydata/announcementDetailData.json'
+<<<<<<< HEAD
 import Button from "../Common/CommonComponent/Button";
+=======
+>>>>>>> e9f2010c322820e570da7364fafa12ae2fe36715
 import AnnouncementDetailItem from './AnnouncementDetailItem';
+import Button from '../Common/CommonComponent/Button';
 
 
 function AnnouncementDetail(props) {
