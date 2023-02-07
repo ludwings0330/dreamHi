@@ -52,7 +52,7 @@ public class Announcement extends BaseTimeEntity {
     @Column(length = 30)
     private String crankPeriod;
 
-    @Column(columnDefinition = "TIMESTAMP", nullable = false)
+    @Column(columnDefinition = "DATE", nullable = false)
     private LocalDate endDate;
 
     @Lob
