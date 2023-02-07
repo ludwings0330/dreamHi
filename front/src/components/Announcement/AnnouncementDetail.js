@@ -2,7 +2,8 @@ import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import AnnouncementData from '../../dummydata/announcementData.json'
 import AnnouncementDetailData from '../../dummydata/announcementDetailData.json'
-import Button from '../Common/CommonComponent/Button';
+import Button from '../Common/Button';
+import AnnouncementDetailItem from './AnnouncementDetailItem';
 
 
 function AnnouncementDetail(props) {
@@ -38,8 +39,14 @@ function AnnouncementDetail(props) {
         }}
       />
 
-      <p>{announcement.result.list[0].title}</p>
-      <p>{announcementDetail.result.description}</p>
+      <br />
+
+      {announcement.result.list[0].state === '모집중' ? '⭕' : '❌'}
+
+
+      <AnnouncementDetailItem
+        key={announcementDetail.result.id}
+        announcementDetail={announcementDetail}/>
 
     </div>
   );
