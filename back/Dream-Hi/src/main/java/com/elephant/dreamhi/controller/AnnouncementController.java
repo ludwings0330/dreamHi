@@ -6,6 +6,7 @@ import com.elephant.dreamhi.model.dto.AnnouncementSaveDto;
 import com.elephant.dreamhi.model.dto.AnnouncementSearchCondition;
 import com.elephant.dreamhi.model.dto.AnnouncementSimpleDto;
 import com.elephant.dreamhi.model.dto.AnnouncementUpdateDto;
+import com.elephant.dreamhi.model.dto.AnnouncementWeeklyDto;
 import com.elephant.dreamhi.model.dto.CastingDetailDto;
 import com.elephant.dreamhi.model.dto.ProcessStageDto;
 import com.elephant.dreamhi.security.PrincipalDetails;
@@ -14,7 +15,9 @@ import com.elephant.dreamhi.service.CastingService;
 import com.elephant.dreamhi.service.ProcessService;
 import com.elephant.dreamhi.utils.Response;
 import com.elephant.dreamhi.utils.Response.Body;
+import java.time.DayOfWeek;
 import java.util.List;
+import java.util.Map;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -107,6 +110,12 @@ public class AnnouncementController {
     public ResponseEntity<Body> findProcessAndStage(@PathVariable Long announcementId, @AuthenticationPrincipal PrincipalDetails user) {
         ProcessStageDto userStageDto = processService.findProcessAndStage(announcementId, user);
         return Response.create(HttpStatus.OK, "회원별 공고 상태를 조회했습니다.", userStageDto);
+    }
+
+    @GetMapping("/weekly")
+    public ResponseEntity<Body> findWeeklyAnnouncements() {
+        Map<DayOfWeek, List<AnnouncementWeeklyDto>> weeklyDtos = announcementService.findWeeklyAnnouncements();
+        return Response.create(HttpStatus.OK, "주간 공고 목록을 조회했습니다.", weeklyDtos);
     }
 
     /**
