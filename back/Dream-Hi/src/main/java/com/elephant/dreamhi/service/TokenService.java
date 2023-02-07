@@ -8,6 +8,6 @@ public interface TokenService {
 
     TokenDto generateToken(Authentication authentication);
 
-    JwtResponse reissueAccessToken(Authentication authentication) throws IllegalArgumentException;
+    JwtResponse reissueAccessToken(String accessToken) throws IllegalArgumentException;
 
 }

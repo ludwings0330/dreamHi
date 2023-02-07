@@ -21,9 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class TokenServiceImpl implements TokenService {
 
     private final TokenProvider tokenProvider;
-
     private final TokenRepository tokenRepository;
-
     private final UserRepository userRepository;
 
     /**
@@ -56,23 +54,30 @@ public class TokenServiceImpl implements TokenService {
     /**
      * authentication을 이용해 새로운 토큰 발급, 토큰 저장
      *
-     * @param authentication
+     * @param userId      : 현재 접근중인 주체 userId
+     * @param accessToken
      * @return JwtResponse 에 Access Token만 담아서 반환한다.
      * @throws IllegalArgumentException 현재 유저의 토큰 정보가 존재하지 않다면 발생
      */
     @Override
     @Transactional
-    public JwtResponse reissueAccessToken(Authentication authentication) throws IllegalArgumentException {
-        String accessToken = tokenProvider.createAccessToken(authentication);
-        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-        log.info(authentication.getName());
-        log.info(principalDetails.getName(), principalDetails.getId());
-        Token oldToken = tokenRepository.findByUserId(principalDetails.getId())
-                                        .orElseThrow(() -> new IllegalArgumentException(principalDetails.getId() + " 유저의 토큰 정보가 존재하지 않습니다."));
+    public JwtResponse reissueAccessToken(String authorization) throws IllegalArgumentException {
+        String accessToken = authorization.substring(7);
+        Token token = tokenRepository.findByUserIdAndAcessToken(accessToken)
+                                     .orElseThrow(() -> new IllegalArgumentException("잘못된 접근입니다. 보안 문제가 발생했습니다. 문의바랍니다."));
+
+        String originRefreshToken = token.getRefreshToken();
+        log.info("{}", originRefreshToken);
+        tokenProvider.validateToken(originRefreshToken);
+        Authentication authentication = tokenProvider.getAuthentication(originRefreshToken);
+        String newAccessToken = tokenProvider.createAccessToken(authentication);
+
         // update access token
-        oldToken.changeAccessToken(accessToken);
+        token.changeAccessToken(newAccessToken);
+
         return JwtResponse.builder()
-                          .accessToken(accessToken)
+                          .id(((PrincipalDetails) authentication.getPrincipal()).getId())
+                          .accessToken(newAccessToken)
                           .build();
     }
 
