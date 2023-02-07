@@ -22,6 +22,8 @@ public interface VolunteerRepositoryCustom {
 
     void updatePassVolunteers(Long announcementId, Process process);
 
-    Long countPassVolunteersByCastingId(Long castingId);
+//    Long countPassVolunteersByCastingId(Long castingId);
+
+    void updateAll(Long announcementId, Process process);
 
 }
