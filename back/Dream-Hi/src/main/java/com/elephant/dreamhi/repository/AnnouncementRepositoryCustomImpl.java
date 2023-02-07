@@ -65,7 +65,7 @@ public class AnnouncementRepositoryCustomImpl implements AnnouncementRepositoryC
                                           .offset(pageable.getOffset())
                                           .limit(pageable.getPageSize())
                                           .fetch();
-        log.debug("조회할 공고 ID: {}", announcementIds);
+        log.info("조회할 공고 ID: {}", announcementIds);
 
         if (announcementIds.isEmpty()) {
             return PageableExecutionUtils.getPage(Collections.emptyList(), pageable, () -> totalCount);
@@ -77,7 +77,7 @@ public class AnnouncementRepositoryCustomImpl implements AnnouncementRepositoryC
                                                            .where(announcement.id.in(announcementIds))
                                                            .distinct()
                                                            .transform(
-                                                                   groupBy().list(Projections.constructor(
+                                                                   groupBy(announcement.id).list(Projections.constructor(
                                                                            AnnouncementSimpleDto.class,
                                                                            announcement.id,
                                                                            announcement.title,
@@ -92,7 +92,7 @@ public class AnnouncementRepositoryCustomImpl implements AnnouncementRepositoryC
                                                                            ))
                                                                    ))
                                                            );
-        log.debug("조회된 공고 목록 : {}", contents);
+        log.info("조회된 공고 목록 : {}", contents);
 
         return PageableExecutionUtils.getPage(contents, pageable, () -> totalCount);
     }
@@ -268,11 +268,10 @@ public class AnnouncementRepositoryCustomImpl implements AnnouncementRepositoryC
 
         return casting.id.in(
                 JPAExpressions.select(casting.id)
-                              .from(casting)
-                              .join(volunteer.casting, casting).fetchJoin()
-                              .join(volunteer.user, user).fetchJoin()
+                              .from(volunteer)
+                              .join(volunteer.casting, casting)
+                              .join(volunteer.user, user)
                               .where(user.id.eq(userId))
-                              .distinct()
         );
     }
 
