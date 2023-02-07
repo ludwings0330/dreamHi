@@ -14,6 +14,7 @@ import static com.querydsl.core.group.GroupBy.list;
 import com.elephant.dreamhi.model.dto.AnnouncementDetailDto;
 import com.elephant.dreamhi.model.dto.AnnouncementSearchCondition;
 import com.elephant.dreamhi.model.dto.AnnouncementSimpleDto;
+import com.elephant.dreamhi.model.dto.AnnouncementWeeklyDto;
 import com.elephant.dreamhi.model.dto.CastingSimpleDto;
 import com.elephant.dreamhi.model.entity.Announcement;
 import com.elephant.dreamhi.model.statics.Gender;
@@ -25,6 +26,7 @@ import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -91,6 +93,22 @@ public class AnnouncementRepositoryCustomImpl implements AnnouncementRepositoryC
         log.debug("조회된 공고 목록 : {}", contents);
 
         return PageableExecutionUtils.getPage(contents, pageable, () -> totalCount);
+    }
+
+    @Override
+    public List<AnnouncementWeeklyDto> findWeeklyAnnouncements(LocalDate endDate) {
+        return queryFactory.select(Projections.constructor(
+                                   AnnouncementWeeklyDto.class,
+                                   announcement.id,
+                                   announcement.title,
+                                   producer.name
+                           ))
+                           .from(announcement)
+                           .join(announcement.producer, producer)
+                           .where(announcement.endDate.eq(endDate))
+                           .orderBy(announcement.hit.desc())
+                           .limit(2)
+                           .fetch();
     }
 
     @Override
