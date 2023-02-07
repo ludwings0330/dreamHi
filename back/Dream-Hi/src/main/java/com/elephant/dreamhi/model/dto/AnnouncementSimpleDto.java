@@ -25,18 +25,18 @@ public class AnnouncementSimpleDto {
 
     private Boolean isFollow;
 
-    private LocalDateTime createDate;
+    private LocalDateTime createdDate;
 
     private Integer hit;
 
     private List<CastingSimpleDto> castings;
 
-    public AnnouncementSimpleDto(Long id, String title, String producerName, Boolean isFollow, LocalDateTime createDate, Integer hit, List<CastingSimpleDto> castings) {
+    public AnnouncementSimpleDto(Long id, String title, String producerName, Boolean isFollow, LocalDateTime createdDate, Integer hit, List<CastingSimpleDto> castings) {
         this.id = id;
         this.title = title;
         this.producerName = producerName;
         this.isFollow = isFollow;
-        this.createDate = createDate;
+        this.createdDate = createdDate;
         this.hit = hit;
         this.castings = castings;
     }
