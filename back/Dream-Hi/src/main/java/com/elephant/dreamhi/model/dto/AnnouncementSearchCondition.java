@@ -24,8 +24,24 @@ public class AnnouncementSearchCondition {
 
     private Long[] styles;
 
-    private Boolean isFollow;
+    private Boolean isFollow = Boolean.FALSE;
 
-    private Boolean isVolunteer;
+    private Boolean isVolunteer = Boolean.FALSE;
+
+    public Boolean getIsFollow() {
+        if (this.isFollow == null) {
+            return Boolean.FALSE;
+        }
+
+        return this.isFollow;
+    }
+
+    public Boolean getIsVolunteer() {
+        if (this.isVolunteer == null) {
+            return Boolean.FALSE;
+        }
+
+        return this.isVolunteer;
+    }
 
 }
