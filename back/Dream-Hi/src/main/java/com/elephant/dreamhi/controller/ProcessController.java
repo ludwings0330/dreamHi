@@ -45,7 +45,6 @@ public class ProcessController {
             @AuthenticationPrincipal PrincipalDetails user
     ) throws IllegalArgumentException {
         if (processSaveDto.getState() == ProcessState.RECRUITING) {
-            log.error("다음 공고를 선택할 때 공고의 현재 Process가 RECRUITING일 수 없다.");
             throw new IllegalArgumentException("Process의 state가 RECRUITING인 경우는 공고 생성 시 한 번만 저장될 수 있습니다.");
         }
 
