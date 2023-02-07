@@ -29,7 +29,7 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
     private Map<String, Object> attributes;
 
     public boolean isGuest() {
-        return id == 0L;
+        return this.id == 0L;
     }
 
     @Override

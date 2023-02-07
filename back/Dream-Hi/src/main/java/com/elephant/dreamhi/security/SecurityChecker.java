@@ -15,6 +15,10 @@ public class SecurityChecker {
 
     private final AuthService authService;
 
+    public boolean isLoginUser(PrincipalDetails user) {
+        return user.getId() != 0L;
+    }
+
     public boolean hasEditorAuthority(PrincipalDetails user, Long producerId) {
         return authService.hasEditorAuthority(user.getId(), producerId);
     }
