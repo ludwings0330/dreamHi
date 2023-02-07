@@ -1,5 +1,4 @@
 import React from 'react';
-import Layout from '../Common/MainLayout/Layout';
 import ActorIntroduce from './info/ActorIntroduce';
 import ActorFilmo from './filmo/ActorFilmo';
 import ActorPhoto from './photo/ActorPhoto';

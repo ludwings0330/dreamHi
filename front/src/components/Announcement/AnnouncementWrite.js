@@ -4,16 +4,16 @@ import Button from '../Common/CommonComponent/Button';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { announcementImageUrl } from '../../recoil/announcement';
+import AnnouncementWriteCasting from './AnnouncementWriteCasting';
 
 function AnnouncementWrite(props) {
   const navigate = useNavigate();
 
   // const ImgUrl = useRecoilValue()
-  const announcementImg = useRecoilValue(announcementImageUrl)
-  const token = {}
+  const announcementImg = useRecoilValue(announcementImageUrl);
+  const token = {};
 
   const sendData = {
     title: 'title',
@@ -44,8 +44,7 @@ function AnnouncementWrite(props) {
       url: 'http://i8a702.p.ssafy.io:8085/api/producers?name={sendData.name}',
       data: sendData,
       headers: {
-        Authorization:
-          `Bearer${token}`,
+        Authorization: `Bearer${token}`,
       },
     })
       .then((res) => {
@@ -57,8 +56,6 @@ function AnnouncementWrite(props) {
         console.log(error);
       });
   };
-
-
 
   return (
     <>
@@ -73,13 +70,13 @@ function AnnouncementWrite(props) {
       <img src={announcementImg} />
       {/*<p> { ImgUrl} </p>*/}
       <AnnouncementWriteItem />
+      <AnnouncementWriteCasting />
 
       <Button
-          title="공고 등록 하기"
-          onClick={() => {
-            postClick();
-            navigate('/announcement');
-          }}
+        title="공고 등록 하기"
+        onClick={() => {
+          postClick();
+        }}
       />
     </>
   );
