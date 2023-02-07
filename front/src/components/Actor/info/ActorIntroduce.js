@@ -7,12 +7,8 @@ const ActorIntroduce = () => {
 
   return (
     <>
-      <div>
-
-                <div className="mt-10 sm:mt-0">
-                  <div className="md:grid md:grid-cols-6 md:gap-6">
-
-
+                {/*actor 정보 입력 양식 최상단*/}
+                <div className="actor-info">
 
                       <form action="#" method="POST">
                         <div className="overflow-hidden shadow sm:rounded-md">
@@ -29,16 +25,6 @@ const ActorIntroduce = () => {
 
                             {/*프로필 사진 등록 부분*/}
                             <div>
-                              <label className="profile-title">프로필 사진 등록</label>
-                              <div className="mt-1 items-center">
-
-                                <svg className="text-gray-300" fill="currentColor" width="200" viewBox="0 0 24 24">
-                                  <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                                </svg>
-                              </div>
-                            </div>
-
-                            <div>
 
                                 <div className="space-y-1 text-center">
 
@@ -52,9 +38,11 @@ const ActorIntroduce = () => {
                                     </label>
                                     <p className="pl-1">or drag and drop</p>
                                   </div>
+
                                   <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
                                 </div>
                               </div>
+
                             </div>
 
 
@@ -179,9 +167,7 @@ const ActorIntroduce = () => {
 
                         </div>
                       </form>
-                    </div>
                   </div>
-              </div>
 
 
     </>
