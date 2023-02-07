@@ -13,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @Getter
 @SuperBuilder
-public class AnnouncementDto {
+public class AnnouncementRequestDto {
 
     @NotNull
     @Size(max = 20)
