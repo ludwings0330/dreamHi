@@ -7,12 +7,12 @@ import { v4 } from 'uuid';
 import '../components/Casting/Casting.css';
 import { useRecoilState, atom } from 'recoil';
 import '../recoil/announcement';
-import { announcementImageUrl } from '../recoil/announcement';
+import { announcementPictureUrl } from '../recoil/announcement';
 
 
 function ImageUpload(props) {
   const [imageUpload, setImageUpload] = useState(null);
-  const [imageUrls, setImageUrls] = useRecoilState(announcementImageUrl);
+  const [imageUrls, setImageUrls] = useRecoilState(announcementPictureUrl);
 
   // const imagesListRef = ref(storage, 'images/');
   const uploadFile = () => {
@@ -141,11 +141,11 @@ export default ImageUpload;
 // export const announcementImg = selector({
 //   key: 'announcementImg',
 //   get: ({ get }) => {
-//     const announcementImgUrl = get(announcementImageUrl);
+//     const announcementImgUrl = get(announcementPictureUrl);
 //     return announcementImgUrl
 //   },
 //   set: ( {set, get} ) => {
-//     const announcementImgUrl = get(announcementImageUrl);
-//     return set(announcementImageUrl , image )
+//     const announcementImgUrl = get(announcementPictureUrl);
+//     return set(announcementPictureUrl , image )
 //   }
 // })

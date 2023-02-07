@@ -5,14 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { announcementImageUrl } from '../../recoil/announcement';
+import { announcementPictureUrl } from '../../recoil/announcement';
 import AnnouncementWriteCasting from './AnnouncementWriteCasting';
 
 function AnnouncementWrite(props) {
   const navigate = useNavigate();
 
   // const ImgUrl = useRecoilValue()
-  const announcementImg = useRecoilValue(announcementImageUrl);
+  const announcementImg = useRecoilValue(announcementPictureUrl);
   const token = {};
 
   const sendData = {
