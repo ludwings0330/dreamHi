@@ -1,22 +1,35 @@
 import React, { useRef, useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import MakerIntro from './MakerIntro';
 import Button from '../../Common/CommonComponent/Button';
 
 const MakerIntroduce = () => {
 
-//파일 미리볼 url을 저장해줄 state
-  const [fileImage, setFileImage] = useState("");
+    const navigate = useNavigate();
+    
+    //제작사 한줄 소개
+    const titleInputRef = useRef();
+    //한줄 소개 관련
+    const [title, setTitle] = useState("");
+    const handleChangeTitle = (e) => {
+        setTitle(e.target.value);
+    }
 
-  // 파일 저장
-  const saveFileImage = (e) => {
-    setFileImage(URL.createObjectURL(e.target.files[0]));
-    console.log(e.target.files[0])
-  };
 
-  // 파일 삭제
-  const deleteFileImage = () => {
-    URL.revokeObjectURL(fileImage);
-    setFileImage("");
-  };
+    //파일 미리볼 url을 저장해줄 state
+      const [fileImage, setFileImage] = useState("");
+
+      // 파일 저장
+      const saveFileImage = (e) => {
+        setFileImage(URL.createObjectURL(e.target.files[0]));
+        console.log(e.target.files[0])
+      };
+
+      // 파일 삭제
+      const deleteFileImage = () => {
+        URL.revokeObjectURL(fileImage);
+        setFileImage("");
+      };
 
   return (
     <>
@@ -81,40 +94,21 @@ const MakerIntroduce = () => {
 
 
                 {/*한줄소개 부분*/}
-                <div>
-                  <label htmlFor="about" className="block text-xl-center font-medium text-gray-700">
-                    한줄소개
-                  </label>
-                  {/*라벨과의 사이 간격 거리*/}
-                  <div className="mt-1">
-
-                                <textarea
-                                  id="about"
-                                  name="about"
-                                  rows={3}
-                                  cols={100}
-                                  className="info-title"
-                                />
+                  <div>
+                      <label>
+                          한줄소개
+                          <input type={"text"}
+                                 value={title}
+                                 required
+                                 ref={titleInputRef}
+                                 onChange={handleChangeTitle}/>
+                      </label>
                   </div>
-                </div>
+
 
                 {/*제작사소개 부분*/}
-                <div>
-                  <label htmlFor="about" className="block text-xl-center font-medium text-gray-700">
-                    제작사 소개
-                  </label>
-                  {/*라벨과의 사이 간격 거리*/}
-                  <div className="mt-1">
-
-                                <textarea
-                                  id="about"
-                                  name="about"
-                                  rows={3}
-                                  cols={100}
-                                  className="info-title"
-                                />
-                  </div>
-                </div>
+                {/*컴포넌트로 추가*/}
+                <MakerIntro />
                 
 
                 {/* 개인정보 입력 후 저장버튼*/}
