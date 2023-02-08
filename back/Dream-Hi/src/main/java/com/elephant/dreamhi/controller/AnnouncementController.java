@@ -210,6 +210,12 @@ public class AnnouncementController {
         return Response.create(HttpStatus.ACCEPTED, "공고를 수정했습니다.");
     }
 
+    /**
+     * @param producerId     공고를 작성한 제작사의 ID
+     * @param announcementId 삭제할 공고의 ID
+     * @param user           현재 로그인한 유저, 제작사에서 EDITOR 권한을 가져야 한다.
+     * @return 공고를 삭제한 후 요청이 수행되었음을 알리는 202 코드를 전달
+     */
     @DeleteMapping("/{producerId}/{announcementId}")
     @PreAuthorize("@checker.hasEditorAuthority(#user, #producerId)")
     public ResponseEntity<Body> deleteAnnouncement(

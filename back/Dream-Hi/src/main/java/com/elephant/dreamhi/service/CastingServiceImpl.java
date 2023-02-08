@@ -57,6 +57,11 @@ public class CastingServiceImpl implements CastingService {
         styleService.updateStyleRelations(casting, castingUpdateDto.getStyles());
     }
 
+    /**
+     * 배역에 연결된 스타일 정보를 삭제하고, 배역을 삭제한다.
+     *
+     * @param casting 삭제할 배역
+     */
     @Override
     public void deleteCasting(Casting casting) {
         castingStyleRelationRepository.deleteAllByCastingId(casting.getId());
