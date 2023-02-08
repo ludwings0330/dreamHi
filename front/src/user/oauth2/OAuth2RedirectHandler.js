@@ -1,40 +1,36 @@
-import React, { Component } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { ACCESS_TOKEN } from '../../constants';
-import { REFRESH_TOKEN } from '../../constants';
-import { BrowserRouter  } from 'react-router-dom'
+import { Navigate, useSearchParams } from '../../../node_modules/react-router-dom/dist/index';
 
-class OAuth2RedirectHandler extends Component {
-    getUrlParameter(name) {
-        console.log(name);
-        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-        let regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+function OAuth2RedirectHandler() {
 
-        let results = regex.exec(this.props.location.search);
-        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-    };
+    const redirectUrl = useRef("");
+    const [searchParams, setSearchParams] = useSearchParams();
 
-    render() {        
-        const accessToken = this.getUrlParameter(ACCESS_TOKEN);
-        const refreshToken = this.getUrlParameter(REFRESH_TOKEN);
-        const error = this.getUrlParameter('error');
+    const getRedirectUrl = () => {
+        const isNew = searchParams.get("isNew");
+        const accessToken = searchParams.get(ACCESS_TOKEN);
+        const error = searchParams.get("error");
 
         if(accessToken) {
-            localStorage.setItem(ACCESS_TOKEN, accessToken);
-            localStorage.setItem(REFRESH_TOKEN, refreshToken);
-            return <BrowserRouter to={{
-                pathname: "/profile",
-                state: { from: this.props.location }
-            }}/>; 
+            localStorage.setItem("accessToken", accessToken);
+            if(isNew === "true") {
+                redirectUrl.current = "/actor/write";
+            } else {
+                redirectUrl.current = "/";
+            }
         } else {
-            return <BrowserRouter to={{
-                pathname: "/login",
-                state: { 
-                    from: this.props.location,
-                    error: error 
-                }
-            }}/>; 
+            redirectUrl.current = "/login";
         }
     }
+    
+    useEffect(() => {
+        getRedirectUrl();
+    }, [])
+
+    return (
+        <Navigate to={redirectUrl.current} replace={true}/>
+    )
 }
 
 export default OAuth2RedirectHandler;
