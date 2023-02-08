@@ -60,6 +60,10 @@ public class AnnouncementController {
             @PageableDefault(size = 4) Pageable pageable,
             @AuthenticationPrincipal PrincipalDetails user
     ) {
+        if (!searchCondition.validate()) {
+            throw new IllegalArgumentException("필터 기준이 올바르지 않습니다.");
+        }
+
         Page<AnnouncementSimpleDto> announcementSimpleDtos = announcementService.findList(searchCondition, pageable, user);
 
         if (announcementSimpleDtos.isEmpty()) {
@@ -95,7 +99,7 @@ public class AnnouncementController {
 
     /**
      * @param pageable 2개의 공고를 조회하는 설정을 기본으로 하는 페이지네이션을 위한 정보
-     * @param user
+     * @param user     현재 로그인 유저 정보
      * @return 지원한 공고 중 가장 최근에 생성된 2개의 공고를 Response의 Body에 담아서 반환한다.
      */
     @GetMapping("/my/volunteer")
@@ -210,6 +214,12 @@ public class AnnouncementController {
         return Response.create(HttpStatus.ACCEPTED, "공고를 수정했습니다.");
     }
 
+    /**
+     * @param producerId     공고를 작성한 제작사의 ID
+     * @param announcementId 삭제할 공고의 ID
+     * @param user           현재 로그인한 유저, 제작사에서 EDITOR 권한을 가져야 한다.
+     * @return 공고를 삭제한 후 요청이 수행되었음을 알리는 202 코드를 전달
+     */
     @DeleteMapping("/{producerId}/{announcementId}")
     @PreAuthorize("@checker.hasEditorAuthority(#user, #producerId)")
     public ResponseEntity<Body> deleteAnnouncement(
