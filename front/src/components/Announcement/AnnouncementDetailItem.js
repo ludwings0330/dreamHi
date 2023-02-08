@@ -1,10 +1,6 @@
 import React from 'react';
 import annoumcementdetail from 'dummydata/announcementDetailData.json';
-<<<<<<< HEAD
 import Button from "../Common/CommonComponent/Button";
-=======
-import Button from '../Common/CommonComponent/Button';
->>>>>>> e9f2010c322820e570da7364fafa12ae2fe36715
 import AnnouncementDetailCasting from './AnnouncementDetailCasting';
 
 function AnnouncementDetailItem(props) {
