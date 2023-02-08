@@ -1,16 +1,22 @@
 import { useState, useEffect } from 'react';
 import { ref, uploadBytes, getDownloadURL, listAll } from 'firebase/storage';
+import { useRecoilValue } from 'recoil'
 
 import { storage } from '../../../imageup/firebase';
 import { v4 } from 'uuid';
 
+// import recoil
+import { actorProfile } from '../recoilActorState'
+
+// import css
 import '../../../components/Casting/Casting.css';
 import './ActorPhoto.css';
 
 function ActorPhotoUpload(props) {
   const [ActorPhotoUpload, setActorPhotoUpload] = useState(null);
   const [ActorPhotoUrls, setActorPhotoUrls] = useState([]);
-  const ActorPhotoDirectory = 'images/actorId/photo'
+  const actorInfo = useRecoilValue(actorProfile)
+  const ActorPhotoDirectory = `images/${actorInfo.name}_${actorInfo.actorProfileId}/photo`
 
   const ActorPhotosListRef = ref(storage, ActorPhotoDirectory);
   const uploadFile = (e) => {
@@ -69,12 +75,9 @@ function ActorPhotoUpload(props) {
 
   useEffect(() => {
     listAll(ActorPhotosListRef).then((response) => {
-      console.log(3434343434)
-      console.log(response.items[response.items.length - 1])
+      // console.log(response.items[response.items.length - 1])
       response.items.forEach((item) => {
         getDownloadURL(item).then((url) => {
-          console.log(3333333333333333333)
-          console.log(url)
           setActorPhotoUrls((prev) => [...prev, url]);
           // setActorPhotoUrls((prev) => [url]);
 
@@ -135,7 +138,7 @@ function ActorPhotoUpload(props) {
           <input
             type="file"
             id="file"
-            onChange={(e) => uploadFile(e)}
+            onChange={uploadFile}
           />
         </div>
 
