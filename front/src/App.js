@@ -50,7 +50,7 @@ function App() {
 
         //배우페이지 관련 이동
         <Route path={"/actor/list"} element={<ActorList />} />
-        <Route path={"/actor/detail"} element={<ActorDetail />} />
+        <Route path={"/actor/detail/:actorProfileId"} element={<ActorDetail />} />
         <Route path={"/actor/write"} element={<ActorWrite />} />
 
         //오디션페이지 관련 이동

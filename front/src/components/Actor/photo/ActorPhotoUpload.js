@@ -7,33 +7,34 @@ import { v4 } from 'uuid';
 import '../../../components/Casting/Casting.css';
 import './ActorPhoto.css';
 
-function ActorImageUpload(props) {
-  const [ActorImageUpload, setActorImageUpload] = useState(null);
-  const [ActorImageUrls, setActorImageUrls] = useState([]);
-  const ActorImageDirectory = 'images/actorId/photo'
+function ActorPhotoUpload(props) {
+  const [ActorPhotoUpload, setActorPhotoUpload] = useState(null);
+  const [ActorPhotoUrls, setActorPhotoUrls] = useState([]);
+  const ActorPhotoDirectory = 'images/actorId/photo'
 
-  const ActorImagesListRef = ref(storage, ActorImageDirectory);
-  const uploadFile = () => {
-    if (ActorImageUpload == null) return;
-    const imageRef = ref(storage, `${ActorImageDirectory}/${ActorImageUpload.name + v4()}`);
-    uploadBytes(imageRef, ActorImageUpload).then((snapshot) => {
+  const ActorPhotosListRef = ref(storage, ActorPhotoDirectory);
+  const uploadFile = (e) => {
+    setActorPhotoUpload(e.target.files[0])
+    // if (ActorPhotoUpload == null) return;
+    const imageRef = ref(storage, `${ActorPhotoDirectory}/${ActorPhotoUpload.name + v4()}`);
+    uploadBytes(imageRef, ActorPhotoUpload).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
-        setActorImageUrls((prev) => [...prev, url]);
-        // setActorImageUrls((prev) => [url]);
-        console.log(setActorImageUrls)
-        console.log(ActorImageUrls)
+        setActorPhotoUrls((prev) => [...prev, url]);
+        // setActorPhotoUrls((prev) => [url]);
+        console.log(setActorPhotoUrls)
+        console.log(ActorPhotoUrls)
       });
     });
   };
 
   // const onChange = event => {
   //   const { value } = event.target;
-  //   setActorImageUrls(value)
-  //   props.onChange(ActorImageUrls)
+  //   setActorPhotoUrls(value)
+  //   props.onChange(ActorPhotoUrls)
   // }
 
   // useEffect(() => {
-  //   listAll(ActorImagesListRef).then((response) => {
+  //   listAll(ActorPhotosListRef).then((response) => {
   //     // console.log(3434343434);
   //     // console.log(response.items);
   //     // console.log(response.items[response.items.length - 1]);
@@ -41,41 +42,41 @@ function ActorImageUpload(props) {
   //       getDownloadURL(item).then((url) => {
   //         // console.log(3333333333333333333);
   //         // console.log(url);
-  //         setActorImageUrls((prev) => [...prev, url]);
-  //         // setActorImageUrls((prev) => [url]);
+  //         setActorPhotoUrls((prev) => [...prev, url]);
+  //         // setActorPhotoUrls((prev) => [url]);
   //       });
   //     });
   //   });
   // }, []);
 
   // useEffect(() => {
-  //   listAll(ActorImagesListRef).then((response) => {
+  //   listAll(ActorPhotosListRef).then((response) => {
   //     console.log(3434343434);
   //     console.log(response.items[response.items.length - 1]);
   //
   //     getDownloadURL(response.items[response.items.length - 1]).then((url) => {
   //       console.log(3333333333333333333);
   //       console.log(url);
-  //       // setActorImageUrls((prev) => [...prev, url]);
-  //       setActorImageUrls((prev) => [url]);
+  //       // setActorPhotoUrls((prev) => [...prev, url]);
+  //       setActorPhotoUrls((prev) => [url]);
   //     });
   //   });
   // }, []);
 
   // console.log(1414141141);
-  // console.log(ActorImageUrls);
-  // console.log(ActorImageUrls[ActorImageUrls.length - 1])
+  // console.log(ActorPhotoUrls);
+  // console.log(ActorPhotoUrls[ActorPhotoUrls.length - 1])
 
   useEffect(() => {
-    listAll(ActorImagesListRef).then((response) => {
+    listAll(ActorPhotosListRef).then((response) => {
       console.log(3434343434)
       console.log(response.items[response.items.length - 1])
       response.items.forEach((item) => {
         getDownloadURL(item).then((url) => {
           console.log(3333333333333333333)
           console.log(url)
-          setActorImageUrls((prev) => [...prev, url]);
-          // setActorImageUrls((prev) => [url]);
+          setActorPhotoUrls((prev) => [...prev, url]);
+          // setActorPhotoUrls((prev) => [url]);
 
 
         });
@@ -88,19 +89,19 @@ function ActorImageUpload(props) {
       {/*<input*/}
       {/*  type="file"*/}
       {/*  onChange={(event) => {*/}
-      {/*    setActorImageUpload(event.target.files[0]);*/}
+      {/*    setActorPhotoUpload(event.target.files[0]);*/}
       {/*  }}*/}
       {/*/>*/}
       <button
         onClick={uploadFile}
         // onChange={() => {
-        //   props.onChange(ActorImageUrls[ActorImageUrls.length - 1]);
+        //   props.onChange(ActorPhotoUrls[ActorPhotoUrls.length - 1]);
         // }}
       >
         사진 올리기
       </button>
       <div className="photo-list">
-        {ActorImageUrls.map((url, idx) => (
+        {ActorPhotoUrls.map((url, idx) => (
             <div className='photo' key={idx}
                  width={"200px"}
                  height={"200px"}>
@@ -124,19 +125,24 @@ function ActorImageUpload(props) {
               className="object-center"
             />
           </label>
+          {/*<input*/}
+          {/*  type="file"*/}
+          {/*  id="file"*/}
+          {/*  onChange={(event) => {*/}
+          {/*    setActorPhotoUpload(event.target.files[0]);*/}
+          {/*  }}*/}
+          {/*/>*/}
           <input
             type="file"
             id="file"
-            onChange={(event) => {
-              setActorImageUpload(event.target.files[0]);
-            }}
+            onChange={(e) => uploadFile(e)}
           />
         </div>
 
-        {/*<img src={ActorImageUrls} />*/}
+        {/*<img src={ActorPhotoUrls} />*/}
       </div>
     </div>
   );
 }
 
-export default ActorImageUpload;
+export default ActorPhotoUpload;
