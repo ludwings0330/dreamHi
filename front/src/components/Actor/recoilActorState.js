@@ -10,16 +10,21 @@ export const actorProfile = atom({
   default: {}
 })
 
-export const ActorFilmoUrl = atom({
-  key: 'ActorFilmoUrl',
+export const actorFilmoUrl = atom({
+  key: 'actorFilmoUrl',
   default: null
 })
-export const ActorPhotoUrl = atom({
-  key: 'ActorPhotoUrl',
+export const actorPhotoUrl = atom({
+  key: 'actorPhotoUrl',
   default: null
 })
 
-export const ActorVideoUrl = atom({
-  key: 'ActorVideoUrl',
+export const actorVideoUrl = atom({
+  key: 'actorVideoUrl',
   default: null
+})
+
+export const actorPhotoLists = atom({
+  key: 'actorPhotoLists',
+  default: []
 })
