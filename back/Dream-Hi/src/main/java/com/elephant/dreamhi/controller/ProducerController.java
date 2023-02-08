@@ -43,7 +43,6 @@ public class ProducerController {
                                                 @AuthenticationPrincipal PrincipalDetails user,
                                                 @PageableDefault Pageable pageable) {
         condition.setUserId(user.getId());
-        log.info("제작사 목록 조회 - userId : [{}]", user.getId());
         Page<ProducerListResponseDto> result = producerService.searchProducersByCondition(condition, pageable);
 
         if (result.getContent().isEmpty()) {
@@ -57,7 +56,6 @@ public class ProducerController {
     @GetMapping("/api/producers/{producerId}")
     public ResponseEntity<Body> getProducerInfoById(@PathVariable Long producerId,
                                                     @AuthenticationPrincipal PrincipalDetails user) throws NotFoundException {
-        log.info("제작사 상세조회 - producerId : [{}], userId : [{}]", producerId, user.getId());
         ProducerInfoResponseDto responseDto = producerService.getProducerInfoById(producerId, user.getId());
 
         return Response.create(HttpStatus.OK, "제작사 조회 성공", responseDto);
@@ -77,7 +75,6 @@ public class ProducerController {
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<Body> createProducer(@RequestParam String name,
                                                @AuthenticationPrincipal PrincipalDetails user) {
-        log.info("제작사 신규 생성 - userId : [{}]", user.getId());
         Long id = producerService.createProducer(name, user.getId());
         return Response.create(HttpStatus.CREATED, "신규 제작사 생성 완료", id);
     }
@@ -93,11 +90,7 @@ public class ProducerController {
 
     @GetMapping("/api/producers/{producerId}/users")
     public ResponseEntity<Body> findMembersByProducerId(@PathVariable Long producerId) {
-        log.info("제작진 목록 조회 요청 - producerId : [{}]", producerId);
-
         List<ProducerMemberDto> result = producerService.findMembersByProducerId(producerId);
-
-        log.info("제작진 목록 조회 성공");
 
         return Response.create(HttpStatus.OK, "제작진 목록 조회 성공", result);
     }
@@ -118,7 +111,6 @@ public class ProducerController {
     public ResponseEntity<Body> deleteProducerMember(@PathVariable Long producerId,
                                                      @PathVariable Long userId,
                                                      @AuthenticationPrincipal PrincipalDetails user) throws NotFoundException {
-        log.info("제작진 삭제 요청 - 요청자 : [{}]", user.getId());
         producerService.deleteProducerMember(producerId, userId);
 
         return Response.create(HttpStatus.ACCEPTED, "제작진 삭제 성공");
@@ -130,11 +122,7 @@ public class ProducerController {
                                                          @PathVariable Long userId,
                                                          @RequestBody ProducerMemberDto requestDto,
                                                          @AuthenticationPrincipal PrincipalDetails user) throws NotFoundException {
-        log.info("제작진 정보 수정 요청 {}, {}, 요청자 : {}", requestDto, userId, user.getId());
-
         producerService.modifyProducerMemberInfo(producerId, userId, requestDto);
-
-        log.info("제작진 정보 수정 성공");
 
         return Response.create(HttpStatus.ACCEPTED, "제작진 정보 수정 성공");
     }

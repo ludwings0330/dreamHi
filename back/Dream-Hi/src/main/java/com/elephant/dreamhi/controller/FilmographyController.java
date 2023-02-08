@@ -34,8 +34,6 @@ public class FilmographyController {
 
     @GetMapping("/api/filmographies")
     public ResponseEntity<Body> findFilmographies(@ModelAttribute FilmographyRequestDto requestDto) {
-        log.info("필모그래피 목록 조회 요청 : [{}]", requestDto);
-
         List<FilmographyResponseDto> responseDto = filmographyService.findFilmographies(requestDto);
 
         if (responseDto.isEmpty()) {

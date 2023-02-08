@@ -43,7 +43,6 @@ public class VolunteerService {
 
     @Transactional
     public void userApplyOnAnnouncement(VolunteerApplyRequestDto requestDto) throws NotFoundException, IllegalArgumentException {
-        log.info("공고지원 시작 : {}", requestDto);
         if (authService.isAnonymous(requestDto.getUserId())) {
             throw new AccessDeniedException("익명 사용자는 지원할 수 없습니다.");
         }
