@@ -1,6 +1,5 @@
 export const API_BASE_URL = 'http://i8a702.p.ssafy.io:8085';
 export const ACCESS_TOKEN = 'accessToken';
-export const REFRESH_TOKEN = 'refreshToken';
 
 export const OAUTH2_REDIRECT_URI = 'http://i8a702.p.ssafy.io/oauth2/redirect'
 
