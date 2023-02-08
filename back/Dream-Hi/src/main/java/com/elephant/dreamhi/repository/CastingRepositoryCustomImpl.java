@@ -27,7 +27,7 @@ public class CastingRepositoryCustomImpl implements CastingRepositoryCustom {
                            .join(castingStyleRelation.style, style)
                            .where(casting.announcement.id.eq(announcementId))
                            .transform(
-                                   groupBy().list(Projections.constructor(
+                                   groupBy(casting).list(Projections.constructor(
                                            CastingDetailDto.class,
                                            casting.id,
                                            casting.name,
@@ -42,7 +42,7 @@ public class CastingRepositoryCustomImpl implements CastingRepositoryCustom {
                                                    StyleDto.class,
                                                    style.id,
                                                    style.description
-                                           )).as("styles")
+                                           ))
                                    ))
                            );
     }

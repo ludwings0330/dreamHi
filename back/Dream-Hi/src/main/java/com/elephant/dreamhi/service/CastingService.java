@@ -5,6 +5,7 @@ import com.elephant.dreamhi.model.dto.CastingDetailDto;
 import com.elephant.dreamhi.model.dto.CastingSaveDto;
 import com.elephant.dreamhi.model.dto.CastingUpdateDto;
 import com.elephant.dreamhi.model.entity.Announcement;
+import com.elephant.dreamhi.model.entity.Casting;
 import java.util.List;
 
 public interface CastingService {
@@ -14,5 +15,7 @@ public interface CastingService {
     void saveCasting(Announcement announcement, CastingSaveDto castingSaveDto) throws NotFoundException;
 
     void updateCasting(Announcement announcement, CastingUpdateDto castingUpdateDto) throws NotFoundException;
+
+    void deleteCasting(Casting casting);
 
 }

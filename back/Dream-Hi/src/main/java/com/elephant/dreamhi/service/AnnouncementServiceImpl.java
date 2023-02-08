@@ -15,6 +15,7 @@ import com.elephant.dreamhi.repository.AnnouncementRepository;
 import com.elephant.dreamhi.repository.FollowRepository;
 import com.elephant.dreamhi.repository.ProcessRepository;
 import com.elephant.dreamhi.repository.ProducerRepository;
+import com.elephant.dreamhi.repository.VolunteerRepository;
 import com.elephant.dreamhi.security.PrincipalDetails;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -34,6 +35,8 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Slf4j
 public class AnnouncementServiceImpl implements AnnouncementService {
+
+    private final VolunteerRepository volunteerRepository;
 
     private final ProcessService processService;
     private final CastingService castingService;
@@ -108,7 +111,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     public AnnouncementDetailDto findDetail(Long announcementId, PrincipalDetails user) throws NotFoundException {
         announcementRepository.plusHitByAnnouncementId(announcementId);
         return announcementRepository.findByAnnouncementIdAndFollowerId(announcementId, user.getId())
-                                                                            .orElseThrow(() -> new NotFoundException("해당 공고를 찾을 수 없습니다."));
+                                     .orElseThrow(() -> new NotFoundException("해당 공고를 찾을 수 없습니다."));
     }
 
     /**
@@ -147,6 +150,14 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     @Override
     @Transactional
     public void deleteAnnouncement(Long announcementId) {
+        Announcement announcement = announcementRepository.findByAnnouncementId(announcementId)
+                                                          .orElseThrow(() -> new NotFoundException("해당 공고를 찾을 수 없습니다."));
+
+        volunteerRepository.deleteAllByAnnouncementId(announcementId);
+        announcement.getCastings()
+                    .forEach(castingService::deleteCasting);
+
+        processRepository.deleteAllByAnnouncementId(announcementId);
         announcementRepository.deleteById(announcementId);
     }
 

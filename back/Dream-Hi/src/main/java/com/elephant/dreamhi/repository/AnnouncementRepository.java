@@ -13,4 +13,9 @@ public interface AnnouncementRepository extends JpaRepository<Announcement, Long
     @Query("UPDATE Announcement a SET a.hit = a.hit + 1 where a.id = :announcementId")
     void plusHitByAnnouncementId(Long announcementId);
 
+    @Override
+    @Modifying
+    @Query("DELETE Announcement a WHERE a.id = :announcementId")
+    void deleteById(Long announcementId);
+
 }
