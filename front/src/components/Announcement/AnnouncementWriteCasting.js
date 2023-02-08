@@ -3,19 +3,23 @@ import { useRecoilState } from 'recoil';
 import { announcementCastingState } from '../../recoil/announcement';
 
 function AnnouncementWriteCasting(props) {
+  // 전역으로 들고 다닐 casting array
   const [castingsArray, setCastingsArray] = useRecoilState(announcementCastingState);
+
+  // recoil castingstate 에 추가하기 위한 이 컴포넌트 용 state
   const [casting, setCasting] = useState({
     name: '',
     description: '',
-    headcount: 0,
-    // minHeight: 130,
-    // maxHeight: 150,
-    // minAge: 5,
-    // maxAge: 10,
+    headcount: null,
+    minHeight: null,
+    maxHeight: null,
+    minAge: null,
+    maxAge: null,
     // gender: "MALE",
     styles: [1, 3],
   });
 
+  // style map 함수 쓰기 위해 따로 빼서 array 로
   const styles = [
     { value: 32, label: '귀여운' },
     { value: 33, label: '날카로운' },
@@ -32,22 +36,67 @@ function AnnouncementWriteCasting(props) {
     { value: 44, label: '청초한' },
   ];
 
+  // name 이랑 description 변경하는 함수
+  const handleCastingChange = (e) => {
+    setCasting({ ...casting, [e.target.name]: e.target.value });
+  };
+
+
+  // headcount state 및 변경 함수
   const [headcount, setHeadcount] = useState(0);
+  const updateHeadcount = (value) => {
+    setCasting({
+      ...casting,
+      headcount: value,
+    });
+  };
+
+
+  //minHeight, maxHeight 설정 함수
+  const updateMinHeight = (value) => {
+    setCasting({
+      ...casting,
+      minHeight: value,
+    });
+  };
+
+  const updateMaxHeight = (value) => {
+    if (value > casting.minHeight) {
+      setCasting({
+        ...casting,
+        maxHeight: value,
+      });
+    };
+  };
+
+  const updateMinAge = (value) => {
+    setCasting({
+      ...casting,
+      minAge: value,
+    });
+  };
+
+  const updateMaxAge = (value) => {
+    if (value > casting.minAge) {
+      setCasting({
+        ...casting,
+        maxAge: value,
+      });
+    };
+  };
+
+
+
+
+
+
 
 
   const [selectedStyles, setSelectedStyles] = useState([]);
   const MAX_SELECTED_OPTIONS = 5;
 
 
-  const handleCastingChange = (e) => {
-    setCasting({ ...casting, [e.target.name]: e.target.value });
-    console.log(87898)
-    console.log(casting)
-  };
 
-  // const handleHeadcountChange = (e) => {
-  //   setHeadcount(e)
-  // }
 
 
 
@@ -74,6 +123,7 @@ function AnnouncementWriteCasting(props) {
     console.log(242422424);
     console.log(casting);
     console.log(announcementCastingState);
+    if (casting.minHeight > casting.maxHeight){alert('키 범위가 잘못되었습니다.')};
 
     setCastingsArray([...castingsArray, casting]);
     setCasting({});
@@ -83,11 +133,15 @@ function AnnouncementWriteCasting(props) {
     <div>
       <h1> 배역 등록 </h1>
 
+
       <form>
+        {/*// 배역 이름 입력*/}
         <p>
-          <label>작품 제목</label> :{' '}
+          <label>배역 이름</label> :{' '}
           <input type="text" name="name" value={casting.name} onChange={handleCastingChange} />
         </p>
+        
+        {/*// 배역 상세 입력*/}
         <p>
           <label>배역 상세</label> :{' '}
           <input
@@ -97,11 +151,47 @@ function AnnouncementWriteCasting(props) {
             onChange={handleCastingChange}
           />
         </p>
+        
+        {/*// 배역 headcount 입력*/}
+        <p>
+        <label>배역 인원</label> :{' '}
+        <input
+            type="number"
+            value={casting.headcount}
+            onChange={(e) => updateHeadcount(e.target.value)}
+            min='0'
+        />
+        </p>
 
-        {/*<button onClick={() => setHeadcount(headcount - 1)}>-</button>*/}
-        <input type="number" value={casting.headcount} onChange={handleCastingChange} min="0" />
-        {/*<button onClick={() => setHeadcount(headcount + 1)}>+</button>*/}
+        
+        {/*키 입력*/}
 
+        <p>
+          <label>배역 키</label> :{' '}
+        <input
+            type="number"
+            value={casting.minHeight}
+            onChange={(e) => updateMinHeight(e.target.value)}
+            min='0'
+            max='210'
+        />
+          ~
+        <input
+            type="number"
+            value={casting.maxHeight}
+            onChange={(e) => updateMaxHeight(e.target.value)}
+            min='0'
+            max='210'
+        />
+        </p>
+
+        
+        
+        
+        
+        
+        
+        {/*// 스타일 입력*/}
 
         <select multiple size={5}>
           {styles.map((style) => (
@@ -122,6 +212,9 @@ function AnnouncementWriteCasting(props) {
             </button>
           </div>
         ))}
+        
+        
+        {/*전역에서 들고 다닐 casting array 업데이트*/}
 
         <button type="button" onClick={addCasting}>
           Add Casting

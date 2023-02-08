@@ -23,7 +23,7 @@ function AnnouncementWrite(props) {
     crankPeriod: '6개월',
     endDate: '2023-02-27T10:00:00',
     description: '공고설명',
-    pictureUrl: { announcementImg },
+    pictureUrl: announcementImg ,
     castings: [
       {
         name: '배역명',
