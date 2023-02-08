@@ -34,8 +34,7 @@ const setSelected = (idx) => {
 const ActorPhoto = () => {
   const test = useRecoilValue(ActorId)
   const [testUrl, setTestUrl] = useRecoilState(ActorPhotoUrl)
-  setTestUrl(`images/${test}/photo`)
-  console.log(testUrl, '됐으면 좋겠다')
+
   return (
     <div className="bg-white">
 
@@ -47,26 +46,26 @@ const ActorPhoto = () => {
             <img src={products[0].imageSrc} alt={products[0].imageAlt}/>
           </div>
 
-          <div className='photo-list'>
-            {products.map((product, idx) => (
-              idx === 0 ? null :
-                <div className='photo' key={product.id}>
-                  <img
-                    src={product.imageSrc}
-                    alt={product.imageAlt}
-                    width={"200px"}
-                    height={"200px"}
-                    className="object-center"
-                    onClick={() => setSelected(idx)}
-                  />
-                </div>
-            ))}
-          </div>
+          {/*<div className='photo-list'>*/}
+          {/*  {products.map((product, idx) => (*/}
+          {/*    idx === 0 ? null :*/}
+          {/*      <div className='photo' key={product.id}>*/}
+          {/*        <img*/}
+          {/*          src={product.imageSrc}*/}
+          {/*          alt={product.imageAlt}*/}
+          {/*          width={"200px"}*/}
+          {/*          height={"200px"}*/}
+          {/*          className="object-center"*/}
+          {/*          onClick={() => setSelected(idx)}*/}
+          {/*        />*/}
+          {/*      </div>*/}
+          {/*  ))}*/}
+          {/*</div>*/}
 
+          <ActorPhotoUpload />
         </div>
 
       </div>
-      <ActorPhotoUpload />
 
       { testUrl }
 
