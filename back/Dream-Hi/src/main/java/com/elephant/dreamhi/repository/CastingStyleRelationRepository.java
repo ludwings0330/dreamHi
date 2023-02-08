@@ -11,6 +11,6 @@ public interface CastingStyleRelationRepository extends JpaRepository<CastingSty
 
     @Modifying
     @Query("DELETE FROM CastingStyleRelation csr WHERE csr.casting.id = :castingId")
-    void deleteAllByCastingId(Long castingId);
+    void deleteByCastingId(Long castingId);
 
 }
