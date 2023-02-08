@@ -110,7 +110,7 @@ public class VolunteerRepositoryCustomImpl implements VolunteerRepositoryCustom 
     }
 
     @Override
-    public void deleteByAnnouncementId(Long announcementId) {
+    public void deleteAllByAnnouncementId(Long announcementId) {
         queryFactory.delete(volunteer)
                     .where(volunteer.announcement.id.eq(announcementId))
                     .execute();

@@ -26,6 +26,6 @@ public interface VolunteerRepositoryCustom {
 
     void updateAll(Long announcementId, Process process);
 
-    void deleteByAnnouncementId(Long announcementId);
+    void deleteAllByAnnouncementId(Long announcementId);
 
 }
