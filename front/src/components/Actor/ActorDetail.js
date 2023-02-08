@@ -3,7 +3,6 @@ import { useRecoilState } from 'recoil';
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 
-import Layout from '../Common/MainLayout/Layout';
 import ActorIntroduce from './info/ActorIntroduce';
 import ActorFilmo from './filmo/ActorFilmo';
 import ActorPhoto from './photo/ActorPhoto';
