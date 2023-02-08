@@ -51,7 +51,7 @@ const MakerList = () => {
           <div>
               <MDBRow className='row-cols-1 row-cols-md-4 g-4'>
                   {MakerList.length > 0 && MakerList.map((maker, idx) => (
-                      <Link to={`/maker/detail`}>
+                      <Link to={`/maker/detail/${maker.makerProfileId}`}>
                           <MDBCol key={idx} className='h-100'>
                               <MDBCard className='h-100'>
                                   <MDBCardImage
