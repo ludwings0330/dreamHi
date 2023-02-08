@@ -8,6 +8,7 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -34,5 +35,8 @@ public class ControllerAdvice {
     public ResponseEntity<Body> handleForbidden(Exception e) {
         return Response.create(HttpStatus.FORBIDDEN, e.getMessage());
     }
+
+    @ExceptionHandler({ AuthenticationException.class })
+    public ResponseEntity<Body> handleAuthentication(AuthenticationException e) { return Response.create(HttpStatus.UNAUTHORIZED, e.getMessage()); }
 
 }
