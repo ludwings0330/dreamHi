@@ -1,8 +1,13 @@
 import { atom } from 'recoil'
 
-export const ActorId = atom({
-  key: 'ActorId',
+export const actorProfileId = atom({
+  key: 'actorProfileId',
   default: 'locker'
+})
+
+export const actorProfile = atom({
+  key: 'actorProfile',
+  default: {}
 })
 
 export const ActorFilmoUrl = atom({
