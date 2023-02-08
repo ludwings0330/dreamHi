@@ -7,6 +7,7 @@ import axios from 'axios';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { announcementPictureUrl } from '../../recoil/announcement';
 import AnnouncementWriteCasting from './AnnouncementWriteCasting';
+import MultiSelect from "./SelectExample";
 
 function AnnouncementWrite(props) {
   const navigate = useNavigate();
@@ -78,6 +79,38 @@ function AnnouncementWrite(props) {
           postClick();
         }}
       />
+
+        {/*<MultiSelect/>*/}
+
+
+
+
+
+
+
+
+
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
     </>
   );
 }
