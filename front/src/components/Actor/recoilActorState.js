@@ -11,10 +11,10 @@ export const ActorFilmoUrl = atom({
 })
 export const ActorPhotoUrl = atom({
   key: 'ActorPhotoUrl',
-  default: `images/${ActorId}/photo`
+  default: null
 })
 
 export const ActorVideoUrl = atom({
   key: 'ActorVideoUrl',
-  default: `images/${ActorId}/video`
+  default: null
 })

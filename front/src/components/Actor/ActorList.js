@@ -1,51 +1,88 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios'
+import { Link, useNavigate } from 'react-router-dom';
+
+// import css
+import {
+  MDBCard,
+  MDBCardImage,
+  MDBCardBody,
+  MDBCardTitle,
+  MDBCardText,
+  MDBRow,
+  MDBCol
+} from 'mdb-react-ui-kit';
 import "./ActorList.css";
+
+// import components
 import PageBar from '../Common/CommonComponent/PageBar';
 import SearchBar from '../Common/CommonComponent/SearchBar';
-import { Link, useNavigate } from 'react-router-dom';
 import Button from '../Common/CommonComponent/Button';
 
 
 const ActorList = () => {
-
   const navigate = useNavigate();
+  const token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDAzIiwiYXV0aCI6IlJPTEVfVVNFUiIsImVtYWlsIjoiZGRmOTk4QGdtYWlsLmNvbSIsImV4cCI6MTY3ODIzNDgwMX0.B-xblykNgvy8DSacYxAUzQCxEkXxqdEi8yXJaKlm3p8Y96rxR0wkvTaEUU_0e-jLqXSXezDDLi5jSA9Imf_A1g';
 
-  // // db의 users 컬렉션을 가져옴
-  // useEffect(() => {
-  //   console.log('useEffect');
-  //   const addData = async() => {
-  //     console.log('addData');
-  //     const data = await getDocs(collection(db, "dreamhi"));
-  //     try{
-  //
-  //       const docRef = await addDoc(collection(db, "dreamhi"), {
-  //         age: 1,
-  //         gender: 'woman',
-  //         height: 100,
-  //         name: 'lee'
-  //       });
-  //       console.log(docRef);
-  //     } catch(e) {
-  //       console.log(e);
-  //     }
-  //   }
-  //   addData();
-  // },[]);
+  const [actorList, setActorList] = useState([]);
 
+  // api 요청 보내서 배우 목록 확보
+  useEffect(() => {
+    axios.get('http://i8a702.p.ssafy.io:8085/api/actors',
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setActorList(res.data.result.content)
+        console.log(res.data.result.content,' 데이터ㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓ');
+      })
+      .catch((error) => {
+        console.log('실패실패ㅠㅠ');
+        console.log(error);
+      });
 
+  }, [setActorList]);
 
   return (
     <div>
       <SearchBar />
-      <Link to={"/actor/detail"}>
-        <div className="actor">
-          <div className="actor_img">
-            <img src="/img/elephant.png" />
-          </div>
-          <h5 className="actor_title"> 배우 소개</h5>
-          <p className="actor_des"> 배우 소개 요약</p>
-        </div>
-      </Link>
+      <div>
+      <MDBRow className='row-cols-1 row-cols-md-4 g-4'>
+        {actorList.length > 0 && actorList.map((actor, idx) => (
+          <Link to={`/actor/detail/${actor.actorProfileId}`}>
+            <MDBCol key={idx} className='h-100'>
+              <MDBCard className='h-100'>
+                <MDBCardImage
+                  src={actor.pictureUrl}
+                  alt={`${actor.name}'s picture`}
+                  position='top'
+                  height='200px'
+                  object-fit='cover'
+                />
+                <MDBCardBody>
+                  <MDBCardTitle>{actor.title}</MDBCardTitle>
+                  <MDBCardText>
+                    {actor.height}
+                    {actor.pictureUrl}
+                  </MDBCardText>
+                </MDBCardBody>
+              </MDBCard>
+            </MDBCol>
+          </Link>
+        ))}
+      </MDBRow>
+      </div>
+      {/*<Link to={`/actor/detail/`}>*/}
+      {/*  <div className="actor">*/}
+      {/*    <div className="actor_img">*/}
+      {/*      <img src="/img/elephant.png" />*/}
+      {/*    </div>*/}
+      {/*    <h5 className="actor_title"> 배우 소개</h5>*/}
+      {/*    <p className="actor_des"> 배우 소개 요약</p>*/}
+      {/*  </div>*/}
+      {/*</Link>*/}
 
       <Button
         title="글작성"

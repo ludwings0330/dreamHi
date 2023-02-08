@@ -7,6 +7,7 @@ import com.elephant.dreamhi.model.dto.CastingUpdateDto;
 import com.elephant.dreamhi.model.entity.Announcement;
 import com.elephant.dreamhi.model.entity.Casting;
 import com.elephant.dreamhi.repository.CastingRepository;
+import com.elephant.dreamhi.repository.CastingStyleRelationRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ public class CastingServiceImpl implements CastingService {
 
     private final StyleService styleService;
     private final CastingRepository castingRepository;
+    private final CastingStyleRelationRepository castingStyleRelationRepository;
 
     /**
      * @param announcementId 공고ID
@@ -53,6 +55,12 @@ public class CastingServiceImpl implements CastingService {
                                            .orElseThrow(() -> new NotFoundException("해당 배역을 찾을 수 없습니다."));
         casting.changeCasting(castingUpdateDto);
         styleService.updateStyleRelations(casting, castingUpdateDto.getStyles());
+    }
+
+    @Override
+    public void deleteCasting(Casting casting) {
+        castingStyleRelationRepository.deleteAllByCastingId(casting.getId());
+        castingRepository.deleteById(casting.getId());
     }
 
 }
