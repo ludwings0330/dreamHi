@@ -109,6 +109,13 @@ public class VolunteerRepositoryCustomImpl implements VolunteerRepositoryCustom 
                     .execute();
     }
 
+    @Override
+    public void deleteByAnnouncementId(Long announcementId) {
+        queryFactory.delete(volunteer)
+                    .where(volunteer.announcement.id.eq(announcementId))
+                    .execute();
+    }
+
     private BooleanExpression stateEq(VolunteerState state) {
         return (state == null) ? null : volunteer.state.eq(state);
     }
