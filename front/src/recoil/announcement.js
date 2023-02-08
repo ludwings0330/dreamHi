@@ -7,11 +7,6 @@ import { atom } from 'recoil';
 
 //Announcement
 
-export const castingState = atom({
-  key: 'castingState',
-  default: [],
-});
-
 
 
 export const announcementTitle = atom({
@@ -51,50 +46,8 @@ export const announcementPictureUrl = atom({
 });
 
 
-// AnnouncementCastings
-
-export const announcementCastingName = atom({
-  key: 'announcementCastingName',
-  default: null
+export const announcementCastingState = atom({
+  key: 'announcementCastingState',
+  default: [],
 });
 
-export const announcementCastingDescription = atom({
-  key: 'announcementCastingDescription',
-  default: null
-});
-
-
-export const announcementCastingHeadcount = atom({
-  key: 'announcementCastingHeadcount',
-  default: null
-});
-
-export const announcementCastingMinHeight = atom({
-  key: 'announcementCastingMinHeight',
-  default: null
-});
-
-export const announcementCastingMaxHeight = atom({
-  key: 'announcementCastingMaxHeight',
-  default: null
-});
-
-export const announcementCastingMinAge = atom({
-  key: 'announcementCastingMinAge',
-  default: null
-});
-
-export const announcementCastingMaxAge = atom({
-  key: 'announcementCastingMaxAge',
-  default: null
-});
-
-export const announcementCastingGender = atom({
-  key: 'announcementCastingGender',
-  default: null
-});
-
-export const announcementCastingStyles = atom({
-  key: 'announcementCastingStyles',
-  default: null
-});
