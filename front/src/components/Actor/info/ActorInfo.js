@@ -110,6 +110,17 @@ const ActorInfo = () => {
             <form className={"actor-info"}>
 
                 <div>
+                    <label>
+                        한줄소개
+                        <input type={"text"}
+                               value={title}
+                               required
+                               ref={titleInputRef}
+                               onChange={handleChangeTitle}/>
+                    </label>
+                </div>
+
+                <div>
             <label>
                 이름
                 <input type={"text"}

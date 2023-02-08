@@ -1,9 +1,7 @@
 import { React, useRef, useEffect, useState } from 'react';
 
 
-//자기소개 component
-const ActorIntro = () => {
-
+const MakerIntro = () => {
     const textRef = useRef();
     const [textAreaHeight, setTextAreaHeight] = useState("auto");
     const [parentHeight, setParentHeight] = useState("auto");
@@ -35,24 +33,23 @@ const ActorIntro = () => {
     const handleChangeIntro = (e) => {
         setIntro(e.target.value);
     }
-
     return (
         <div style={parentStyle}>
-            <h4>자기소개</h4>
-    <textarea
-        className={"actor-intro"}
-        placeholder="자기소개"
-        value={intro}
-        onChange={(e) => onChangeHandler(e)}
-        ref={textRef}
-        style={{
-            height: textAreaHeight,
-            overflow: "hidden",
-        }}
-        rows={3}
-    />
+            <h4>제작사 소개</h4>
+            <textarea
+                className={"actor-intro"}
+                placeholder="자기소개"
+                value={intro}
+                onChange={(e) => onChangeHandler(e)}
+                ref={textRef}
+                style={{
+                    height: textAreaHeight,
+                    overflow: "hidden",
+                }}
+                rows={3}
+            />
         </div>
     );
 };
 
-export default ActorIntro;
+export default MakerIntro;
