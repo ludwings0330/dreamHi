@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { updateProfileFile, aaa } from 'service/testService';
+import { updateProfileFile } from 'service/testService';
 import { Button, Container } from '../../node_modules/@material-ui/core/index';
 
 function APITestPage() {
@@ -21,9 +21,6 @@ function APITestPage() {
     //     await aaa(1, {},
     //         (response) => {});
     // }
-    const click = () => {
-        console.log("ggg");
-    }
   return (
       <>
       <Container align="center" mt={5}>

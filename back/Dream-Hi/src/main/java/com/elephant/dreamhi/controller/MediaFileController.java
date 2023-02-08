@@ -44,7 +44,7 @@ public class MediaFileController {
      * MediaFile 추가 메소드
      */
     @PostMapping("/api/actors/{actorId}/media")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("@checker.isLoginUser(#principalDetails)")
     public ResponseEntity<?> addMediaFile(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable Long actorId,
                                           @RequestBody MediaFileRequestDto mediaFileRequestDto) {
         mediaFileService.addMediaFile(principalDetails.getId(), actorId, mediaFileRequestDto);
