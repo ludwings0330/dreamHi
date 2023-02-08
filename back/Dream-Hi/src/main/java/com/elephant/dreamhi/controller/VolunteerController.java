@@ -34,6 +34,7 @@ public class VolunteerController {
     private final VolunteerService volunteerService;
 
     @PostMapping("/api/announcements/{announcementId}/volunteers")
+    @PreAuthorize("@checker.isLoginUser(#user)")
     public ResponseEntity<Body> apply(@PathVariable Long announcementId,
                                       @RequestBody VolunteerApplyRequestDto requestDto,
                                       @AuthenticationPrincipal PrincipalDetails user) throws NotFoundException, IllegalArgumentException {
@@ -46,7 +47,7 @@ public class VolunteerController {
     }
 
     @PutMapping("/api/announcements/{announcementId}/volunteers/{volunteerId}")
-    @PreAuthorize("@checker.hasAnnouncementAuthority(#user, #announcementId)")
+    @PreAuthorize("@checker.isLoginUser(#user) && @checker.hasAnnouncementAuthority(#user, #announcementId)")
     public ResponseEntity<Body> manageVolunteer(@PathVariable Long announcementId,
                                                 @PathVariable Long volunteerId,
                                                 @RequestBody VolunteerManageRequestDto requestDto,
@@ -61,7 +62,7 @@ public class VolunteerController {
     }
 
     @GetMapping("/api/announcements/{announcementId}/casting/{castingId}/volunteers")
-    @PreAuthorize("@checker.hasAnnouncementAuthority(#user, #announcementId)")
+    @PreAuthorize("@checker.isLoginUser(#user) && @checker.hasAnnouncementAuthority(#user, #announcementId)")
     public ResponseEntity<Body> findVolunteersByCasting(@PathVariable Long announcementId,
                                                         @PathVariable Long castingId,
                                                         @PageableDefault Pageable pageable,
@@ -77,7 +78,7 @@ public class VolunteerController {
     }
 
     @GetMapping("/api/announcements/{announcementId}/volunteers")
-    @PreAuthorize("@checker.hasAnnouncementAuthority(#user, #announcementId)")
+    @PreAuthorize("@checker.isLoginUser(#user) && @checker.hasAnnouncementAuthority(#user, #announcementId)")
     public ResponseEntity<Body> findAllVolunteers(@PathVariable Long announcementId,
                                                   @PageableDefault Pageable pageable,
                                                   @ModelAttribute VolunteerSearchCondition condition,

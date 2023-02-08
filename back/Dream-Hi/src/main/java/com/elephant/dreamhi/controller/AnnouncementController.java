@@ -205,7 +205,7 @@ public class AnnouncementController {
     }
 
     @PutMapping
-    @PreAuthorize("@checker.hasEditorAuthority(#user, #announcementUpdateDto.producerId)")
+    @PreAuthorize("@checker.isLoginUser(#user) && @checker.hasEditorAuthority(#user, #announcementUpdateDto.producerId)")
     public ResponseEntity<Body> updateAnnouncement(
             @RequestBody @Valid AnnouncementUpdateDto announcementUpdateDto,
             @AuthenticationPrincipal PrincipalDetails user
@@ -221,7 +221,7 @@ public class AnnouncementController {
      * @return 공고를 삭제한 후 요청이 수행되었음을 알리는 202 코드를 전달
      */
     @DeleteMapping("/{producerId}/{announcementId}")
-    @PreAuthorize("@checker.hasEditorAuthority(#user, #producerId)")
+    @PreAuthorize("@checker.isLoginUser(#user) && @checker.hasEditorAuthority(#user, #producerId)")
     public ResponseEntity<Body> deleteAnnouncement(
             @PathVariable Long producerId,
             @PathVariable Long announcementId,

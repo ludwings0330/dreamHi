@@ -24,7 +24,7 @@ public class AuthController {
     private final TokenService tokenService;
 
     @PostMapping("/api/logout")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("@checker.isLoginUser(#principalDetails)")
     public ResponseEntity<Body> logout(@AuthenticationPrincipal PrincipalDetails principalDetails) {
         tokenService.deleteToken(principalDetails.getId());
         return Response.accepted();
