@@ -41,4 +41,16 @@ public class AnnouncementSearchCondition {
         return Objects.requireNonNullElse(this.isVolunteer, Boolean.FALSE);
     }
 
+    public boolean validate() {
+        if (this.minHeight != null && this.maxHeight != null) {
+            return this.minHeight <= this.maxHeight;
+        }
+
+        if (this.minAge != null && this.maxAge != null) {
+            return this.minAge <= this.maxAge;
+        }
+
+        return true;
+    }
+
 }

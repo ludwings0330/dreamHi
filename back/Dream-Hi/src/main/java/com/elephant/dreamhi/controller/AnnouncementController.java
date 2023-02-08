@@ -60,6 +60,10 @@ public class AnnouncementController {
             @PageableDefault(size = 4) Pageable pageable,
             @AuthenticationPrincipal PrincipalDetails user
     ) {
+        if (!searchCondition.validate()) {
+            throw new IllegalArgumentException("필터 기준이 올바르지 않습니다.");
+        }
+
         Page<AnnouncementSimpleDto> announcementSimpleDtos = announcementService.findList(searchCondition, pageable, user);
 
         if (announcementSimpleDtos.isEmpty()) {
@@ -95,7 +99,7 @@ public class AnnouncementController {
 
     /**
      * @param pageable 2개의 공고를 조회하는 설정을 기본으로 하는 페이지네이션을 위한 정보
-     * @param user
+     * @param user     현재 로그인 유저 정보
      * @return 지원한 공고 중 가장 최근에 생성된 2개의 공고를 Response의 Body에 담아서 반환한다.
      */
     @GetMapping("/my/volunteer")
