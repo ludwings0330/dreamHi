@@ -9,7 +9,7 @@ import MakerPeopleList from './MakerPeopleList/MakerPeopleList';
 import MakerAnnouncementList from './AnnouncementList/MakerAnnouncementList';
 
 const MakerDetail = () => {
-    const { makerProfileId } = useParams();
+    const { makerProfileId } = useParams()
     console.log(makerProfileId, '잘나옵니까???????????')
     const token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDAzIiwiYXV0aCI6IlJPTEVfVVNFUiIsImVtYWlsIjoiZGRmOTk4QGdtYWlsLmNvbSIsImV4cCI6MTY3ODIzNDgwMX0.B-xblykNgvy8DSacYxAUzQCxEkXxqdEi8yXJaKlm3p8Y96rxR0wkvTaEUU_0e-jLqXSXezDDLi5jSA9Imf_A1g';
 
