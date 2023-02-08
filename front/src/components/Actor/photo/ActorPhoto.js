@@ -7,11 +7,12 @@ import axios from 'axios'
 
 const ActorPhoto = () => {
   const actorPhotos = useRecoilValue(actorPhotoLists);
-  // const setSelected = (idx) => {
-  //   document.querySelector('.actor-photo-main').innerHTML=`<img src=${actorPhotoList[idx].url} alt=${actorPhotoList[idx]}/>`
-  // };
   const actorPhotoList = useRecoilValue(actorPhotoLists)
+  const setSelected = (idx) => {
+    document.querySelector('.actor-photo-main').innerHTML=`<img src=${actorPhotoList[idx].url} alt=${actorPhotoList[idx]}/>`
+  };
 
+  console.log(actorPhotos,'안되는')
   // console.log(actorPhotos[0].url, '안되냐ㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑ')
   // useEffect(() => {
   //   axios.get(`http://i8a702.p.ssafy.io:8085/api/actors/100001/media`)
@@ -32,7 +33,7 @@ const ActorPhoto = () => {
 
         <div className="list-container">
           <div className='actor-photo-main'>
-            {/*<img src={actorPhotoList[0].url} alt={actorPhotoList[0].url}/>*/}
+            <img src={actorPhotoList[0].url} alt={actorPhotoList[0].url}/>
           </div>
           {actorPhotos.length > 0 && actorPhotos.map((actorPhoto, idx) => (
             <div className='photo'
@@ -43,7 +44,7 @@ const ActorPhoto = () => {
                    alt='image'
                    object-fit={"contain"}
                    className="object-center"
-                   // onClick={() => setSelected(idx)}
+                   onClick={() => setSelected(idx)}
               />
             </div>
           ))}
