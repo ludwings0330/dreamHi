@@ -1,13 +1,13 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MainView from '../components/Main/MainView';
-import Layout from '../components/Common/MainLayout/Layout';
+// import APITestPage from './APITestPage';
 
 function MainPage() {
   return (
       <>
 
       <MainView />
-
+      {/*<APITestPage />*/}
       </>
   );
 }

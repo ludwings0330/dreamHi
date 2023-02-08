@@ -1,74 +1,26 @@
-import React, { Component } from 'react';
+import React, {  } from 'react';
 import {
   Route,
   Routes
 } from 'react-router-dom';
 import Login from '../../user/login/Login';
 import OAuth2RedirectHandler from '../../user/oauth2/OAuth2RedirectHandler';
-import LoadingIndicator from '../../components/Common/CommonComponent/LoadingIndicator';
-import { getCurrentUser } from '../../util/APIUtils';
-import { ACCESS_TOKEN } from '../../constants';
 import './LoginPage.css';
 
 
-class LoginPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      authenticated: false,
-      currentUser: null,
-      loading: true
-    }
-
-    this.loadCurrentlyLoggedInUser = this.loadCurrentlyLoggedInUser.bind(this);
-    this.handleLogout = this.handleLogout.bind(this);
-  }
-
-  loadCurrentlyLoggedInUser() {
-    getCurrentUser()
-      .then(response => {
-        this.setState({
-          currentUser: response,
-          authenticated: true,
-          loading: false
-        });
-      }).catch(error => {
-      this.setState({
-        loading: false
-      });
-    });
-  }
-
-  handleLogout() {
-    localStorage.removeItem(ACCESS_TOKEN);
-    this.setState({
-      authenticated: false,
-      currentUser: null
-    });
-  }
-
-  componentDidMount() {
-    this.loadCurrentlyLoggedInUser();
-  }
-
-  render() {
-    if(this.state.loading) {
-      return <LoadingIndicator />
-    }
-
+function LoginPage() {
     return (
       <>
 
         <div className="app-body">
           <Login />
           <Routes>
-            <Route path="/login" element={<Login authenticated={this.state.authenticated} />} />
+            <Route path="/login" element={<Login  />} />
             <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
           </Routes>
         </div>
       </>
     );
-  }
 }
 
 export default LoginPage;
