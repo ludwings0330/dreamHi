@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { useRecoilState } from 'recoil';
 import { announcementCastingState } from '../../recoil/announcement';
 
@@ -8,16 +8,17 @@ function AnnouncementWriteCasting(props) {
 
   // recoil castingstate 에 추가하기 위한 이 컴포넌트 용 state
   const [casting, setCasting] = useState({
-    name: '',
-    description: '',
+    name: null,
+    description: null,
     headcount: null,
     minHeight: null,
     maxHeight: null,
     minAge: null,
     maxAge: null,
-    // gender: "MALE",
-    styles: [1, 3],
+    gender: [],
+    styles: [],
   });
+
 
   // style map 함수 쓰기 위해 따로 빼서 array 로
   const styles = [
@@ -61,14 +62,14 @@ function AnnouncementWriteCasting(props) {
   };
 
   const updateMaxHeight = (value) => {
-    if (value > casting.minHeight) {
       setCasting({
         ...casting,
         maxHeight: value,
       });
-    };
   };
 
+
+  // minAge, maxAge 설정 함수
   const updateMinAge = (value) => {
     setCasting({
       ...casting,
@@ -77,28 +78,26 @@ function AnnouncementWriteCasting(props) {
   };
 
   const updateMaxAge = (value) => {
-    if (value > casting.minAge) {
       setCasting({
         ...casting,
         maxAge: value,
       });
     };
+
+
+
+  //성별 설정 함수
+  const [gender, setGender]= useState("");
+  const handleGenderChange = (event) => {
+    setGender(event.target.value);
+    setCasting({ ...casting, [event.target.name]: event.target.value });
   };
 
 
 
-
-
-
-
-
+  //스타일 설정 함수
   const [selectedStyles, setSelectedStyles] = useState([]);
   const MAX_SELECTED_OPTIONS = 5;
-
-
-
-
-
 
   const handleStyleClick = (e) => {
     const clickedValue = e.target.value;
@@ -119,15 +118,48 @@ function AnnouncementWriteCasting(props) {
     console.log(selectedStyles);
   };
 
-  const addCasting = () => {
+  //배역 추가 함수
+  const addCasting = (e) => {
+
+    // e.preventDefault()
     console.log(242422424);
     console.log(casting);
     console.log(announcementCastingState);
-    if (casting.minHeight > casting.maxHeight){alert('키 범위가 잘못되었습니다.')};
+    console.log(casting.maxHeight)
+    console.log(casting.minHeight)
+    if (parseInt(casting.minHeight) > parseInt(casting.maxHeight)){alert('키 범위가 잘못되었습니다.')}
+    else if (parseInt(casting.minAge) > parseInt(casting.maxAge)){alert('나이 범위가 잘못되었습니다.')}
+    else {setCastingsArray([...castingsArray, casting])}
 
-    setCastingsArray([...castingsArray, casting]);
-    setCasting({});
+    setCasting({
+      name: null,
+      description: null,
+      headcount: null,
+      minHeight: null,
+      maxHeight: null,
+      minAge: null,
+      maxAge: null,
+      gender: [],
+      styles: [],
+    });
+
+    console.log(casting, '😭😭😭😭😭😭')
   };
+
+  //배역 삭제 함수
+  const deleteCasting = (index) => {
+    let newArray = [...castingsArray];
+    newArray.splice(index, 1);
+    setCastingsArray(newArray);
+    console.log(announcementCastingState)
+    console.log(castingsArray)
+  };
+
+  useEffect(() => {
+    console.log('🐳🐳🐳🐳🐳')
+    console.log('🤑🤑🤑',casting)
+
+  }, [castingsArray]);
 
   return (
     <div>
@@ -140,7 +172,7 @@ function AnnouncementWriteCasting(props) {
           <label>배역 이름</label> :{' '}
           <input type="text" name="name" value={casting.name} onChange={handleCastingChange} />
         </p>
-        
+
         {/*// 배역 상세 입력*/}
         <p>
           <label>배역 상세</label> :{' '}
@@ -151,7 +183,7 @@ function AnnouncementWriteCasting(props) {
             onChange={handleCastingChange}
           />
         </p>
-        
+
         {/*// 배역 headcount 입력*/}
         <p>
         <label>배역 인원</label> :{' '}
@@ -163,7 +195,7 @@ function AnnouncementWriteCasting(props) {
         />
         </p>
 
-        
+
         {/*키 입력*/}
 
         <p>
@@ -185,12 +217,42 @@ function AnnouncementWriteCasting(props) {
         />
         </p>
 
-        
-        
-        
-        
-        
-        
+
+
+        {/*나이 입력*/}
+
+        <p>
+          <label>배역 나이</label> :{' '}
+          <input
+              type="number"
+              value={casting.minAge}
+              onChange={(e) => updateMinAge(e.target.value)}
+              min='0'
+              max='100'
+          />
+          ~
+          <input
+              type="number"
+              value={casting.maxAge}
+              onChange={(e) => updateMaxAge(e.target.value)}
+              min='0'
+              max='100'
+          />
+        </p>
+
+
+        {/*성별 입력*/}
+        <p>
+          <label>배역 성별</label>
+          <select name="gender" value={gender} onChange={handleGenderChange}>
+            <option value=""></option>
+            <option value="MALE">남성</option>
+            <option value="FEMALE">여성</option>
+          </select>
+        </p>
+
+
+
         {/*// 스타일 입력*/}
 
         <select multiple size={5}>
@@ -212,13 +274,21 @@ function AnnouncementWriteCasting(props) {
             </button>
           </div>
         ))}
-        
-        
+
+
         {/*전역에서 들고 다닐 casting array 업데이트*/}
 
         <button type="button" onClick={addCasting}>
           Add Casting
         </button>
+        <ul>
+          {castingsArray.map((casting, index) => (
+              <li key={index}>
+                {casting.name}
+                <button onClick={() => deleteCasting(index)}>Delete</button>
+              </li>
+          ))}
+        </ul>
       </form>
     </div>
   );
