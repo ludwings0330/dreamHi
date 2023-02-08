@@ -62,7 +62,7 @@ public class ProducerController {
     }
 
     @PutMapping("/api/producers/{producerId}")
-    @PreAuthorize("@checker.hasEditorAuthority(#user, #producerId)")
+    @PreAuthorize("@checker.isLoginUser(#user) && @checker.hasEditorAuthority(#user, #producerId)")
     public ResponseEntity<Body> updateProducerInfo(@PathVariable Long producerId,
                                                    @RequestBody ProducerUpdateRequestDto producerDto,
                                                    @AuthenticationPrincipal PrincipalDetails user) throws NotFoundException {
@@ -72,7 +72,7 @@ public class ProducerController {
     }
 
     @PostMapping("/api/producers")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("@checker.isLoginUser(#user) && @checker.isLoginUser(#user)")
     public ResponseEntity<Body> createProducer(@RequestParam String name,
                                                @AuthenticationPrincipal PrincipalDetails user) {
         Long id = producerService.createProducer(name, user.getId());
@@ -80,7 +80,7 @@ public class ProducerController {
     }
 
     @DeleteMapping("/api/producers/{producerId}")
-    @PreAuthorize("@checker.hasEditorAuthority(#user, #producerId)")
+    @PreAuthorize("@checker.isLoginUser(#user) && @checker.hasEditorAuthority(#user, #producerId)")
     public ResponseEntity<Body> deleteProducer(@PathVariable Long producerId,
                                                @AuthenticationPrincipal PrincipalDetails user) throws NotFoundException {
         producerService.deleteProducer(producerId);
@@ -96,7 +96,7 @@ public class ProducerController {
     }
 
     @PostMapping("/api/producers/{producerId}/users/{userId}")
-    @PreAuthorize("@checker.hasEditorAuthority(#user, #producerId)")
+    @PreAuthorize("@checker.isLoginUser(#user) && @checker.hasEditorAuthority(#user, #producerId)")
     public ResponseEntity<Body> addProducerMember(@PathVariable Long producerId,
                                                   @PathVariable Long userId,
                                                   @RequestBody ProducerMemberDto requestDto,
@@ -107,7 +107,7 @@ public class ProducerController {
     }
 
     @DeleteMapping("/api/producers/{producerId}/users/{userId}")
-    @PreAuthorize("@checker.hasEditorAuthority(#user, #producerId)")
+    @PreAuthorize("@checker.isLoginUser(#user) && @checker.hasEditorAuthority(#user, #producerId)")
     public ResponseEntity<Body> deleteProducerMember(@PathVariable Long producerId,
                                                      @PathVariable Long userId,
                                                      @AuthenticationPrincipal PrincipalDetails user) throws NotFoundException {
@@ -117,7 +117,7 @@ public class ProducerController {
     }
 
     @PutMapping("/api/producers/{producerId}/users/{userId}")
-    @PreAuthorize("@checker.hasEditorAuthority(#user, #producerId)")
+    @PreAuthorize("@checker.isLoginUser(#user) && @checker.hasEditorAuthority(#user, #producerId)")
     public ResponseEntity<Body> modifyProducerMemberInfo(@PathVariable Long producerId,
                                                          @PathVariable Long userId,
                                                          @RequestBody ProducerMemberDto requestDto,

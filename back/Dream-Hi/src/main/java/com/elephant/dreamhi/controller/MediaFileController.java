@@ -57,12 +57,12 @@ public class MediaFileController {
      * @param principalDetails        : 접근 중 주체
      * @param actorProfileId          : 배우 프로필 id
      * @param actorProfileMediaFileId : 미디어 파일 id
-     * @return 200
+     * @return 202
      * @throws AccessDeniedException          : 사용자가 잘못된 배우 프로필 수정을 요청 시 권한 없음 발생
      * @throws EmptyResultDataAccessException : 삭제할 데이터가 없는 경우 발생
      */
     @DeleteMapping("/api/actors/{actorProfileId}/media/{actorProfileMediaFileId}")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("@checker.isLoginUser(#principalDetails)")
     public ResponseEntity<Body> deleteMediaFile(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable Long actorProfileId,
                                                 @PathVariable Long actorProfileMediaFileId)
             throws AccessDeniedException, EmptyResultDataAccessException {

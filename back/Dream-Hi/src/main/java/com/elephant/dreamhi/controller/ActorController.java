@@ -67,10 +67,10 @@ public class ActorController {
      * 배우 프로필 공개/비공개 전환 메소드
      *
      * @param principalDetails : 현재 접근중인 주체
-     * @return 200
+     * @return 202
      */
     @PutMapping("/api/my/actor-profile/disclosure")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("@checker.isLoginUser(#principalDetails)")
     public ResponseEntity<Body> changeVisibleProfile(@AuthenticationPrincipal PrincipalDetails principalDetails) {
         actorService.changeVisibleProfile(principalDetails.getId());
         return Response.accepted();
@@ -81,12 +81,12 @@ public class ActorController {
      *
      * @param principalDetails       : 현재 접근중인 주체
      * @param actorProfileRequestDto
-     * @return 200
+     * @return 202
      * @throws FullResourceException           : 태그 저장 개수 초과 시 발생
      * @throws DataIntegrityViolationException : Unique 제약 조건 위반 시 발생
      */
     @PutMapping("/api/my/actor-profile")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("@checker.isLoginUser(#principalDetails)")
     public ResponseEntity<Body> updateActorProfile(@AuthenticationPrincipal PrincipalDetails principalDetails,
                                                    @RequestBody ActorProfileRequestDto actorProfileRequestDto)
             throws FullResourceException, DataIntegrityViolationException {

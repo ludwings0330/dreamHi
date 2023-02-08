@@ -36,7 +36,7 @@ public class ProcessController {
      * @return 공고의 절차를 바꾸는 것에 성공하면 201 코드로 응답을 반환
      */
     @PostMapping("/begin")
-    @PreAuthorize("@checker.hasEditorAuthority(#user, #producerId)")
+    @PreAuthorize("@checker.isLoginUser(#user) && @checker.hasEditorAuthority(#user, #producerId)")
     public ResponseEntity<Body> saveProcessWithRecruiting(
             @RequestParam Long announcementId,
             @RequestParam Long producerId,
@@ -55,7 +55,7 @@ public class ProcessController {
      * @throws IllegalArgumentException 공고의 현재 절차가 모집 중인 경우 발생하는 예외
      */
     @PostMapping("/next")
-    @PreAuthorize("@checker.hasEditorAuthority(#user, #processSaveDto.producerId)")
+    @PreAuthorize("@checker.isLoginUser(#user) && @checker.hasEditorAuthority(#user, #processSaveDto.producerId)")
     public ResponseEntity<Body> saveProcessWithoutRecruiting(
             @RequestBody @Valid ProcessSaveDto processSaveDto,
             @AuthenticationPrincipal PrincipalDetails user

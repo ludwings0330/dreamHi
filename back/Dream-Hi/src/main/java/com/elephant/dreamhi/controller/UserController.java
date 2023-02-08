@@ -33,7 +33,7 @@ public class UserController {
      * @throws org.springframework.security.core.userdetails.UsernameNotFoundException : id 조회 결과 없을 시 발생
      */
     @GetMapping("/api/my")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("@checker.isLoginUser(#principalDetails)")
     public ResponseEntity<Body> findUserDetail(@AuthenticationPrincipal PrincipalDetails principalDetails) {
         UserSimpleDto userSimpleDto = userService.findUserSimple(principalDetails.getId());
         return Response.create(HttpStatus.OK, "헤더를 위한 기본 정보 조회 성공", userSimpleDto);
@@ -44,11 +44,11 @@ public class UserController {
      *
      * @param principalDetails : 현재 접근중인 주체
      * @param pictureDto       : PictureDTO
-     * @return 200
+     * @return 202
      * @throws UsernameNotFoundException : userId에 해당하는 유저가 존재하지않은 경우 발생합니다.
      */
     @PutMapping("/api/my/main-profile")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("@checker.isLoginUser(#principalDetails)")
     public ResponseEntity<Body> changeMainProfile(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody PictureDto pictureDto)
             throws UsernameNotFoundException {
         userService.updateMainProfile(principalDetails.getId(), pictureDto);
