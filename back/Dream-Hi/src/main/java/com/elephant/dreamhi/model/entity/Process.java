@@ -14,7 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -36,7 +35,7 @@ public class Process {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "announcement_id", nullable = false)
+    @JoinColumn(name = "announcement_id", nullable = false, updatable = false)
     private Announcement announcement;
 
     @Enumerated(EnumType.STRING)
@@ -50,6 +49,15 @@ public class Process {
     public static Process getInstanceForRecruiting(Announcement announcement) {
         return Process.builder()
                       .announcement(announcement)
+                      .state(ProcessState.RECRUITING)
+                      .build();
+    }
+
+    public static Process getInstanceForInProgress(Announcement announcement) {
+        return Process.builder()
+                      .announcement(announcement)
+                      .state(ProcessState.IN_PROGRESS)
+                      .stage(StageName.DOC)
                       .build();
     }
 

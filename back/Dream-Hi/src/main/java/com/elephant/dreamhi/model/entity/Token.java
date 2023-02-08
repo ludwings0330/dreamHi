@@ -53,11 +53,9 @@ public class Token {
      * 로그인 시 이미 토큰 정보가 존재 시 새로운 토큰으로 교체하기 위한 메소드
      *
      * @param accessToken  : Access Token
-     * @param refreshToken : Refresh Token
      */
-    public void regenerateToken(String accessToken, String refreshToken) {
+    public void updateAccessToken(String accessToken) {
         this.accessToken = accessToken;
-        this.refreshToken = refreshToken;
     }
 
 }

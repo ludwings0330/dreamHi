@@ -45,6 +45,8 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-oauth2-client', version: '2.5.4'
     // h2 database for test
     testImplementation 'com.h2database:h2:2.1.214'
+    // aop dependency
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
 }
 
 tasks.named('test') {

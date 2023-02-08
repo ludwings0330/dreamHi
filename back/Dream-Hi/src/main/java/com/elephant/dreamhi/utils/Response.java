@@ -1,6 +1,7 @@
 package com.elephant.dreamhi.utils;
 
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +30,7 @@ public class Response {
     }
 
     public static ResponseEntity<Body> noContent() {
-        return create(HttpStatus.NO_CONTENT, "no content");
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     public static ResponseEntity<Body> created() {
@@ -42,6 +43,7 @@ public class Response {
 
     @Builder
     @Getter
+    @Data
     public static class Body {
 
         private String message;

@@ -18,7 +18,7 @@ public class UserSimpleDto {
 
     private String pictureUrl;
 
-    public void setUserSimpleDto(User user) {
+    public UserSimpleDto(User user) {
         this.id = user.getId();
         this.name = user.getName();
         this.pictureUrl = user.getPicture() == null ? null : user.getPicture().getUrl();

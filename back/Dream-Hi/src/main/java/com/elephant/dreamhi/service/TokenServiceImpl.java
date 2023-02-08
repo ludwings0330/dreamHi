@@ -21,9 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class TokenServiceImpl implements TokenService {
 
     private final TokenProvider tokenProvider;
-
     private final TokenRepository tokenRepository;
-
     private final UserRepository userRepository;
 
     /**
@@ -35,14 +33,16 @@ public class TokenServiceImpl implements TokenService {
     @Override
     @Transactional
     public TokenDto generateToken(Authentication authentication) {
-        TokenDto tokenDto = tokenProvider.createNewToken(authentication);
         Long userId = ((PrincipalDetails) authentication.getPrincipal()).getId();
+        String accessToken = tokenProvider.createAccessToken(authentication);
 
         Optional<Token> oldToken = tokenRepository.findByUserId(userId);
+        TokenDto tokenDto = TokenDto.builder().id(userId).accessToken(accessToken).build();
         if (oldToken.isEmpty()) {
-            createToken(tokenDto);
+            String refreshToken = tokenProvider.createRefreshToken(authentication);
+            createToken(tokenDto, refreshToken);
         } else {
-            updateToken(tokenDto, oldToken);
+            updateToken(tokenDto, oldToken.get());
         }
 
         return tokenDto;
@@ -51,25 +51,27 @@ public class TokenServiceImpl implements TokenService {
     /**
      * authentication을 이용해 새로운 토큰 발급, 토큰 저장
      *
-     * @param authentication
+     * @param authorization : Header에 담긴 Token 정보
      * @return JwtResponse 에 Access Token만 담아서 반환한다.
      * @throws IllegalArgumentException 현재 유저의 토큰 정보가 존재하지 않다면 발생
      */
     @Override
     @Transactional
-    public JwtResponse reissueAccessToken(Authentication authentication) throws IllegalArgumentException {
-        String accessToken = tokenProvider.createAccessToken(authentication);
-        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-        log.info(authentication.getName());
-        log.info(principalDetails.getName(), principalDetails.getId());
-        Token oldToken = tokenRepository.findByUserId(principalDetails.getId()).orElseThrow(() -> {
-            throw new IllegalArgumentException(principalDetails.getId() + " 유저의 토큰 정보가 존재하지 않습니다.");
-        });
+    public JwtResponse reissueAccessToken(String authorization) throws IllegalArgumentException {
+        String accessToken = authorization.substring(7);
+        Token token = tokenRepository.findByUserIdAndAcessToken(accessToken)
+                                     .orElseThrow(() -> new IllegalArgumentException("잘못된 접근입니다. 보안 문제가 발생했습니다. 문의바랍니다."));
+
+        String originRefreshToken = token.getRefreshToken();
+        log.info("{}", originRefreshToken);
+        tokenProvider.validateToken(originRefreshToken);
+        Authentication authentication = tokenProvider.getAuthentication(originRefreshToken);
+        String newAccessToken = tokenProvider.createAccessToken(authentication);
+
         // update access token
-        oldToken.changeAccessToken(accessToken);
-        return JwtResponse.builder()
-                          .accessToken(accessToken)
-                          .build();
+        token.changeAccessToken(newAccessToken);
+
+        return JwtResponse.builder().id(((PrincipalDetails) authentication.getPrincipal()).getId()).accessToken(newAccessToken).build();
     }
 
     /**
@@ -78,9 +80,23 @@ public class TokenServiceImpl implements TokenService {
      * @param tokenDto : 새로 만든 토큰 DTO
      * @param oldToken : 기존에 저장된 토큰
      */
-    private static void updateToken(TokenDto tokenDto, Optional<Token> oldToken) {
-        Token newToken = oldToken.get();
-        newToken.regenerateToken(tokenDto.getAccessToken(), tokenDto.getRefreshToken());
+    private static void updateToken(TokenDto tokenDto, Token oldToken) {
+        Token newToken = oldToken;
+        newToken.updateAccessToken(tokenDto.getAccessToken());
+    }
+
+    /**
+     * 로그아웃 시 DB에 Token data 삭제 메소드
+     *
+     * @param userId : 현재 접근중인 주체 userId
+     * @throws IllegalArgumentException : 올바르지 않은 경우 발생합니다.
+     */
+    @Override
+    @Transactional
+    public void deleteToken(Long userId) throws IllegalArgumentException {
+        if (tokenRepository.deleteByUserId(userId) != 1) {
+            throw new IllegalArgumentException("잘못된 접근입니다.");
+        }
     }
 
     /**
@@ -88,12 +104,8 @@ public class TokenServiceImpl implements TokenService {
      *
      * @param tokenDto : 새로 만든 토큰 DTO
      */
-    private void createToken(TokenDto tokenDto) {
-        Token newToken = Token.builder()
-                              .userId(tokenDto.getId())
-                              .accessToken(tokenDto.getAccessToken())
-                              .refreshToken(tokenDto.getRefreshToken())
-                              .build();
+    private void createToken(TokenDto tokenDto, String refreshToken) {
+        Token newToken = Token.builder().userId(tokenDto.getId()).accessToken(tokenDto.getAccessToken()).refreshToken(refreshToken).build();
         tokenRepository.save(newToken);
     }
 

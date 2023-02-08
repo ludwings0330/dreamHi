@@ -6,13 +6,15 @@ import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @SuperBuilder
-public class AnnouncementUpdateDto extends AnnouncementDto {
+@ToString(callSuper = true)
+public class AnnouncementUpdateDto extends AnnouncementRequestDto {
 
     @NotNull
     private Long id;

@@ -2,18 +2,20 @@ package com.elephant.dreamhi.model.dto;
 
 import com.elephant.dreamhi.model.entity.Announcement;
 import com.elephant.dreamhi.model.entity.Follow;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Objects;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Builder
+@ToString
 public class AnnouncementDetailDto {
 
     @NotNull
@@ -31,7 +33,7 @@ public class AnnouncementDetailDto {
     private String crankPeriod;
 
     @NotNull
-    private LocalDateTime endDate;
+    private LocalDate endDate;
 
     private String description;
 
@@ -44,7 +46,7 @@ public class AnnouncementDetailDto {
     private Boolean isFollow;
 
     public AnnouncementDetailDto(Long id, String title, Long producerId, String producerName, String payment, String crankPeriod,
-                                 LocalDateTime endDate, String description, Integer hit, String pictureUrl, Boolean isFollow) {
+                                 LocalDate endDate, String description, Integer hit, String pictureUrl, Boolean isFollow) {
         this.id = id;
         this.title = title;
         this.producer = new ProducerAnnouncementDto(producerId, producerName);

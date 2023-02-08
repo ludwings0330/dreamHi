@@ -10,7 +10,7 @@ import com.elephant.dreamhi.model.entity.Follow;
 import com.elephant.dreamhi.model.entity.Producer;
 import com.elephant.dreamhi.model.entity.User;
 import com.elephant.dreamhi.model.statics.FollowType;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,7 +114,7 @@ class AnnouncementRepositoryCustomImplTest {
 
     private Announcement createTestAnnouncement(Producer producer) {
         return Announcement.builder()
-                           .endDate(LocalDateTime.of(2023, 2, 10, 14, 34, 23))
+                           .endDate(LocalDate.of(2023, 2, 10))
                            .title("더미 공고1")
                            .producer(producer)
                            .build();

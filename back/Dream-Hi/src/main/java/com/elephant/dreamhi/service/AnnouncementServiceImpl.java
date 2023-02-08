@@ -6,6 +6,7 @@ import com.elephant.dreamhi.model.dto.AnnouncementSaveDto;
 import com.elephant.dreamhi.model.dto.AnnouncementSearchCondition;
 import com.elephant.dreamhi.model.dto.AnnouncementSimpleDto;
 import com.elephant.dreamhi.model.dto.AnnouncementUpdateDto;
+import com.elephant.dreamhi.model.dto.AnnouncementNameDto;
 import com.elephant.dreamhi.model.dto.ProcessStageDto;
 import com.elephant.dreamhi.model.entity.Announcement;
 import com.elephant.dreamhi.model.entity.Process;
@@ -15,6 +16,11 @@ import com.elephant.dreamhi.repository.FollowRepository;
 import com.elephant.dreamhi.repository.ProcessRepository;
 import com.elephant.dreamhi.repository.ProducerRepository;
 import com.elephant.dreamhi.security.PrincipalDetails;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -62,6 +68,31 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         }
 
         return announcementSimpleDtos;
+    }
+
+    /**
+     * @return 요일 별로 2개의 공고를 조회수 순으로 선택하여 Map에 저장하여 반환한다.
+     */
+    @Override
+    public Map<DayOfWeek, List<AnnouncementNameDto>> findWeeklyAnnouncements() {
+        Map<DayOfWeek, List<AnnouncementNameDto>> weeklyDtos = new EnumMap<>(DayOfWeek.class);
+
+        for (int i = 1; i <= 7; i++) {
+            LocalDate endDate = LocalDate.now().with(DayOfWeek.of(i));
+            List<AnnouncementNameDto> dtos = announcementRepository.findWeeklyAnnouncements(endDate);
+            weeklyDtos.put(DayOfWeek.of(i), dtos);
+        }
+
+        return weeklyDtos;
+    }
+
+    /**
+     * @param N 조회수 순으로 상위 몇 개의 공고를 조회할지 결정한다.
+     * @return 모집 중인 상태의 공고 중에서 조회수 순으로 상위 N개의 공고를 조회하여 반환한다.
+     */
+    @Override
+    public List<AnnouncementNameDto> findTopAnnouncementsWithRecruiting(final int N) {
+        return announcementRepository.findTopAnnouncementsWithRecruiting(N);
     }
 
     /**

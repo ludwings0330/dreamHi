@@ -89,21 +89,6 @@ public class TokenProvider implements InitializingBean {
     }
 
     /**
-     * TokenDto 생성 메소드
-     *
-     * @param authentication : SecurityContext에 담긴 Authentication 객체 정보
-     * @return TokenDto : userId, accessToken, refreshToken
-     */
-    public TokenDto createNewToken(Authentication authentication) {
-        PrincipalDetails user = (PrincipalDetails) authentication.getPrincipal();
-        return new TokenDto(
-                user.getId(),
-                createAccessToken(authentication),
-                createRefreshToken(authentication)
-        );
-    }
-
-    /**
      * 토큰 유효성 검사 메소드
      *
      * @param token : Token 문자열
@@ -111,7 +96,6 @@ public class TokenProvider implements InitializingBean {
      */
     public boolean validateToken(String token) {
         try {
-            log.info("Validation Check Token : {}", token);
             getClaims(token);
             return true;
         } catch (SecurityException | MalformedJwtException e) {
@@ -125,23 +109,6 @@ public class TokenProvider implements InitializingBean {
         }
 
         return false;
-    }
-
-    /**
-     * JwtResponse 반환 - createNewToken과의 차이점은 JwtResponse는 추후 추가 정보가 퓔요할 경우 사용하기 위한 메소드이다.
-     *
-     * @param authentication : SecurityContext에 담긴 Authentication 객체 정보
-     * @param token          : Token 문자열
-     * @return 클라이언트에게 전달할 내용과 Token을 함께 전달하기 위한 JwtResponse 객체
-     */
-    public JwtResponse createJwtResponse(Authentication authentication, TokenDto token) {
-        PrincipalDetails user = (PrincipalDetails) authentication.getPrincipal();
-
-        return JwtResponse.builder()
-                          .accessToken(token.getAccessToken())
-                          .refreshToken(token.getRefreshToken())
-                          .id(user.getId())
-                          .build();
     }
 
     /**
@@ -190,10 +157,7 @@ public class TokenProvider implements InitializingBean {
     private String createToken(Authentication authentication, long validityTime) {
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         String authorities = getAuthorities(principalDetails);
-        log.info("authorities of token: {}", authorities);
-
         Date expirationTime = new Date(System.currentTimeMillis() + validityTime);
-        log.info("expiration time of token: {}", expirationTime);
 
         return Jwts.builder()
                    .setSubject(String.valueOf(principalDetails.getId()))

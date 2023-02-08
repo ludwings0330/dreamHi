@@ -39,7 +39,7 @@ public class VolunteerController {
                                       @AuthenticationPrincipal PrincipalDetails user) throws NotFoundException, IllegalArgumentException {
         requestDto.setUserId(user.getId());
         requestDto.setAnnouncementId(announcementId);
-        log.info("지원 요청 : {}", requestDto);
+
         volunteerService.userApplyOnAnnouncement(requestDto);
 
         return Response.create(HttpStatus.CREATED, "지원이 완료되었습니다");
@@ -54,8 +54,6 @@ public class VolunteerController {
         requestDto.setVolunteerId(volunteerId);
         requestDto.setAnnouncementId(announcementId);
         requestDto.setUserId(user.getId());
-
-        log.info("지원자 상태 업데이트 요청 : {}", requestDto);
 
         volunteerService.manageVolunteer(requestDto);
 
@@ -73,7 +71,6 @@ public class VolunteerController {
         condition.setCastingId(castingId);
         condition.setPageable(pageable);
         condition.setUserId(user.getId());
-        log.info("배역으로 지원자 목록 조회, {}", condition);
 
         final VolunteerSearchResponseDto responseDto = volunteerService.findVolunteersByCastingIdAndCondition(condition);
         return Response.create(HttpStatus.OK, "조회 성공", responseDto);

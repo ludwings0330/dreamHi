@@ -36,7 +36,7 @@ public class UserController {
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<Body> findUserDetail(@AuthenticationPrincipal PrincipalDetails principalDetails) {
         UserSimpleDto userSimpleDto = userService.findUserSimple(principalDetails.getId());
-        return Response.create(HttpStatus.OK, HttpStatus.OK.name(), userSimpleDto);
+        return Response.create(HttpStatus.OK, "헤더를 위한 기본 정보 조회 성공", userSimpleDto);
     }
 
     /**
@@ -52,7 +52,7 @@ public class UserController {
     public ResponseEntity<Body> changeMainProfile(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody PictureDto pictureDto)
             throws UsernameNotFoundException {
         userService.updateMainProfile(principalDetails.getId(), pictureDto);
-        return Response.ok();
+        return Response.accepted();
     }
 
 }

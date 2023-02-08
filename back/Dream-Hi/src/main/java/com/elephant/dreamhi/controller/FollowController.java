@@ -38,7 +38,7 @@ public class FollowController {
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<Body> getFollowerCount(@AuthenticationPrincipal PrincipalDetails principalDetails) {
         Long response = followService.getFollowerCount(principalDetails.getId());
-        return Response.create(HttpStatus.OK, HttpStatus.OK.name(), response);
+        return Response.create(HttpStatus.OK, "나를 팔로우 하는 사람 수 조회 성공", response);
     }
 
     /**
@@ -54,7 +54,7 @@ public class FollowController {
     public ResponseEntity<Body> checkFollow(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestParam FollowType type,
                                             @RequestParam Long id) {
         Boolean response = followService.checkFollow(type, id, principalDetails.getId());
-        return Response.create(HttpStatus.OK, HttpStatus.OK.name(), response);
+        return Response.create(HttpStatus.OK, "팔로우 여부 조회 성공", response);
     }
 
     /**
@@ -69,8 +69,8 @@ public class FollowController {
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<Body> addFollow(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody FollowRequestDto followRequestDto)
             throws DuplicateKeyException {
-        Boolean response = followService.addFollow(followRequestDto.getType(), followRequestDto.getId(), principalDetails.getId());
-        return Response.create(HttpStatus.OK, HttpStatus.OK.name(), response);
+        followService.addFollow(followRequestDto.getType(), followRequestDto.getId(), principalDetails.getId());
+        return Response.accepted();
     }
 
     /**
@@ -85,8 +85,8 @@ public class FollowController {
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<Body> removeFollow(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestParam FollowType type,
                                              @RequestParam Long id) throws IllegalArgumentException {
-        Boolean response = followService.removeFollow(type, id, principalDetails.getId());
-        return Response.create(HttpStatus.OK, HttpStatus.OK.name(), response);
+        followService.removeFollow(type, id, principalDetails.getId());
+        return Response.accepted();
     }
 
 }

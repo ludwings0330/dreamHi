@@ -92,13 +92,21 @@ public class VolunteerRepositoryCustomImpl implements VolunteerRepositoryCustom 
                     .execute();
     }
 
+//    @Override
+//    public Long countPassVolunteersByCastingId(Long castingId) {
+//        return queryFactory.select(volunteer.count())
+//                           .from(volunteer)
+//                           .where(volunteer.casting.id.eq(castingId),
+//                                  volunteer.state.eq(VolunteerState.PASS))
+//                           .fetchOne();
+//    }
+
     @Override
-    public Long countPassVolunteersByCastingId(Long castingId) {
-        return queryFactory.select(volunteer.count())
-                           .from(volunteer)
-                           .where(volunteer.casting.id.eq(castingId),
-                                  volunteer.state.eq(VolunteerState.PASS))
-                           .fetchOne();
+    public void updateAll(Long announcementId, Process process) {
+        queryFactory.update(volunteer)
+                    .set(volunteer.process, process)
+                    .where(volunteer.announcement.id.eq(announcementId))
+                    .execute();
     }
 
     private BooleanExpression stateEq(VolunteerState state) {

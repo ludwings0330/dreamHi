@@ -4,6 +4,7 @@ import static com.elephant.dreamhi.model.entity.QAnnouncement.announcement;
 import static com.elephant.dreamhi.model.entity.QCasting.casting;
 import static com.elephant.dreamhi.model.entity.QCastingStyleRelation.castingStyleRelation;
 import static com.elephant.dreamhi.model.entity.QFollow.follow;
+import static com.elephant.dreamhi.model.entity.QProcess.process;
 import static com.elephant.dreamhi.model.entity.QProducer.producer;
 import static com.elephant.dreamhi.model.entity.QStyle.style;
 import static com.elephant.dreamhi.model.entity.QUser.user;
@@ -12,11 +13,13 @@ import static com.querydsl.core.group.GroupBy.groupBy;
 import static com.querydsl.core.group.GroupBy.list;
 
 import com.elephant.dreamhi.model.dto.AnnouncementDetailDto;
+import com.elephant.dreamhi.model.dto.AnnouncementNameDto;
 import com.elephant.dreamhi.model.dto.AnnouncementSearchCondition;
 import com.elephant.dreamhi.model.dto.AnnouncementSimpleDto;
 import com.elephant.dreamhi.model.dto.CastingSimpleDto;
 import com.elephant.dreamhi.model.entity.Announcement;
 import com.elephant.dreamhi.model.statics.Gender;
+import com.elephant.dreamhi.model.statics.ProcessState;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -25,6 +28,7 @@ import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -61,18 +65,19 @@ public class AnnouncementRepositoryCustomImpl implements AnnouncementRepositoryC
                                           .offset(pageable.getOffset())
                                           .limit(pageable.getPageSize())
                                           .fetch();
+        log.info("조회할 공고 ID: {}", announcementIds);
 
         if (announcementIds.isEmpty()) {
             return PageableExecutionUtils.getPage(Collections.emptyList(), pageable, () -> totalCount);
         }
 
         List<AnnouncementSimpleDto> contents = queryFactory.selectFrom(announcement)
-                                                           .join(announcement.producer, producer).fetchJoin()
-                                                           .join(announcement.castings, casting).fetchJoin()
+                                                           .join(announcement.producer, producer)
+                                                           .join(announcement.castings, casting)
                                                            .where(announcement.id.in(announcementIds))
                                                            .distinct()
                                                            .transform(
-                                                                   groupBy().list(Projections.constructor(
+                                                                   groupBy(announcement.id).list(Projections.constructor(
                                                                            AnnouncementSimpleDto.class,
                                                                            announcement.id,
                                                                            announcement.title,
@@ -87,8 +92,25 @@ public class AnnouncementRepositoryCustomImpl implements AnnouncementRepositoryC
                                                                            ))
                                                                    ))
                                                            );
+        log.info("조회된 공고 목록 : {}", contents);
 
         return PageableExecutionUtils.getPage(contents, pageable, () -> totalCount);
+    }
+
+    @Override
+    public List<AnnouncementNameDto> findWeeklyAnnouncements(LocalDate endDate) {
+        return queryFactory.select(Projections.constructor(
+                                   AnnouncementNameDto.class,
+                                   announcement.id,
+                                   announcement.title,
+                                   producer.name
+                           ))
+                           .from(announcement)
+                           .join(announcement.producer, producer)
+                           .where(announcement.endDate.eq(endDate))
+                           .orderBy(announcement.hit.desc())
+                           .limit(2)
+                           .fetch();
     }
 
     @Override
@@ -128,8 +150,25 @@ public class AnnouncementRepositoryCustomImpl implements AnnouncementRepositoryC
         return Optional.ofNullable(findedAnnouncementDetailDto);
     }
 
+    @Override
+    public List<AnnouncementNameDto> findTopAnnouncementsWithRecruiting(final int N) {
+        return queryFactory.select(Projections.constructor(
+                                   AnnouncementNameDto.class,
+                                   announcement.id,
+                                   announcement.title,
+                                   producer.name
+                           ))
+                           .from(announcement)
+                           .join(announcement.producer, producer)
+                           .join(process.announcement, announcement)
+                           .where(process.state.eq(ProcessState.RECRUITING))
+                           .orderBy(announcement.hit.desc())
+                           .limit(N)
+                           .fetch();
+    }
+
     private JPAQuery<Long> getQueryToFindAnnouncementIdsByCondition(AnnouncementSearchCondition condition, Long userId) {
-        return queryFactory.select(announcement.id)
+        return queryFactory.selectDistinct(announcement.id)
                            .from(announcement)
                            .join(announcement.producer, producer)
                            .join(announcement.castings, casting)
@@ -229,11 +268,10 @@ public class AnnouncementRepositoryCustomImpl implements AnnouncementRepositoryC
 
         return casting.id.in(
                 JPAExpressions.select(casting.id)
-                              .from(casting)
-                              .join(volunteer.casting, casting).fetchJoin()
-                              .join(volunteer.user, user).fetchJoin()
+                              .from(volunteer)
+                              .join(volunteer.casting, casting)
+                              .join(volunteer.user, user)
                               .where(user.id.eq(userId))
-                              .distinct()
         );
     }
 

@@ -37,7 +37,7 @@ public class MediaFileController {
     @GetMapping("/api/actors/{id}/media")
     public ResponseEntity<Body> getMediaFiles(@PathVariable Long id) {
         MediaFileResponseDto responseDto = mediaFileService.findMediaFilesByActorProfileId(id);
-        return Response.create(HttpStatus.OK, HttpStatus.OK.name(), responseDto);
+        return Response.create(HttpStatus.OK, "미디어 파일 정보 조회 성공", responseDto);
     }
 
     /**
@@ -66,9 +66,8 @@ public class MediaFileController {
     public ResponseEntity<Body> deleteMediaFile(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable Long actorProfileId,
                                                 @PathVariable Long actorProfileMediaFileId)
             throws AccessDeniedException, EmptyResultDataAccessException {
-        log.info("id : {} {} {}", principalDetails.getId(), actorProfileId, actorProfileMediaFileId);
         mediaFileService.deleteMediaFile(principalDetails.getId(), actorProfileId, actorProfileMediaFileId);
-        return Response.ok();
+        return Response.accepted();
     }
 
 }

@@ -1,8 +1,8 @@
 package com.elephant.dreamhi.model.entity;
 
-import com.elephant.dreamhi.model.dto.AnnouncementDto;
+import com.elephant.dreamhi.model.dto.AnnouncementRequestDto;
 import com.elephant.dreamhi.model.dto.AnnouncementSaveDto;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -52,8 +52,8 @@ public class Announcement extends BaseTimeEntity {
     @Column(length = 30)
     private String crankPeriod;
 
-    @Column(columnDefinition = "TIMESTAMP", nullable = false)
-    private LocalDateTime endDate;
+    @Column(columnDefinition = "DATE", nullable = false)
+    private LocalDate endDate;
 
     @Lob
     private String description;
@@ -80,13 +80,13 @@ public class Announcement extends BaseTimeEntity {
                            .build();
     }
 
-    public void changeAnnouncement(AnnouncementDto announcementDto) {
-        this.title = announcementDto.getTitle();
-        this.payment = announcementDto.getPayment();
-        this.crankPeriod = announcementDto.getCrankPeriod();
-        this.endDate = announcementDto.getEndDate();
-        this.description = announcementDto.getDescription();
-        this.picture = announcementDto.getPictureUrl();
+    public void changeAnnouncement(AnnouncementRequestDto announcementRequestDto) {
+        this.title = announcementRequestDto.getTitle();
+        this.payment = announcementRequestDto.getPayment();
+        this.crankPeriod = announcementRequestDto.getCrankPeriod();
+        this.endDate = announcementRequestDto.getEndDate();
+        this.description = announcementRequestDto.getDescription();
+        this.picture = announcementRequestDto.getPictureUrl();
     }
 
 }
