@@ -20,7 +20,6 @@ const ActorDetail = () => {
 
   // api 요청 보내서 배우 목록 확보
   useEffect(() => {
-    console.log('여기는 작동하냐고')
     axios.get('http://i8a702.p.ssafy.io:8085/api/actors',
       {
         headers: {
@@ -35,10 +34,8 @@ const ActorDetail = () => {
       });
   }, [setActorInfo]);
 
-  console.log(actorInfo, '제발 나와')
 
   useEffect(() => {
-    console.log('어디가 안되냐고')
     axios.get(`http://i8a702.p.ssafy.io:8085/api/actors/100001/media`)
       // axios.get(`http://i8a702.p.ssafy.io:8085/api/actors/${actorInfo.actorProfileId}/media`)
       .then((res) => {
