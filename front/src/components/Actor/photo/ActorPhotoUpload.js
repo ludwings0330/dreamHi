@@ -14,6 +14,7 @@ import '../../../components/Casting/Casting.css';
 import './ActorPhoto.css';
 
 function ActorPhotoUpload(props) {
+  console.log('test')
   const [ActorPhotoUploaded, setActorPhotoUploaded] = useState(null);
   // const [actPhotoUrl, setActPhotoUrl] = useState('');
   // const [actorPhotos, setActorPhotos] = useRecoilState(actorPhotoLists);
