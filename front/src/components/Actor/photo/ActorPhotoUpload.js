@@ -7,7 +7,7 @@ import { storage } from '../../../imageup/firebase';
 import { v4 } from 'uuid';
 
 // import recoil
-import { actorProfile, actorPhotoUrl, actorPhotoLists } from '../recoilActorState'
+import { actorProfile, actorPhotoUrl, actorPhotoLists, googleToken } from 'recoil/recoilActorState'
 
 // import css
 import '../../../components/Casting/Casting.css';
@@ -23,7 +23,7 @@ function ActorPhotoUpload(props) {
 
   const ActorPhotosListRef = ref(storage, ActorPhotoDirectory);
 
-  const token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDAwMDEiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZW1haWwiOiJkZGY5OThAZ21haWwuY29tIiwiZXhwIjoxNjc4MjU2MjEyfQ.gSBnEPdb7LPDgTMwi5fDDlEdYxgbdJ6hInbddudS9suerZhCPuHDV3P9C6ygWTacOvhfT9tS8i94LP1qSszc0w';
+  const token = useRecoilValue(googleToken)
 
   const uploadFile = () => {
     if (ActorPhotoUploaded === null) return;
@@ -82,11 +82,6 @@ function ActorPhotoUpload(props) {
 
   return (
     <div>
-      <button
-        onClick={uploadFile}
-      >
-        사진 올리기
-      </button>
       <div className="photo-list">
         {/*{actPhotoUrl.map((url, idx) => (*/}
         {/*    <div className='photo' key={idx}*/}
@@ -131,6 +126,11 @@ function ActorPhotoUpload(props) {
             setActorPhotoUploaded(e.target.files[0])}
             }
           />
+          <button
+            onClick={uploadFile}
+          >
+            사진 올리기
+          </button>
         </div>
       </div>
     </div>

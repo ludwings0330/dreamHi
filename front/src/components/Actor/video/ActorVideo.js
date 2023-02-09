@@ -37,7 +37,7 @@ const ActorVideo = () => {
 
         <div className="list-container">
           <div className='video-main'>
-            <video  src={products[0].imageSrc} alt={products[0].imageAlt} controls/>
+            <video src="https://firebasestorage.googleapis.com/v0/b/dreamhi-17f24.appspot.com/o/images%2F00f5b771.mp4?alt=media&token=293dd7f5-a5ea-4a78-8ccc-8b11e4f7d25c" alt={products[0].imageAlt} controls/>
           </div>
 
           <div className='video-list'>
