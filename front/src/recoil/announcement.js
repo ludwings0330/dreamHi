@@ -11,32 +11,32 @@ import { atom } from 'recoil';
 
 export const announcementTitle = atom({
   key: 'announcementTitle',
-  default: null
+  default: ''
 });
 
 export const announcementProducerId = atom({
   key: 'announcementProducerId',
-  default: null
+  default: ''
 });
 
 export const announcementPayment = atom({
   key: 'announcementPayment',
-  default: null
+  default: ''
 });
 
 export const announcementCrankPeriod = atom({
   key: 'announcementCrankPeriod',
-  default: null
+  default: ''
 });
 
 export const announcementEndDate = atom({
   key: 'announcementEndDate',
-  default: null
+  default: new Date()
 });
 
 export const announcementDescription = atom({
   key: 'announcementDescription',
-  default: null
+  default: ''
 });
 
 
