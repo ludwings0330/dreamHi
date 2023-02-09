@@ -22,14 +22,20 @@ import { CgProfile } from "react-icons/cg";
 // css
 import './MainHeader.css';
 import "bootstrap/scss/bootstrap.scss";
+import { userSimpleSelector } from 'recoil/user/userStore';
+import { useRecoilValue } from 'recoil';
+
+// api
+import {logout} from "service/authService";
 
 
 function MainHeader() {
   const navigate = useNavigate();
-  console.log(ACCESS_TOKEN,2512515123123);
-  const token = localStorage.getItem(ACCESS_TOKEN);
-  console.log(token,"token1111111111");
+  const userSimple = useRecoilValue(userSimpleSelector());
   
+  const logoutClick = () => {
+    logout();
+  }
   return (
 
     <Navbar>
@@ -51,7 +57,7 @@ function MainHeader() {
           <div className="header-top-right">
 
             {/*로그인 전에 보이는 버튼*/}
-            {token == null ?
+            {userSimple.id == null ?
               <Button
                 title="로그인"
                 onClick={() => {
@@ -85,10 +91,7 @@ function MainHeader() {
                   </Link>
 
                   <Link to={"/"} tag="li">
-                    <DropdownItem className="nav-item" onClick={() => {
-                      localStorage.removeItem(ACCESS_TOKEN)
-                      navigate("/")
-                    }}
+                    <DropdownItem className="nav-item" onClick={logoutClick}
                     >로그아웃</DropdownItem>
                   </Link>
 
