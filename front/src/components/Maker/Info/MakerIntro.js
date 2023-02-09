@@ -15,7 +15,7 @@ const MakerIntro = () => {
         height: textAreaHeight,
     };
 
-    // 댓글의 내용이 변할 때마다 textAreaRef의 높이를 조정해 준다.
+    // 글의 길이가 변할 때마다 textAreaRef의 높이를 조정해 준다.
     useEffect(() => {
         if (textRef && textRef.current) {
             setParentHeight(`${textRef.current.scrollHeight}px`);
@@ -23,7 +23,7 @@ const MakerIntro = () => {
         }
     }, []);
 
-    // 댓글의 값이 변할 때 추가로 높이를 보정해 준다.
+    // 글의 값이 변할 때 추가로 높이를 보정해 준다.
     const onChangeHandler = (event) => {
         setTextAreaHeight("auto");
         setParentHeight(`${textRef.current.scrollHeight}px`);
