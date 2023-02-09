@@ -44,7 +44,7 @@ public class FilmographyController {
     }
 
     @PostMapping("/api/filmographies")
-    @PreAuthorize("@checker.hasFilmographyAuthority(#user, #requestDto)")
+    @PreAuthorize("@checker.isLoginUser(#user) && @checker.hasFilmographyAuthority(#user, #requestDto)")
     public ResponseEntity<Body> addFilmography(@RequestBody FilmographyRequestDto requestDto,
                                                @AuthenticationPrincipal PrincipalDetails user) throws AccessDeniedException, NotFoundException {
         filmographyService.addFilmography(requestDto);
@@ -53,7 +53,7 @@ public class FilmographyController {
     }
 
     @DeleteMapping("/api/filmographies/{filmographyId}")
-    @PreAuthorize("@checker.hasFilmographyAuthority(#user, #requestDto)")
+    @PreAuthorize("@checker.isLoginUser(#user) && @checker.hasFilmographyAuthority(#user, #requestDto)")
     public ResponseEntity<Body> deleteFilmography(@RequestBody @Nullable FilmographyRequestDto requestDto,
                                                   @PathVariable Long filmographyId,
                                                   @AuthenticationPrincipal PrincipalDetails user) {
@@ -63,7 +63,7 @@ public class FilmographyController {
     }
 
     @PutMapping("/api/filmographies/{filmographyId}")
-    @PreAuthorize("@checker.hasFilmographyAuthority(#user, #requestDto)")
+    @PreAuthorize("@checker.isLoginUser(#user) && @checker.hasFilmographyAuthority(#user, #requestDto)")
     public ResponseEntity<Body> updateFilmography(@RequestBody FilmographyRequestDto requestDto,
                                                   @PathVariable Long filmographyId,
                                                   @AuthenticationPrincipal PrincipalDetails user) {

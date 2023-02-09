@@ -22,7 +22,7 @@ import Button from '../Common/CommonComponent/Button';
 
 const ActorList = () => {
   const navigate = useNavigate();
-  const token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDAzIiwiYXV0aCI6IlJPTEVfVVNFUiIsImVtYWlsIjoiZGRmOTk4QGdtYWlsLmNvbSIsImV4cCI6MTY3ODIzNDgwMX0.B-xblykNgvy8DSacYxAUzQCxEkXxqdEi8yXJaKlm3p8Y96rxR0wkvTaEUU_0e-jLqXSXezDDLi5jSA9Imf_A1g';
+  const token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDAwMDEiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZW1haWwiOiJkZGY5OThAZ21haWwuY29tIiwiZXhwIjoxNjc4MjU2MjEyfQ.gSBnEPdb7LPDgTMwi5fDDlEdYxgbdJ6hInbddudS9suerZhCPuHDV3P9C6ygWTacOvhfT9tS8i94LP1qSszc0w';
 
   const [actorList, setActorList] = useState([]);
 
@@ -51,7 +51,7 @@ const ActorList = () => {
       <div>
       <MDBRow className='row-cols-1 row-cols-md-4 g-4'>
         {actorList.length > 0 && actorList.map((actor, idx) => (
-          <Link to={`/actor/detail/${actor.actorProfileId}`}>
+          <Link to={`/actor/detail/${actor.actorProfileId}`} key={idx}>
             <MDBCol key={idx} className='h-100'>
               <MDBCard className='h-100'>
                 <MDBCardImage

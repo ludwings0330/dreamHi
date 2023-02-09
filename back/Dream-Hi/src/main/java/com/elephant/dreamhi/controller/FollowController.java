@@ -35,7 +35,7 @@ public class FollowController {
      * @return 나를 팔로우하는 사람 수
      */
     @GetMapping("/api/my/followers")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("@checker.isLoginUser(#principalDetails)")
     public ResponseEntity<Body> getFollowerCount(@AuthenticationPrincipal PrincipalDetails principalDetails) {
         Long response = followService.getFollowerCount(principalDetails.getId());
         return Response.create(HttpStatus.OK, "나를 팔로우 하는 사람 수 조회 성공", response);
@@ -47,10 +47,10 @@ public class FollowController {
      * @param principalDetails : 현재 접근중인 주체
      * @param type             : 조회할 Type
      * @param id               : 조회할 id
-     * @return 팔로우하고 있다면 true, 하지 않다면 false
+     * @return true or false
      */
     @GetMapping("/api/follow")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("@checker.isLoginUser(#principalDetails)")
     public ResponseEntity<Body> checkFollow(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestParam FollowType type,
                                             @RequestParam Long id) {
         Boolean response = followService.checkFollow(type, id, principalDetails.getId());
@@ -66,7 +66,7 @@ public class FollowController {
      * @throws DataIntegrityViolationException : DB 제약사항 위반
      */
     @PostMapping("/api/follow")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("@checker.isLoginUser(#principalDetails)")
     public ResponseEntity<Body> addFollow(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody FollowRequestDto followRequestDto)
             throws DuplicateKeyException {
         followService.addFollow(followRequestDto.getType(), followRequestDto.getId(), principalDetails.getId());
@@ -82,7 +82,7 @@ public class FollowController {
      * @throws IllegalArgumentException : 잘못된 접근
      */
     @DeleteMapping("/api/follow")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("@checker.isLoginUser(#principalDetails)")
     public ResponseEntity<Body> removeFollow(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestParam FollowType type,
                                              @RequestParam Long id) throws IllegalArgumentException {
         followService.removeFollow(type, id, principalDetails.getId());

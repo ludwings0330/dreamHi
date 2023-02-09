@@ -26,9 +26,10 @@ import "bootstrap/scss/bootstrap.scss";
 
 function MainHeader() {
   const navigate = useNavigate();
-  console.log(ACCESS_TOKEN,2512515123123)
+  console.log(ACCESS_TOKEN,2512515123123);
   const token = localStorage.getItem(ACCESS_TOKEN);
-  console.log(token,"token1111111111")
+  console.log(token,"token1111111111");
+  
   return (
 
     <Navbar>

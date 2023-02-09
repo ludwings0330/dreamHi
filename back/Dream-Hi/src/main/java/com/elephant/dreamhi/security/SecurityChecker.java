@@ -4,8 +4,12 @@ import com.elephant.dreamhi.model.dto.FilmographyRequestDto;
 import com.elephant.dreamhi.model.statics.FilmoType;
 import com.elephant.dreamhi.model.statics.ProducerRole;
 import com.elephant.dreamhi.service.AuthService;
+import java.io.PrintStream;
+import java.io.PrintWriter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
@@ -15,8 +19,9 @@ public class SecurityChecker {
 
     private final AuthService authService;
 
-    public boolean isLoginUser(PrincipalDetails user) {
-        return user.getId() != 0L;
+    public boolean isLoginUser(PrincipalDetails user) throws AuthenticationException {
+        if(user.getId() == 0L) throw new DisabledException("로그인이 필요한 기능입니다.");
+        return true;
     }
 
     public boolean hasEditorAuthority(PrincipalDetails user, Long producerId) {

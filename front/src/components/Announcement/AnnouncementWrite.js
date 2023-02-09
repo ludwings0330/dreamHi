@@ -4,38 +4,43 @@ import Button from '../Common/CommonComponent/Button';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { announcementImageUrl } from '../../recoil/announcement';
+import {
+  announcementCastingState,
+  announcementCrankPeriod,
+  announcementDescription,
+  announcementEndDate,
+  announcementPayment,
+  announcementPictureUrl,
+  announcementProducerId,
+  announcementTitle,
+} from '../../recoil/announcement';
+import AnnouncementWriteCasting from './AnnouncementWriteCasting';
+import MultiSelect from './SelectExample';
 
 function AnnouncementWrite(props) {
   const navigate = useNavigate();
 
-  // const ImgUrl = useRecoilValue()
-  const announcementImg = useRecoilValue(announcementImageUrl)
-  const token = {}
+  const announcementImg = useRecoilValue(announcementPictureUrl);
+  const announcementCasting = useRecoilValue(announcementCastingState);
+  const dataTitle = useRecoilValue(announcementTitle);
+  const dataProducerId = useRecoilValue(announcementProducerId);
+  const dataPayment = useRecoilValue(announcementPayment);
+  const dataCrankPeriod = useRecoilValue(announcementCrankPeriod);
+  const dataEndDate = useRecoilValue(announcementEndDate);
+  const dataDescription = useRecoilValue(announcementDescription);
+
+  const token = {};
 
   const sendData = {
-    title: 'title',
-    producerId: 1001,
-    payment: '협의 후 결정',
-    crankPeriod: '6개월',
-    endDate: '2023-02-27T10:00:00',
-    description: '공고설명',
-    pictureUrl: { announcementImg },
-    castings: [
-      {
-        name: '배역명',
-        description: '배역설명',
-        headcount: 1,
-        minHeight: 130,
-        maxHeight: 150,
-        minAge: 5,
-        maxAge: 10,
-        gender: 'MALE',
-        styles: [1],
-      },
-    ],
+    title: dataTitle,
+    producerId: dataProducerId,
+    payment: dataPayment,
+    crankPeriod: dataCrankPeriod,
+    endDate: dataEndDate,
+    description: dataDescription,
+    pictureUrl: announcementImg,
+    castings: announcementCasting,
   };
 
   const postClick = () => {
@@ -44,8 +49,7 @@ function AnnouncementWrite(props) {
       url: 'http://i8a702.p.ssafy.io:8085/api/producers?name={sendData.name}',
       data: sendData,
       headers: {
-        Authorization:
-          `Bearer${token}`,
+        Authorization: `Bearer${token}`,
       },
     })
       .then((res) => {
@@ -57,8 +61,6 @@ function AnnouncementWrite(props) {
         console.log(error);
       });
   };
-
-
 
   return (
     <>
@@ -73,14 +75,38 @@ function AnnouncementWrite(props) {
       <img src={announcementImg} />
       {/*<p> { ImgUrl} </p>*/}
       <AnnouncementWriteItem />
+      <AnnouncementWriteCasting />
 
       <Button
-          title="공고 등록 하기"
-          onClick={() => {
-            postClick();
-            navigate('/announcement');
-          }}
+        title="공고 등록 하기"
+        onClick={() => {
+          postClick();
+        }}
       />
+
+      {/*<MultiSelect/>*/}
+
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
     </>
   );
 }

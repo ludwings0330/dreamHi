@@ -1,94 +1,114 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import MakerIntro from './MakerIntro';
 import Button from '../../Common/CommonComponent/Button';
 
 const MakerIntroduce = () => {
+
+    const navigate = useNavigate();
+    
+    //제작사 한줄 소개
+    const titleInputRef = useRef();
+    //한줄 소개 관련
+    const [title, setTitle] = useState("");
+    const handleChangeTitle = (e) => {
+        setTitle(e.target.value);
+    }
+
+
+    //파일 미리볼 url을 저장해줄 state
+      const [fileImage, setFileImage] = useState("");
+
+      // 파일 저장
+      const saveFileImage = (e) => {
+        setFileImage(URL.createObjectURL(e.target.files[0]));
+        console.log(e.target.files[0])
+      };
+
+      // 파일 삭제
+      const deleteFileImage = () => {
+        URL.revokeObjectURL(fileImage);
+        setFileImage("");
+      };
+
   return (
     <>
-      <div>
+      <div className={"maker-info"}>
 
-        <div className="mt-10 sm:mt-0">
-          <div className="md:grid md:grid-cols-6 md:gap-6">
-
-
-
-            <form action="#" method="POST">
-              <div className="overflow-hidden shadow sm:rounded-md">
-
-                <div className="bg-white px-5 py-5 sm:p-6">
-
-                  <div className="px-4 sm:px-0">
-                    <h1 className="text-lg font-medium leading-6 text-gray-900">기본 정보 입력</h1>
-                  </div>
                   {/*공백부분*/}
                   <div className="space-y-6 bg-white py-3">
                   </div>
 
                   {/*프로필 사진 등록 부분*/}
-                  <div>
-                    <label className="maker-title">제작사 프로필 사진 등록</label>
-                    <div className="mt-1 items-center">
+                  <table>
+                    <h2>프로필사진등록</h2>
+                    <tbody>
+                    <tr>
+                      <th></th>
+                      <td>
+                        <div>
+                          { fileImage ?
+                              <img
+                                  alt="sample"
+                                  src={fileImage}
+                                  style={{ margin: "auto" }}
+                              />
+                              :
+                              <img
+                                  alt="sample"
+                                  src="https://i.ibb.co/cTpZvr4/bb.png"
+                                  style={{ margin: "auto" }}
+                              />
+                          }
+                          <div
+                              style={{
+                                alignItems: "center",
+                                justifyContent: "center",
+                              }}
+                          >
+                            <input
+                                name="imgUpload"
+                                type="file"
+                                accept="image/*"
+                                onChange={saveFileImage}
+                            />
 
-                      <svg className="text-gray-300" fill="currentColor" width="200" viewBox="0 0 24 24">
-                        <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                      </svg>
-                    </div>
-                  </div>
-
-                  <div>
-
-                    <div className="space-y-1 text-center">
-
-                      <div className="flex text-sm text-gray-600">
-                        <label
-                          htmlFor="file-upload"
-                          className="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500"
-                        >
-                          <span>Upload a file</span>
-                          <input id="file-upload" name="file-upload" type="file" className="sr-only" />
-                        </label>
-                        <p className="pl-1">or drag and drop</p>
-                      </div>
-                      <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
-                    </div>
-                  </div>
-                </div>
+                            <button
+                                style={{
+                                  backgroundColor: "gray",
+                                  color: "white",
+                                  width: "55px",
+                                  height: "40px",
+                                  cursor: "pointer",
+                                }}
+                                onClick={() => deleteFileImage()}
+                            >
+                              삭제
+                            </button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
 
 
                 {/*한줄소개 부분*/}
-                <div>
-                  <label htmlFor="about" className="block text-xl-center font-medium text-gray-700">
-                    한줄소개
-                  </label>
-                  {/*라벨과의 사이 간격 거리*/}
-                  <div className="mt-1">
-
-                                <textarea
-                                  id="about"
-                                  name="about"
-                                  rows={3}
-                                  cols={100}
-                                  className="info-title"
-                                />
+                  <div>
+                      <label>
+                          한줄소개
+                          <input type={"text"}
+                                 value={title}
+                                 required
+                                 ref={titleInputRef}
+                                 onChange={handleChangeTitle}/>
+                      </label>
                   </div>
-                </div>
+
 
                 {/*제작사소개 부분*/}
-                <div>
-                  <label htmlFor="about" className="block text-xl-center font-medium text-gray-700">
-                    제작사 소개
-                  </label>
-                  {/*라벨과의 사이 간격 거리*/}
-                  <div className="mt-1">
-
-                                <textarea
-                                  id="about"
-                                  name="about"
-                                  rows={3}
-                                  cols={100}
-                                  className="info-title"
-                                />
-                  </div>
-                </div>
+                {/*컴포넌트로 추가*/}
+                <MakerIntro />
                 
 
                 {/* 개인정보 입력 후 저장버튼*/}
@@ -96,10 +116,6 @@ const MakerIntroduce = () => {
                   <Button title="저장"/>
                 </div>
 
-              </div>
-            </form>
-          </div>
-        </div>
       </div>
 
     </>

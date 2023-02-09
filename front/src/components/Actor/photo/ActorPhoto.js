@@ -1,39 +1,29 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './ActorPhoto.css';
 import ActorPhotoUpload from './ActorPhotoUpload';
-import { ActorId, ActorPhotoUrl } from '../recoilActorState'
+import { actorProfileId, actorPhotoUrl, actorProfile, actorPhotoLists } from '../recoilActorState'
 import { useRecoilValue, useRecoilState } from 'recoil'
-
-const products = [
-  {
-    id: 1,
-    name: 'Basic Tee',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
-  },
-  {
-    id: 2,
-    name: 'Basic Tee',
-    imageSrc: 'https://i.ibb.co/FmTym4n/555.png',
-  },
-  {
-    id: 3,
-    name: 'Basic Tee',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
-  },
-  {
-    id: 4,
-    name: 'Basic Tee',
-    imageSrc: 'https://cdn.pixabay.com/photo/2022/10/16/13/17/road-7525092_640.jpg',
-  },
-]
-const setSelected = (idx) => {
-  document.querySelector('.actor-photo-main').innerHTML=`<img src=${products[idx].imageSrc} alt=${products[idx].imageAlt}/>`
-};
-
+import axios from 'axios'
 
 const ActorPhoto = () => {
-  const test = useRecoilValue(ActorId)
-  const [testUrl, setTestUrl] = useRecoilState(ActorPhotoUrl)
+  const actorPhotos = useRecoilValue(actorPhotoLists);
+  const actorPhotoList = useRecoilValue(actorPhotoLists)
+  const setSelected = (idx) => {
+    document.querySelector('.actor-photo-main').innerHTML=`<img src=${actorPhotoList[idx].url} alt=${actorPhotoList[idx]}/>`
+  };
+
+  console.log(actorPhotos,'안되는')
+  // console.log(actorPhotos[0].url, '안되냐ㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑ')
+  // useEffect(() => {
+  //   axios.get(`http://i8a702.p.ssafy.io:8085/api/actors/100001/media`)
+  //     .then((res) => {
+  //       setActorPhotos(res.data.result.pictures)
+  //       console.log(res.data.result.pictures, '잘 찍히나요?')
+  //     })
+  //     .catch((err) => {
+  //       console.log(err)
+  //     })
+  // }, [setActorPhotos]);
 
   return (
     <div className="bg-white">
@@ -43,8 +33,21 @@ const ActorPhoto = () => {
 
         <div className="list-container">
           <div className='actor-photo-main'>
-            <img src={products[0].imageSrc} alt={products[0].imageAlt}/>
+            <img src={actorPhotoList[0].url} alt={actorPhotoList[0].url}/>
           </div>
+          {actorPhotos.length > 0 && actorPhotos.map((actorPhoto, idx) => (
+            <div className='photo'
+                 key={idx}
+                 width={"200px"}
+                 height={"200px"}>
+              <img src={actorPhoto.url}
+                   alt='image'
+                   object-fit={"contain"}
+                   className="object-center"
+                   onClick={() => setSelected(idx)}
+              />
+            </div>
+          ))}
 
           {/*<div className='photo-list'>*/}
           {/*  {products.map((product, idx) => (*/}
@@ -64,11 +67,7 @@ const ActorPhoto = () => {
 
           <ActorPhotoUpload />
         </div>
-
       </div>
-
-      { testUrl }
-
     </div>
 
   );

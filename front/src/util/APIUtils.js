@@ -1,51 +1,47 @@
-import { API_BASE_URL, ACCESS_TOKEN } from '../constants';
+import axios from "axios";
+import { API_BASE_URL } from "constants/index";
+import ErrorCode from "service/errorService";
 
-const request = (options) => {
-    const headers = new Headers({
-        'Content-Type': 'application/json',
-    })
+const api = axios.create({
+    baseURL: API_BASE_URL,
+    // baseURL: "http://localhost:8080",
+    headers: {
+        "Content-Type": "application/json;charset=utf-8",
+    } 
+})
+
+/**
+ * 1. 요청 인터셉터
+ * - 요청 직전 수행할 콜백 함수
+ * - error 직전 수행할 콜백 함수
+ */
+api.interceptors.request.use(
+    function (config) {
+        // before send request logic
+        return config;
+    },
+    function(error) {
+        // before send error logic
+        return Promise.reject(error);
+    }
+);
     
-    if(localStorage.getItem(ACCESS_TOKEN)) {
-        headers.append('Authorization', 'Bearer ' + localStorage.getItem(ACCESS_TOKEN))
+    /**
+     * 2. 응답 인터셉터
+     * - 응답 데이터 가공 콜백 함수
+     * - error 데이터 가공 콜백 함수
+    */
+api.interceptors.response.use(
+    function(response) {
+        // response data 가공
+    return response;
+    },
+
+    async function(error) {
+        // error data 가공
+        ErrorCode(error.response);
+        return Promise.reject(error);
     }
+)
 
-    const defaults = {headers: headers};
-    options = Object.assign({}, defaults, options);
-
-    return fetch(options.url, options)
-    .then(response => 
-        response.json().then(json => {
-            if(!response.ok) {
-                return Promise.reject(json);
-            }
-            return json;
-        })
-    );
-};
-
-export function getCurrentUser() {
-    if(!localStorage.getItem(ACCESS_TOKEN)) {
-        return Promise.reject("No access token set.");
-    }
-
-    return request({
-        url: API_BASE_URL + "/user/me",
-        method: 'GET'
-    });
-}
-
-export function login(loginRequest) {
-    return request({
-        url: API_BASE_URL + "/auth/login",
-        method: 'POST',
-        body: JSON.stringify(loginRequest)
-    });
-}
-
-export function signup(signupRequest) {
-    return request({
-        url: API_BASE_URL + "/auth/signup",
-        method: 'POST',
-        body: JSON.stringify(signupRequest)
-    });
-}
+export default api;

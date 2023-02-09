@@ -147,6 +147,9 @@ public class AnnouncementServiceImpl implements AnnouncementService {
                              .forEach(castingUpdateDto -> castingService.updateCasting(announcement, castingUpdateDto));
     }
 
+    /**
+     * @param announcementId 삭제할 공고의 ID
+     */
     @Override
     @Transactional
     public void deleteAnnouncement(Long announcementId) {

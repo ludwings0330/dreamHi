@@ -24,6 +24,11 @@ public class ProcessServiceImpl implements ProcessService {
     private final ProcessRepository processRepository;
     private final VolunteerRepository volunteerRepository;
 
+    /**
+     * @param announcementId 현재 공고의 ID
+     * @param user 현재 로그인한 유저
+     * @return 현재 공고에서 유저의 상태를 반환
+     */
     @Override
     public ProcessStageDto findProcessAndStage(Long announcementId, PrincipalDetails user) {
         Process lastProcess = processRepository.findLastProcessByAnnouncementId(announcementId)
@@ -37,6 +42,11 @@ public class ProcessServiceImpl implements ProcessService {
         return ProcessStageDto.toDto(lastProcess, volunteers);
     }
 
+    /**
+     * 진행 중 절차를 공고와 연결하여 등록하고, 공고에 지원한 지원자의 절차를 갱신한다.
+     *
+     * @param announcementId 현재 공고의 ID
+     */
     @Override
     public void saveProcessWithRecruiting(Long announcementId) {
         Announcement announcement = announcementRepository.getReferenceById(announcementId);
@@ -45,6 +55,11 @@ public class ProcessServiceImpl implements ProcessService {
         volunteerRepository.updateAll(announcementId, process);
     }
 
+    /**
+     * 새로운 절차와 오디션 단계, 공고ID를 이용하여 절차를 저장하고, 공고의 모든 지원자의 절차를 갱신한다.
+     *
+     * @param processSaveDto 공고ID, 새로운 절차, 새로운 오디션 단계
+     */
     @Override
     public void saveProcessWithoutRecruiting(ProcessSaveDto processSaveDto) {
 //        Announcement announcement = announcementRepository.findByAnnouncementId(processSaveDto.getAnnouncementId())
