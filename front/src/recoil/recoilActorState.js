@@ -42,5 +42,5 @@ export const actorVideoLists = atom({
 
 export const googleToken = atom({
   key: 'googleToken',
-  default: 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDAwMDEiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZW1haWwiOiJkZGY5OThAZ21haWwuY29tIiwiZXhwIjoxNjc1OTIyODg2fQ.B2j72OmK5UMSwSI-qW0eDvw8nrHoBPWw1llg6LnMZvpKDG72RJqUuCg03lWDmg_P7lPhVS7rVtD0Rg0tpqygPA'
+  default: 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDAwMDEiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZW1haWwiOiJkZGY5OThAZ21haWwuY29tIiwiZXhwIjoxNjc1OTMwOTc2fQ.nY5hyxEi6xQv_1ZUErustADrwOyfCtpbnRnpaRvw2CHHsNEZPrKjbXsiZRvZ1Whd8HKYN9bj3iJEjqLK1AUtQw'
 })
