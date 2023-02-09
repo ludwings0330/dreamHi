@@ -21,7 +21,7 @@ public class ActorListResponseDto {
     private String title;
     private Gender gender;
     private Integer age;
-    private Double height;
+    private Integer height;
     private List<StyleDto> styles;
     @NotNull
     private Boolean isFollow;

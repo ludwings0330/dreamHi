@@ -41,14 +41,14 @@ public class VolunteerSearchResponseDto {
 
         private VolunteerState state;
 
-        private Double height;
+        private Integer height;
 
         private Integer age;
 
         private Boolean isFollow;
 
         @QueryProjection
-        public VolunteerSimpleInfo(Long userId, String imageUrl, String name, VolunteerState state, Double height, Integer age, Boolean isFollow) {
+        public VolunteerSimpleInfo(Long userId, String imageUrl, String name, VolunteerState state, Integer height, Integer age, Boolean isFollow) {
             this.userId = userId;
             this.imageUrl = imageUrl;
             this.name = name;

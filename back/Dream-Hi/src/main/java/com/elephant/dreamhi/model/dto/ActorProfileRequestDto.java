@@ -19,7 +19,7 @@ public class ActorProfileRequestDto {
     private String title;
     private Gender gender;
     private Integer age;
-    private Double height;
+    private Integer height;
     private String description;
     private List<Long> deleteStyles = new ArrayList<>();
     private List<Long> insertStyles = new ArrayList<>();
