@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ACCESS_TOKEN } from '../../../constants';
 
 import {
@@ -22,20 +22,39 @@ import { CgProfile } from "react-icons/cg";
 // css
 import './MainHeader.css';
 import "bootstrap/scss/bootstrap.scss";
-import { userSimpleSelector } from 'recoil/user/userStore';
-import { useRecoilValue } from 'recoil';
+import { userSimpleSelector, userSimpleState } from 'recoil/user/userStore';
+import { useRecoilState } from 'recoil';
 
 // api
 import {logout} from "service/authService";
 
+// Swal
+import Swal from "sweetalert2";
 
 function MainHeader() {
   const navigate = useNavigate();
-  const userSimple = useRecoilValue(userSimpleSelector());
+  const [userSimple, setUserSimple] = useRecoilState(userSimpleState);
   
-  const logoutClick = () => {
-    logout();
-  }
+  const logoutClick = async () => {
+    const isLogout = await logout();
+    if(isLogout) {
+      console.log("로그아웃 성공");
+      setUserSimple({});
+      Swal.fire({
+        title: "감사합니다 😀",
+        text: "로그아웃!!",
+        icon: "success"
+      }).then(function() {
+          // window.location.href="http://i8a702.p.ssafy.io/login";
+          window.location.href="/";
+      })
+    } 
+  };
+  useEffect(()=> {
+    console.log(userSimple);
+  }, userSimple)
+  
+
   return (
 
     <Navbar>
