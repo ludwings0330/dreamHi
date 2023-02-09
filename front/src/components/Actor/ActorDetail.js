@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 
@@ -8,11 +8,11 @@ import ActorFilmo from './filmo/ActorFilmo';
 import ActorPhoto from './photo/ActorPhoto';
 import ActorVideo from './video/ActorVideo';
 
-import { actorProfile, actorFilmoUrl, actorPhotoUrl, actorVideoUrl, actorPhotoLists } from './recoilActorState'
+import { actorProfile, actorFilmoUrl, actorPhotoUrl, actorVideoUrl, actorPhotoLists, googleToken } from 'recoil/recoilActorState'
 
 const ActorDetail = () => {
   const { actorProfileId } = useParams()
-  const token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDAwMDEiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZW1haWwiOiJkZGY5OThAZ21haWwuY29tIiwiZXhwIjoxNjc4MjU2MjEyfQ.gSBnEPdb7LPDgTMwi5fDDlEdYxgbdJ6hInbddudS9suerZhCPuHDV3P9C6ygWTacOvhfT9tS8i94LP1qSszc0w';
+  const token = useRecoilValue(googleToken)
 
   const [actorPhotos, setActorPhotos] = useRecoilState(actorPhotoLists);
   const [actorInfo, setActorInfo] = useRecoilState(actorProfile);
