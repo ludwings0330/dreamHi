@@ -20,7 +20,7 @@ public interface FollowRepository extends JpaRepository<Follow, Long>, FollowRep
     List<Follow> findAllByFollower_Id(Long userId);
 
     @Query("select f.producer.id from Follow f where f.follower.id=:userId and f.type='PRODUCER'")
-    List<Long> findProducerIdByFollowerId(Long userId);
+    List<Long> findProducerIdByFollowerId(@Param("userId") Long userId);
 
     @Query("select count(f.id) from Follow f where f.actor.id=:id")
     Long countByActor_Id(@Param("id") Long id);
