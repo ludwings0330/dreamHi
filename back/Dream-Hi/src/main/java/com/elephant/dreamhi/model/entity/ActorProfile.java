@@ -48,7 +48,7 @@ public class ActorProfile {
     private Integer age;
     @Enumerated(EnumType.STRING)
     private Gender gender;
-    private Double height;
+    private Integer height;
     @Column(length = 500)
     private String description;
     @Column(nullable = false)

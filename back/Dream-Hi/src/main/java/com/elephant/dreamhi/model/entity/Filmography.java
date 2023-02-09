@@ -32,7 +32,7 @@ public class Filmography {
     private String url;
 
     // uuid
-    @Column(nullable = false, length = 45)
+    @Column(nullable = false)
     private String savedName;
 
     // Origin File Name
