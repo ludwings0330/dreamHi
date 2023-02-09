@@ -37,7 +37,8 @@ public class ProducerRepositoryCustomImpl implements ProducerRepositoryCustom {
                                                                       ))
                                                               .from(producer)
                                                               .where(nameEq(condition.getName()),
-                                                                     followEq(condition.getIsFollow(), condition.getUserId()));
+                                                                     followEq(condition.getIsFollow(), condition.getUserId()),
+                                                                     involveEq(condition.getUserId(), condition.getInvolve()));
 
         final List<ProducerListResponseDto> fetch = query.offset(pageable.getOffset()).limit(pageable.getPageSize()).fetch();
 
@@ -69,6 +70,12 @@ public class ProducerRepositoryCustomImpl implements ProducerRepositoryCustom {
 
     private BooleanExpression nameEq(String name) {
         return (name != null) ? producer.name.contains(name) : null;
+    }
+
+    private BooleanExpression involveEq(Long userId, Boolean involve) {
+        return (involve != null) ? producer.id.in(JPAExpressions.select(userProducerRelation.producer.id)
+                                                                .from(userProducerRelation)
+                                                                .where(userProducerRelation.user.id.eq(userId))) : null;
     }
 
 }
