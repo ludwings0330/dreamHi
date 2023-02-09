@@ -2,7 +2,7 @@ import { ACCESS_TOKEN } from "constants/index";
 import api from "util/APIUtils";
 import jwtApi from "util/JwtApi";
 import ErrorCode from "./errorService";
-import Swal from "sweetalert2";
+
 
 
 const reissueAccessToken = async () => {
@@ -18,21 +18,15 @@ const reissueAccessToken = async () => {
 }
 
 const logout = async () => {
-    await jwtApi.post("/api/logout")
+    const result = await jwtApi.post("/api/logout")
     .then((response) => {
         console.log(response);
         if(response.status === 202) {
             localStorage.removeItem(ACCESS_TOKEN);
-            Swal.fire({
-                title: "감사합니다 😀",
-                text: "로그아웃!!",
-                icon: "success"
-            }).then(function() {
-                // window.location.href="http://i8a702.p.ssafy.io/login";
-                window.location.href="/";
-            })
         }
+        return response.status;
     })
+    return result === 202 ? true : false;
 }
 
 export {
