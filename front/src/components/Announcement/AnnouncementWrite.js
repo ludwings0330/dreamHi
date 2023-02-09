@@ -21,7 +21,6 @@ import MultiSelect from './SelectExample';
 function AnnouncementWrite(props) {
   const navigate = useNavigate();
 
-  // const ImgUrl = useRecoilValue()
   const announcementImg = useRecoilValue(announcementPictureUrl);
   const announcementCasting = useRecoilValue(announcementCastingState);
   const dataTitle = useRecoilValue(announcementTitle);

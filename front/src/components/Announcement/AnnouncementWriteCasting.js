@@ -8,13 +8,13 @@ function AnnouncementWriteCasting(props) {
 
   // recoil castingstate 에 추가하기 위한 이 컴포넌트 용 state
   const [casting, setCasting] = useState({
-    name: null,
-    description: null,
-    headcount: null,
-    minHeight: null,
-    maxHeight: null,
-    minAge: null,
-    maxAge: null,
+    name: '',
+    description: '',
+    headcount: '',
+    minHeight: '',
+    maxHeight: '',
+    minAge: '',
+    maxAge: '',
     gender: [],
     styles: [],
   });
@@ -132,18 +132,18 @@ function AnnouncementWriteCasting(props) {
     else {setCastingsArray([...castingsArray, casting])}
 
     setCasting({
-      name: null,
-      description: null,
-      headcount: null,
-      minHeight: null,
-      maxHeight: null,
-      minAge: null,
-      maxAge: null,
+      name: '',
+      description: '',
+      headcount: '',
+      minHeight: '',
+      maxHeight: '',
+      minAge: '',
+      maxAge: '',
       gender: [],
       styles: [],
     });
 
-    console.log(casting, '😭😭😭😭😭😭')
+    console.log(castingsArray, '😭😭😭😭😭😭')
   };
 
   //배역 삭제 함수
@@ -156,8 +156,12 @@ function AnnouncementWriteCasting(props) {
   };
 
   useEffect(() => {
+    setSelectedStyles(casting.styles)
+    setGender(casting.gender)
+
     console.log('🐳🐳🐳🐳🐳')
     console.log('🤑🤑🤑',casting)
+    console.log(castingsArray, '😭😭😭😭😭😭')
 
   }, [castingsArray]);
 
@@ -284,7 +288,7 @@ function AnnouncementWriteCasting(props) {
         <ul>
           {castingsArray.map((casting, index) => (
               <li key={index}>
-                {casting.name}
+                {casting.name}역
                 <button onClick={() => deleteCasting(index)}>Delete</button>
               </li>
           ))}
