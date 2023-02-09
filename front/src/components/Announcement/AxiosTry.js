@@ -2,8 +2,8 @@ import React from 'react';
 import axios from 'axios';
 
 function AxiosTry(props) {
-  const token =
-    'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5OTkiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZW1haWwiOiJ5dWhtaW45MkBoYW5tYWlsLm5ldCIsImV4cCI6MTY3ODA4NDIwOX0.odM7jHz7N1wA5kKgb93yBuUOcG7CWrvqVOEEh0l65WoxBWurXxnV4DUQyAl8oBO08em2KsDvW6e8mbzfYm1jGg';
+  const token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDAwMDEiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZW1haWwiOiJkZGY5OThAZ21haWwuY29tIiwiZXhwIjoxNjc4MjU2MjEyfQ.gSBnEPdb7LPDgTMwi5fDDlEdYxgbdJ6hInbddudS9suerZhCPuHDV3P9C6ygWTacOvhfT9tS8i94LP1qSszc0w';
+ 
   const sendData = {
     title: 'title',
     producerId: 1001,
@@ -72,7 +72,7 @@ function AxiosTry(props) {
         {
         headers: {
           Authorization: `Bearer ${token}`,
-        }, params: { name : '해운대' }
+        }, params: { name : '메가커피' }
       })
       .then((res) => {
         alert('성공');

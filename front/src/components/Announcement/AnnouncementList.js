@@ -1,10 +1,13 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import AnnouncementListItem from './AnnouncementListItem';
 import SearchBar from '../Common/CommonComponent/SearchBar';
 import PageBar from '../Common/CommonComponent/PageBar';
 
 function AnnouncementList(props) {
   const { announcements, onClickItem } = props;
+
+
+  // useEffect()
 
   return (
     <div className="announcement-post-container">

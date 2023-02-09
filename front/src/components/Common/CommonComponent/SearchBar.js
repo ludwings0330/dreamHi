@@ -137,6 +137,7 @@ const SearchBar = () => {
       setCheckedList(checkedStyles.filter(el => el !== item));
     }
   };
+  console.log(checkedStyles)
 
   //체크박스 해지 메소드
   const onRemove = item => {

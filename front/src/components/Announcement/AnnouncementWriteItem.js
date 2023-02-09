@@ -24,6 +24,7 @@ function AnnouncementWriteItem(props) {
   const [endDate, setEndDate] = useRecoilState(announcementEndDate);
 
   const handleDataTitle = (e) => {
+    // e.defaultPrevented
     setDataTitle(e.target.value);
   };
 
@@ -41,19 +42,21 @@ function AnnouncementWriteItem(props) {
 
   const formattedDate = dataEndDate.toISOString().substr(0, 10);
 
-  useEffect(() => {
-    return () => {
-      setEndDate(formattedDate);
-      console.log(22222, endDate)
-    };
-  }, [formattedDate]);
+  setEndDate(formattedDate)
 
-    useEffect(() => {
-        return () => {
-            setEndDate(formattedDate);
-            console.log(33333, endDate)
-        };
-    }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     setEndDate(formattedDate);
+  //     console.log(22222, endDate);
+  //   };
+  // }, [dataEndDate]);
+  //
+  // useEffect(() => {
+  //   return () => {
+  //     setEndDate(formattedDate);
+  //     console.log(33333, endDate);
+  //   };
+  // }, []);
 
   // setEndDate(formattedDate)
 

@@ -31,7 +31,7 @@ export const announcementCrankPeriod = atom({
 
 export const announcementEndDate = atom({
   key: 'announcementEndDate',
-  default: new Date()
+  default: ''
 });
 
 export const announcementDescription = atom({
