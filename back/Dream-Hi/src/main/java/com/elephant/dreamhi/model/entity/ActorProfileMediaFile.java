@@ -38,7 +38,7 @@ public class ActorProfileMediaFile {
     private String url;
 
     // uuid
-    @Column(nullable = false, length = 45)
+    @Column(nullable = false)
     private String savedName;
 
     // Origin File Name
@@ -51,7 +51,7 @@ public class ActorProfileMediaFile {
 
     // 편의메소드
     public void changeActorProfile(ActorProfile actorProfile) {
-        if(this.actorProfile != null) {
+        if (this.actorProfile != null) {
             this.actorProfile.getActorProfileMediaFiles().remove(this);
         }
         this.actorProfile = actorProfile;
