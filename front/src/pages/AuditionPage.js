@@ -8,23 +8,30 @@ import Notice from '../components/Audition/Notice';
 import styled, { css } from 'styled-components'
 
 function AuditionPage(props) {
-  const navigate = useNavigate()
+
+  const navigate = useNavigate();
   return (
     <>
+        <div className={"audition-date-pick"}>
+            <h1>면접 일정 선택</h1>
+        </div>
+
+
+
       <Button
         title="면접보기"
         onClick={() => {
           navigate("/audition/meeting")
         }}
       />
-      <AuditionContent>
-        <AuditionContentLeft>
-          <CalendarAnnounce />
-        </AuditionContentLeft>
-        <AuditionContentRight>
-          <Notice />
-        </AuditionContentRight>
-      </AuditionContent>
+      {/*<AuditionContent>*/}
+      {/*  <AuditionContentLeft>*/}
+      {/*    <CalendarAnnounce />*/}
+      {/*  </AuditionContentLeft>*/}
+      {/*  <AuditionContentRight>*/}
+      {/*    <Notice />*/}
+      {/*  </AuditionContentRight>*/}
+      {/*</AuditionContent>*/}
 
     </>
   );
@@ -32,18 +39,18 @@ function AuditionPage(props) {
 
 export default AuditionPage;
 
-const AuditionContent = styled.div`
-  display: flex;
-  left: 50%;
-  position: absolute;
-  transform: translateX(-50%);
-  margin-top: 30px;
-  `
-
-const AuditionContentLeft = styled.div`
-  margin-right: 200px;
-`
-
-const AuditionContentRight = styled.div`
-
-`
+// const AuditionContent = styled.div`
+//   display: flex;
+//   left: 50%;
+//   position: absolute;
+//   transform: translateX(-50%);
+//   margin-top: 30px;
+//   `
+//
+// const AuditionContentLeft = styled.div`
+//   margin-right: 200px;
+// `
+//
+// const AuditionContentRight = styled.div`
+//
+// `

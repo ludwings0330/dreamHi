@@ -36,7 +36,7 @@ const ActorList = () => {
       })
       .then((res) => {
         setActorList(res.data.result.content)
-        console.log(res.data.result.content,' 데이터ㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓ');
+        console.log(res.data.result.content,'데이터');
       })
       .catch((error) => {
         console.log('실패실패ㅠㅠ');
@@ -44,6 +44,10 @@ const ActorList = () => {
       });
 
   }, [setActorList]);
+  
+  
+
+  
 
   return (
     <div>

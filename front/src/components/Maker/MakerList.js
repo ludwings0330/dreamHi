@@ -76,11 +76,13 @@ const MakerList = () => {
           </div>
 
 
+          <div className={"maker-regist-button"}>
         <Button
           title="글작성"
           onClick={() => {
             navigate("/maker/write")
           }} />
+          </div>
 
 
         <div className={"page_bar"}>
