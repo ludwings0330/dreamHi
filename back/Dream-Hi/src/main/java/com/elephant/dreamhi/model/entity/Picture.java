@@ -21,7 +21,7 @@ public class Picture {
     private String url;
 
     // uuid
-    @Column(name = "picture_saved_name", nullable = true, length = 45)
+    @Column(name = "picture_saved_name", nullable = true)
     private String savedName;
 
     // Origin File Name

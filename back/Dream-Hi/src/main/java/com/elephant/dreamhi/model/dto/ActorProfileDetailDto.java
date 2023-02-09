@@ -10,38 +10,25 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Data
 @AllArgsConstructor
 @Builder
 public class ActorProfileDetailDto {
 
-    private Long userId;
-
-    private String email;
-
-    private String name;
-
-    private String phone;
-
-    private String picrtureUrl;
-
-    private Long actorProfileId;
-
-    private Integer age;
-
-    private String description;
-
-    private Gender gender;
-
-    private Double height;
-
-    private String title;
-
-    private Boolean visible;
     private final List<StyleDto> styles = new ArrayList<>();
+    private Long userId;
+    private String email;
+    private String name;
+    private String phone;
+    private String picrtureUrl;
+    private Long actorProfileId;
+    private Integer age;
+    private String description;
+    private Gender gender;
+    private Integer height;
+    private String title;
+    private Boolean visible;
 
     public ActorProfileDetailDto(ActorProfile actorProfile) {
         User user = actorProfile.getUser();

@@ -15,14 +15,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ActorSimpleProfileDto {
 
+    private final List<String> styles = new ArrayList<>();
     private Long id;
     private String title;
     private String name;
-    private Double height;
+    private Integer height;
     private String url;
     private Gender gender;
     private Integer age;
-    private final List<String> styles = new ArrayList<>();
     private Boolean isFollow;
 
     public ActorSimpleProfileDto(ActorProfile profile, Long id) {
