@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil'
 
 // import css
 import {
@@ -18,11 +19,12 @@ import "./ActorList.css";
 import PageBar from '../Common/CommonComponent/PageBar';
 import SearchBar from '../Common/CommonComponent/SearchBar';
 import Button from '../Common/CommonComponent/Button';
+import { googleToken } from 'recoil/recoilActorState'
 
 
 const ActorList = () => {
   const navigate = useNavigate();
-  const token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDAwMDEiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZW1haWwiOiJkZGY5OThAZ21haWwuY29tIiwiZXhwIjoxNjc4MjU2MjEyfQ.gSBnEPdb7LPDgTMwi5fDDlEdYxgbdJ6hInbddudS9suerZhCPuHDV3P9C6ygWTacOvhfT9tS8i94LP1qSszc0w';
+  const token = useRecoilValue(googleToken)
 
   const [actorList, setActorList] = useState([]);
 

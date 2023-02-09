@@ -8,35 +8,38 @@ import { storage } from '../../../imageup/firebase';
 import { v4 } from 'uuid';
 
 // import recoil
-import { actorProfile, actorPhotoUrl, actorPhotoLists, googleToken } from 'recoil/recoilActorState'
+import { actorProfile, actorVideoUrl, actorVideoLists, googleToken } from 'recoil/recoilActorState'
 
 // import css
 import '../../../components/Casting/Casting.css';
-import './ActorPhoto.css';
+import './ActorVideo.css';
 
-function ActorPhotoUpload(props) {
-  console.log('test')
-  const [ActorPhotoUploaded, setActorPhotoUploaded] = useState(null);
-  // const [actPhotoUrl, setActPhotoUrl] = useState('');
-  // const [actorPhotos, setActorPhotos] = useRecoilState(actorPhotoLists);
-  const ActorPhotoDirectory = useRecoilValue(actorPhotoUrl)
+function ActorVideoUpload(props) {
+  const [ActorVideoUploaded, setActorVideoUploaded] = useState(null);
+  // const [actVideoUrl, setActVideoUrl] = useState('');
+  // const [actorVideos, setActorVideos] = useRecoilState(actorVideoLists);
+  const ActorVideoDirectory = useRecoilValue(actorVideoUrl)
   const actorInfo = useRecoilValue(actorProfile)
 
-  const ActorPhotosListRef = ref(storage, ActorPhotoDirectory);
+  const ActorVideosListRef = ref(storage, ActorVideoDirectory);
 
   const token = useRecoilValue(googleToken)
 
   const uploadFile = () => {
-    if (ActorPhotoUploaded === null) return;
-    const imageRef = ref(storage, `${ActorPhotoDirectory}/${ActorPhotoUploaded.name + v4()}`)
-    uploadBytes(imageRef, ActorPhotoUploaded).then((snapshot) => {
+    console.log(ActorVideoUploaded, '개답해 대코')
+    console.log('뭐해?')
+    if (ActorVideoUploaded === null) return;
+    console.log('일안해?')
+    const imageRef = ref(storage, `${ActorVideoDirectory}/${ActorVideoUploaded.name + v4()}`)
+    uploadBytes(imageRef, ActorVideoUploaded).then((snapshot) => {
       getDownloadURL(snapshot.ref)
         .then((url) => {
-          // setActPhotoUrl(url);
+            console.log('업로드가 잘 되고 잇나요', url)
+          // setActVideoUrl(url);
         const content = {
-          originName: `${actorInfo.name}'s picture`,
-          savedName: `picture ${actorInfo.name}`,
-          type: "PICTURE",
+          originName: `${actorInfo.name}'s video`,
+          savedName: `video ${actorInfo.name}`,
+          type: "video",
           url: url
         }
         // axios.post(`http://i8a702.p.ssafy.io:8085/api/actors/${actorInfo.actorProfileId}/media`,
@@ -60,32 +63,37 @@ function ActorPhotoUpload(props) {
   // useEffect(() => {
   //   axios.get(`http://i8a702.p.ssafy.io:8085/api/actors/100001/media`)
   //     .then((res) => {
-  //       setActorPhotos(res.data.result.pictures)
-  //       console.log(res.data.result.pictures)
+  //       setActorVideos(res.data.result.videos)
+  //       console.log(res.data.result.videos)
   //     })
   //     .catch((err) => {
   //       console.log(err)
   //     })
-  // }, [setActorPhotos]);
+  // }, [setActorVideos]);
 
 
   // useEffect(() => {
-  //   listAll(ActorPhotosListRef).then((response) => {
+  //   listAll(ActorVideosListRef).then((response) => {
   //     // console.log(response.items[response.items.length - 1])
   //     response.items.forEach((item) => {
   //       getDownloadURL(item).then((url) => {
-  //         setActPhotoUrl((prev) => [...prev, url]);
-  //         // setActPhotoUrl((prev) => [url]);
+  //         setActVideoUrl((prev) => [...prev, url]);
+  //         // setActVideoUrl((prev) => [url]);
   //       });
   //     });
   //   });
   // }, []);
 
+  useEffect(() => {
+    console.log(ActorVideoUploaded, '제발 잘나와줘')
+  }, [ActorVideoUploaded])
+  
+
   return (
     <div>
-      <div className="photo-list">
-        {/*{actPhotoUrl.map((url, idx) => (*/}
-        {/*    <div className='photo' key={idx}*/}
+      <div className="Video-list">
+        {/*{actVideoUrl.map((url, idx) => (*/}
+        {/*    <div className='Video' key={idx}*/}
         {/*         width={"200px"}*/}
         {/*         height={"200px"}>*/}
         {/*      <img*/}
@@ -98,12 +106,12 @@ function ActorPhotoUpload(props) {
         {/*    </div>*/}
         {/*  )*/}
         {/*)}*/}
-        {/*{actorPhotos.length > 0 && actorPhotos.map((actorPhoto, idx) => (*/}
-        {/*  <div className='photo'*/}
+        {/*{actorVideos.length > 0 && actorVideos.map((actorVideo, idx) => (*/}
+        {/*  <div className='Video'*/}
         {/*       key={idx}*/}
         {/*       width={"200px"}*/}
         {/*       height={"200px"}>*/}
-        {/*    <img src={actorPhoto.url}*/}
+        {/*    <img src={actorVideo.url}*/}
         {/*         alt='image'*/}
         {/*         object-fit={"contain"}*/}
         {/*         className="object-center"*/}
@@ -111,7 +119,7 @@ function ActorPhotoUpload(props) {
         {/*  </div>*/}
         {/*))}*/}
         <div className="file-box">
-          <label for='file-photo'>
+          <label for='file-video'>
             <img
               src="https://www.w3schools.com/howto/img_avatar2.png"
               width={"200px"}
@@ -122,10 +130,11 @@ function ActorPhotoUpload(props) {
           </label>
           <input
             type="file"
-            id="file-photo"
+            id="file-video"
             onChange={(e) => {
-            setActorPhotoUploaded(e.target.files[0])}
+            setActorVideoUploaded(e.target.files[0])}
             }
+    
           />
           <button
             onClick={uploadFile}
@@ -138,4 +147,4 @@ function ActorPhotoUpload(props) {
   );
 }
 
-export default ActorPhotoUpload;
+export default ActorVideoUpload;

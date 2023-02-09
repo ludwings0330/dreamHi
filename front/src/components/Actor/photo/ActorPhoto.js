@@ -1,29 +1,30 @@
 import React, {useEffect} from 'react';
 import './ActorPhoto.css';
 import ActorPhotoUpload from './ActorPhotoUpload';
-import { actorProfileId, actorPhotoUrl, actorProfile, actorPhotoLists } from '../recoilActorState'
+import { actorProfileId, actorPhotoUrl, actorProfile, actorPhotoLists } from 'recoil/recoilActorState'
 import { useRecoilValue, useRecoilState } from 'recoil'
 import axios from 'axios'
 
 const ActorPhoto = () => {
-  const actorPhotos = useRecoilValue(actorPhotoLists);
-  const actorPhotoList = useRecoilValue(actorPhotoLists)
+  const [actorPhotos, setActorPhotos] = useRecoilState(actorPhotoLists)
+  // const actorPhotos = useRecoilValue(actorPhotoLists);
+  
   const setSelected = (idx) => {
-    document.querySelector('.actor-photo-main').innerHTML=`<img src=${actorPhotoList[idx].url} alt=${actorPhotoList[idx]}/>`
+    document.querySelector('.actor-photo-main').innerHTML=`<img src=${actorPhotos[idx].url} alt=${actorPhotos[idx]}/>`
   };
 
   console.log(actorPhotos,'안되는')
   // console.log(actorPhotos[0].url, '안되냐ㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑ')
-  // useEffect(() => {
-  //   axios.get(`http://i8a702.p.ssafy.io:8085/api/actors/100001/media`)
-  //     .then((res) => {
-  //       setActorPhotos(res.data.result.pictures)
-  //       console.log(res.data.result.pictures, '잘 찍히나요?')
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //     })
-  // }, [setActorPhotos]);
+  useEffect(() => {
+    axios.get(`http://i8a702.p.ssafy.io:8085/api/actors/100001/media`)
+      .then((res) => {
+        setActorPhotos(res.data.result.pictures)
+        console.log(res.data.result.pictures, '잘 찍히나요?')
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }, [setActorPhotos]);
 
   return (
     <div className="bg-white">
@@ -33,7 +34,7 @@ const ActorPhoto = () => {
 
         <div className="list-container">
           <div className='actor-photo-main'>
-            <img src={actorPhotoList[0].url} alt={actorPhotoList[0].url}/>
+            <img src={actorPhotos[0].url} alt={actorPhotos[0].url}/>
           </div>
           {actorPhotos.length > 0 && actorPhotos.map((actorPhoto, idx) => (
             <div className='photo'
@@ -41,29 +42,13 @@ const ActorPhoto = () => {
                  width={"200px"}
                  height={"200px"}>
               <img src={actorPhoto.url}
-                   alt='image'
-                   object-fit={"contain"}
-                   className="object-center"
-                   onClick={() => setSelected(idx)}
-              />
+                alt='image'
+                object-fit={"contain"}
+                className="object-center"
+                onClick={() => setSelected(idx)}
+               />
             </div>
           ))}
-
-          {/*<div className='photo-list'>*/}
-          {/*  {products.map((product, idx) => (*/}
-          {/*    idx === 0 ? null :*/}
-          {/*      <div className='photo' key={product.id}>*/}
-          {/*        <img*/}
-          {/*          src={product.imageSrc}*/}
-          {/*          alt={product.imageAlt}*/}
-          {/*          width={"200px"}*/}
-          {/*          height={"200px"}*/}
-          {/*          className="object-center"*/}
-          {/*          onClick={() => setSelected(idx)}*/}
-          {/*        />*/}
-          {/*      </div>*/}
-          {/*  ))}*/}
-          {/*</div>*/}
 
           <ActorPhotoUpload />
         </div>
