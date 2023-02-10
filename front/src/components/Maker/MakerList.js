@@ -51,7 +51,11 @@ const MakerList = () => {
           <div>
               <MDBRow className='row-cols-1 row-cols-md-4 g-4'>
                   {MakerList.length > 0 && MakerList.map((maker, idx) => (
+<<<<<<< Updated upstream
                       <Link to={`/maker/detail`}>
+=======
+                      <Link to={`/maker/detail/${maker.makerProfileId}`}>
+>>>>>>> Stashed changes
                           <MDBCol key={idx} className='h-100'>
                               <MDBCard className='h-100'>
                                   <MDBCardImage
@@ -92,12 +96,5 @@ const MakerList = () => {
       );
 };
 
-// <Link to={"/maker/detail"}>
-//     <div className="maker">
-//         <div className="maker_img"><img src="/img/elephant.png" className="actor_img"/></div>
-//         <h5 className="maker_title"> 제작사 소개</h5>
-//         <p className="maker_des"> 제작사 소개 요약</p>
-//     </div>
-// </Link>
 
 export default MakerList;

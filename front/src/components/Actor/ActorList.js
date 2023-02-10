@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil'
 
 // import css
 import {
-  MDBCard,
-  MDBCardImage,
-  MDBCardBody,
-  MDBCardTitle,
-  MDBCardText,
-  MDBRow,
-  MDBCol
+    MDBCard,
+    MDBCardImage,
+    MDBCardBody,
+    MDBCardTitle,
+    MDBCardText,
+    MDBRow,
+    MDBCol
 } from 'mdb-react-ui-kit';
 import "./ActorList.css";
 
@@ -21,6 +20,8 @@ import SearchBar from '../Common/CommonComponent/SearchBar';
 import Button from '../Common/CommonComponent/Button';
 import { googleToken } from 'recoil/recoilActorState'
 
+import {useRecoilValue} from "recoil";
+import {actorListSelector} from "recoil/actor/actorStore";
 
 const ActorList = () => {
   const navigate = useNavigate();

@@ -15,6 +15,7 @@ const api = axios.create({
     },
 })
 
+})
 /**
  * 1. 요청 인터셉터
  * - 요청 직전 수행할 콜백 함수
@@ -30,16 +31,16 @@ api.interceptors.request.use(
         return Promise.reject(error);
     }
 );
-    
-    /**
-     * 2. 응답 인터셉터
-     * - 응답 데이터 가공 콜백 함수
-     * - error 데이터 가공 콜백 함수
-    */
+
+/**
+ * 2. 응답 인터셉터
+ * - 응답 데이터 가공 콜백 함수
+ * - error 데이터 가공 콜백 함수
+ */
 api.interceptors.response.use(
     function(response) {
         // response data 가공
-    return response;
+        return response;
     },
 
     async function(error) {

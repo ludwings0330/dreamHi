@@ -7,14 +7,14 @@ import App from './App';
 import { RecoilRoot, atom, selector, useRecoilState, useRecoilValue } from 'recoil';
 
 ReactDOM.render(
-  <RecoilRoot>
-  <Suspense fallback={<div>Loading...</div>}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Suspense>
-  </RecoilRoot>,
-  document.getElementById('root'),
+    <RecoilRoot>
+        <Suspense fallback={<div>Loading...</div>}>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+        </Suspense>
+    </RecoilRoot>,
+    document.getElementById('root'),
 );
 
 // If you want to start measuring performance in your app, pass a function

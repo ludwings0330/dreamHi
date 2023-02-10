@@ -58,6 +58,7 @@ const ActorInfo = () => {
 
     //스타일 관련
     const [checkedStyles, setCheckedList] = useState([]);
+    const MAX_SELECTED_OPTIONS = 5; 
 
     const stylesList = [
         {id: '32', description: '귀여운' },
@@ -81,7 +82,7 @@ const ActorInfo = () => {
             setCheckedList([...checkedStyles, item]);
         } else if (!checked) {
             setCheckedList(checkedStyles.filter(el => el !== item));
-        }
+        } 
     };
 
     //체크박스 해지 메소드
