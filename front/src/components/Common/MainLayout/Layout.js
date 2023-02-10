@@ -1,18 +1,24 @@
 import React from 'react';
+import './Layout.css';
 import MainFooter from './MainFooter';
 import MainHeader from './MainHeader';
 
 const Layout = (props) => {
-  return (
-    <div>
-      <MainHeader />
-      <main>
-        {props.children}
-      </main>
+    return (
+        <>
+            <header id={"main-header"}>
+                <MainHeader/>
+            </header>
 
-      <MainFooter />
-    </div>
-  );
+            <main id={"main-content"}>
+                {props.children}
+            </main>
+
+            <footer id={"main-footer"}>
+                <MainFooter/>
+            </footer>
+        </>
+    );
 };
 
 export default Layout;

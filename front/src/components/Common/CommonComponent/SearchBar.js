@@ -8,11 +8,14 @@ import axios from 'axios';
 import Button from '../CommonComponent/Button';
 
 //import css
-import './SearchBar.css';
 
 
 
-const SearchBar = () => {
+
+
+
+
+const SearchBar = ({actorList,setActorList}) => {
   const token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDAwMDEiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZW1haWwiOiJkZGY5OThAZ21haWwuY29tIiwiZXhwIjoxNjc4MjU2MjEyfQ.gSBnEPdb7LPDgTMwi5fDDlEdYxgbdJ6hInbddudS9suerZhCPuHDV3P9C6ygWTacOvhfT9tS8i94LP1qSszc0w';
 
 
@@ -21,12 +24,12 @@ const SearchBar = () => {
     const sendData = {
 
       "filter": {
-        "name": name,
-        "height": height,
-        "age": age,
-        "gender": selectGender,
-        "styles" : checkedStyles,
-        "isFollow": "false",
+        "name": "user10",
+        "height": 161,
+        "age": 61,
+        "gender": "MALE",
+        "styles" : [7,8,20,23],
+        "isFollow": false,
       },
       "page": 0,
       "size": 8
@@ -34,10 +37,13 @@ const SearchBar = () => {
 
     };
 
-    console.log(sendData)
-    axios
+
+    const params = { search:{sendData} };
+
+    console.log(sendData);
+    console.log(  axios
         .get('http://i8a702.p.ssafy.io:8085/api/actors',
-            sendData, {
+            {
               headers: {
                 Authorization: `Bearer ${token}`,
 
@@ -45,13 +51,19 @@ const SearchBar = () => {
             })
         .then((res) => {
           alert('성공');
+          console.log(res.data.result.content,' 데이터ㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓ');
+
           console.log(res.data);
+
+          setActorList([res.data.result.content[1]])
+
         })
         .catch((error) => {
           console.log('실패...');
           console.log(sendData)
           console.log(error);
-        });
+        }))
+
 
 
   };

@@ -1,66 +1,67 @@
-import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom'
+import React, {useEffect} from 'react';
+import {useParams} from 'react-router-dom'
 import './ActorVideo.css';
 import ActorVideoUpload from './ActorVideoUpload';
-import { actorProfileId, actorPhotoUrl, actorProfile, actorVideoLists } from 'recoil/recoilActorState'
-import { useRecoilValue, useRecoilState } from 'recoil'
+import {actorProfileId, actorPhotoUrl, actorProfile, actorVideoLists} from 'recoil/recoilActorState'
+import {useRecoilValue, useRecoilState} from 'recoil'
 import axios from 'axios'
 
 const ActorVideo = () => {
-  const { actorProfileId } = useParams()
-  console.log(actorProfileId)
-  const [actorVideos, setActorVideos] = useRecoilState(actorVideoLists)
-  // const actorVideos = useRecoilValue(actorVideoLists);
-  
-  const setSelected = (idx) => {
-    document.querySelector('.actor-video-main').innerHTML=`<video src=${actorVideos[idx].url} alt=${actorVideos[idx]} controls />`
-  };
+    const {actorProfileId} = useParams()
+    console.log(actorProfileId)
+    const [actorVideos, setActorVideos] = useRecoilState(actorVideoLists)
+    // const actorVideos = useRecoilValue(actorVideoLists);
 
-  console.log(actorVideos,'비디오 리스트')
-  // console.log(actorVideos[0].url, '안되냐ㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑ')
-  useEffect(() => {
-    axios.get(`http://i8a702.p.ssafy.io:8085/api/actors/100001/media`)
-    // axios.get(`http://i8a702.p.ssafy.io:8085/api/actors/${actorProfileId}/media`)
-      .then((res) => {
-        setActorVideos(res.data.result.videos)
-        console.log(res.data.result.videos, '잘 찍히나요?')
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }, [setActorVideos]);
+    const setSelected = (idx) => {
+        document.querySelector(
+            '.actor-video-main'
+        ).innerHTML = `<video src=${actorVideos[idx].url} alt=${actorVideos[idx]} />`
+    };
 
-  return (
-    <div className="bg-white">
+    console.log(actorVideos, '비디오 리스트')
+    // console.log(actorVideos[0].url, '안되냐ㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑ')
+    useEffect(() => {
+        // axios.get(`http://i8a702.p.ssafy.io:8085/api/actors/100001/media`)
+        axios.get(`http://i8a702.p.ssafy.io:8085/api/actors/${actorProfileId}/media`)
+            .then((res) => {
+                setActorVideos(res.data.result.videos)
+                console.log(res.data.result.videos, '잘 찍히나요?')
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }, [setActorVideos]);
 
-      <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
-        <h1>프로필사진</h1>
+    return (
+        <div className="bg-white">
+            <h1>연기영상</h1>
 
-        <div className="list-container">
-          <div className='actor-video-main'>
-            {/* <video src={actorVideos[0].url} alt={actorVideos[0].url}/> */}
-            <video src="https://firebasestorage.googleapis.com/v0/b/dreamhi-17f24.appspot.com/o/images%2F00f5b771.mp4?alt=media&token=293dd7f5-a5ea-4a78-8ccc-8b11e4f7d25c" alt={actorVideos[0].url} controls width={"200px"} />
-          </div>
-          {actorVideos.length > 0 && actorVideos.map((actorVideo, idx) => (
-            <div className='photo'
-                 key={idx}
-                 width={"200px"}
-                 height={"200px"}>
-              <video src={actorVideo.url}
-                alt='image'
-                object-fit={"contain"}
-                className="object-center"
-                onClick={() => setSelected(idx)}
-               />
+            {/*연기영상 전체 틀*/}
+            <div className="actor-video-whole">
+
+                {/*연기영상 메인*/}
+                <div className='actor-video-main'>
+                    <video src={actorVideos[0].url} alt={actorVideos[0].url}/>
+                </div>
+
+                {/*연기영상 list*/}
+                {actorVideos.length > 0 &&
+                actorVideos.map((actorVideo, idx) => (
+                    <div className='actor-video-list'
+                         key={idx}>
+                        <video
+                            src={actorVideo.url}
+                            alt='image'
+                            onClick={() => setSelected(idx)}
+                        />
+                    </div>
+                ))}
+
+                <ActorVideoUpload/>
             </div>
-          ))}
-
-          <ActorVideoUpload />
         </div>
-      </div>
-    </div>
 
-  );
+    );
 };
 
 export default ActorVideo;

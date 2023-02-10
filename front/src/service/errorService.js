@@ -6,15 +6,15 @@ function ErrorCode(response) {
     switch (code) {
         case 204:
             Swal.fire({
-                title: code, 
-                text: message, 
+                title: code,
+                text: message,
                 icon: "info"
             });
             break;
         case 400:
             Swal.fire({
-                title: code, 
-                text: message, 
+                title: code,
+                text: message,
                 icon: "error"
             });
             return;
@@ -25,21 +25,21 @@ function ErrorCode(response) {
                 text: message,
                 icon: "info"
             }).then(function() {
-                window.location.href="http://i8a702.p.ssafy.io/login";
-                // window.location.href="http://localhost:3000/login";
+                // window.location.href="http://i8a702.p.ssafy.io/login";
+                window.location.href="/login";
             })
             return;
         case 403: case 404: case 409: case 500:
             Swal.fire({
-                title: code, 
-                text: message, 
+                title: code,
+                text: message,
                 icon: "error"
             });
             return;
         default:
             Swal.fire({
-                title: code, 
-                text: message, 
+                title: code,
+                text: message,
                 icon: "error"
             });
             return;

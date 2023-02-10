@@ -106,7 +106,7 @@ const ActorInfo = () => {
 
     return (
         <>
-            <SearchBar />
+            {/*<SearchBar />*/}
             <form className={"actor-info"}>
 
                 <div>
