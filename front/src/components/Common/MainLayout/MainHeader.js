@@ -52,7 +52,7 @@ function MainHeader() {
   };
   useEffect(()=> {
     console.log(userSimple);
-  }, userSimple)
+  }, [userSimple])
   
 
   return (
