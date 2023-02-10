@@ -12,7 +12,7 @@ import {
     MDBRow,
     MDBCol
 } from 'mdb-react-ui-kit';
-import {} from './MakerList.css'
+import { } from './MakerList.css'
 
 //import common
 import SearchBar from '../Common/CommonComponent/SearchBar';
@@ -35,7 +35,7 @@ const MakerList = () => {
             })
             .then((res) => {
                 setMakerList(res.data.result.content)
-                console.log(res.data.result.content,' 데이터ㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓ');
+                console.log(res.data.result.content, ' 데이터ㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓ');
             })
             .catch((error) => {
                 console.log('실패실패ㅠㅠ');
@@ -45,45 +45,45 @@ const MakerList = () => {
     }, [setMakerList]);
 
     return (
-      <div>
-        <SearchBar />
-          <div>
-              <MDBRow className='row-cols-1 row-cols-md-4 g-4'>
-                  {MakerList.length > 0 && MakerList.map((maker, idx) => (
-                      <Link to={`/maker/detail/${maker.makerProfileId}`}>
-                          <MDBCol key={idx} className='h-100'>
-                              <MDBCard className='h-100'>
-                                  <MDBCardImage
-                                      src={maker.spictureUrl}
-                                      alt={`${maker.name}'s picture`}
-                                      position='top'
-                                      height='200px'
-                                      object-fit='cover'
-                                  />
-                                  <MDBCardBody>
-                                      <MDBCardTitle>{maker.title}</MDBCardTitle>
-                                      <MDBCardText>
-                                          {maker.height}
-                                          {maker.pictureUrl}
-                                      </MDBCardText>
-                                  </MDBCardBody>
-                              </MDBCard>
-                          </MDBCol>
-                      </Link>
-                  ))}
-              </MDBRow>
-          </div>
+        <div>
+            <SearchBar />
+            <div>
+                <MDBRow className='row-cols-1 row-cols-md-4 g-4'>
+                    {MakerList.length > 0 && MakerList.map((maker, idx) => (
+                        <Link to={`/maker/detail/${maker.makerProfileId}`}>
+                            <MDBCol key={idx} className='h-100'>
+                                <MDBCard className='h-100'>
+                                    <MDBCardImage
+                                        src={maker.spictureUrl}
+                                        alt={`${maker.name}'s picture`}
+                                        position='top'
+                                        height='200px'
+                                        object-fit='cover'
+                                    />
+                                    <MDBCardBody>
+                                        <MDBCardTitle>{maker.title}</MDBCardTitle>
+                                        <MDBCardText>
+                                            {maker.height}
+                                            {maker.pictureUrl}
+                                        </MDBCardText>
+                                    </MDBCardBody>
+                                </MDBCard>
+                            </MDBCol>
+                        </Link>
+                    ))}
+                </MDBRow>
+            </div>
 
 
-        <Button
-          title="글작성"
-          onClick={() => {
-            navigate("/maker/write")
-          }} />
+            <Button
+                title="글작성"
+                onClick={() => {
+                    navigate("/maker/write")
+                }} />
 
 
-      </div>
-      );
+        </div>
+    );
 };
 
 // <Link to={"/maker/detail"}>

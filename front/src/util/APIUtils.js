@@ -27,7 +27,7 @@ api.interceptors.request.use(
         // before send request logic
         return config;
     },
-    function(error) {
+    function (error) {
         // before send error logic
         return Promise.reject(error);
     }
@@ -39,12 +39,12 @@ api.interceptors.request.use(
  * - error 데이터 가공 콜백 함수
  */
 api.interceptors.response.use(
-    function(response) {
+    function (response) {
         // response data 가공
         return response;
     },
 
-    async function(error) {
+    async function (error) {
         // error data 가공
         ErrorCode(error.response);
         return Promise.reject(error);

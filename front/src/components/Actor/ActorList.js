@@ -4,13 +4,13 @@ import { Link, useNavigate } from 'react-router-dom';
 
 // import css
 import {
-    MDBCard,
-    MDBCardImage,
-    MDBCardBody,
-    MDBCardTitle,
-    MDBCardText,
-    MDBRow,
-    MDBCol
+  MDBCard,
+  MDBCardImage,
+  MDBCardBody,
+  MDBCardTitle,
+  MDBCardText,
+  MDBRow,
+  MDBCol
 } from 'mdb-react-ui-kit';
 import "./ActorList.css";
 
@@ -21,7 +21,7 @@ import Button from '../Common/CommonComponent/Button';
 import { googleToken } from 'recoil/recoilActorState'
 import { actorListSelector } from "recoil/actor/actorStore"
 
-import {useRecoilValue} from "recoil";
+import { useRecoilValue } from "recoil";
 
 
 const ActorList = () => {
@@ -61,39 +61,39 @@ const ActorList = () => {
   //     });
 
   // }, [setActorList]);
-  
-  
 
-  
+
+
+
 
   return (
     <div>
       <SearchBar />
       <div>
-      <MDBRow className='row-cols-1 row-cols-md-4 g-4'>
-        {actorList.length > 0 && actorList.map((actor, idx) => (
-          <Link to={`/actor/detail/${actor.actorProfileId}`} key={idx}>
-            <MDBCol key={idx} className='h-100'>
-              <MDBCard className='h-100'>
-                <MDBCardImage
-                  src={actor.pictureUrl}
-                  alt={`${actor.name}'s picture`}
-                  position='top'
-                  height='200px'
-                  object-fit='cover'
-                />
-                <MDBCardBody>
-                  <MDBCardTitle>{actor.title}</MDBCardTitle>
-                  <MDBCardText>
-                    {actor.height}
-                    {actor.pictureUrl}
-                  </MDBCardText>
-                </MDBCardBody>
-              </MDBCard>
-            </MDBCol>
-          </Link>
-        ))}
-      </MDBRow>
+        <MDBRow className='row-cols-1 row-cols-md-4 g-4'>
+          {actorList.length > 0 && actorList.map((actor, idx) => (
+            <Link to={`/actor/detail/${actor.actorProfileId}`} key={idx}>
+              <MDBCol key={idx} className='h-100'>
+                <MDBCard className='h-100'>
+                  <MDBCardImage
+                    src={actor.pictureUrl}
+                    alt={`${actor.name}'s picture`}
+                    position='top'
+                    height='200px'
+                    object-fit='cover'
+                  />
+                  <MDBCardBody>
+                    <MDBCardTitle>{actor.title}</MDBCardTitle>
+                    <MDBCardText>
+                      {actor.height}
+                      {actor.pictureUrl}
+                    </MDBCardText>
+                  </MDBCardBody>
+                </MDBCard>
+              </MDBCol>
+            </Link>
+          ))}
+        </MDBRow>
       </div>
       {/*<Link to={`/actor/detail/`}>*/}
       {/*  <div className="actor">*/}
