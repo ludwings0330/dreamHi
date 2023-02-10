@@ -19,6 +19,7 @@ import PageBar from '../Common/CommonComponent/PageBar';
 import SearchBar from '../Common/CommonComponent/SearchBar';
 import Button from '../Common/CommonComponent/Button';
 import { googleToken } from 'recoil/recoilActorState'
+import { actorListSelector } from "recoil/actor/actorStore"
 
 import {useRecoilValue} from "recoil";
 import {actorListSelector} from "recoil/actor/actorStore";
@@ -27,26 +28,39 @@ const ActorList = () => {
   const navigate = useNavigate();
   const token = useRecoilValue(googleToken)
 
-  const [actorList, setActorList] = useState([]);
+  const actorList = useRecoilValue(actorListSelector());
+
+  useEffect(() => {
+    console.log(actorList);
+  }, []);
+
+
+
+
+
+
+
+
+  // const [actorList, setActorList] = useState([]);
 
   // api 요청 보내서 배우 목록 확보
-  useEffect(() => {
-    axios.get('http://i8a702.p.ssafy.io:8085/api/actors',
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        setActorList(res.data.result.content)
-        console.log(res.data.result.content,'데이터');
-      })
-      .catch((error) => {
-        console.log('실패실패ㅠㅠ');
-        console.log(error);
-      });
+  // useEffect(() => {
+  //   axios.get('http://i8a702.p.ssafy.io:8085/api/actors',
+  //     {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     })
+  //     .then((res) => {
+  //       setActorList(res.data.result.content)
+  //       console.log(res.data.result.content,'데이터');
+  //     })
+  //     .catch((error) => {
+  //       console.log('실패실패ㅠㅠ');
+  //       console.log(error);
+  //     });
 
-  }, [setActorList]);
+  // }, [setActorList]);
   
   
 

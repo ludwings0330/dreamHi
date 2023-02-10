@@ -1,7 +1,8 @@
 import axios from "axios";
+import { API_BASE_URL } from "constants/index";
 import ErrorCode from "service/errorService";
 import { parse, stringify } from "qs";
-import { API_BASE_URL } from "constants/index";
+
 
 const api = axios.create({
     baseURL: API_BASE_URL,
@@ -11,7 +12,7 @@ const api = axios.create({
     },
     paramsSerializer: {
         encode: parse,
-        serialize: stringify,
+        serialize: stringify
     },
 })
 

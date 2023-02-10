@@ -3,8 +3,18 @@ import AnnouncementListItem from './AnnouncementListItem';
 import SearchBar from '../Common/CommonComponent/SearchBar';
 import PageBar from '../Common/CommonComponent/PageBar';
 
+import { useRecoilValue } from 'recoil';
+import { announcementListSelector } from 'recoil/announcement/announcementStore';
+
+
 function AnnouncementList(props) {
-  const { announcements, onClickItem } = props;
+  // const { announcements, onClickItem } = props;
+
+  const announcementList = useRecoilValue(announcementListSelector())
+
+  useEffect(() =>{
+    console.log('😁👻👻👻',announcementList)
+  }, [])
 
 
   // useEffect()
@@ -12,7 +22,9 @@ function AnnouncementList(props) {
   return (
     <div className="announcement-post-container">
       <h2> 공고리스트페이지 </h2>
-      <SearchBar />
+
+
+      {/* <SearchBar />
 
       {announcements.map(function (announcement, index) {
         return (
@@ -26,7 +38,7 @@ function AnnouncementList(props) {
         );
       })}
 
-      <PageBar />
+      <PageBar /> */}
     </div>
   );
 }

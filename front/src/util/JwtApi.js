@@ -2,9 +2,8 @@ import axios from "axios";
 import { ACCESS_TOKEN } from "constants/index";
 import { reissueAccessToken } from "service/authService";
 import ErrorCode from "service/errorService";
-import { parse, stringify } from "qs";
-
 import { API_BASE_URL } from "constants/index";
+import { parse, stringify } from "qs";
 
 const jwtApi = axios.create({
     baseURL: API_BASE_URL,
@@ -14,7 +13,7 @@ const jwtApi = axios.create({
     },
     paramsSerializer: {
         encode: parse,
-        serialize: stringify,
+        serialize: stringify
     },
 })
 
