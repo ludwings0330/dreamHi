@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import AnnouncementListItem from './AnnouncementListItem';
 import SearchBar from '../Common/CommonComponent/SearchBar';
-import PageBar from '../Common/CommonComponent/PageBar';
 
 import { useRecoilValue } from 'recoil';
 import { announcementListSelector } from 'recoil/announcement/announcementStore';
