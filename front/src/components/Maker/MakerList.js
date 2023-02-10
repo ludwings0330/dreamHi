@@ -16,7 +16,6 @@ import {} from './MakerList.css'
 
 //import common
 import SearchBar from '../Common/CommonComponent/SearchBar';
-import PageBar from '../Common/CommonComponent/PageBar';
 import Button from '../Common/CommonComponent/Button';
 
 const MakerList = () => {
@@ -51,15 +50,11 @@ const MakerList = () => {
           <div>
               <MDBRow className='row-cols-1 row-cols-md-4 g-4'>
                   {MakerList.length > 0 && MakerList.map((maker, idx) => (
-<<<<<<< Updated upstream
-                      <Link to={`/maker/detail`}>
-=======
                       <Link to={`/maker/detail/${maker.makerProfileId}`}>
->>>>>>> Stashed changes
                           <MDBCol key={idx} className='h-100'>
                               <MDBCard className='h-100'>
                                   <MDBCardImage
-                                      src={maker.pictureUrl}
+                                      src={maker.spictureUrl}
                                       alt={`${maker.name}'s picture`}
                                       position='top'
                                       height='200px'
@@ -80,21 +75,23 @@ const MakerList = () => {
           </div>
 
 
-          <div className={"maker-regist-button"}>
         <Button
           title="글작성"
           onClick={() => {
             navigate("/maker/write")
           }} />
-          </div>
 
 
-        <div className={"page_bar"}>
-          <PageBar />
-        </div>
       </div>
       );
 };
 
+// <Link to={"/maker/detail"}>
+//     <div className="maker">
+//         <div className="maker_img"><img src="/img/elephant.png" className="actor_img"/></div>
+//         <h5 className="maker_title"> 제작사 소개</h5>
+//         <p className="maker_des"> 제작사 소개 요약</p>
+//     </div>
+// </Link>
 
 export default MakerList;

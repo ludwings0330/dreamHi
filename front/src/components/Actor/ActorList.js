@@ -22,7 +22,7 @@ import { googleToken } from 'recoil/recoilActorState'
 import { actorListSelector } from "recoil/actor/actorStore"
 
 import {useRecoilValue} from "recoil";
-import {actorListSelector} from "recoil/actor/actorStore";
+
 
 const ActorList = () => {
   const navigate = useNavigate();
