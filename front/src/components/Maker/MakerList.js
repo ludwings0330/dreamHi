@@ -12,11 +12,10 @@ import {
     MDBRow,
     MDBCol
 } from 'mdb-react-ui-kit';
-import {} from './MakerList.css'
+import { } from './MakerList.css'
 
 //import common
 import SearchBar from '../Common/CommonComponent/SearchBar';
-import PageBar from '../Common/CommonComponent/PageBar';
 import Button from '../Common/CommonComponent/Button';
 
 const MakerList = () => {
@@ -36,7 +35,7 @@ const MakerList = () => {
             })
             .then((res) => {
                 setMakerList(res.data.result.content)
-                console.log(res.data.result.content,' 데이터ㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓ');
+                console.log(res.data.result.content, ' 데이터ㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓ');
             })
             .catch((error) => {
                 console.log('실패실패ㅠㅠ');
@@ -46,55 +45,53 @@ const MakerList = () => {
     }, [setMakerList]);
 
     return (
-      <div>
-        <SearchBar />
-          <div>
-              <MDBRow className='row-cols-1 row-cols-md-4 g-4'>
-                  {MakerList.length > 0 && MakerList.map((maker, idx) => (
-<<<<<<< Updated upstream
-                      <Link to={`/maker/detail`}>
-=======
-                      <Link to={`/maker/detail/${maker.makerProfileId}`}>
->>>>>>> Stashed changes
-                          <MDBCol key={idx} className='h-100'>
-                              <MDBCard className='h-100'>
-                                  <MDBCardImage
-                                      src={maker.pictureUrl}
-                                      alt={`${maker.name}'s picture`}
-                                      position='top'
-                                      height='200px'
-                                      object-fit='cover'
-                                  />
-                                  <MDBCardBody>
-                                      <MDBCardTitle>{maker.title}</MDBCardTitle>
-                                      <MDBCardText>
-                                          {maker.height}
-                                          {maker.pictureUrl}
-                                      </MDBCardText>
-                                  </MDBCardBody>
-                              </MDBCard>
-                          </MDBCol>
-                      </Link>
-                  ))}
-              </MDBRow>
-          </div>
+        <div>
+            <SearchBar />
+            <div>
+                <MDBRow className='row-cols-1 row-cols-md-4 g-4'>
+                    {MakerList.length > 0 && MakerList.map((maker, idx) => (
+                        <Link to={`/maker/detail/${maker.makerProfileId}`}>
+                            <MDBCol key={idx} className='h-100'>
+                                <MDBCard className='h-100'>
+                                    <MDBCardImage
+                                        src={maker.spictureUrl}
+                                        alt={`${maker.name}'s picture`}
+                                        position='top'
+                                        height='200px'
+                                        object-fit='cover'
+                                    />
+                                    <MDBCardBody>
+                                        <MDBCardTitle>{maker.title}</MDBCardTitle>
+                                        <MDBCardText>
+                                            {maker.height}
+                                            {maker.pictureUrl}
+                                        </MDBCardText>
+                                    </MDBCardBody>
+                                </MDBCard>
+                            </MDBCol>
+                        </Link>
+                    ))}
+                </MDBRow>
+            </div>
 
 
-          <div className={"maker-regist-button"}>
-        <Button
-          title="글작성"
-          onClick={() => {
-            navigate("/maker/write")
-          }} />
-          </div>
+            <Button
+                title="글작성"
+                onClick={() => {
+                    navigate("/maker/write")
+                }} />
 
 
-        <div className={"page_bar"}>
-          <PageBar />
         </div>
-      </div>
-      );
+    );
 };
 
+// <Link to={"/maker/detail"}>
+//     <div className="maker">
+//         <div className="maker_img"><img src="/img/elephant.png" className="actor_img"/></div>
+//         <h5 className="maker_title"> 제작사 소개</h5>
+//         <p className="maker_des"> 제작사 소개 요약</p>
+//     </div>
+// </Link>
 
 export default MakerList;
