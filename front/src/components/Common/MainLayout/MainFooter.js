@@ -1,24 +1,31 @@
 import React from "react";
+import "bootstrap/scss/bootstrap.scss";
+
 
 import "./MainFooter.css";
 
 function MainFooter() {
-  return (
 
-    <footer className="footer-body">
+    const thisYear = () => {
+        const year = new Date().getFullYear();
+        return year;
+    };
 
-      <div className="footer-left">
-        <img src='/img/elephant.png' alt='elephant-logo' className="footer-logo" />
-        <span>© 2023 All Rights Reserved</span>
-      </div>
+    return (
+
+        <div id={"main-footer"}>
 
 
-      <div className="footer-right">
-        <p>Made by Africa Elephant</p>
+            <div className="footer-left">
+                <img src='/img/elephant.png' alt='elephant-logo' className="footer-logo"/>
+            </div>
 
-      </div>
-    </footer>
-  );
-}
+            <div className="footer-right">
+                <p>Made by Africa Elephant</p>
+            </div>
+
+        </div>
+    );
+};
 
 export default MainFooter;

@@ -1,29 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import { ACCESS_TOKEN } from '../../../constants';
+import React, {useState, useEffect} from 'react';
+import {ACCESS_TOKEN} from '../../../constants';
 
 import {
-  Navbar,
-  NavLink,
-  Container,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownItem,
-  DropdownMenu, Col, Row
+    Navbar,
+    NavLink,
+    Container,
+    UncontrolledDropdown,
+    DropdownToggle,
+    DropdownItem,
+    DropdownMenu, Col, Row
 } from "reactstrap";
 
 import Button from '../CommonComponent/Button';
-import { Link, useNavigate } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 
 
 // react-icons
-import { AiOutlineBell } from 'react-icons/ai'
-import { CgProfile } from "react-icons/cg";
+import {AiOutlineBell} from 'react-icons/ai'
+import {CgProfile} from "react-icons/cg";
 
 // css
 import './MainHeader.css';
 import "bootstrap/scss/bootstrap.scss";
-import { userSimpleSelector, userSimpleState } from 'recoil/user/userStore';
-import { useRecoilState } from 'recoil';
+import {userSimpleSelector, userSimpleState} from 'recoil/user/userStore';
+import {useRecoilState} from 'recoil';
 
 // api
 import {logout} from "service/authService";

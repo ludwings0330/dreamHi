@@ -11,7 +11,7 @@ export const userSimpleState = atom({
         pictureUrl: ""
     },
     effects_UNSTABLE: [persistAtom],
-})
+});
 
 // selector는 파생시킬 때 사용해야한다.
 // userSimpleState의 경우 초기 값으로 id가 들어오지 않기 때문에 안되는건가??

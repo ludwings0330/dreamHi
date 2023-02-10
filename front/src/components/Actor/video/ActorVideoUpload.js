@@ -1,14 +1,14 @@
 /* eslint-disable jsx-a11y/alt-text */
 import { useState, useEffect } from 'react';
 import { ref, uploadBytes, getDownloadURL, listAll } from 'firebase/storage';
-import { useRecoilValue, useRecoilState } from 'recoil'
-import axios from 'axios'
+import { useRecoilValue, useRecoilState } from 'recoil';
+import axios from 'axios';
 
 import { storage } from '../../../imageup/firebase';
 import { v4 } from 'uuid';
 
 // import recoil
-import { actorProfile, actorVideoUrl, actorVideoLists, googleToken } from 'recoil/recoilActorState'
+import { actorProfile, actorVideoUrl, actorVideoLists, googleToken } from 'recoil/recoilActorState';
 
 // import css
 import '../../../components/Casting/Casting.css';
@@ -18,44 +18,42 @@ function ActorVideoUpload(props) {
   const [ActorVideoUploaded, setActorVideoUploaded] = useState(null);
   // const [actVideoUrl, setActVideoUrl] = useState('');
   // const [actorVideos, setActorVideos] = useRecoilState(actorVideoLists);
-  const ActorVideoDirectory = useRecoilValue(actorVideoUrl)
-  const actorInfo = useRecoilValue(actorProfile)
+  const ActorVideoDirectory = useRecoilValue(actorVideoUrl);
+  const actorInfo = useRecoilValue(actorProfile);
 
   const ActorVideosListRef = ref(storage, ActorVideoDirectory);
 
-  const token = useRecoilValue(googleToken)
+  const token = useRecoilValue(googleToken);
 
   const uploadFile = () => {
-    console.log(ActorVideoUploaded, '개답해 대코')
-    console.log('뭐해?')
+    console.log(ActorVideoUploaded, '개답해 대코');
+    console.log('뭐해?');
     if (ActorVideoUploaded === null) return;
-    console.log('일안해?')
-    const imageRef = ref(storage, `${ActorVideoDirectory}/${ActorVideoUploaded.name + v4()}`)
+    console.log('일안해?');
+    const imageRef = ref(storage, `${ActorVideoDirectory}/${ActorVideoUploaded.name + v4()}`);
     uploadBytes(imageRef, ActorVideoUploaded).then((snapshot) => {
-      getDownloadURL(snapshot.ref)
-        .then((url) => {
-            console.log('업로드가 잘 되고 잇나요', url)
-          // setActVideoUrl(url);
+      getDownloadURL(snapshot.ref).then((url) => {
+        console.log('업로드가 잘 되고 잇나요', url);
+        // setActVideoUrl(url);
         const content = {
           originName: `${actorInfo.name}'s video`,
           savedName: `video ${actorInfo.name}`,
-          type: "video",
-          url: url
-        }
+          type: 'video',
+          url: url,
+        };
         // axios.post(`http://i8a702.p.ssafy.io:8085/api/actors/${actorInfo.actorProfileId}/media`,
-          axios.post(`http://i8a702.p.ssafy.io:8085/api/actors/100001/media`,
-          content,
-          {
+        axios
+          .post(`http://i8a702.p.ssafy.io:8085/api/actors/100001/media`, content, {
             headers: {
               Authorization: `Bearer ${token}`,
-            }
+            },
           })
           .then((res) => {
-            console.log('post success')
+            console.log('post success');
           })
           .catch((err) => {
-            console.log(err)
-          })
+            console.log(err);
+          });
       });
     });
   };
@@ -71,7 +69,6 @@ function ActorVideoUpload(props) {
   //     })
   // }, [setActorVideos]);
 
-
   // useEffect(() => {
   //   listAll(ActorVideosListRef).then((response) => {
   //     // console.log(response.items[response.items.length - 1])
@@ -85,9 +82,8 @@ function ActorVideoUpload(props) {
   // }, []);
 
   useEffect(() => {
-    console.log(ActorVideoUploaded, '제발 잘나와줘')
-  }, [ActorVideoUploaded])
-  
+    console.log(ActorVideoUploaded, '제발 잘나와줘');
+  }, [ActorVideoUploaded]);
 
   return (
     <div>
@@ -119,12 +115,12 @@ function ActorVideoUpload(props) {
         {/*  </div>*/}
         {/*))}*/}
         <div className="file-box">
-          <label for='file-video'>
+          <label for="file-video">
             <img
               src="https://www.w3schools.com/howto/img_avatar2.png"
-              width={"200px"}
-              height={"200px"}
-              object-fit={"cover"}
+              width={'200px'}
+              height={'200px'}
+              object-fit={'cover'}
               className="object-center"
             />
           </label>
@@ -132,15 +128,10 @@ function ActorVideoUpload(props) {
             type="file"
             id="file-video"
             onChange={(e) => {
-            setActorVideoUploaded(e.target.files[0])}
-            }
-    
+              setActorVideoUploaded(e.target.files[0]);
+            }}
           />
-          <button
-            onClick={uploadFile}
-          >
-            사진 올리기
-          </button>
+          <button onClick={uploadFile}>사진 올리기</button>
         </div>
       </div>
     </div>
