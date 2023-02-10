@@ -1,10 +1,12 @@
 import { ACCESS_TOKEN } from "constants/index";
 import api from "util/APIUtils";
+import jwtApi from "util/JwtApi";
 import ErrorCode from "./errorService";
+
+
 
 const reissueAccessToken = async () => {
     api.defaults.headers["Authorization"] = "Bearer " + localStorage.getItem("accessToken");
-    // api.defaults.headers["Authorization"] = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5IiwiYXV0aCI6IlJPTEVfVVNFUiIsImVtYWlsIjoiYmJiNDIyNEBuYXRlLmNvbSIsImV4cCI6MTY3NTg0NzIwMX0.JxV4s5snsSvWTDUHiLMw0jCNJeErptu3R4rHK8VGJhqZzHNeqVs5DtBxYca7TJV1qHjjzOqwRC8ApaACaHU8eQ";
     await api.post("/auth/refresh-token", {})
     .then((response) => {
         console.log(response);
@@ -15,11 +17,18 @@ const reissueAccessToken = async () => {
     });
 }
 
-const aaa = async (actorId, payload, success) => {
-    api.get(`/api/actors/${actorId}`, payload)
-    .then(success);
+const logout = async () => {
+    const result = await jwtApi.post("/api/logout")
+    .then((response) => {
+        console.log(response);
+        if(response.status === 202) {
+            localStorage.removeItem(ACCESS_TOKEN);
+        }
+        return response.status;
+    })
+    return result === 202 ? true : false;
 }
 
 export {
-    reissueAccessToken, aaa
+    reissueAccessToken, logout
 }

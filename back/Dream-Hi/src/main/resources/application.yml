@@ -5,6 +5,7 @@ spring:
       - dbconfig
       - jwt
       - security
+      - ssl
   #  config:
 #    import:
 #      - application-dbconfig.yml
