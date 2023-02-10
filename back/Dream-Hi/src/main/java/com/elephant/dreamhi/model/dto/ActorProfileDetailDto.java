@@ -21,7 +21,7 @@ public class ActorProfileDetailDto {
     private String email;
     private String name;
     private String phone;
-    private String picrtureUrl;
+    private String pictureUrl;
     private Long actorProfileId;
     private Integer age;
     private String description;
@@ -36,7 +36,7 @@ public class ActorProfileDetailDto {
         this.email = user.getEmail();
         this.name = user.getName();
         this.phone = user.getPhone();
-        this.picrtureUrl = user.getPicture() == null ? null : user.getPicture().getUrl();
+        this.pictureUrl = user.getPicture() == null ? null : user.getPicture().getUrl();
         this.actorProfileId = actorProfile.getId();
         this.title = actorProfile.getTitle();
         this.age = actorProfile.getAge();
