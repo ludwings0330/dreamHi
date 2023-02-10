@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ACCESS_TOKEN } from '../../../constants';
 
 import {
@@ -22,14 +22,39 @@ import { CgProfile } from "react-icons/cg";
 // css
 import './MainHeader.css';
 import "bootstrap/scss/bootstrap.scss";
+import { userSimpleSelector, userSimpleState } from 'recoil/user/userStore';
+import { useRecoilState } from 'recoil';
 
+// api
+import {logout} from "service/authService";
+
+// Swal
+import Swal from "sweetalert2";
 
 function MainHeader() {
   const navigate = useNavigate();
-  console.log(ACCESS_TOKEN,2512515123123);
-  const token = localStorage.getItem(ACCESS_TOKEN);
-  console.log(token,"token1111111111");
+  const [userSimple, setUserSimple] = useRecoilState(userSimpleState);
   
+  const logoutClick = async () => {
+    const isLogout = await logout();
+    if(isLogout) {
+      console.log("로그아웃 성공");
+      setUserSimple({});
+      Swal.fire({
+        title: "감사합니다 😀",
+        text: "로그아웃!!",
+        icon: "success"
+      }).then(function() {
+          // window.location.href="http://i8a702.p.ssafy.io/login";
+          window.location.href="/";
+      })
+    } 
+  };
+  useEffect(()=> {
+    console.log(userSimple);
+  }, userSimple)
+  
+
   return (
 
     <Navbar>
@@ -51,7 +76,7 @@ function MainHeader() {
           <div className="header-top-right">
 
             {/*로그인 전에 보이는 버튼*/}
-            {token == null ?
+            {userSimple.id == null ?
               <Button
                 title="로그인"
                 onClick={() => {
@@ -85,10 +110,7 @@ function MainHeader() {
                   </Link>
 
                   <Link to={"/"} tag="li">
-                    <DropdownItem className="nav-item" onClick={() => {
-                      localStorage.removeItem(ACCESS_TOKEN)
-                      navigate("/")
-                    }}
+                    <DropdownItem className="nav-item" onClick={logoutClick}
                     >로그아웃</DropdownItem>
                   </Link>
 

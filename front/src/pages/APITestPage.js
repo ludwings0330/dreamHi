@@ -17,10 +17,6 @@ function APITestPage() {
         });
     }
 
-    // const onEventName = async () => {
-    //     await aaa(1, {},
-    //         (response) => {});
-    // }
   return (
       <>
       <Container align="center" mt={5}>

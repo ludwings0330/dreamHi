@@ -2,6 +2,8 @@ import axios from "axios";
 import { ACCESS_TOKEN } from "constants/index";
 import { reissueAccessToken } from "service/authService";
 import ErrorCode from "service/errorService";
+import { parse, stringify } from "qs";
+
 import { API_BASE_URL } from "constants/index";
 
 const jwtApi = axios.create({
@@ -9,7 +11,11 @@ const jwtApi = axios.create({
     // baseURL: "http://localhost:8080",
     headers: {
         "Content-Type": "application/json;charset=utf-8",
-    } 
+    },
+    paramsSerializer: {
+        encode: parse,
+        serialize: stringify,
+    },
 })
 
 /**
@@ -22,8 +28,7 @@ jwtApi.interceptors.request.use(
         // before send request logic
         const accessToken = localStorage.getItem(ACCESS_TOKEN);
         if(accessToken) {
-            // config.headers.Authorization = `Bearer ${accessToken}`;
-            config.headers.Authorization = `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5IiwiYXV0aCI6IlJPTEVfVVNFUiIsImVtYWlsIjoiYmJiNDIyNEBuYXRlLmNvbSIsImV4cCI6MTY3NTg0NzIwMX0.JxV4s5snsSvWTDUHiLMw0jCNJeErptu3R4rHK8VGJhqZzHNeqVs5DtBxYca7TJV1qHjjzOqwRC8ApaACaHU8eQ`;
+            config.headers.Authorization = `Bearer ${accessToken}`;
         }
         return config;
     },
