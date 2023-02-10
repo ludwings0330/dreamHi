@@ -11,6 +11,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
@@ -49,7 +50,10 @@ public class ControllerLogAop {
         if(returnObj instanceof ResponseEntity) {
             ResponseEntity<Body> response = (ResponseEntity<Body>) returnObj;
             // return 파라미터
-            log.info(" => Response Data    {} : {} \t{}", response.getStatusCode(), response.getBody().getMessage(), response.getBody().getResult());
+            HttpStatus status = response.getStatusCode();
+            String message = status.equals(HttpStatus.OK) ? response.getBody().getMessage() : "";
+            Object result = status.equals(HttpStatus.OK) ? response.getBody().getResult() : "";
+            log.info(" => Response Data    {} : {} \t{}", status, message, result);
         }
         log.info("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
     }
