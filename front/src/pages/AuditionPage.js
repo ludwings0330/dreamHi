@@ -6,13 +6,43 @@ import CalendarAnnounce from '../components/Calendar/calendarAnnounce';
 
 import Notice from '../components/Audition/Notice';
 import styled, { css } from 'styled-components'
+import DateCalendar from 'components/Calendar/DateCalendar';
+import { Box, Container } from '../../node_modules/@mui/material/index';
+import Divider from '@mui/material/Divider';
+import MakerDateCalendar from 'components/Calendar/DateCalendar';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import TimeTable from 'components/Calendar/TimeTable';
 
-function AuditionPage(props) {
+function AuditionPage() {
 
   const navigate = useNavigate();
   return (
     <>
-        <div className={"audition-date-pick"}>
+    <Container
+    justify="center"
+    // minWidth="60%"
+    >
+
+      <h1>Audition!!</h1>
+      <Box sx={{
+          mt: 5,
+          backgroudColor: "#fff"
+      }}>
+      <Divider variant="fullWidth" sx={{mt:2, mb:2,  bgcolor: "black"}} />
+        <CalendarMonthIcon sx={{color: "#45b6fe"}} /> 날짜 선택
+      <Divider variant="fullWidth" sx={{mt:2, mb:2,  bgcolor: "black"}} />
+        <MakerDateCalendar />
+      </Box>
+      <Divider variant="fullWidth" />
+      <Box sx={{mt: 5}}>
+      <Divider variant="fullWidth" sx={{mt:2, mb:2,  bgcolor: "black"}} />
+        <AccessTimeIcon sx={{color: "#45b6fe"}} /> 시간 선택
+      <Divider variant="fullWidth" sx={{mt:2, mb:2,  bgcolor: "black"}} />
+        <TimeTable />
+      </Box>
+    </Container>
+        {/* <div className={"audition-date-pick"}>
             <h1>면접 일정 선택</h1>
         </div>
 
@@ -24,14 +54,14 @@ function AuditionPage(props) {
           navigate("/audition/meeting")
         }}
       />
-      {/*<AuditionContent>*/}
-      {/*  <AuditionContentLeft>*/}
-      {/*    <CalendarAnnounce />*/}
-      {/*  </AuditionContentLeft>*/}
-      {/*  <AuditionContentRight>*/}
-      {/*    <Notice />*/}
-      {/*  </AuditionContentRight>*/}
-      {/*</AuditionContent>*/}
+      <AuditionContent>
+       <AuditionContentLeft>
+         <CalendarAnnounce />
+       </AuditionContentLeft>
+       <AuditionContentRight>
+         <Notice />
+       </AuditionContentRight>
+      </AuditionContent> */}
 
     </>
   );

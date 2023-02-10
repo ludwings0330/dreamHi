@@ -30,3 +30,9 @@ export const userSimpleState = atom({
 //         set(userSimpleState, newData);
 //     }
 // })
+
+export const userTypeState = atom({
+    key: "userTypeState",
+    default: "PRODUCER",
+    effects_UNSTABLE: [persistAtom],
+})
