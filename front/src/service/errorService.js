@@ -25,8 +25,7 @@ function ErrorCode(response) {
                 text: message,
                 icon: "info"
             }).then(function() {
-                // window.location.href="http://i8a702.p.ssafy.io/login";
-                window.location.href="http://localhost:3000/login";
+                window.location.href="/login";
             })
             return;
         case 403: case 404: case 409: case 500:

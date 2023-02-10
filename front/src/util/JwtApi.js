@@ -1,19 +1,17 @@
 import axios from "axios";
-import { ACCESS_TOKEN } from "constants/index";
+import { ACCESS_TOKEN, API_BASE_URL } from "constants/index";
 import { reissueAccessToken } from "service/authService";
 import ErrorCode from "service/errorService";
-import { API_BASE_URL } from "constants/index";
 import { parse, stringify } from "qs";
 
 const jwtApi = axios.create({
     baseURL: API_BASE_URL,
-    // baseURL: "http://localhost:8080",
     headers: {
         "Content-Type": "application/json;charset=utf-8",
     },
     paramsSerializer: {
         encode: parse,
-        serialize: stringify
+        serialize: stringify,
     },
 })
 
