@@ -8,6 +8,7 @@ import static com.elephant.dreamhi.model.entity.QProcess.process;
 import static com.elephant.dreamhi.model.entity.QProducer.producer;
 import static com.elephant.dreamhi.model.entity.QStyle.style;
 import static com.elephant.dreamhi.model.entity.QUser.user;
+import static com.elephant.dreamhi.model.entity.QUserProducerRelation.userProducerRelation;
 import static com.elephant.dreamhi.model.entity.QVolunteer.volunteer;
 import static com.querydsl.core.group.GroupBy.groupBy;
 import static com.querydsl.core.group.GroupBy.list;
@@ -20,6 +21,7 @@ import com.elephant.dreamhi.model.dto.CastingSimpleDto;
 import com.elephant.dreamhi.model.entity.Announcement;
 import com.elephant.dreamhi.model.statics.Gender;
 import com.elephant.dreamhi.model.statics.ProcessState;
+import com.elephant.dreamhi.model.statics.ProducerRole;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -114,7 +116,7 @@ public class AnnouncementRepositoryCustomImpl implements AnnouncementRepositoryC
     }
 
     @Override
-    public Optional<AnnouncementDetailDto> findByAnnouncementIdAndFollowerId(Long announcementId, Long followerId) {
+    public Optional<AnnouncementDetailDto> findByAnnouncementIdAndFollowerId(Long announcementId, Long userId) {
         AnnouncementDetailDto findedAnnouncementDetailDto = queryFactory.select(Projections.constructor(
                                                                                 AnnouncementDetailDto.class,
                                                                                 announcement.id,
@@ -134,12 +136,26 @@ public class AnnouncementRepositoryCustomImpl implements AnnouncementRepositoryC
                                                                                                                       .from(follow)
                                                                                                                       .where(
                                                                                                                               follow.announcement.id.eq(announcementId),
-                                                                                                                              follow.follower.id.eq(followerId)
+                                                                                                                              follow.follower.id.eq(userId)
                                                                                                                       ).eq(1L)
                                                                                                 )
                                                                                                 .then(Boolean.TRUE)
                                                                                                 .otherwise(Boolean.FALSE),
                                                                                         "isFollow"
+                                                                                ),
+                                                                                Expressions.as(
+                                                                                        new CaseBuilder()
+                                                                                                .when(
+                                                                                                        JPAExpressions.select(userProducerRelation.role)
+                                                                                                                      .from(userProducerRelation)
+                                                                                                                      .where(
+                                                                                                                              userProducerRelation.user.id.eq(userId),
+                                                                                                                              producerEq(announcementId)
+                                                                                                                      )
+                                                                                                                      .eq(ProducerRole.EDITOR)
+                                                                                                ).then(Boolean.TRUE)
+                                                                                                .otherwise(Boolean.FALSE),
+                                                                                        "isEditor"
                                                                                 )
                                                                         ))
                                                                         .from(announcement)
@@ -272,6 +288,15 @@ public class AnnouncementRepositoryCustomImpl implements AnnouncementRepositoryC
                               .join(volunteer.casting, casting)
                               .join(volunteer.user, user)
                               .where(user.id.eq(userId))
+        );
+    }
+
+    private BooleanExpression producerEq(Long announcementId) {
+        return userProducerRelation.producer.id.eq(
+                JPAExpressions.select(producer.id)
+                              .from(announcement)
+                              .join(announcement.producer, producer)
+                              .where(announcement.id.eq(announcementId))
         );
     }
 
