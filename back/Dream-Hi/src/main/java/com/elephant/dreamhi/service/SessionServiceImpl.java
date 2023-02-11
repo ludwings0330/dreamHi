@@ -18,6 +18,14 @@ public class SessionServiceImpl implements SessionService {
     private final SessionRepository sessionRepository;
 
     @Override
+    public String findLatestSessionIdByAnnouncementId(Long announcementId) {
+        return sessionRepository.findLatestSessionByAnnouncementId(announcementId)
+                                .orElseThrow(() -> new NotFoundException("화상 오디션 입장을 위한 세션을 찾을 수 없습니다."))
+                                .getSessionId();
+
+    }
+
+    @Override
     @Transactional
     public void saveSession(Long announcementId, String sessionId) {
         Announcement announcement = announcementRepository.getReferenceById(announcementId);
