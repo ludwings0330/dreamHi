@@ -35,7 +35,7 @@ public class ProcessServiceImpl implements ProcessService {
                                                .orElseThrow(() -> new IllegalArgumentException("공고의 진행 상황을 찾을 수 없습니다. 유효하지 않은 공고ID 입니다."));
 
         if (user.isGuest()) {
-            return new ProcessStageDto(lastProcess.getState(), UserStageName.NONE);
+            return new ProcessStageDto(lastProcess, UserStageName.NONE);
         }
 
         List<Volunteer> volunteers = volunteerRepository.findByUserIdAndAnnouncementId(user.getId(), announcementId);

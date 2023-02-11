@@ -57,7 +57,7 @@ public class AnnouncementController {
     @GetMapping
     public ResponseEntity<Body> findList(
             @ModelAttribute AnnouncementSearchCondition searchCondition,
-            @PageableDefault(size = 4) Pageable pageable,
+            @PageableDefault Pageable pageable,
             @AuthenticationPrincipal PrincipalDetails user
     ) {
         if (!searchCondition.validate()) {
@@ -122,19 +122,6 @@ public class AnnouncementController {
     }
 
     /**
-     * @param announcementId 공고 ID
-     * @param user           시큐리티 컨텍스트에 저장된 인증 객체로부터 얻어낸 Principal
-     * @return 공고 상세 정보를 응답으로 반환
-     * @throws NotFoundException 공고 ID로 공고를 검색했는데 동시성 문제 등의 이슈로 공고를 찾을 수 없게 된 상황에 예외를 던진다.
-     */
-    @GetMapping("/{announcementId}")
-    public ResponseEntity<Body> findDetail(@PathVariable Long announcementId, @AuthenticationPrincipal PrincipalDetails user)
-            throws NotFoundException {
-        AnnouncementDetailDto announcementDetailDto = announcementService.findDetail(announcementId, user);
-        return Response.create(HttpStatus.OK, "공고 상세 정보를 조회했습니다.", announcementDetailDto);
-    }
-
-    /**
      * @return 주간 공고 목록을 조회하여, 월요일부터 일요일까지 순차적으로 최대 2개의 공고를 Response의 Body에 담아서 반환한다.
      */
     @GetMapping("/weekly")
@@ -156,6 +143,19 @@ public class AnnouncementController {
         }
 
         return Response.create(HttpStatus.OK, "Top N 공고 목록을 조회했습니다.", announcementNameDtos);
+    }
+
+    /**
+     * @param announcementId 공고 ID
+     * @param user           시큐리티 컨텍스트에 저장된 인증 객체로부터 얻어낸 Principal
+     * @return 공고 상세 정보를 응답으로 반환
+     * @throws NotFoundException 공고 ID로 공고를 검색했는데 동시성 문제 등의 이슈로 공고를 찾을 수 없게 된 상황에 예외를 던진다.
+     */
+    @GetMapping("/{announcementId}")
+    public ResponseEntity<Body> findDetail(@PathVariable Long announcementId, @AuthenticationPrincipal PrincipalDetails user)
+            throws NotFoundException {
+        AnnouncementDetailDto announcementDetailDto = announcementService.findDetail(announcementId, user);
+        return Response.create(HttpStatus.OK, "공고 상세 정보를 조회했습니다.", announcementDetailDto);
     }
 
     /**
