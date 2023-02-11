@@ -25,6 +25,18 @@ public class SessionController {
 
     private final SessionService sessionService;
 
+    @GetMapping
+    @PreAuthorize("@checker.isLoginUser(#user) && @checker.hasBookAuthority(#user, #processId, #nowDateTime)")
+    public ResponseEntity<Body> findSession(
+            @PathVariable Long announcementId,
+            @RequestParam Long processId,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime nowDateTime,
+            @AuthenticationPrincipal PrincipalDetails user
+    ) {
+        String sessionId = sessionService.findLatestSessionIdByAnnouncementId(announcementId);
+        return Response.create(HttpStatus.OK, "화상 오디션 입장을 위한 세션 ID를 조회했습니다.", sessionId);
+    }
+
     @PostMapping("/{sessionId}")
     public ResponseEntity<Body> saveSession(@PathVariable Long announcementId, @PathVariable String sessionId) {
         sessionService.saveSession(announcementId, sessionId);
