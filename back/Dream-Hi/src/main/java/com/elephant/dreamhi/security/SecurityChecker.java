@@ -4,8 +4,7 @@ import com.elephant.dreamhi.model.dto.FilmographyRequestDto;
 import com.elephant.dreamhi.model.statics.FilmoType;
 import com.elephant.dreamhi.model.statics.ProducerRole;
 import com.elephant.dreamhi.service.AuthService;
-import java.io.PrintStream;
-import java.io.PrintWriter;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.Authentication;
@@ -74,6 +73,10 @@ public class SecurityChecker {
     public boolean hasAnnouncementAuthority(PrincipalDetails user, Long announcementId) {
         // announcementId 로 producerId 를 찾음 -> producerId 로 hasEditor
         return authService.hasAnnouncementAuthority(user, announcementId);
+    }
+
+    public boolean hasBookAuthority(PrincipalDetails user, Long processId, LocalDateTime now) {
+        return authService.hasBookAuthority(user, processId, now);
     }
 
 }
