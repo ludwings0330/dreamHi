@@ -4,46 +4,55 @@ import { useRecoilState } from "recoil";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import { experimentalStyled as styled } from '@mui/material/styles';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Radio from '@mui/material/Radio';
+import RadioGroup, { useRadioGroup } from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  }));
 
-export default function  TimeTable() {
-    const [books, setBooks] = useRecoilState(booksSelector());
+export default function  TimeTable({date}) {
+    const [books, setBooks] = useRecoilState(booksSelector(date));
     const [checkTime, setCheckTime] = useState("");
 
-    useEffect(() => {
-        console.log(books);
-    },[])
-    const handleCheck = (event) => {
-        setCheckTime(event.target.value);
-    };
+    
+    
+    const handleCheck = (e) => {
+        setCheckTime(e.target.value);
+    }
     return(
-        <>
+        <Box sx={{mt:3, mb: 3}}>
             <Grid container spacing={{ xs: 2}} columns={{ xs: 8 }}>
                 {books.map((book, index) => (
                     <Grid item xs={2} sm={4} md={4} key={index}>
                     {/* <TimeDetail book={book} /> */}
-                    <Radio 
-                        checked={checkTime === book.time}
-                        value={book.time}
-                        disabled={book.isBook}
-                        onChange={handleCheck}
-                        // label={book.time}
-                        // labelPlacement="end"
-                    />
+                    <Box sx={{
+                        // display: book.isBook ? "none" : "block",
+                        boxShadow: 3,
+                        borderRadius: 5,
+                        // fontWeight: 'bold',
+                        bgcolor: book.isBook || book.time == checkTime ? "#051094" : "#52B2BF",
+                        // fontSize: 18,
+                        // color: "#FFFFFF",
+                        opacity: book.isBook ? [1, 1, 0.1] : [1, 1, 0.8],
+                    }}
+                    textAlign="center"
+                    >
+                    <FormControlLabel label={book.time} control={<Radio
+                            checked={checkTime === book.time}
+                            value={book.time}
+                            disabled={book.isBook}
+                            onChange={handleCheck}
+                            sx={{
+                                color:"#FFFFFF",
+                            }}
+                    />} sx={{
+                        color: "#FFFFFF",
+                        display:"block"
+                    }}>
+                    </FormControlLabel>
+                    </Box>
                     </Grid>
                 ))}
             </Grid>
-        </>
+        </Box>
     );
 }
