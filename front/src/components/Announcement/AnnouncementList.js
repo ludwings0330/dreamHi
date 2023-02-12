@@ -19,6 +19,7 @@ function AnnouncementList(props) {
 
   useEffect(() => {
     console.log('😁👻👻👻', announcementList)
+    console.log(announcementList.find((item)=>{return item.id == 50002}))
   }, [])
 
 
@@ -43,13 +44,13 @@ function AnnouncementList(props) {
                   {announcement.castings.map(function (cast, index) {
                     return (
                       <span>
-                        {cast.name}
+                        {cast.name}역
                       </span>
                     );
                   })}
                 </div>
-                <p>{announcement.createDate}</p>
-                <p>{announcement.hit}</p>
+                <p>{announcement.createdDate.substring(0,10)}</p>
+                <p>조회수 : {announcement.hit}</p>
                 <div>{announcement.isFollow === true ? '💙' : '🖤'}</div>
 
                 <div>{announcement.state.processState === 'RECRUITING' ? '⭕' : '❌'}</div>

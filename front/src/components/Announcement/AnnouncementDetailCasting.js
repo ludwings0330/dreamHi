@@ -1,12 +1,18 @@
 import React from 'react';
 import CastingData from 'dummydata/announcementDetailCastingData.json';
+import { useRecoilValue } from 'recoil';
+import { announcementListDetailCastingSelector } from 'recoil/announcement/announcementStore';
 
 function AnnouncementDetailCasting(props) {
+  const { announcement } = props;
+  console.log('🤦‍♀️🤦‍♀️🤦‍♀️',announcement)
+  const CastingData = useRecoilValue(announcementListDetailCastingSelector(announcement.id))
+
   const data = CastingData
 
   return (
     <div>
-      {data.result.castings.map(function (casting, index) {
+      {data.map(function (casting, index) {
         console.log(casting)
         return (
           <div className='announcement-post-container'>
