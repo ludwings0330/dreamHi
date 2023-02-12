@@ -13,6 +13,7 @@ import ActorList from './components/Actor/ActorList';
 import ActorDetail from './components/Actor/ActorDetail';
 import ActorWrite from './components/Actor/ActorWrite';
 import LoginPage from './pages/Login/LoginPage';
+import ScheduleCreatePage from "./pages/ScheduleCreatePage";
 import AuditionPage from './pages/AuditionPage';
 import AuditionMeeting from './components/Audition/AuditionMeeting';
 
@@ -54,6 +55,7 @@ function App() {
         <Route path={"/actor/write"} element={<ActorWrite />} />
 
         //오디션페이지 관련 이동
+        <Route path={"/schedule"} element={<ScheduleCreatePage />} />
         <Route path={"/audition"} element={<AuditionPage />} />
         <Route path={"/audition/meeting"} element={<AuditionMeeting />} />
 
