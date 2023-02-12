@@ -7,17 +7,13 @@ import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
 import { Box, ThemeProvider, createTheme } from '@mui/system';
 import Grid from "@mui/material/Grid";
 import { Paper } from '../../../node_modules/@mui/material/index';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useRecoilState } from 'recoil';
 import { userTypeState } from 'recoil/user/userStore';
+import {auditionStartState, auditionEndState } from "recoil/book/bookStore";
 
-const isWeekend = (date) => {
-  const day = date.day();
-
-  return day === 0 || day === 6;
-};
 export default function MakerDateCalendar() {
-  const [startDate, setStartDate] = useState(dayjs(new Date()));
-  const [endDate, setEndDate] = useState(dayjs(new Date()+7));
+  const [startDate, setStartDate] = useRecoilState(auditionStartState);
+  const [endDate, setEndDate] = useRecoilState(auditionEndState);
   const userType = useRecoilValue(userTypeState);
 
   return (
@@ -26,7 +22,11 @@ export default function MakerDateCalendar() {
         direction="row"
         justifyContent="space-around"
         alignItems="center"
+        sx={{
+            mt:3, mb:3
+        }}
     >
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
         <Grid>
             <Paper evaluate={3}
                 sx={{
@@ -37,22 +37,21 @@ export default function MakerDateCalendar() {
                 maxWidth: 400
                 }}
             >
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
             <StaticDatePicker
+                toolbarTitle="📅 오디션 시작일"
                 onChange={(newStartDate) => setStartDate(newStartDate)}
                 value={startDate}
                 renderInput={(params) => <TextField {...params} />}
                 componentsProps={{
                 actionBar: {
-                    actions: ['today'],
-                    reset: ['reset']
+                    actions: ['today', 'clear'],
                 },
                 }}
             />
-            </LocalizationProvider>
+            {/* </LocalizationProvider> */}
         </Paper>
         </Grid>
-        { userType==="PRODUCER" ? 
+        { userType==="PRODUCER".toUpperCase() ? 
 
         <Grid >
             <Paper evaluate={3}
@@ -64,21 +63,24 @@ export default function MakerDateCalendar() {
                 maxWidth: 400,
                 }}
             >
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
+        {/* <LocalizationProvider dateAdapter={AdapterDayjs}> */}
             <StaticDatePicker
+                toolbarTitle="📅 오디션 종료일"
+                minDate={startDate}
                 onChange={(newEndDate) => setEndDate(newEndDate)}
                 value={endDate}
                 renderInput={(params) => <TextField {...params} />}
+                vertical
                 componentsProps={{
                 actionBar: {
-                    actions: ['today'],
+                    actions: ['today', 'clear'],
                 },
                 }}
             />
-            </LocalizationProvider>
         </Paper>
         </Grid>
         : null } 
+            </LocalizationProvider>
     </Grid>
   );
 }

@@ -11,7 +11,7 @@ import { atom } from 'recoil';
 
 export const announcementTitle = atom({
   key: 'announcementTitle',
-  default: ''
+  default: '공고 제목'
 });
 
 export const announcementProducerId = atom({
@@ -31,7 +31,7 @@ export const announcementCrankPeriod = atom({
 
 export const announcementEndDate = atom({
   key: 'announcementEndDate',
-  default: ''
+  default: new Date()
 });
 
 export const announcementDescription = atom({

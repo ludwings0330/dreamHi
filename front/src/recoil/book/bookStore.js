@@ -1,7 +1,28 @@
 import {atom, selectorFamily } from "recoil";
 import { recoilPersist } from "recoil-persist";
+import dayjs from 'dayjs';
 
 // const { persistAtom } = recoilPersist();
+
+export const auditionStartState = atom({
+    key: "auditionStartState",
+    default: dayjs(new Date())
+})
+
+export const auditionEndState = atom({
+    key: "auditionEndState",
+    default: dayjs(new Date())
+})
+
+export const auditionStartTimeState = atom({
+    key: "auditionStartTimeState",
+    default: dayjs("09:00", "HH:mm")
+})
+
+export const auditionEndTimeState = atom({
+    key: "auditionEndTimeState",
+    default: dayjs("18:00", "HH:mm")
+})
 
 export const booksState = atom({
     key: "booksState",
