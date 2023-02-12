@@ -26,7 +26,7 @@ function AnnouncementList(props) {
   // useEffect()
 
   return (
-    <div className="announcement-post-container">
+    <div>
       <h2> 공고리스트페이지 </h2>
 
 
@@ -34,6 +34,7 @@ function AnnouncementList(props) {
       {announcementList.length > 0 && announcementList.map(function (announcement) {
         return (
           <Link to={`/announcement/${announcement.id}`} key={announcement.id} >
+
             <div>
               <div className="announcement-list-item-wrapper">
                 <p>
