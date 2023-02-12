@@ -2,15 +2,17 @@ import React, { useState } from 'react';
 import AnnouncementList from '../components/Announcement/AnnouncementList';
 import Button from '../components/Common/CommonComponent/Button';
 import { useNavigate } from 'react-router-dom';
-import AnnouncementData from '../dummydata/announcementData.json';
 import axios from 'axios';
 import AxiosTry from '../components/Announcement/AxiosTry';
+import { useRecoilValue } from 'recoil';
+import { userSimpleState } from 'recoil/user/userStore';
 
 
 
 function AnnouncementPage(props) {
   
   const navigate = useNavigate();
+  const userSimple = useRecoilValue(userSimpleState)
 
 
   return (
@@ -18,7 +20,11 @@ function AnnouncementPage(props) {
       <Button
         title="글 작성하기"
         onClick={() => {
-          navigate("/announcement/write")
+          if(userSimple.id) {
+            navigate("/announcement/write")
+          } else {
+            navigate("/login")
+          }
         }}
       />
 

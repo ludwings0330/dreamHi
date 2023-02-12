@@ -73,11 +73,10 @@ function AnnouncementWrite(props) {
         }}
       />
       {/*<button onClick={postClick}>Post</button>*/}
-      <img src={announcementImg} />
       {/*<p> { ImgUrl} </p>*/}
+        <ImageUpload/>
       <AnnouncementWriteItem />
       <AnnouncementWriteCasting />
-        <ImageUpload/>
         
         <button onClick={postClick}>공고다공고</button>
 
