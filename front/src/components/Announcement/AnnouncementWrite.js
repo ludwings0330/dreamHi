@@ -1,23 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import AnnouncementWriteItem from './AnnouncementWriteItem';
 import Button from '../Common/CommonComponent/Button';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 
-import { useRecoilState, useRecoilValue } from 'recoil';
+import {useRecoilValue} from 'recoil';
 import {
-  announcementCastingState,
-  announcementCrankPeriod,
-  announcementDescription,
-  announcementEndDate,
-  announcementPayment,
-  announcementPictureUrl,
-  announcementProducerId,
-  announcementTitle,
-} from '../../recoil/announcement';
+    announcementCastingState,
+    announcementCrankPeriod,
+    announcementDescription,
+    announcementEndDate,
+    announcementPayment,
+    announcementPictureUrl,
+    announcementProducerId,
+    announcementTitle,
+} from 'recoil/announcement/announcement';
 import AnnouncementWriteCasting from './AnnouncementWriteCasting';
-import MultiSelect from './SelectExample';
-import ImageUpload from "../../imageup/ImageUpload";
+import ImageUpload from "imageup/ImageUpload";
 
 function AnnouncementWrite(props) {
     const token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDAwMDEiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZW1haWwiOiJkZGY5OThAZ21haWwuY29tIiwiZXhwIjoxNjc4MjU2MjEyfQ.gSBnEPdb7LPDgTMwi5fDDlEdYxgbdJ6hInbddudS9suerZhCPuHDV3P9C6ygWTacOvhfT9tS8i94LP1qSszc0w';

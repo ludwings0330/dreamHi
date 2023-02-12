@@ -6,8 +6,8 @@ import { v4 } from 'uuid';
 
 import '../components/Casting/Casting.css';
 import { useRecoilState, atom } from 'recoil';
-import '../recoil/announcement';
-import { announcementPictureUrl } from '../recoil/announcement';
+import 'recoil/announcement/announcement';
+import { announcementPictureUrl } from 'recoil/announcement/announcement';
 
 
 function ImageUpload(props) {

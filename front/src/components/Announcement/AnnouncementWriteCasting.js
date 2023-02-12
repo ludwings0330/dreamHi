@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { useRecoilState } from 'recoil';
-import { announcementCastingState } from '../../recoil/announcement';
+import { announcementCastingState } from 'recoil/announcement/announcement';
 
 function AnnouncementWriteCasting(props) {
   // 전역으로 들고 다닐 casting array
