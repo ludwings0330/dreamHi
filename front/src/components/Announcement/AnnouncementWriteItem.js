@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { useRecoilValue } from '../../recoil';
+import { useRecoilValue } from 'recoil';
 import {
   announcementCrankPeriod,
   announcementDescription,
@@ -9,7 +9,7 @@ import {
   announcementPayment,
   announcementProducerId,
   announcementTitle,
-} from '../../recoil/announcement';
+} from 'recoil/announcement/announcement';
 import { useRecoilState } from 'recoil';
 
 function AnnouncementWriteItem(props) {
