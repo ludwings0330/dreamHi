@@ -13,74 +13,52 @@ import MakerDateCalendar from 'components/Calendar/DateCalendar';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimeTable from 'components/Calendar/TimeTable';
+import Grid from '@mui/material/Grid';
 
 function AuditionPage() {
 
   const navigate = useNavigate();
   return (
-    <>
     <Container
     justify="center"
-    // minWidth="60%"
+    sx={{
+      mb:5
+    }}
     >
 
-      <h1>Audition!!</h1>
-      <Box sx={{
-          mt: 5,
-          backgroudColor: "#fff"
+      <Box align="center" sx={{
+        typography: "h3",
+        mb: 8,
+        fontWeight: "bold"
+      }}>🎬 오디션 일정 선택
+      </Box>
+      <Grid container >
+        <Grid item xs={8} >
+          <Box>
+          <Divider variant="fullWidth" sx={{ m: "auto",  bgcolor: "black"}} />
+            <CalendarMonthIcon sx={{mt:2, mb:2, color: "#45b6fe"}} /> 날짜 선택
+          <Divider variant="fullWidth" sx={{ m:"auto",  bgcolor: "black"}} />
+            <MakerDateCalendar />
+          </Box>
+          <Divider variant="fullWidth" />
+          <Box sx={{mt: 5}}>
+          <Divider variant="fullWidth" sx={{ bgcolor: "black"}} />
+            <AccessTimeIcon sx={{mt:2, mb:2, color: "#45b6fe"}} /> 시간 선택
+          <Divider variant="fullWidth" sx={{ bgcolor: "black"}} />
+            <TimeTable />
+          </Box>
+        </Grid>
+        <Divider orientation="vertical" flexItem variant="inset" sx={{ bgcolor: "black"}} />
+        <Grid item xs={3} sx={{
+          mt: 5
       }}>
-      <Divider variant="fullWidth" sx={{mt:2, mb:2,  bgcolor: "black"}} />
-        <CalendarMonthIcon sx={{color: "#45b6fe"}} /> 날짜 선택
-      <Divider variant="fullWidth" sx={{mt:2, mb:2,  bgcolor: "black"}} />
-        <MakerDateCalendar />
-      </Box>
-      <Divider variant="fullWidth" />
-      <Box sx={{mt: 5}}>
-      <Divider variant="fullWidth" sx={{mt:2, mb:2,  bgcolor: "black"}} />
-        <AccessTimeIcon sx={{color: "#45b6fe"}} /> 시간 선택
-      <Divider variant="fullWidth" sx={{mt:2, mb:2,  bgcolor: "black"}} />
-        <TimeTable />
-      </Box>
+          <Container>
+            saljkdnasldnkas
+          </Container>
+        </Grid>
+      </Grid>
     </Container>
-        {/* <div className={"audition-date-pick"}>
-            <h1>면접 일정 선택</h1>
-        </div>
-
-
-
-      <Button
-        title="면접보기"
-        onClick={() => {
-          navigate("/audition/meeting")
-        }}
-      />
-      <AuditionContent>
-       <AuditionContentLeft>
-         <CalendarAnnounce />
-       </AuditionContentLeft>
-       <AuditionContentRight>
-         <Notice />
-       </AuditionContentRight>
-      </AuditionContent> */}
-
-    </>
   );
 }
 
 export default AuditionPage;
-
-// const AuditionContent = styled.div`
-//   display: flex;
-//   left: 50%;
-//   position: absolute;
-//   transform: translateX(-50%);
-//   margin-top: 30px;
-//   `
-//
-// const AuditionContentLeft = styled.div`
-//   margin-right: 200px;
-// `
-//
-// const AuditionContentRight = styled.div`
-//
-// `
