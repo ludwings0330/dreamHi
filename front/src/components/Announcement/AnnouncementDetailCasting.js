@@ -1,5 +1,4 @@
 import React from 'react';
-import CastingData from 'dummydata/announcementDetailCastingData.json';
 import { useRecoilValue } from 'recoil';
 import { announcementListDetailCastingSelector } from 'recoil/announcement/announcementStore';
 
