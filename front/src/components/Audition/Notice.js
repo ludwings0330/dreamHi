@@ -1,11 +1,12 @@
 import React from 'react';
 
-import './audition.css'
-function Notice(props) {
+import './audition.css';
+const Notice = () => {
   return (
     <div className="notice-body">
       <div className="notice-text">
-        <p>면접을 진행하고 싶은 시간을 선택해주세요
+        <p>
+          면접을 진행하고 싶은 시간을 선택해주세요.
           <span>'날짜' 선택 후 '시간' 선택</span>
         </p>
         <p>면접 시간은 20분 간격으로 설정할 수 있습니다.</p>
@@ -21,6 +22,6 @@ function Notice(props) {
       </div>
     </div>
   );
-}
+};
 
 export default Notice;

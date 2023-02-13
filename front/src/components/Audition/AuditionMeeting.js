@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { OpenVidu } from 'openvidu-browser';
 import axios from 'axios';
 import UserVideoComponent from './UserVideoComponent';
-import { useRecoilState } from 'recoil';
-
+import './App.css';
+import { Grid, Divider } from '@mui/material';
+import Notice from './Notice';
 const APPLICATION_SERVER_URL = 'https://dreamhi.p-e.kr/';
 
 const AuditionMeeting = (props) => {
@@ -255,100 +256,104 @@ const AuditionMeeting = (props) => {
 
   return (
     <>
-      <div>
-        <h1>오디션!!! 오픈비두!!!</h1>
-      </div>
-      <div className="container">
-        {state.session === undefined ? (
-          <div id="join">
-            <div id="img-div">
-              <img src="resources/images/openvidu_grey_bg_transp_cropped.png" alt="OpenVidu logo" />
-            </div>
-            <div id="join-dialog" className="jumbotron vertical-center">
-              <h1> Join a video session </h1>
-              <form className="form-group" onSubmit={joinSession}>
-                <p>
-                  <label>Participant: </label>
-                  <input
-                    className="form-control"
-                    type="text"
-                    id="userName"
-                    value={state.myUserName}
-                    onChange={handleChangeUserName}
-                    required
-                  />
-                </p>
-                <p>
-                  <label> Session: </label>
-                  <input
-                    className="form-control"
-                    type="text"
-                    id="sessionId"
-                    value={state.mySessionId}
-                    onChange={handleChangeSessionId}
-                    required
-                  />
-                </p>
-                <p className="text-center">
-                  <input
-                    className="btn btn-lg btn-success"
-                    name="commit"
-                    type="submit"
-                    value="JOIN"
-                  />
-                </p>
-              </form>
-            </div>
-          </div>
-        ) : null}
-
-        {state.session !== undefined ? (
-          <div id="session">
-            <div id="session-header">
-              <h1 id="session-title">{state.mySessionId}</h1>
-              <input
-                className="btn btn-large btn-danger"
-                type="button"
-                id="buttonLeaveSession"
-                onClick={leaveSession}
-                value="Leave session"
-              />
-            </div>
-
-            {state.mainStreamManager !== undefined ? (
-              <div id="main-video" className="col-md-6">
-                <UserVideoComponent streamManager={state.mainStreamManager} />
-                <input
-                  className="btn btn-large btn-success"
-                  type="button"
-                  id="buttonSwitchCamera"
-                  onClick={switchCamera}
-                  value="Switch Camera"
+      <Grid container>
+        <Grid item xs={8}>
+          {state.session === undefined ? (
+            <div id="join">
+              <div id="img-div">
+                <img
+                  src="resources/images/openvidu_grey_bg_transp_cropped.png"
+                  alt="OpenVidu logo"
                 />
               </div>
-            ) : null}
-            <div id="video-container" className="col-md-6">
-              {state.publisher !== undefined ? (
-                <div
-                  className="stream-container col-md-6 col-xs-6"
-                  onClick={() => handleMainVideoStream(state.publisher)}
-                >
-                  <UserVideoComponent streamManager={state.publisher} />
+              <div id="join-dialog" className="jumbotron vertical-center">
+                <h1> Join a video session </h1>
+                <form className="form-group" onSubmit={joinSession}>
+                  <p>
+                    <label>Participant: </label>
+                    <input
+                      className="form-control"
+                      type="text"
+                      id="userName"
+                      value={state.myUserName}
+                      onChange={handleChangeUserName}
+                      required
+                    />
+                  </p>
+                  <p>
+                    <label> Session: </label>
+                    <input
+                      className="form-control"
+                      type="text"
+                      id="sessionId"
+                      value={state.mySessionId}
+                      onChange={handleChangeSessionId}
+                      required
+                    />
+                  </p>
+                  <p className="text-center">
+                    <input
+                      className="btn btn-lg btn-success"
+                      name="commit"
+                      type="submit"
+                      value="JOIN"
+                    />
+                  </p>
+                </form>
+              </div>
+            </div>
+          ) : null}
+
+          {state.session !== undefined ? (
+            <div id="session">
+              <div id="session-header">
+                <h1 id="session-title">{state.mySessionId}</h1>
+                <input
+                  className="btn btn-large btn-danger"
+                  type="button"
+                  id="buttonLeaveSession"
+                  onClick={leaveSession}
+                  value="나가기!"
+                />
+              </div>
+
+              {/*mainStream이 뜨는 부분*/}
+              {state.mainStreamManager !== undefined ? (
+                <div id="main-video" className="col-md-6">
+                  <UserVideoComponent streamManager={state.mainStreamManager} />
                 </div>
               ) : null}
-              {state.subscribers.map((sub, i) => (
-                <div
-                  key={i}
-                  className="stream-container col-md-6 col-xs-6"
-                  onClick={() => handleMainVideoStream(sub)}
-                >
-                  <UserVideoComponent streamManager={sub} />
-                </div>
-              ))}
+
+              {/*세션 참여자들 화면이 뜨는 부분*/}
+              <div id="video-container" className="col-md-6">
+                {state.publisher !== undefined ? (
+                  <div
+                    className="stream-container col-md-12 col-xs-12"
+                    onClick={() => handleMainVideoStream(state.publisher)}
+                  >
+                    <UserVideoComponent streamManager={state.publisher} />
+                  </div>
+                ) : null}
+                {state.subscribers.map((sub, i) => (
+                  <div
+                    key={i}
+                    className="stream-container col-md-12 col-xs-12"
+                    onClick={() => handleMainVideoStream(sub)}
+                  >
+                    <UserVideoComponent streamManager={sub} />
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        ) : null}
-      </div>
+          ) : null}
+        </Grid>
+
+        <Divider orientation={'vertical'} />
+
+        <Grid item xs={3}>
+          <Notice />
+        </Grid>
+      </Grid>
     </>
   );
 };

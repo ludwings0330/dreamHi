@@ -1,11 +1,16 @@
+#main-video {
+    width: 100%;
+}
 .notice-body {
-    width: 40%;
+    width: 100%;
+    text-align: center;
+    margin-left: 10px;
     font-size: 16px;
     word-break: keep-all;
 }
 
 .notice-text {
-    transform: translateX(80%);
+    /*transform: translateX(80%);*/
 }
 
 .notice-text span {
