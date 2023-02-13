@@ -52,6 +52,10 @@ public class AuthService {
         return hasEditorAuthority(user.getId(), producerId);
     }
 
+    public boolean hasAnnouncementAuthority(PrincipalDetails user, Long producerId, Long announcementId) {
+        return authRepository.findRoleByUser_IdAndProducer_IdAndAnnouncement_Id(user.getId(), producerId, announcementId) == ProducerRole.EDITOR;
+    }
+
     public boolean isPassedVolunteer(PrincipalDetails user, Long processId) {
         return volunteerRepository.findByUserIdAndProcessId(user.getId(), processId)
                                   .isPresent();

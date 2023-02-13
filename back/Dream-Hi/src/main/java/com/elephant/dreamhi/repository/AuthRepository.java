@@ -1,10 +1,11 @@
 package com.elephant.dreamhi.repository;
 
 import static com.elephant.dreamhi.model.entity.QActorProfile.actorProfile;
+import static com.elephant.dreamhi.model.entity.QAnnouncement.announcement;
 import static com.elephant.dreamhi.model.entity.QFilmography.filmography;
+import static com.elephant.dreamhi.model.entity.QProducer.producer;
 import static com.elephant.dreamhi.model.entity.QUserProducerRelation.userProducerRelation;
 
-import com.elephant.dreamhi.model.entity.QAnnouncement;
 import com.elephant.dreamhi.model.statics.ProducerRole;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.Optional;
@@ -24,6 +25,19 @@ public class AuthRepository {
                                                      userProducerRelation.producer.id.eq(producerId))
                                               .fetchOne();
         return Optional.ofNullable(role);
+    }
+
+    public ProducerRole findRoleByUser_IdAndProducer_IdAndAnnouncement_Id(Long userId, Long producerId, Long announcementId) {
+        return queryFactory.select(userProducerRelation.role)
+                           .from(announcement)
+                           .join(announcement.producer, producer)
+                           .join(producer.userProducerRelations, userProducerRelation)
+                           .where(
+                                   userProducerRelation.user.id.eq(userId),
+                                   producer.id.eq(producerId),
+                                   announcement.id.eq(announcementId)
+                           )
+                           .fetchOne();
     }
 
     public Optional<Long> findActorProfileByUserId(Long userId) {
@@ -53,9 +67,9 @@ public class AuthRepository {
     }
 
     public Optional<Long> findProducerIdByAnnouncementId(Long announcementId) {
-        Long find = queryFactory.select(QAnnouncement.announcement.producer.id)
-                                .from(QAnnouncement.announcement)
-                                .where(QAnnouncement.announcement.id.eq(announcementId)).fetchOne();
+        Long find = queryFactory.select(announcement.producer.id)
+                                .from(announcement)
+                                .where(announcement.id.eq(announcementId)).fetchOne();
 
         return Optional.ofNullable(find);
     }

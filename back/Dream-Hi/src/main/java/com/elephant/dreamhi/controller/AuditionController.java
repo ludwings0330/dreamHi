@@ -21,15 +21,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/audition")
+@RequestMapping("/api/announcements/{announcementId}/audition")
 @RequiredArgsConstructor
 public class AuditionController {
 
     private final AuditionService auditionService;
 
+    /**
+     * @param processId 오디션의 현재 절차 ID
+     * @param user      현재 로그인 한 유저
+     * @return 화상 오디션을 위한 파일 URL 조회 결과를 Response의 Body에 담아서 반환
+     * @throws NotFoundException 현재 절차 ID에 대하여 사전에 저장해 둔 세션 정보가 없을 때 발생하는 예외
+     */
     @GetMapping("/on/{processId}/file")
-    @PreAuthorize("@checker.isLoginUser(#user) && @checker.isPassedVolunteer(#user, #processId)")
-    public ResponseEntity<Body> findFileUrl(@PathVariable Long processId, @AuthenticationPrincipal PrincipalDetails user) {
+    @PreAuthorize("@checker.isLoginUser(#user) && @checker.isPassedVolunteer(#user, #producerId, #announcementId, #processId)")
+    public ResponseEntity<Body> findFileUrl(
+            @PathVariable Long processId,
+            @PathVariable Long announcementId,
+            @RequestParam(name = "pid") Long producerId,
+            @AuthenticationPrincipal PrincipalDetails user
+    ) throws NotFoundException {
         String fileUrl = auditionService.findFileUrl(processId);
         return Response.create(HttpStatus.OK, "화상 오디션을 위한 파일 URL를 조회했습니다.", fileUrl);
     }
@@ -42,10 +53,12 @@ public class AuditionController {
      * @throws NotFoundException 현재 절차 ID에 대하여 사전에 저장해 둔 세션 정보가 없을 때 발생하는 예외
      */
     @GetMapping("/on/{processId}/session")
-    @PreAuthorize("@checker.isLoginUser(#user) && @checker.hasBookAuthority(#user, #processId, #now)")
+    @PreAuthorize("@checker.isLoginUser(#user) && @checker.hasBookAuthority(#user, #producerId, #announcementId, #processId, #now)")
     public ResponseEntity<Body> findSessionId(
             @PathVariable Long processId,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime now,
+            @PathVariable Long announcementId,
+            @RequestParam Long producerId,
             @AuthenticationPrincipal PrincipalDetails user
     ) throws NotFoundException {
         String sessionId = auditionService.findSessionId(processId);
@@ -61,10 +74,11 @@ public class AuditionController {
      * @throws IllegalArgumentException 현재 절차의 stage가 화상 오디션이 아닐 때 발생하는 예외
      */
     @PostMapping("/on/{processId}")
-    @PreAuthorize("@checker.isLoginUser(#user) && @checker.hasEditorAuthority(#user, #producerId)")
+    @PreAuthorize("@checker.isLoginUser(#user) && @checker.hasAnnouncementAuthority(#user, #producerId, #announcementId)")
     public ResponseEntity<Body> saveSession(
             @PathVariable Long processId,
             @RequestBody String fileUrl,
+            @PathVariable Long announcementId,
             @RequestBody Long producerId,
             @AuthenticationPrincipal PrincipalDetails user
     ) throws NotFoundException, IllegalArgumentException {
