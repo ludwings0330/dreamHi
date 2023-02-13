@@ -1,11 +1,14 @@
 package com.elephant.dreamhi.repository;
 
+import static com.elephant.dreamhi.model.entity.QActorProfile.actorProfile;
 import static com.elephant.dreamhi.model.entity.QBook.book;
+import static com.elephant.dreamhi.model.entity.QUser.user;
 import static com.elephant.dreamhi.model.entity.QVolunteer.volunteer;
 
 import com.elephant.dreamhi.model.dto.BookPeriodDto;
 import com.elephant.dreamhi.model.dto.BookProducerDto;
 import com.elephant.dreamhi.model.dto.BookResponseDto;
+import com.elephant.dreamhi.model.dto.BookedVolunteerDto;
 import com.querydsl.core.types.ConstantImpl;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
@@ -88,6 +91,26 @@ public class BookRepositoryCustomImpl implements BookRepositoryCustom {
                            .join(book.volunteer, volunteer)
                            .where(book.process.id.eq(processId),
                                   START_DATE.eq(date.toString()))
+                           .fetch();
+    }
+
+    @Override
+    public List<BookedVolunteerDto> findByProcessIdAndBookDate(Long processId, LocalDate today) {
+        return queryFactory.select(Projections.constructor(BookedVolunteerDto.class,
+                                                           user.id,
+                                                           user.name,
+                                                           actorProfile.gender,
+                                                           actorProfile.age,
+                                                           actorProfile.height,
+                                                           volunteer.state,
+                                                           START_TIME,
+                                                           END_TIME))
+                           .from(book)
+                           .join(book.volunteer, volunteer).fetchJoin()
+                           .join(volunteer.user, user).fetchJoin()
+                           .join(actorProfile.user, user).fetchJoin()
+                           .where(book.process.id.eq(processId),
+                                  START_DATE.eq(today.toString()))
                            .fetch();
     }
 
