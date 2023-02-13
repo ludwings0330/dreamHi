@@ -14,10 +14,12 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional(readOnly = true)
 public class ProcessServiceImpl implements ProcessService {
 
     private final AnnouncementRepository announcementRepository;
@@ -48,6 +50,7 @@ public class ProcessServiceImpl implements ProcessService {
      * @param announcementId 현재 공고의 ID
      */
     @Override
+    @Transactional
     public void saveProcessWithRecruiting(Long announcementId) {
         Announcement announcement = announcementRepository.getReferenceById(announcementId);
         Process process = Process.getInstanceForInProgress(announcement);
@@ -61,13 +64,14 @@ public class ProcessServiceImpl implements ProcessService {
      * @param processSaveDto 공고ID, 새로운 절차, 새로운 오디션 단계
      */
     @Override
-    public void saveProcessWithoutRecruiting(ProcessSaveDto processSaveDto) {
+    @Transactional
+    public Long saveProcessWithoutRecruiting(ProcessSaveDto processSaveDto) {
 //        Announcement announcement = announcementRepository.findByAnnouncementId(processSaveDto.getAnnouncementId())
 //                                                          .orElseThrow(() -> new NotFoundException("[ProcessServiceImpl.saveProcess] 해당 공고를 찾을 수 없습니다."));
 
         Announcement announcement = announcementRepository.getReferenceById(processSaveDto.getAnnouncementId());
         Process process = Process.toEntity(announcement, processSaveDto);
-        processRepository.save(process);
+        Long processId = processRepository.save(process).getId();
 
          // 모집 완료인 경우
 //        if (process.getState() == ProcessState.FINISH) {
@@ -81,6 +85,8 @@ public class ProcessServiceImpl implements ProcessService {
 //        }
 
         volunteerRepository.updatePassVolunteers(announcement.getId(), process);
+
+        return processId;
     }
 
 }
