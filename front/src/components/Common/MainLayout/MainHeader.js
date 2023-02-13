@@ -151,14 +151,14 @@ function MainHeader() {
               <Button
                 title="배우"
                 onClick={() => {
-                  navigate("/actor")
+                  navigate("/actor/list")
                 }} />
 
 
               <Button
                 title="제작사"
                 onClick={() => {
-                  navigate("/maker")
+                  navigate("/maker/list")
                 }} />
 
 

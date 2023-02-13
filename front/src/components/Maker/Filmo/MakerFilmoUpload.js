@@ -8,43 +8,43 @@ import {storage} from '../../../imageup/firebase';
 import {v4} from 'uuid';
 
 // import recoil
-import {actorProfile, actorPhotoUrl, actorPhotoLists, googleToken} from 'recoil/recoilActorState'
+import {makerProfile, makerFilmoUrl, makerFilmoLists, googleToken} from 'recoil/recoilMakerState'
 
 // import css
 import '../../../components/Casting/Casting.css';
-import './ActorPhoto.css';
+import './MakerFilmo.css';
 
-function ActorPhotoUpload(props) {
+function MakerFilmoUpload(props) {
     console.log('test',props)
     //setActorPhotos
-    console.log(props.actorPhotos)
-    const [ActorPhotoUploaded, setActorPhotoUploaded] = useState(null);
-    const ActorPhotoDirectory = useRecoilValue(actorPhotoUrl)
-    const actorInfo = useRecoilValue(actorProfile)
+    console.log(props.makerFilmos)
+    const [MakerFilmoUploaded, setMakerFilmoUploaded] = useState(null);
+    const MakerFilmoDirectory = useRecoilValue(makerFilmoUrl)
+    const makerInfo = useRecoilValue(makerProfile)
 
-    const ActorPhotosListRef = ref(storage, ActorPhotoDirectory);
+    const MakerFilmosListRef = ref(storage, MakerFilmoDirectory);
 
     const token = useRecoilValue(googleToken)
 
     const uploadFile = () => {
-        if (ActorPhotoUploaded === null) return;
-        const imageRef = ref(storage, `${ActorPhotoDirectory}/${ActorPhotoUploaded.name + v4()}`)
-        uploadBytes(imageRef, ActorPhotoUploaded).then((snapshot) => {
+        if (MakerFilmoUploaded === null) return;
+        const imageRef = ref(storage, `${MakerFilmoDirectory}/${MakerFilmoUploaded.name + v4()}`)
+        uploadBytes(imageRef, MakerFilmoUploaded).then((snapshot) => {
             getDownloadURL(snapshot.ref)
                 .then((url) => {
                     // setActPhotoUrl(url);
                     const content = {
-                        originName: `${actorInfo.name}'s picture`,
-                        savedName: `picture ${actorInfo.name}`,
+                        originName: `${makerInfo.name}'s picture`,
+                        savedName: `picture ${makerInfo.name}`,
                         type: "PICTURE",
                         url: url
                     }
                     console.log("파베",url)
-                    props.setActorPhotos(props.actorPhotos.concat({'id':
-                        props.actorPhotos.length,
+                    props.setMakerFilmos(props.makerFilmos.concat({'id':
+                        props.makerFilmos.length,
                         'url':url}))
                     // axios.post(`http://i8a702.p.ssafy.io:8085/api/actors/${actorInfo.actorProfileId}/media`,
-                    axios.post(`http://localhost:8080/api/actors/100001/media`,
+                    axios.post(`http://localhost:8080/api/producers/100001/media`,
                         content,
                         {
                             headers: {
@@ -81,7 +81,7 @@ function ActorPhotoUpload(props) {
                         id="file-photo"
                         onChange={(e) => {
 
-                            setActorPhotoUploaded(e.target.files[0])
+                            setMakerFilmoUploaded(e.target.files[0])
                         }
                         }
                     />
@@ -96,4 +96,4 @@ function ActorPhotoUpload(props) {
     );
 }
 
-export default ActorPhotoUpload;
+export default MakerFilmoUpload;
