@@ -57,7 +57,7 @@ public class AuthService {
 
     public boolean isPassedVolunteer(PrincipalDetails user, Long processId) {
         return volunteerRepository.findByUserIdAndProcessId(user.getId(), processId)
-                                  .isPresent();
+                                  .size() > 0;
     }
 
     public boolean hasBookAuthority(PrincipalDetails user, Long processId, LocalDateTime now) throws AccessDeniedException {
