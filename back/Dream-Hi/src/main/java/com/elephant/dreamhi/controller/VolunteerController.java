@@ -91,4 +91,19 @@ public class VolunteerController {
         return Response.create(HttpStatus.OK, "조회 성공", contents);
     }
 
+    /**
+     * 현재 채용절차에 남은 지원자 수를 조회합니다.
+     *
+     * @param processId : 현재 채용 절차 id
+     * @param user      : 현재 접근중인 주체
+     * @return 지원자 수
+     */
+    @GetMapping("/api/announcements/process/{processId}/volunteer-count")
+    @PreAuthorize("@checker.isLoginUser(#user)")
+    public ResponseEntity<Body> findCurrentVolunteerCount(@PathVariable Long processId,
+                                                          @AuthenticationPrincipal PrincipalDetails user) {
+        Long volunteerCount = volunteerService.findVolunteerCount(processId);
+        return Response.create(HttpStatus.OK, "현재 남은 지원자 수 조회 성공", volunteerCount);
+    }
+
 }

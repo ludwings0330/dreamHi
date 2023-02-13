@@ -129,4 +129,13 @@ public class VolunteerService {
         return result;
     }
 
+    /**
+     * 현재 채용 절차에 해당하는 지원자 수 조회
+     * @param processId
+     * @return volunteer count
+     */
+    public Long findVolunteerCount(Long processId) {
+        return volunteerRepository.countByCurrentProcessId(processId);
+    }
+
 }
