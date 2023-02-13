@@ -24,7 +24,7 @@ export const announcementFilterState = atom({
             isVolunteer: "",
         },
         page: 0,
-        size: 4
+        size: 10
     },
 })
 
@@ -44,7 +44,7 @@ export const announcementListSelector = selectorFamily({
                 isVolunteer: "",
             },
             page: 0,
-            size: 50
+            size: 10
         };
 
         // const searchCondition = {
@@ -64,22 +64,24 @@ export const announcementListSelector = selectorFamily({
         // };
         console.log('😎😎😎😎😎',announcementFilter);
         const userSimple = get(userSimpleState);
-        const data = null;
+        let data = null;
         if(userSimple.id) {
             console.log("LOGIN API");
             data = await jwtApi.get(`/api/announcements`, {params: announcementFilter})
             .then((response) => {
+                console.log('logedin')
                 console.log("Get/api/announcements");
                 console.log(response);
-                return response.data;
+                return response.data.result.content;
             });  
         } else {
             console.log("[NOT LOGIN] API");
             data = await api.get(`/api/announcements`, {params: announcementFilter})
                 .then((response) => {
+                    console.log('로그인 안 된 상태')
                     console.log("Get/api/announcements");
                     console.log(response);
-                    return response.data;
+                    return response.data.result.content;
                 });
         }
         return data;

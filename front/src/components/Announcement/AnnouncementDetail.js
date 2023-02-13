@@ -46,7 +46,7 @@ function AnnouncementDetail(props) {
 
             <AnnouncementDetailItem
                 key={announcementDetail.result.id}
-                announcementDetail={announcementDetail}/>
+                announcementDetail={announcementDetail} />
 
         </div>
     );
