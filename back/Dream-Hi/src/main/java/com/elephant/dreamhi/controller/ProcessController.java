@@ -1,6 +1,7 @@
 package com.elephant.dreamhi.controller;
 
 import com.elephant.dreamhi.model.dto.AuditionCreateRequestDto;
+import com.elephant.dreamhi.model.dto.FileDto;
 import com.elephant.dreamhi.model.dto.ProcessSaveDto;
 import com.elephant.dreamhi.model.statics.ProcessState;
 import com.elephant.dreamhi.security.PrincipalDetails;
@@ -8,6 +9,7 @@ import com.elephant.dreamhi.service.BookService;
 import com.elephant.dreamhi.service.ProcessService;
 import com.elephant.dreamhi.utils.Response;
 import com.elephant.dreamhi.utils.Response.Body;
+import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -74,7 +76,7 @@ public class ProcessController {
 
     /**
      * 오디션 일정 추가
-     * */
+     */
     @PostMapping("/{processId}/audition")
     @PreAuthorize("@checker.isLoginUser(#user)")
     public ResponseEntity<Body> createAuditionSchedule(@AuthenticationPrincipal PrincipalDetails user,
@@ -82,6 +84,23 @@ public class ProcessController {
                                                        @RequestBody AuditionCreateRequestDto auditionCreateRequestDto) {
         bookService.createAuditionSchedule(processId, auditionCreateRequestDto);
         return Response.create(HttpStatus.CREATED, "오디션 일정 생성 성공");
+    }
+
+    /**
+     * 오디션 화상 면접 절차 중 공지사항 및 대본 파일 업로드 메소드
+     *
+     * @param user      : 현재 접근중 주체
+     * @param processId : 현재 채용 절차 id
+     * @param fileDtos  : 업로드할 파일 데이터
+     * @return 201 CREATED
+     */
+    @PostMapping("/{processId}/notice-file")
+    @PreAuthorize("@checker.isLoginUser(#user)")
+    public ResponseEntity<Body> saveAllNoticeFiles(@AuthenticationPrincipal PrincipalDetails user,
+                                                   @PathVariable Long processId,
+                                                   @RequestBody List<FileDto> fileDtos) {
+        processService.saveAllNoticeFiles(processId, fileDtos);
+        return Response.create(HttpStatus.CREATED, "공지사항 및 대본 파일 업로드 성공");
     }
 
 }
