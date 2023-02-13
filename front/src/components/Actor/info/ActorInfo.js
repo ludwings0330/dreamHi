@@ -1,12 +1,31 @@
-import { React, useState, useRef } from 'react';
+import { React, useState, useRef,useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-import SearchBar from '../../Common/CommonComponent/SearchBar';
+import { useLocation } from "react-router";
 
 
 
 //개인정보 입력 component
 const ActorInfo = () => {
+    useEffect(() => {
+        console.log("처음 렌더링 될 때만 실행됨",state.styles);
+        setTitle(state.title)
+        setName(state.name)
+        setSelectGender(state.gender)
+        setAge(state.age)
+        setHeight(state.height)
 
+        for(let i=0;i<state.styles.length;i++){
+            setCheckedList([...checkedStyles, state.styles[i]['description']]);
+
+        }
+        setPhone(state.phone)
+        setEmail(state.email)
+
+    }, []);
+    const { state } = useLocation();
+
+    console.log(state,"ActorInfo 컴포넌트 state값");
+    console.log(state.name)
     const navigate = useNavigate();
 
     //useRef 관련
@@ -25,6 +44,7 @@ const ActorInfo = () => {
     const [title, setTitle] = useState("");
     const handleChangeTitle = (e) => {
         setTitle(e.target.value);
+        state.title=e.target.value
     }
 
 
@@ -32,12 +52,14 @@ const ActorInfo = () => {
     const [name, setName] = useState("");
     const handleChangeName = (e) => {
         setName(e.target.value);
+        state.name=e.target.value
     };
 
     //성별 관련
     const [selectGender, setSelectGender] = useState("");
     const handleSelectGender = (e) => {
         setSelectGender(e.target.value);
+        state.gender=e.target.value
     };
 
 
@@ -46,6 +68,7 @@ const ActorInfo = () => {
     const [age, setAge] = useState("");
     const handleChangeAge = (e) => {
         setAge(e.target.value);
+        state.age=e.target.value
     };
 
 
@@ -53,6 +76,7 @@ const ActorInfo = () => {
     const [height, setHeight] = useState("");
     const handleChangeHeight = (e) => {
         setHeight(e.target.value);
+        state.height=e.target.value
     };
 
 
@@ -80,14 +104,18 @@ const ActorInfo = () => {
     const handleCheckedStyles = (checked, item) => {
         if (checked) {
             setCheckedList([...checkedStyles, item]);
+            console.log(checkedStyles,2222222222232323,item)
         } else if (!checked) {
             setCheckedList(checkedStyles.filter(el => el !== item));
-        } 
+        }
+        state.styles=checkedStyles
+
     };
 
     //체크박스 해지 메소드
     const onRemove = item => {
         setCheckedList(checkedStyles.filter(el => el !== item));
+        state.styles=checkedStyles
     };
 
 
@@ -95,19 +123,20 @@ const ActorInfo = () => {
     const [phone, setPhone] = useState("");
     const handleChangePhone = (event) => {
         setPhone(event.target.value);
+        state.name=event.target.value
     };
 
     //이메일 관련
     const [email, setEmail] = useState("");
     const handleChangeEmail = (event) => {
         setEmail(event.target.value);
-    };
+        state.email=event.target.value
 
+    };
 
 
     return (
         <>
-            {/*<SearchBar />*/}
             <form className={"actor-info"}>
 
                 <div>
