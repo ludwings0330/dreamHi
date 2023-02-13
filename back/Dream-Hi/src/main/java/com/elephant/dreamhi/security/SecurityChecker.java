@@ -75,11 +75,22 @@ public class SecurityChecker {
         return authService.hasAnnouncementAuthority(user, announcementId);
     }
 
-    public boolean isPassedVolunteer(PrincipalDetails user, Long processId) {
-        return authService.isPassedVolunteer(user, processId);
+    public boolean hasAnnouncementAuthority(PrincipalDetails user, Long producerId, Long announcementId) {
+        return authService.hasAnnouncementAuthority(user, producerId, announcementId);
     }
 
-    public boolean hasBookAuthority(PrincipalDetails user, Long processId, LocalDateTime now) {
+    public boolean isPassedVolunteer(PrincipalDetails user, Long producerId, Long announcementId, Long processId) {
+        if (producerId != null) {
+            return hasAnnouncementAuthority(user, producerId, announcementId);
+        }
+
+        return authService.isPassedVolunteer(user, processId);
+    }
+    public boolean hasBookAuthority(PrincipalDetails user, Long producerId, Long announcementId, Long processId, LocalDateTime now) {
+        if (producerId != null) {
+            return hasAnnouncementAuthority(user, producerId, announcementId);
+        }
+
         return authService.hasBookAuthority(user, processId, now);
     }
 
