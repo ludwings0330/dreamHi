@@ -26,6 +26,28 @@ import { useRecoilValue } from 'recoil';
 const ActorList = () => {
   const navigate = useNavigate();
   const token = useRecoilValue(googleToken);
+
+  //   const sendData = {
+  //
+  //       "filter": {
+  //           "name": "user10",
+  //           "height": 161,
+  //           "age": 61,
+  //           "gender": "MALE",
+  //           "styles": [7, 8, 20, 23],
+  //           "isFollow": false,
+  //       },
+  //       "page": 0,
+  //       "size": 8
+  //
+  //
+  //   };
+  // const actorList = useRecoilValue(actorListSelector(sendData));
+  //
+  // useEffect(() => {
+  //   console.log(actorList,444444444444);
+  // }, []);
+
   const [actorList, setActorList] = useState([]);
 
   // api 요청 보내서 배우 목록 확보
@@ -53,16 +75,31 @@ const ActorList = () => {
         console.log('실패실패ㅠㅠ');
         console.log(error);
       });
+
+    // api.get('http://localhost:8080/api/actors',
+    // {
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    // })
+    // .then((res) => {
+    //   setActorList(res.data.result.content)
+    //   console.log(res.data.result.content,'데이터');
+    // })
+    // .catch((error) => {
+    //   console.log('실패실패ㅠㅠ');
+    //   console.log(error);
+    // });
   }, [setActorList]);
 
   return (
-    <div>
+    <div className={'actor-body'}>
       <SearchBar actorList={actorList} setActorList={setActorList} />
       <div>
         <MDBRow className="row-cols-1 row-cols-md-4 g-4">
           {actorList.length > 0 &&
             actorList.map((actor, idx) => (
-              <Link to={`/actor/detail/${actor.actorProfileId}`} key={idx}>
+              <Link to={`/actor/detail/${actor.actorProfileId}`} key={idx} style={{ textDecoration: "none" }}>
                 <MDBCol key={idx} className="h-100">
                   <MDBCard className="h-100">
                     <MDBCardImage
@@ -73,12 +110,23 @@ const ActorList = () => {
                       object-fit="cover"
                     />
                     <MDBCardBody>
-                      <MDBCardTitle>{actor.title}</MDBCardTitle>
+                      <MDBCardTitle className="card-text">
+                        {actor.title}
+                      </MDBCardTitle>
                       <MDBCardText>
-                        {actor.name}
-                        {actor.gender}
-                        {actor.age}
-                        {actor.height}
+                        <div className='card-info'>
+                          <span>이름 : {actor.name}</span>
+                          <span>성별 : {actor.gender === "MALE" ? "남자" : "여자"} </span>
+                          <span>나이 : {actor.age}</span>
+                          <span>키 : {actor.height}cm</span>
+                          <p>스타일 :</p>
+                          <div className='card-info-style'>
+                            {actor.styles.map((style, idx) => (
+                              <span>{style.description}</span>
+                            ))}
+                          </div>
+                        </div>
+                        {actor.styles.description}
                       </MDBCardText>
                     </MDBCardBody>
                   </MDBCard>
@@ -104,9 +152,7 @@ const ActorList = () => {
         }}
       />
 
-      {/*<div className={"page_bar"}>*/}
-      {/*    <PageBar/>*/}
-      {/*</div>*/}
+      <div className={'page_bar'}>{/* <PageBar/> */}</div>
     </div>
   );
 };
