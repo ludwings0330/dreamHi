@@ -4,25 +4,18 @@ import TextField from '@mui/material/TextField';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
-import { Box, ThemeProvider, createTheme } from '@mui/system';
 import Grid from "@mui/material/Grid";
 import { Paper } from '../../../node_modules/@mui/material/index';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { userTypeState } from 'recoil/user/userStore';
-import {auditionStartState, auditionEndState, auditionSelectState, checkTimeState } from "recoil/book/bookStore";
-import { useEffect } from 'react';
+import {auditionStartState, auditionEndState } from "recoil/book/bookStore";
 
 export default function MakerDateCalendar() {
-  const [startDate, setStartDate] = useRecoilState(auditionStartState);
-  const [endDate, setEndDate] = useRecoilState(auditionEndState);
-  const userType = useRecoilValue(userTypeState);
-  const [selectDate, setSelectDate] = useRecoilState(auditionSelectState);
-  const [checkTime, setCheckTime] = useRecoilState(checkTimeState);
-  useEffect(() => {
-    console.log("일 변경 시 checkTime 수정");
-    console.log(checkTime);
-  },[checkTime])
-  return (
+    const [startDate, setStartDate] = useRecoilState(auditionStartState);
+    const [endDate, setEndDate] = useRecoilState(auditionEndState);
+    const userType = useRecoilValue(userTypeState);
+
+    return (
     <Grid
         container
         direction="row"
@@ -36,33 +29,49 @@ export default function MakerDateCalendar() {
         <Grid>
             <Paper elevation={8}
                 sx={{
-                borderRadius: 3,
                 p: 2,
-                maxWidth: 400
+                borderRadius: 3,
+                maxWidth: 350
                 }}
             >
             <StaticDatePicker
-                toolbarTitle="📅 오디션 일정 예약"
-                onChange={(newDate) => {
-                    console.log("일 변경 시 checkTime 수정");
-                    console.log(checkTime);
-                    setSelectDate(newDate);
-                    setCheckTime();
-                    }
-                }
-                value={selectDate}
+                toolbarTitle="📅 오디션 시작일"
+                onChange={(newStartDate) => setStartDate(newStartDate)}
+                value={startDate}
                 renderInput={(params) => <TextField {...params} />}
                 componentsProps={{
                 actionBar: {
                     actions: ['today', 'clear'],
                 },
                 }}
-                minDate={startDate}
-                maxDate={endDate}
+                minDate={dayjs(new Date())}
             />
         </Paper>
         </Grid>
-            </LocalizationProvider>
+        <Grid >
+            <Paper elevation={8}
+                sx={{
+                p: 2,
+                borderRadius: 3,
+                maxWidth: 350,
+                }}
+            >
+            <StaticDatePicker
+                toolbarTitle="📅 오디션 종료일"
+                minDate={startDate}
+                onChange={(newEndDate) => setEndDate(newEndDate)}
+                value={endDate}
+                renderInput={(params) => <TextField {...params} />}
+                vertical
+                componentsProps={{
+                actionBar: {
+                    actions: ['today', 'clear'],
+                },
+                }}
+            />
+        </Paper>
+        </Grid>
+        </LocalizationProvider>
     </Grid>
-  );
+    );
 }
