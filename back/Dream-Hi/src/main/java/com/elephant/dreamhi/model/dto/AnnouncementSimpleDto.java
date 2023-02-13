@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -7,7 +8,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.format.annotation.DateTimeFormat;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,14 +26,15 @@ public class AnnouncementSimpleDto {
 
     private Boolean isFollow;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime createdDate;
 
     private Integer hit;
 
     private List<CastingSimpleDto> castings;
 
-    public AnnouncementSimpleDto(Long id, String title, String producerName, Boolean isFollow, LocalDateTime createdDate, Integer hit, List<CastingSimpleDto> castings) {
+    public AnnouncementSimpleDto(Long id, String title, String producerName, Boolean isFollow, LocalDateTime createdDate, Integer hit,
+                                 List<CastingSimpleDto> castings) {
         this.id = id;
         this.title = title;
         this.producerName = producerName;
