@@ -21,6 +21,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.support.PageableExecutionUtils;
@@ -40,6 +41,18 @@ public class VolunteerRepositoryCustomImpl implements VolunteerRepositoryCustom 
                            .where(volunteer.user.id.eq(userId), casting.announcement.id.eq(announcementId))
                            .distinct()
                            .fetch();
+    }
+
+    @Override
+    public Optional<Volunteer> findByUserIdAndProcessId(Long userId, Long processId) {
+        return Optional.ofNullable(
+                queryFactory.selectFrom(volunteer)
+                            .where(
+                                    volunteer.user.id.eq(userId),
+                                    volunteer.process.id.eq(processId)
+                            )
+                            .fetchOne()
+        );
     }
 
     @Override
