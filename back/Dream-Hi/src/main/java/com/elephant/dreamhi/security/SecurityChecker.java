@@ -79,7 +79,7 @@ public class SecurityChecker {
         return authService.hasAnnouncementAuthority(user, producerId, announcementId);
     }
 
-    public boolean isPassedVolunteer(PrincipalDetails user, Long producerId, Long announcementId, Long processId) {
+    public boolean hasPassedAuthority(PrincipalDetails user, Long producerId, Long announcementId, Long processId) {
         if (producerId != null) {
             return hasAnnouncementAuthority(user, producerId, announcementId);
         }
