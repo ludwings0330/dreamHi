@@ -18,7 +18,7 @@ import './ActorList.css';
 // import components
 import SearchBar from '../Common/CommonComponent/SearchBar';
 import Button from '../Common/CommonComponent/Button';
-import { googleToken } from 'recoil/recoilActorState';
+import { googleToken } from 'recoil/actor/actorStore';
 import { actorListSelector } from 'recoil/actor/actorStore';
 
 import { useRecoilValue } from 'recoil';

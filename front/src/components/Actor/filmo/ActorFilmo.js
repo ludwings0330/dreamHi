@@ -6,9 +6,10 @@ import {
   actorFilmoUrl,
   actorProfile,
   actorFilmoLists,
-} from 'recoil/recoilActorState';
+} from 'recoil/actor/actorStore';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import axios from 'axios';
+import { API_BASE_URL } from '../../../constants';
 
 const ActorFilmo = () => {
   const [actorFilmos, setActorFilmos] = useRecoilState(actorFilmoLists);
@@ -23,8 +24,9 @@ const ActorFilmo = () => {
 
   console.log(actorFilmos, '안되는222222');
   useEffect(() => {
+    console.log(`${API_BASE_URL}/api/actors/100001/media`);
     axios
-      .get(`http://i8a702.p.ssafy.io:8085/api/actors/100001/media`)
+      .get(`{API_BASE_URL}/api/actors/100001/media`)
       .then((res) => {
         setActorFilmos(res.data.result.pictures);
         console.log(res.data.result.pictures, '잘 찍히나요?');

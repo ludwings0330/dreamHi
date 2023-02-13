@@ -38,6 +38,11 @@ export const actorFilmoUrl = atom({
   key: 'actorFilmoUrl',
   default: null,
 });
+
+export const actorFilmoLists = atom({
+  key: 'actorFilmoLists',
+  default: [],
+});
 export const actorPhotoUrl = atom({
   key: 'actorPhotoUrl',
   default: null,

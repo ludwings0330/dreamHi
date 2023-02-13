@@ -1,11 +1,12 @@
 import { React, useState } from 'react';
 
-import { actorProfile, actorPhotoUrl, actorPhotoLists, googleToken } from 'recoil/recoilActorState';
+import { actorProfile, actorPhotoUrl, actorPhotoLists, googleToken } from 'recoil/actor/actorStore';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { storage } from '../../../imageup/firebase';
 import { ref, uploadBytes, getDownloadURL, listAll } from 'firebase/storage';
 import { v4 } from 'uuid';
 import axios from 'axios';
+import {API_BASE_URL} from "../../../constants";
 
 //프로필 사진 등록 component
 const ActorProfile = () => {
@@ -39,7 +40,7 @@ const ActorProfile = () => {
 
         // axios.post(`http://i8a702.p.ssafy.io:8085/api/actors/${actorInfo.actorProfileId}/media`,
         axios
-          .post(`http://localhost:8080/api/actors/100001/media`, content, {
+          .post(`${API_BASE_URL}/api/actors/100001/media`, content, {
             headers: {
               Authorization: `Bearer ${token}`,
             },

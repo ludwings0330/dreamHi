@@ -18,15 +18,15 @@ import {
   makerFilmoUrl,
   makerPhotoUrl,
   makerFilmoLists,
-  googleToken,
-} from 'recoil/recoilMakerState';
+} from 'recoil/maker/makerStore';
+import {API_BASE_URL} from "../../constants";
 
 const MakerDetail = () => {
   const { state } = useLocation();
 
   const navigate = useNavigate();
   const { makerProfileId } = useParams();
-  const token = useRecoilValue(googleToken);
+  const token = localStorage.getItem('accessToken');
 
   const [makerFilmos, setMakerFilmos] = useRecoilState(makerFilmoLists);
 
@@ -49,7 +49,7 @@ const MakerDetail = () => {
 
       //수정
       axios
-        .put('http://localhost:8080/api/producers', data, {
+        .put(`${API_BASE_URL}/api/producers`, data, {
           headers: {
             Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDAwMDEiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZW1haWwiOiJkZGY5OThAZ21haWwuY29tIiwiZXhwIjoxNjc4MjU2MjEyfQ.gSBnEPdb7LPDgTMwi5fDDlEdYxgbdJ6hInbddudS9suerZhCPuHDV3P9C6ygWTacOvhfT9tS8i94LP1qSszc0w`,
           },
@@ -64,7 +64,7 @@ const MakerDetail = () => {
     }
     //상세 조회
     axios
-      .get(`http://localhost:8080/api/producers/${makerProfileId}`, {
+      .get(`${API_BASE_URL}/api/producers/${makerProfileId}`, {
         headers: {
           Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDAwMDEiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZW1haWwiOiJkZGY5OThAZ21haWwuY29tIiwiZXhwIjoxNjc4MjU2MjEyfQ.gSBnEPdb7LPDgTMwi5fDDlEdYxgbdJ6hInbddudS9suerZhCPuHDV3P9C6ygWTacOvhfT9tS8i94LP1qSszc0w`,
         },

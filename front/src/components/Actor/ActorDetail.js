@@ -12,6 +12,7 @@ import ActorVideo from './video/ActorVideo';
 import Button from '../Common/CommonComponent/Button';
 
 import { useLocation } from 'react-router';
+import { API_BASE_URL } from '../../constants';
 
 //import recoil
 import {
@@ -21,7 +22,8 @@ import {
   actorVideoUrl,
   actorPhotoLists,
   googleToken,
-} from 'recoil/recoilActorState';
+} from 'recoil/actor/actorStore';
+import jwtApi from '../../util/JwtApi';
 
 const ActorDetail = () => {
   const { state } = useLocation();
@@ -78,12 +80,8 @@ const ActorDetail = () => {
         insertStyles: [5, 8],
       };
 
-      axios
-        .put(`http://localhost:8080/api/my/actor-profile`, data, {
-          headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDAwMDEiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZW1haWwiOiJkZGY5OThAZ21haWwuY29tIiwiZXhwIjoxNjc4MjU2MjEyfQ.gSBnEPdb7LPDgTMwi5fDDlEdYxgbdJ6hInbddudS9suerZhCPuHDV3P9C6ygWTacOvhfT9tS8i94LP1qSszc0w`,
-          },
-        })
+      jwtApi
+        .put(`${API_BASE_URL}/api/my/actor-profile`, data)
         .then((res) => {
           // setActorInfo(res.data.result.filter(actor => actor.actorProfileId == actorProfileId)[0])
           console.log(res, 'put 수정 이후');
@@ -95,7 +93,7 @@ const ActorDetail = () => {
         });
     }
     axios
-      .get(`http://localhost:8080/api/users/${actorProfileId}/actor-profile`, {
+      .get(`${API_BASE_URL}/api/users/${actorProfileId}/actor-profile`, {
         headers: {
           Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDAwMDEiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZW1haWwiOiJkZGY5OThAZ21haWwuY29tIiwiZXhwIjoxNjc4MjU2MjEyfQ.gSBnEPdb7LPDgTMwi5fDDlEdYxgbdJ6hInbddudS9suerZhCPuHDV3P9C6ygWTacOvhfT9tS8i94LP1qSszc0w`,
         },
@@ -115,7 +113,7 @@ const ActorDetail = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/actors/100001/media`)
+      .get(`${API_BASE_URL}/api/actors/100001/media`)
       // axios.get(`http://i8a702.p.ssafy.io:8085/api/actors/${actorInfo.actorProfileId}/media`)
       .then((res) => {
         console.log(res.data.result.pictures, 88888888888888);

@@ -8,11 +8,12 @@ import { storage } from '../../../imageup/firebase';
 import { v4 } from 'uuid';
 
 // import recoil
-import { actorProfile, actorVideoUrl, actorVideoLists, googleToken } from 'recoil/recoilActorState';
+import { actorProfile, actorVideoUrl, actorVideoLists, googleToken } from 'recoil/actor/actorStore';
 
 // import css
 import '../../../components/Casting/Casting.css';
 import './ActorVideo.css';
+import {API_BASE_URL} from "../../../constants";
 
 function ActorVideoUpload(props) {
   const [ActorVideoUploaded, setActorVideoUploaded] = useState(null);
@@ -43,7 +44,7 @@ function ActorVideoUpload(props) {
         };
         // axios.post(`http://i8a702.p.ssafy.io:8085/api/actors/${actorInfo.actorProfileId}/media`,
         axios
-          .post(`http://i8a702.p.ssafy.io:8085/api/actors/100001/media`, content, {
+          .post(`${API_BASE_URL}/api/actors/100001/media`, content, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
