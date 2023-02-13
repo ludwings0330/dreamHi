@@ -2,12 +2,16 @@ package com.elephant.dreamhi.service;
 
 import com.elephant.dreamhi.exception.NotFoundException;
 import com.elephant.dreamhi.model.dto.BookPeriod;
+import com.elephant.dreamhi.model.dto.BookProducerDto;
+import com.elephant.dreamhi.model.dto.BookResponseDto;
 import com.elephant.dreamhi.model.entity.Process;
 import com.elephant.dreamhi.model.entity.Session;
 import com.elephant.dreamhi.model.statics.StageName;
 import com.elephant.dreamhi.repository.BookRepository;
 import com.elephant.dreamhi.repository.ProcessRepository;
 import com.elephant.dreamhi.repository.SessionRepository;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,6 +30,16 @@ public class AuditionServiceImpl implements AuditionService {
     public BookPeriod findBookPeriod(Long processId) {
         return bookRepository.findBookPeriodByProcessId(processId)
                              .orElseThrow(() -> new NotFoundException("현재 절차에서 예약 가능한 기간을 찾을 수 없습니다. 제작사는 예약 기간을 등록해주세요."));
+    }
+
+    @Override
+    public List<BookResponseDto> findAllBookForVolunteer(Long processId, LocalDate date) {
+        return bookRepository.findAllForVolunteerByProcessIdAndDate(processId, date);
+    }
+
+    @Override
+    public List<BookProducerDto> findAllBookForProducer(Long processId, LocalDate date) {
+        return bookRepository.findAllForProducerByProducerIdAndDate(processId, date);
     }
 
     @Override
