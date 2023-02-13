@@ -21,7 +21,6 @@ import {
   actorPhotoUrl,
   actorVideoUrl,
   actorPhotoLists,
-  googleToken,
 } from 'recoil/actor/actorStore';
 import jwtApi from '../../util/JwtApi';
 
@@ -30,7 +29,7 @@ const ActorDetail = () => {
 
   const navigate = useNavigate();
   const { actorProfileId } = useParams();
-  const token = useRecoilValue(googleToken);
+  const token = localStorage.getItem('accessToken');
 
   const [actorPhotos, setActorPhotos] = useRecoilState(actorPhotoLists);
   const [actorInfo, setActorInfo] = useState({
