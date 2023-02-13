@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Button from '../components/Common/CommonComponent/Button';
@@ -10,7 +10,7 @@ import DateCalendar from 'components/Calendar/DateCalendar';
 import { Box, Container } from '../../node_modules/@mui/material/index';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
-import MakerDateCalendar from 'components/Calendar/DateCalendar';
+import MakerDateCalendar from 'components/Calendar/MakerDateCalendar';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimeRangeSelect from 'components/Calendar/TimeRangeSelect';
@@ -19,6 +19,7 @@ import NoticeUpload from "components/Calendar/NoticeUpload";
 function ScheduleCreatePage() {
 
   const navigate = useNavigate();
+  const totalVolunteer = useState(50);
   return (
     <Container
     justify="center"
@@ -29,10 +30,13 @@ function ScheduleCreatePage() {
 
       <Box align="center" sx={{
         typography: "h3",
-        mb: 8,
         fontWeight: "bold"
       }}>🎬 오디션 일정 선택
       </Box>
+      <Box align="center" sx={{
+        typography: "h6",
+        mb: 8
+      }}>총원 {totalVolunteer} 명</Box>
       <Grid container >
         <Grid item xs={8} >
           <Box>
