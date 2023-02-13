@@ -1,23 +1,20 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Box, Container } from '../../node_modules/@mui/material/index';
+import { Box, Container, Button } from '../../node_modules/@mui/material/index';
 import Divider from '@mui/material/Divider';
-import MakerDateCalendar from 'components/Calendar/ActorDateCalendar';
+import Grid from '@mui/material/Grid';
+import MakerDateCalendar from 'components/Calendar/MakerDateCalendar';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import Grid from '@mui/material/Grid';
-import BasicNotice from 'components/Calendar/BasicNotice';
+import TimeRangeSelect from 'components/Calendar/TimeRangeSelect';
+import NoticeUpload from 'components/Calendar/NoticeUpload';
 import { useRecoilValue } from 'recoil';
-import { userTypeState } from 'recoil/user/userStore';
-import ActorTimeTable from 'components/Calendar/ActorTimeTable';
-import MakerTimeTable from 'components/Calendar/MakerTimeTable';
-import ActorDateCalendar from 'components/Calendar/ActorDateCalendar';
+import { totlaVolunteerSelector } from 'recoil/volunteer/volunteerStore';
 
-function AuditionPage() {
-  const userType = useRecoilValue(userTypeState);
-
+function ScheduleCreatePage() {
   const navigate = useNavigate();
+  const totalVolunteer = useRecoilValue(totlaVolunteerSelector());
   return (
     <Container
       justify="center"
@@ -29,37 +26,43 @@ function AuditionPage() {
         align="center"
         sx={{
           typography: 'h3',
-          mb: 8,
           fontWeight: 'bold',
         }}
       >
         🎬 오디션 일정 선택
       </Box>
+      <Box
+        align="center"
+        sx={{
+          typography: 'h6',
+          mb: 8,
+        }}
+      >
+        총원 {totalVolunteer} 명
+      </Box>
       <Grid container>
-        <Grid item xs={6}>
+        <Grid item xs={8}>
           <Box>
             <Divider variant="fullWidth" sx={{ m: 'auto', bgcolor: 'black' }} />
             <CalendarMonthIcon sx={{ mt: 2, mb: 2, color: '#45b6fe' }} /> 날짜 선택
             <Divider variant="fullWidth" sx={{ m: 'auto', bgcolor: 'black' }} />
-            {userType === 'producer'.toUpperCase() ? <MakerDateCalendar /> : <ActorDateCalendar />}
+            <MakerDateCalendar />
           </Box>
           <Divider variant="fullWidth" />
           <Box sx={{ mt: 5 }}>
             <Divider variant="fullWidth" sx={{ bgcolor: 'black' }} />
             <AccessTimeIcon sx={{ mt: 2, mb: 2, color: '#45b6fe' }} /> 시간 선택
             <Divider variant="fullWidth" sx={{ bgcolor: 'black' }} />
-            {userType === 'producer'.toUpperCase() ? <MakerTimeTable /> : <ActorTimeTable />}
+            <TimeRangeSelect />
           </Box>
         </Grid>
         <Divider orientation="vertical" flexItem variant="inset" sx={{ bgcolor: 'black' }} />
-        <Grid item xs={5}>
-          <Container>
-            <BasicNotice />
-          </Container>
+        <Grid item xs={3}>
+          <NoticeUpload />
         </Grid>
       </Grid>
     </Container>
   );
 }
 
-export default AuditionPage;
+export default ScheduleCreatePage;
