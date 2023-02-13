@@ -1,6 +1,6 @@
 package com.elephant.dreamhi.controller;
 
-import com.elephant.dreamhi.model.dto.PictureDto;
+import com.elephant.dreamhi.model.dto.FileDto;
 import com.elephant.dreamhi.model.dto.UserSimpleDto;
 import com.elephant.dreamhi.security.PrincipalDetails;
 import com.elephant.dreamhi.service.UserService;
@@ -43,15 +43,15 @@ public class UserController {
      * 메인 프로필 사진 변경 메소드
      *
      * @param principalDetails : 현재 접근중인 주체
-     * @param pictureDto       : PictureDTO
+     * @param fileDto          : FileDto
      * @return 202
      * @throws UsernameNotFoundException : userId에 해당하는 유저가 존재하지않은 경우 발생합니다.
      */
     @PutMapping("/api/my/main-profile")
     @PreAuthorize("@checker.isLoginUser(#principalDetails)")
-    public ResponseEntity<Body> changeMainProfile(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody PictureDto pictureDto)
+    public ResponseEntity<Body> changeMainProfile(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody FileDto fileDto)
             throws UsernameNotFoundException {
-        userService.updateMainProfile(principalDetails.getId(), pictureDto);
+        userService.updateMainProfile(principalDetails.getId(), fileDto);
         return Response.accepted();
     }
 
