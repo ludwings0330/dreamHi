@@ -1,23 +1,15 @@
-import React from 'react';
-import { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import api from 'util/APIUtils';
 
 //import component
-import Button from '../CommonComponent/Button';
-
 //import css
-import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdb-react-ui-kit';
-import './SearchBar.css'
+import { MDBBtn, MDBCol, MDBContainer, MDBRow } from 'mdb-react-ui-kit';
+import './SearchBar.css';
+import jwtApi from '../../../util/JwtApi';
 
 const SearchBar = ({ actorList, setActorList }) => {
-  const token =
-    'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDAwMDEiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZW1haWwiOiJkZGY5OThAZ21haWwuY29tIiwiZXhwIjoxNjc4MjU2MjEyfQ.gSBnEPdb7LPDgTMwi5fDDlEdYxgbdJ6hInbddudS9suerZhCPuHDV3P9C6ygWTacOvhfT9tS8i94LP1qSszc0w';
-
   const search = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const actorFilter = {
       name: name,
       height: height,
@@ -26,30 +18,21 @@ const SearchBar = ({ actorList, setActorList }) => {
       styles: checkedStyles,
       isFollow: false,
     };
-    api
+
+    jwtApi
       .get(`/api/actors`, {
-        params: {
-          name: name,
-          height: height,
-          age: age,
-          gender: selectGender,
-          styles: checkedStyles,
-          isFollow: false,
-        },
+        params: { ...actorFilter },
       })
       .then((response) => {
         console.log(actorFilter, '검색 필터값');
         console.log('GET /api/actors');
-        console.log(response, '검색한다22222222');
-        if (response.data.result.content == 'undefined') {
-        }
-        console.log(response.data.result.content, '검색한다');
+        console.log(response, '필터를 통해 배우 목록 조회');
         setActorList(response.data.result.content);
       })
       .catch((error) => {
         setActorList([]);
-
-        console.log('실패실패ㅠㅠ');
+        console.log('배우 필터링 조회 실패');
+        console.log(actorFilter);
         console.log(error);
       });
   };
@@ -74,6 +57,7 @@ const SearchBar = ({ actorList, setActorList }) => {
   //성별 관련
   const [selectGender, setSelectGender] = useState('');
   const handleSelectGender = (e) => {
+    console.log(e.target.value);
     setSelectGender(e.target.value);
   };
 
@@ -125,16 +109,11 @@ const SearchBar = ({ actorList, setActorList }) => {
     <>
       {/*최상위 tag에는 id로 할당하자*/}
       <form id={'actor-info'}>
-        <div className='actor-info-top'>
+        <div className="actor-info-top">
           <div className={'search-name'}>
             <label>
               <span>이름</span>
-              <input
-                type={'text'}
-                value={name}
-                ref={nameInputRef}
-                onChange={handleChangeName}
-              />
+              <input type={'text'} value={name} ref={nameInputRef} onChange={handleChangeName} />
             </label>
           </div>
 
@@ -184,27 +163,22 @@ const SearchBar = ({ actorList, setActorList }) => {
           <div className={'search-styles-items'}>
             <MDBContainer>
               <MDBRow>
-                {stylesList.map((item) => {
-                  return (
-                    <MDBCol md="2" sm="4">
-                      <label key={item.id} className='items'>
-                        <input
-                          key={item}
-                          type={'checkbox'}
-                          value={item.id}
-                          onChange={(e) => {
-                            handleCheckedStyles(e.target.checked, e.target.value);
-                          }}
-                          checked={checkedStyles.includes(item.id) ? true : false}
-                          />
-                          <span>
-                            {item.description}
-                          </span>
-                      </label>
-                    </MDBCol>
-                  );
-                })}
-
+                {stylesList.map((item) => (
+                  <MDBCol md="2" sm="4" key={item.id}>
+                    <label key={item.id} className="items">
+                      <input
+                        key={item.id}
+                        type={'checkbox'}
+                        value={item.id}
+                        onChange={(e) => {
+                          handleCheckedStyles(e.target.checked, e.target.value);
+                        }}
+                        checked={checkedStyles.includes(item.id)}
+                      />
+                      <span>{item.description}</span>
+                    </label>
+                  </MDBCol>
+                ))}
               </MDBRow>
             </MDBContainer>
           </div>
