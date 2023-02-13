@@ -1,5 +1,61 @@
 #actor-info {
-    border-style: solid;
-    border-color: black;
-    border-width: medium;
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+}
+
+.actor-info-top {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.actor-info-top div {
+    margin-right: 20px;
+}
+
+.actor-info-top span {
+    margin-right: 10px;
+}
+
+input[type='number'], input[type='text'] {
+    width: 80px;
+    height: 20px
+} 
+
+select {
+    width: 80px;
+    height: 20px;
+}
+
+.search-styles {
+    width: 80%;
+}
+
+.search-styles > span {
+    display: block;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.search-styles-items {
+    margin-top: 10px;
+    display: grid;
+    flex-wrap: wrap;
+}
+
+.search-styles-items .items {
+    padding-right: 20px;
+}
+
+.search-styles-items span {
+    margin-left: 10px;
+}
+
+.search-buttons {
+    width: 10%;
+    align-self: flex-end;
+    margin-right: 30px;
 }
