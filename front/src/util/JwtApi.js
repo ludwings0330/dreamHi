@@ -54,8 +54,10 @@ jwtApi.interceptors.response.use(
     console.log(response);
     if (response.status === 401) {
       const originRequest = config;
-      await reissueAccessToken();
-      originRequest.headers.Authorization = `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`;
+      await reissueAccessToken().then(() => {
+        originRequest.headers.Authorization = `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`;
+      });
+
       return axios(originRequest);
     }
     ErrorCode(response);

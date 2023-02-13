@@ -1,14 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './ActorFilmo.css';
 import ActorFilmoUpload from './ActorFilmoUpload';
-import {
-  actorProfileId,
-  actorFilmoUrl,
-  actorProfile,
-  actorFilmoLists,
-} from 'recoil/recoilActorState';
-import { useRecoilValue, useRecoilState } from 'recoil';
-import axios from 'axios';
+import { actorFilmoLists } from 'recoil/actor/actorStore';
+import { useRecoilState } from 'recoil';
 
 const ActorFilmo = () => {
   const [actorFilmos, setActorFilmos] = useRecoilState(actorFilmoLists);
@@ -19,21 +13,11 @@ const ActorFilmo = () => {
     ).innerHTML = `<img src=${actorFilmos[idx].url} alt=${actorFilmos[idx]}/>`;
   };
 
-  console.log(actorFilmos, '안되는');
-
-  console.log(actorFilmos, '안되는222222');
-  useEffect(() => {
-    axios
-      .get(`http://i8a702.p.ssafy.io:8085/api/actors/100001/media`)
-      .then((res) => {
-        setActorFilmos(res.data.result.pictures);
-        console.log(res.data.result.pictures, '잘 찍히나요?');
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [setActorFilmos]);
-
+  if (actorFilmos.length === 0) {
+    return null;
+  }
+  console.log('필모그래피 정보들');
+  console.log(actorFilmos);
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -46,13 +30,14 @@ const ActorFilmo = () => {
           </div>
 
           {actorFilmos.length > 0 &&
-            actorFilmos.map((actorFilmo, idx) => (
-              <div className="actor-filmo" key={idx} width={'200px'} height={'200px'}>
+            actorFilmos.map((filmography) => (
+              <div className="actor-filmo" key={filmography.id} width={'200px'} height={'200px'}>
                 <img
-                  src={actorFilmo.url}
+                  src={filmography.photoUrl}
                   alt="image"
                   className="object-center"
-                  onClick={() => setSelected(idx)}
+                  loading={'lazy'}
+                  onClick={() => setSelected(filmography.id)}
                 />
               </div>
             ))}

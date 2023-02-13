@@ -1,29 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import { ACCESS_TOKEN } from '../../../constants';
+import React, { useEffect } from 'react';
 
 import {
-  Navbar,
-  NavLink,
+  Col,
   Container,
-  UncontrolledDropdown,
-  DropdownToggle,
   DropdownItem,
   DropdownMenu,
-  Col,
+  DropdownToggle,
+  Navbar,
   Row,
+  UncontrolledDropdown,
 } from 'reactstrap';
 
 import Button from '../CommonComponent/Button';
 import { Link, useNavigate } from 'react-router-dom';
 
 // react-icons
-import { AiOutlineBell } from 'react-icons/ai';
 import { CgProfile } from 'react-icons/cg';
 
 // css
 import './MainHeader.css';
 import 'bootstrap/scss/bootstrap.scss';
-import { userSimpleSelector, userSimpleState } from 'recoil/user/userStore';
+import { userSimpleState } from 'recoil/user/userStore';
 import { useRecoilState } from 'recoil';
 
 // api
@@ -37,23 +34,21 @@ function MainHeader() {
   const [userSimple, setUserSimple] = useRecoilState(userSimpleState);
 
   const logoutClick = async () => {
-    const isLogout = await logout();
+    let isLogout = !userSimple ? false : await logout();
+
     if (isLogout) {
-      console.log('로그아웃 성공');
-      setUserSimple({});
       Swal.fire({
         title: '감사합니다 😀',
         text: '로그아웃!!',
         icon: 'success',
       }).then(function () {
-        // window.location.href="http://i8a702.p.ssafy.io/login";
         window.location.href = '/';
       });
     }
+
+    setUserSimple({});
   };
-  useEffect(() => {
-    console.log(userSimple);
-  }, [userSimple]);
+  useEffect(() => {}, [userSimple]);
 
   return (
     <Navbar>
@@ -71,10 +66,10 @@ function MainHeader() {
               className="header-logo"
             />
           </div>
-
+          {/*{(userSimple.name != undefined) ? `name : ${userSimple.name}` : null}*/}
           <div className="header-top-right">
             {/*로그인 전에 보이는 버튼*/}
-            {userSimple.id == null ? (
+            {userSimple.id === undefined || userSimple.id === '' ? (
               <Button
                 title="로그인"
                 onClick={() => {
@@ -88,7 +83,7 @@ function MainHeader() {
                   <CgProfile size="40" color="#7EA6F4" />
                 </DropdownToggle>
 
-                <DropdownMenu className="dropdown-navbar" right tag="ul">
+                <DropdownMenu className="dropdown-navbar" end tag="ul">
                   <Link to={'/actor/detail/:actorProfileId'} tag="li">
                     <DropdownItem className="nav-item">내 이력서</DropdownItem>
                   </Link>

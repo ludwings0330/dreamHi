@@ -1,9 +1,11 @@
 import React from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../../constants';
 
 function AxiosTry(props) {
-  const token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDAwMDEiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZW1haWwiOiJkZGY5OThAZ21haWwuY29tIiwiZXhwIjoxNjc4MjU2MjEyfQ.gSBnEPdb7LPDgTMwi5fDDlEdYxgbdJ6hInbddudS9suerZhCPuHDV3P9C6ygWTacOvhfT9tS8i94LP1qSszc0w';
- 
+  const token =
+    'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDAwMDEiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZW1haWwiOiJkZGY5OThAZ21haWwuY29tIiwiZXhwIjoxNjc4MjU2MjEyfQ.gSBnEPdb7LPDgTMwi5fDDlEdYxgbdJ6hInbddudS9suerZhCPuHDV3P9C6ygWTacOvhfT9tS8i94LP1qSszc0w';
+
   const sendData = {
     title: 'title',
     producerId: 1001,
@@ -29,7 +31,7 @@ function AxiosTry(props) {
 
   const getClick = () => {
     axios
-      .get('http://i8a702.p.ssafy.io:8085/api/my', {
+      .get(`${API_BASE_URL}/api/my`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -46,8 +48,7 @@ function AxiosTry(props) {
 
   const postClick = () => {
     axios
-      .post('http://i8a702.p.ssafy.io:8085/api/announcements',
-        sendData, {
+      .post(`${API_BASE_URL}/api/announcements`, sendData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -58,25 +59,26 @@ function AxiosTry(props) {
       })
       .catch((error) => {
         console.log('실패실패ㅠㅠ');
-        console.log(sendData)
+        console.log(sendData);
         console.log(error);
       });
   };
 
-
-
   const postMakerClick = () => {
     axios
-      .post('http://i8a702.p.ssafy.io:8085/api/producers',
+      .post(
+        `${API_BASE_URL}/api/producers`,
         {},
         {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        }, params: { name : '메가커피' }
-      })
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          params: { name: '메가커피' },
+        },
+      )
       .then((res) => {
         alert('성공');
-        console.log(12121212)
+        console.log(12121212);
         console.log(res.data);
       })
       .catch((error) => {
@@ -85,16 +87,11 @@ function AxiosTry(props) {
       });
   };
 
-
-
-
   return (
     <div>
       <button onClick={getClick}> getgetget </button>
       <button onClick={postClick}> postpostpost </button>
       <button onClick={postMakerClick}> maker </button>
-
-
     </div>
   );
 }

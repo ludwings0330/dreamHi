@@ -1,29 +1,21 @@
-import React from "react";
-import { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import axios from 'axios';
-import api from "util/APIUtils";
-import { announcementFilterState } from "recoil/announcement/announcementStore";
-import { useRecoilState } from "recoil";
-
+import React, {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import api from 'util/APIUtils';
+import {announcementFilterState} from 'recoil/announcement/announcementStore';
+import {useRecoilState} from 'recoil';
 
 //import component
 // import Button from '../CommonComponent/Button';
-
 //import css
-
+// import './SearchBar.css';
 
 function AnnouncementSearchBar({ actorList, setActorList }) {
-  const [searchData, setSearchData] = useRecoilState(announcementFilterState)
-  
+  const [searchData, setSearchData] = useRecoilState(announcementFilterState);
 
   const search = () => {
-
-    
     setSearchData({
-      name: name
-    })
+      name: name,
+    });
 
     const actorFilter = {
       name: name,
@@ -32,79 +24,62 @@ function AnnouncementSearchBar({ actorList, setActorList }) {
       gender: selectGender,
       styles: checkedStyles,
       isFollow: false,
-
     };
-    api.get(`/api/actors`,
-      {
+    api
+      .get(`/api/actors`, {
         params: {
-
-
-
           name: name,
           height: height,
           age: age,
           gender: selectGender,
           styles: checkedStyles,
           isFollow: false,
-
-
-
-        }
+        },
       })
       .then((response) => {
-        console.log(actorFilter, "검색 필터값")
-        console.log("GET /api/actors");
-        console.log(response, "검색한다22222222");
+        console.log(actorFilter, '검색 필터값');
+        console.log('GET /api/actors');
+        console.log(response, '검색한다22222222');
         if (response.data.result.content == 'undefined') {
         }
-        console.log(response.data.result.content, "검색한다");
-        setActorList(response.data.result.content)
-
-
-
-      }).catch((error) => {
-        setActorList([])
+        console.log(response.data.result.content, '검색한다');
+        setActorList(response.data.result.content);
+      })
+      .catch((error) => {
+        setActorList([]);
 
         console.log('실패실패ㅠㅠ');
         console.log(error);
       });
-
-
   };
-
 
   //필터 -> 이름, 키, 나이, 성별, 스타일태그 + 검색
 
-
   const navigate = useNavigate();
 
-
   //이름 관련
-  const [name, setName] = useState("");
+  const [name, setName] = useState('');
   const handleChangeName = (e) => {
     setName(e.target.value);
   };
 
   //성별 관련
-  const [selectGender, setSelectGender] = useState("");
+  const [selectGender, setSelectGender] = useState('');
   const handleSelectGender = (e) => {
     setSelectGender(e.target.value);
   };
 
-
   //나이 관련
-  const [age, setAge] = useState("");
+  const [age, setAge] = useState('');
   const handleChangeAge = (e) => {
     setAge(e.target.value);
   };
 
-
   //키 관련
-  const [height, setHeight] = useState("");
+  const [height, setHeight] = useState('');
   const handleChangeHeight = (e) => {
     setHeight(e.target.value);
   };
-
 
   //스타일 관련
   const [checkedStyles, setCheckedList] = useState([]);
@@ -125,105 +100,83 @@ function AnnouncementSearchBar({ actorList, setActorList }) {
     { id: '44', description: '청초한' },
   ];
 
-
   const handleCheckedStyles = (checked, item) => {
     if (checked) {
       setCheckedList([...checkedStyles, item]);
     } else if (!checked) {
-      setCheckedList(checkedStyles.filter(el => el !== item));
+      setCheckedList(checkedStyles.filter((el) => el !== item));
     }
   };
 
   //체크박스 해지 메소드
-  const onRemove = item => {
-    setCheckedList(checkedStyles.filter(el => el !== item));
+  const onRemove = (item) => {
+    setCheckedList(checkedStyles.filter((el) => el !== item));
   };
 
-
   return (
-
     <>
       {/*최상위 tag에는 id로 할당하자*/}
-      <form id={"actor-info"}>
-
-        <div className={"search-name"}>
+      <form id={'actor-info'}>
+        <div className={'search-name'}>
           <label>
             이름
-            <input type={"text"}
-              value={name}
-              required
-              onChange={handleChangeName} />
+            <input type={'text'} value={name} required onChange={handleChangeName} />
           </label>
         </div>
 
-        <div className={"search-gender"}>
+        <div className={'search-gender'}>
           <label>
             성별
-            <select
-              name="gender"
-              onChange={handleSelectGender}
-              value={selectGender}
-              required
-            >
+            <select name="gender" onChange={handleSelectGender} value={selectGender} required>
               <option value="male">남</option>
               <option value="female">여</option>
             </select>
           </label>
         </div>
 
-
-        <div className={"search-age"}>
+        <div className={'search-age'}>
           <label>
             나이
-            <input type={"number"}
-              value={age}
-              required
-              onChange={handleChangeAge} />
+            <input type={'number'} value={age} required onChange={handleChangeAge} />
           </label>
         </div>
 
-        <div className={"search-height"}>
+        <div className={'search-height'}>
           <label>
             키
-            <input type={"number"}
-              value={height}
-              required
-              onChange={handleChangeHeight} />
+            <input type={'number'} value={height} required onChange={handleChangeHeight} />
           </label>
         </div>
 
-        <div className={"search-styles"}>
+        <div className={'search-styles'}>
           <label>스타일</label>
-          {stylesList.map(item => {
+          {stylesList.map((item) => {
             return (
               <label key={item.id}>
-                <input type={"checkbox"}
+                <input
+                  type={'checkbox'}
                   value={item.id}
-                  onChange={e => {
+                  onChange={(e) => {
                     handleCheckedStyles(e.target.checked, e.target.value);
                   }}
-                  checked={checkedStyles.includes(item.id) ? true : false} />
+                  checked={checkedStyles.includes(item.id) ? true : false}
+                />
                 {item.description}
               </label>
-            )
+            );
           })}
         </div>
 
-        <div className={"search-button"}
-          onClick={() => search()}>
+        <div className={'search-button'} onClick={() => search()}>
           검색
-
           {/* <Button
              title="검색"
 
          /> */}
         </div>
         <hr />
-
       </form>
     </>
-
-
   );
 }
 

@@ -1,18 +1,23 @@
 /* eslint-disable jsx-a11y/alt-text */
-import { useState, useEffect } from 'react';
-import { ref, uploadBytes, getDownloadURL, listAll } from 'firebase/storage';
-import { useRecoilValue, useRecoilState } from 'recoil';
+import {useState, useEffect} from 'react';
+import {ref, uploadBytes, getDownloadURL, listAll} from 'firebase/storage';
+import {useRecoilValue, useRecoilState} from 'recoil';
 import axios from 'axios';
 
-import { storage } from '../../../imageup/firebase';
-import { v4 } from 'uuid';
+import {storage} from '../../../imageup/firebase';
+import {v4} from 'uuid';
 
 // import recoil
-import { actorProfile, actorVideoUrl, actorVideoLists, googleToken } from 'recoil/recoilActorState';
+import {
+  actorProfile,
+  actorVideoUrl,
+  actorVideoLists
+} from 'recoil/actor/actorStore';
 
 // import css
 import '../../../components/Casting/Casting.css';
 import './ActorVideo.css';
+import {API_BASE_URL} from "../../../constants";
 
 function ActorVideoUpload(props) {
   const [ActorVideoUploaded, setActorVideoUploaded] = useState(null);
@@ -23,14 +28,17 @@ function ActorVideoUpload(props) {
 
   const ActorVideosListRef = ref(storage, ActorVideoDirectory);
 
-  const token = useRecoilValue(googleToken);
+  const token = localStorage.getItem('accessToken');
 
   const uploadFile = () => {
     console.log(ActorVideoUploaded, '개답해 대코');
     console.log('뭐해?');
-    if (ActorVideoUploaded === null) return;
+    if (ActorVideoUploaded === null) {
+      return;
+    }
     console.log('일안해?');
-    const imageRef = ref(storage, `${ActorVideoDirectory}/${ActorVideoUploaded.name + v4()}`);
+    const imageRef = ref(storage,
+        `${ActorVideoDirectory}/${ActorVideoUploaded.name + v4()}`);
     uploadBytes(imageRef, ActorVideoUploaded).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
         console.log('업로드가 잘 되고 잇나요', url);
@@ -43,17 +51,17 @@ function ActorVideoUpload(props) {
         };
         // axios.post(`http://i8a702.p.ssafy.io:8085/api/actors/${actorInfo.actorProfileId}/media`,
         axios
-          .post(`http://i8a702.p.ssafy.io:8085/api/actors/100001/media`, content, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
-          .then((res) => {
-            console.log('post success');
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        .post(`${API_BASE_URL}/api/actors/100001/media`, content, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          console.log('post success');
+        })
+        .catch((err) => {
+          console.log(err);
+        });
       });
     });
   };
@@ -86,55 +94,55 @@ function ActorVideoUpload(props) {
   }, [ActorVideoUploaded]);
 
   return (
-    <div>
-      <div className="Video-list">
-        {/*{actVideoUrl.map((url, idx) => (*/}
-        {/*    <div className='Video' key={idx}*/}
-        {/*         width={"200px"}*/}
-        {/*         height={"200px"}>*/}
-        {/*      <img*/}
-        {/*        src={url}*/}
-        {/*        alt="test"*/}
-        {/*        object-fit={"scale-down"}*/}
-        {/*        className="object-center"*/}
-        {/*        onClick={uploadFile}*/}
-        {/*      />*/}
-        {/*    </div>*/}
-        {/*  )*/}
-        {/*)}*/}
-        {/*{actorVideos.length > 0 && actorVideos.map((actorVideo, idx) => (*/}
-        {/*  <div className='Video'*/}
-        {/*       key={idx}*/}
-        {/*       width={"200px"}*/}
-        {/*       height={"200px"}>*/}
-        {/*    <img src={actorVideo.url}*/}
-        {/*         alt='image'*/}
-        {/*         object-fit={"contain"}*/}
-        {/*         className="object-center"*/}
-        {/*    />*/}
-        {/*  </div>*/}
-        {/*))}*/}
-        <div className="file-box">
-          <label for="file-video">
-            <img
-              src="/img/plus.png"
-              width={'200px'}
-              height={'200px'}
-              object-fit={'cover'}
-              className="object-center"
+      <div>
+        <div className="Video-list">
+          {/*{actVideoUrl.map((url, idx) => (*/}
+          {/*    <div className='Video' key={idx}*/}
+          {/*         width={"200px"}*/}
+          {/*         height={"200px"}>*/}
+          {/*      <img*/}
+          {/*        src={url}*/}
+          {/*        alt="test"*/}
+          {/*        object-fit={"scale-down"}*/}
+          {/*        className="object-center"*/}
+          {/*        onClick={uploadFile}*/}
+          {/*      />*/}
+          {/*    </div>*/}
+          {/*  )*/}
+          {/*)}*/}
+          {/*{actorVideos.length > 0 && actorVideos.map((actorVideo, idx) => (*/}
+          {/*  <div className='Video'*/}
+          {/*       key={idx}*/}
+          {/*       width={"200px"}*/}
+          {/*       height={"200px"}>*/}
+          {/*    <img src={actorVideo.url}*/}
+          {/*         alt='image'*/}
+          {/*         object-fit={"contain"}*/}
+          {/*         className="object-center"*/}
+          {/*    />*/}
+          {/*  </div>*/}
+          {/*))}*/}
+          <div className="file-box">
+            <label for="file-video">
+              <img
+                  src="/img/plus.png"
+                  width={'200px'}
+                  height={'200px'}
+                  object-fit={'cover'}
+                  className="object-center"
+              />
+            </label>
+            <input
+                type="file"
+                id="file-video"
+                onChange={(e) => {
+                  setActorVideoUploaded(e.target.files[0]);
+                }}
             />
-          </label>
-          <input
-            type="file"
-            id="file-video"
-            onChange={(e) => {
-              setActorVideoUploaded(e.target.files[0]);
-            }}
-          />
-          <button onClick={uploadFile}>사진 올리기</button>
+            <button onClick={uploadFile}>사진 올리기</button>
+          </div>
         </div>
       </div>
-    </div>
   );
 }
 

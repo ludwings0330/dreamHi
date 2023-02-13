@@ -1,20 +1,21 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
-import { RecoilRoot, atom, selector, useRecoilState, useRecoilValue } from 'recoil';
+import { RecoilRoot } from 'recoil';
 
-ReactDOM.render(
-    <RecoilRoot>
-        <Suspense fallback={<div>Loading...</div>}>
-            <BrowserRouter>
-                <App />
-            </BrowserRouter>
-        </Suspense>
-    </RecoilRoot>,
-    document.getElementById('root'),
+const rootNode = document.getElementById('root');
+
+ReactDOM.createRoot(rootNode).render(
+  <RecoilRoot>
+    <Suspense fallback={<div>Loading...</div>}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Suspense>
+  </RecoilRoot>,
 );
 
 // If you want to start measuring performance in your app, pass a function
