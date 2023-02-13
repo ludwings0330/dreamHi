@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
-import { ko } from 'date-fns/esm/locale'
-import "react-datepicker/dist/react-datepicker.css";
+import { ko } from 'date-fns/esm/locale';
+import 'react-datepicker/dist/react-datepicker.css';
 
 function CalendarAnnounce(props) {
   const [startDate, setStartDate] = useState(null);
@@ -14,15 +14,15 @@ function CalendarAnnounce(props) {
   };
 
   const changeDate = (date) => {
-    setStartDate(date)
-  }
+    setStartDate(date);
+  };
 
   const handleChange = (date) => {
-    changeDate(date)
+    changeDate(date);
     if (startDate) {
-      setStartDate(startDate.setHours(date.getHours(), date.getMinutes(), 0, 0))
+      setStartDate(startDate.setHours(date.getHours(), date.getMinutes(), 0, 0));
       setSelectedDates([...selectedDates, startDate]);
-      setStartDate(null)
+      setStartDate(null);
     }
   };
 
@@ -33,11 +33,13 @@ function CalendarAnnounce(props) {
         if (e.target.className.includes('react-datepicker__time-list-item')) {
           const selectedTime = new Date(e.target.getAttribute('data-time'));
           const selectedDate = new Date(selectedTime).setHours(0, 0, 0, 0);
-          const existingDate = selectedDates.find(d => new Date(d).setHours(0, 0, 0, 0) === selectedDate);
+          const existingDate = selectedDates.find(
+            (d) => new Date(d).setHours(0, 0, 0, 0) === selectedDate,
+          );
           if (!existingDate) {
             handleChange(selectedTime);
           } else {
-            const newSelectedDates = selectedDates.filter(d => d !== existingDate);
+            const newSelectedDates = selectedDates.filter((d) => d !== existingDate);
             setSelectedDates(newSelectedDates);
           }
         }
@@ -46,10 +48,8 @@ function CalendarAnnounce(props) {
   }, []);
 
   const handleDelete = (date) => {
-    setSelectedDates(selectedDates.filter(d => d !== date));
+    setSelectedDates(selectedDates.filter((d) => d !== date));
   };
-
-
 
   return (
     <div>
@@ -68,24 +68,24 @@ function CalendarAnnounce(props) {
         minDate={new Date()}
       />
       <div>
-        {selectedDates.length > 0 && selectedDates.map((date, index) => (
-          <div key={index}>
-            Selected Date: {date.toLocaleString('ko-KR', {
-            year: '2-digit',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: true,
-          })}
-            <button onClick={() => handleDelete(date)}>
-              X
-            </button>
-          </div>
-        ))}
+        {selectedDates.length > 0 &&
+          selectedDates.map((date, index) => (
+            <div key={index}>
+              Selected Date:{' '}
+              {date.toLocaleString('ko-KR', {
+                year: '2-digit',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true,
+              })}
+              <button onClick={() => handleDelete(date)}>X</button>
+            </div>
+          ))}
       </div>
     </div>
   );
-};
+}
 
 export default CalendarAnnounce;

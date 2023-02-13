@@ -1,5 +1,5 @@
-import React from "react";
-import {Route, Routes} from "react-router-dom";
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 
 //import main page
 import MainPage from './pages/MainPage';
@@ -37,54 +37,42 @@ import AuditionMeeting from './components/Audition/AuditionMeeting';
 //import collection
 import Collection from './components/Collection/Collection';
 
-
 function App() {
-
-    return (
-        <Layout>
-            <Routes>
-                //메인페이지 관련 이동
-                <Route index element={<MainPage/>}/>
-                <Route path="/actor" element={<ActorPage/>}/>
-                <Route path="/maker" element={<MakerPage/>}/>
-                <Route path={"/login"} element={<LoginPage/>}/>
-
-                //공고페이지 관련 이동
-                <Route path="/announcement" element={<AnnouncementPage/>}/>
-                <Route path="/announcement/list" element={<AnnouncementList/>}/>
-                <Route path="/announcement/write" element={<AnnouncementWrite/>}/>
-                <Route path="/announcement/:announcementId" element={<AnnouncementDetail/>}/>
-
-
-                //채용페이지 관련 이동
-                <Route path="/casting" element={<CastingPage/>}/>
-                <Route path="/casting/detail" element={<CastingDetail/>}/>
-
-
-                //배우페이지 관련 이동
-                <Route path={"/actor/list"} element={<ActorList/>}/>
-                <Route path={"/actor/detail/:actorProfileId"} element={<ActorDetail/>}/>
-                <Route path={"/actor/write"} element={<ActorWrite/>}/>
-                <Route path={"/actor/delete"} element={<ActorDelete/>}/>
-
-                //오디션페이지 관련 이동
-                <Route path={"/audition"} element={<AuditionPage/>}/>
-                <Route path={"/audition/meeting"} element={<AuditionMeeting/>}/>
-
-                //제작사페이지 관련 이동
-                <Route path={"/maker/list"} element={<MakerList/>}/>
-                <Route path={"/maker/detail/:makerProfileId"} element={<MakerDetail/>}/>
-                <Route path={"/maker/write"} element={<MakerWrite/>}/>
-
-                //모아보기페이지 관련 이동
-                <Route path={"/collection"} element={<Collection/>}/>
-
-                //로그인 관련 이동
-                <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler/>}/>
-
-            </Routes>
-        </Layout>
-    );
+  return (
+    <Layout>
+      <Routes>
+        //메인페이지 관련 이동
+        <Route index element={<MainPage />} />
+        <Route path="/actor" element={<ActorPage />} />
+        <Route path="/maker" element={<MakerPage />} />
+        <Route path={'/login'} element={<LoginPage />} />
+        //공고페이지 관련 이동
+        <Route path="/announcement" element={<AnnouncementPage />} />
+        <Route path="/announcement/list" element={<AnnouncementList />} />
+        <Route path="/announcement/write" element={<AnnouncementWrite />} />
+        <Route path="/announcement/:announcementId" element={<AnnouncementDetail />} />
+        //채용페이지 관련 이동
+        <Route path="/casting" element={<CastingPage />} />
+        <Route path="/casting/detail" element={<CastingDetail />} />
+        //배우페이지 관련 이동
+        <Route path={'/actor/list'} element={<ActorList />} />
+        <Route path={'/actor/detail/:actorProfileId'} element={<ActorDetail />} />
+        <Route path={'/actor/write'} element={<ActorWrite />} />
+        <Route path={'/actor/delete'} element={<ActorDelete />} />
+        //오디션페이지 관련 이동
+        <Route path={'/audition'} element={<AuditionPage />} />
+        <Route path={'/audition/meeting'} element={<AuditionMeeting />} />
+        //제작사페이지 관련 이동
+        <Route path={'/maker/list'} element={<MakerList />} />
+        <Route path={'/maker/detail/:makerProfileId'} element={<MakerDetail />} />
+        <Route path={'/maker/write'} element={<MakerWrite />} />
+        //모아보기페이지 관련 이동
+        <Route path={'/collection'} element={<Collection />} />
+        //로그인 관련 이동
+        <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
+      </Routes>
+    </Layout>
+  );
 }
 
 export default App;

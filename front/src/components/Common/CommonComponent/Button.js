@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import palette from '../../../lib/styles/palette';
 
-
 const StyledButton = styled.button`
   border: rgba(7, 7, 7, 0.16);
   border-radius: 5px;
@@ -24,7 +23,7 @@ const StyledButton = styled.button`
 function Button(props) {
   const { title, onClick } = props;
 
-  return <StyledButton onClick={onClick}>{title || "button"}</StyledButton>;
+  return <StyledButton onClick={onClick}>{title || 'button'}</StyledButton>;
 }
 
 export default Button;
