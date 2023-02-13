@@ -1,18 +1,16 @@
 .actor-info {
-
 }
 
 .info-form {
-    text-align: center;
-    position: absolute;
-    right: 20px;
+  text-align: center;
+  position: absolute;
+  right: 20px;
 }
 
 .actor-profile {
-    text-align: center;
-    position: absolute;
-    right: 20px;
-    left: 20px;
-    top: 250px;
+  text-align: center;
+  position: absolute;
+  right: 20px;
+  left: 20px;
+  top: 250px;
 }
-

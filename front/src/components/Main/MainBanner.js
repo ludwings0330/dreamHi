@@ -1,6 +1,6 @@
-import Slider from "react-slick";
-import "slick-carousel/slick/slick-theme.css";
-import "slick-carousel/slick/slick.css";
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick-theme.css';
+import 'slick-carousel/slick/slick.css';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -16,14 +16,13 @@ const Image = styled.img`
 `;
 
 export default function MainBanner() {
-
   const settings = {
     // dots: true,
     dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
-    slidesToScroll: 1
+    slidesToScroll: 1,
   };
   return (
     <Wrapper>
@@ -45,7 +44,3 @@ export default function MainBanner() {
     </Wrapper>
   );
 }
-
-
-
-
