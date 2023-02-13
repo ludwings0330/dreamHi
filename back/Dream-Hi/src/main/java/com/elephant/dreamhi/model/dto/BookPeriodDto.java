@@ -17,7 +17,7 @@ import lombok.ToString;
 @Getter
 @Builder
 @ToString
-public class BookPeriod {
+public class BookPeriodDto {
 
     @NotNull
     @JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
@@ -27,7 +27,7 @@ public class BookPeriod {
     @JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate endDate;
 
-    public BookPeriod(String startDate, String endDate) {
+    public BookPeriodDto(String startDate, String endDate) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd").localizedBy(Locale.KOREA);
         this.startDate = LocalDate.parse(startDate, dateTimeFormatter);
         this.endDate = LocalDate.parse(endDate, dateTimeFormatter);

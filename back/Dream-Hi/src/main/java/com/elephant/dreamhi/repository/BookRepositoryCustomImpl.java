@@ -3,7 +3,7 @@ package com.elephant.dreamhi.repository;
 import static com.elephant.dreamhi.model.entity.QBook.book;
 import static com.elephant.dreamhi.model.entity.QVolunteer.volunteer;
 
-import com.elephant.dreamhi.model.dto.BookPeriod;
+import com.elephant.dreamhi.model.dto.BookPeriodDto;
 import com.elephant.dreamhi.model.dto.BookProducerDto;
 import com.elephant.dreamhi.model.dto.BookResponseDto;
 import com.querydsl.core.types.ConstantImpl;
@@ -48,10 +48,10 @@ public class BookRepositoryCustomImpl implements BookRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Optional<BookPeriod> findBookPeriodByProcessId(Long processId) {
+    public Optional<BookPeriodDto> findBookPeriodByProcessId(Long processId) {
         return Optional.ofNullable(
                 queryFactory.select(Projections.constructor(
-                                    BookPeriod.class,
+                                    BookPeriodDto.class,
                                     START_DATE.min(),
                                     END_DATE.max()
                             ))
