@@ -1,30 +1,34 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import AnnouncementData from '../../dummydata/announcementData.json'
-import AnnouncementDetailData from '../../dummydata/announcementDetailData.json'
 import Button from "../Common/CommonComponent/Button";
 import AnnouncementDetailItem from './AnnouncementDetailItem';
+import { useRecoilValue, useRecoilState } from 'recoil';
+import { announcementListDetailSelector, announcementDetailId, announcementListSelector } from 'recoil/announcement/announcementStore';
+import AnnouncementDetailProcess from './AnnouncementDetailProcess';
 
 
 function AnnouncementDetail(props) {
+    console.log(1234)
     const navigate = useNavigate()
+    // const announcementList = useRecoilValue(announcementListSelector())
     const { announcementId } = useParams()
-    const announcement = AnnouncementData.find((item) => {
-        console.log(33333333)
-        console.log(item.result.list[0].id)
-        console.log(55555555555)
-        console.log(announcementId)
-        return item.result.list[0].id == announcementId
-    })
-    const announcementDetail = AnnouncementDetailData
-    console.log(AnnouncementDetailData.result.id)
-    console.log(AnnouncementDetailData.result.description)
-    console.log(announcementDetail)
+    console.log('🐳🐳',announcementId)
+
+    const announcement = useRecoilValue(announcementListDetailSelector(announcementId))
+    console.log('1414',announcement)
+
+
+    // const announcement = announcementList.find((item) => {
+    //     console.log(announcementId)
+    //     console.log(item)
+    //     return item.id == announcementId
+    // })
+
+
+    // const announcementDetail = AnnouncementDetailData
 
 
     // const announcementDetail = AnnouncementDetailData.find((item) => {
-    //   console.log(777777777777)
-    //   console.log(item.result.id)
     //   return item.result.id == announcementId
     // })
 
@@ -40,13 +44,15 @@ function AnnouncementDetail(props) {
             />
 
             <br />
-
-            {announcement.result.list[0].state === '모집중' ? '⭕' : '❌'}
+            <AnnouncementDetailProcess 
+                key={ announcementId }
+                announcement = { announcement }
+            />
 
 
             <AnnouncementDetailItem
-                key={announcementDetail.result.id}
-                announcementDetail={announcementDetail}/>
+                key={ announcementId }
+                announcement = {announcement} />
 
         </div>
     );

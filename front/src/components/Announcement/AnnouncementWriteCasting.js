@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { useRecoilState } from 'recoil';
-import { announcementCastingState } from '../../recoil/announcement';
+import { announcementCastingState } from 'recoil/announcement/announcement';
 
 function AnnouncementWriteCasting(props) {
   // 전역으로 들고 다닐 casting array
@@ -174,7 +174,12 @@ function AnnouncementWriteCasting(props) {
         {/*// 배역 이름 입력*/}
         <p>
           <label>배역 이름</label> :{' '}
-          <input type="text" name="name" value={casting.name} onChange={handleCastingChange} />
+          <input 
+          type="text" 
+          name="name" 
+          value={casting.name} 
+          maxLength={20}
+          onChange={handleCastingChange} />
         </p>
 
         {/*// 배역 상세 입력*/}
@@ -184,6 +189,7 @@ function AnnouncementWriteCasting(props) {
             type="text"
             name="description"
             value={casting.description}
+            maxLength={20}
             onChange={handleCastingChange}
           />
         </p>
