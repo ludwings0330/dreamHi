@@ -33,6 +33,7 @@ export const userSimpleState = atom({
 
 export const userTypeState = atom({
     key: "userTypeState",
+    // default: "ACTOR",
     default: "PRODUCER",
     effects_UNSTABLE: [persistAtom],
 })
