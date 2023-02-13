@@ -18,14 +18,13 @@ import {} from './MakerList.css';
 //import common
 import SearchBar from '../Common/CommonComponent/SearchBar';
 import Button from '../Common/CommonComponent/Button';
-import { googleToken } from 'recoil/actor/actorStore';
 import { makerListSelector } from 'recoil/maker/makerStore';
 
 import { useRecoilValue } from 'recoil';
 
 const MakerList = () => {
   const navigate = useNavigate();
-  const token = useRecoilValue(googleToken);
+  const token = localStorage.getItem('accessToken')
   const [MakerList, setMakerList] = useState([]);
 
   // api 요청 보내서 제작사 목록 확보
