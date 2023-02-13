@@ -10,6 +10,6 @@ public interface ProcessService {
 
     void saveProcessWithRecruiting(Long announcementId);
 
-    void saveProcessWithoutRecruiting(ProcessSaveDto processSaveDto);
+    Long saveProcessWithoutRecruiting(ProcessSaveDto processSaveDto);
 
 }

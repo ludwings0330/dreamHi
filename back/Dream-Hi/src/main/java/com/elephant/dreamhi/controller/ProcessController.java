@@ -1,8 +1,10 @@
 package com.elephant.dreamhi.controller;
 
+import com.elephant.dreamhi.model.dto.AuditionCreateRequestDto;
 import com.elephant.dreamhi.model.dto.ProcessSaveDto;
 import com.elephant.dreamhi.model.statics.ProcessState;
 import com.elephant.dreamhi.security.PrincipalDetails;
+import com.elephant.dreamhi.service.BookService;
 import com.elephant.dreamhi.service.ProcessService;
 import com.elephant.dreamhi.utils.Response;
 import com.elephant.dreamhi.utils.Response.Body;
@@ -13,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProcessController {
 
     private final ProcessService processService;
+    private final BookService bookService;
 
     /**
      * 공고 모집 마감 시 새로운 절차를 등록하고, 공고를 연결한다.
@@ -64,8 +68,20 @@ public class ProcessController {
             throw new IllegalArgumentException("Process의 state가 RECRUITING인 경우는 공고 생성 시 한 번만 저장될 수 있습니다.");
         }
 
-        processService.saveProcessWithoutRecruiting(processSaveDto);
-        return Response.create(HttpStatus.CREATED, "오디션의 다음 단계가 시작되었습니다.");
+        Long processId = processService.saveProcessWithoutRecruiting(processSaveDto);
+        return Response.create(HttpStatus.CREATED, "오디션의 다음 단계가 시작되었습니다.", processId);
+    }
+
+    /**
+     * 오디션 일정 추가
+     * */
+    @PostMapping("/{processId}/audition")
+    @PreAuthorize("@checker.isLoginUser(#user)")
+    public ResponseEntity<Body> createAuditionSchedule(@AuthenticationPrincipal PrincipalDetails user,
+                                                       @PathVariable Long processId,
+                                                       @RequestBody AuditionCreateRequestDto auditionCreateRequestDto) {
+        bookService.createAuditionSchedule(processId, auditionCreateRequestDto);
+        return Response.create(HttpStatus.CREATED, "오디션 일정 생성 성공");
     }
 
 }
