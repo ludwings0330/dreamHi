@@ -1,5 +1,6 @@
 package com.elephant.dreamhi.model.dto;
 
+import com.elephant.dreamhi.model.entity.Book;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import java.time.LocalTime;
@@ -39,6 +40,15 @@ public class BookResponseDto {
         this.startTime = LocalTime.parse(startTime, dateTimeFormatter);
         this.endTime = LocalTime.parse(endTime, dateTimeFormatter);
         this.reserved = reserved;
+    }
+
+    public static BookResponseDto toDto(Book book) {
+        return BookResponseDto.builder()
+                              .id(book.getId())
+                              .startTime(book.getStartTime().toLocalTime())
+                              .endTime(book.getEndTime().toLocalTime())
+                              .reserved(book.getReserved())
+                              .build();
     }
 
 }
