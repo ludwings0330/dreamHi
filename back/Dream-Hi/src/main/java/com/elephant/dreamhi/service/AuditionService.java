@@ -5,6 +5,7 @@ import com.elephant.dreamhi.model.dto.BookPeriodDto;
 import com.elephant.dreamhi.model.dto.BookProducerDto;
 import com.elephant.dreamhi.model.dto.BookRequestDto;
 import com.elephant.dreamhi.model.dto.BookResponseDto;
+import com.elephant.dreamhi.model.dto.BookedVolunteerDto;
 import com.elephant.dreamhi.security.PrincipalDetails;
 import java.time.LocalDate;
 import java.util.List;
@@ -26,5 +27,7 @@ public interface AuditionService {
     void saveSession(Long processId, String fileUrl) throws NotFoundException, IllegalArgumentException;
 
     void saveBookOfVolunteer(Long processId, BookRequestDto bookRequestDto, PrincipalDetails user) throws NotFoundException, IllegalArgumentException;
+
+    List<BookedVolunteerDto> findBookedVolunteersOnToday(Long processId);
 
 }
