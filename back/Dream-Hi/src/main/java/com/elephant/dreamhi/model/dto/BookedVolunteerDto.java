@@ -40,7 +40,7 @@ public class BookedVolunteerDto {
 
     public BookedVolunteerDto(Long userId, String name, Gender gender, Integer age, Integer height, VolunteerState state, String startTime,
                               String endTime) {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss", Locale.KOREA);
 
         this.userId = userId;
         this.name = name;
