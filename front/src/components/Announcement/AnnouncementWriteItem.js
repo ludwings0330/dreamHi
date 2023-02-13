@@ -79,6 +79,7 @@ function AnnouncementWriteItem(props) {
           name="dataTitle"
           value={dataTitle}
           placeholder="작품명을 입력해주세요"
+          maxLength={20}
           onChange={handleDataTitle}
         />
       </p>
@@ -90,6 +91,7 @@ function AnnouncementWriteItem(props) {
           name="dataPayment"
           value={dataPayment}
           placeholder="급여를 입력해주세요"
+          maxLength={20}
           onChange={handleDataPayment}
         />
       </p>
@@ -101,6 +103,7 @@ function AnnouncementWriteItem(props) {
           name="dataCrankPeriod"
           value={dataCrankPeriod}
           placeholder="촬영 기간을 입력해주세요"
+          maxLength={20}
           onChange={handleDataCrankPeriod}
         />
       </p>

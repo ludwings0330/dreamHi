@@ -17,7 +17,7 @@ function AnnouncementDetailCasting(props) {
           <div className='announcement-post-container'>
             <div className='announcement-content'> 배역 명 : {casting.name} </div>
             <div className='announcement-content'> 성별 : {casting.gender} </div>
-            <div className='announcement-content'> 인원 : {casting.headCount} 명 </div>
+            <div className='announcement-content'> 인원 : {casting.headcount} 명 </div>
             <div className='announcement-content'> 기타 상세 : {casting.description} </div>
 
 
