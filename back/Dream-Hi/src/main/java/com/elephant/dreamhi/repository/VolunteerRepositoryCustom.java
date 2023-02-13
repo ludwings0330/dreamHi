@@ -8,11 +8,14 @@ import com.elephant.dreamhi.model.entity.Volunteer;
 import com.elephant.dreamhi.model.statics.VolunteerState;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import org.springframework.data.domain.Page;
 
 public interface VolunteerRepositoryCustom {
 
     List<Volunteer> findByUserIdAndAnnouncementId(Long userId, Long announcementId);
+
+    Optional<Volunteer> findByUserIdAndProcessId(Long userId, Long processId);
 
     Map<VolunteerState, Long> getVolunteerStateSummary(VolunteerSearchCondition condition);
 
