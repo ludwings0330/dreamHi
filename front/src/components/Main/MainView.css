@@ -1,9 +1,10 @@
 .main-body {
     position: relative;
-    left: 0;
     bottom: 0;
-    right: 0;
+    margin-left: auto;
+    margin-right: auto;
     margin-bottom: 15px;
+    width: 80%;
 }
 
 .main-img {

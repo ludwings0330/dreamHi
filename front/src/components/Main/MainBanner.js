@@ -4,10 +4,9 @@ import "slick-carousel/slick/slick.css";
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-  width: 90%;
   display: block;
-  margin-left: auto;
-  margin-right: auto
+  margin-top: 30px;
+  margin-bottom: 50px;
 `;
 
 const Image = styled.img`
