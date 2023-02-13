@@ -21,7 +21,7 @@ import {
     actorVideoUrl,
     actorPhotoLists,
     googleToken
-} from 'recoil/recoilActorState'
+} from 'recoil/recoilActorState';
 
 
 const ActorDetail = () => {
@@ -92,15 +92,12 @@ const ActorDetail = () => {
                 .then((res) => {
                     // setActorInfo(res.data.result.filter(actor => actor.actorProfileId == actorProfileId)[0])
                     console.log(res, "put 수정 이후")
-                    state=res.data.result
+                    state = res.data.result
                     // setActorInfo(res.data.result)
-
                 })
                 .catch((error) => {
                     console.log(error, '이래서 실패했다');
                 });
-
-
         }
         axios.get(`http://localhost:8080/api/users/${actorProfileId}/actor-profile`,
             {

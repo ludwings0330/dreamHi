@@ -16,7 +16,6 @@ import {
 import "./ActorList.css";
 
 // import components
-// import PageBar from '../Common/CommonComponent/PageBar';
 import SearchBar from '../Common/CommonComponent/SearchBar';
 import Button from '../Common/CommonComponent/Button';
 import {googleToken} from 'recoil/recoilActorState'
@@ -27,31 +26,7 @@ import {useRecoilValue} from "recoil";
 
 const ActorList = () => {
     const navigate = useNavigate();
-    const token = useRecoilValue(googleToken)
-
-
-    //   const sendData = {
-    //
-    //       "filter": {
-    //           "name": "user10",
-    //           "height": 161,
-    //           "age": 61,
-    //           "gender": "MALE",
-    //           "styles": [7, 8, 20, 23],
-    //           "isFollow": false,
-    //       },
-    //       "page": 0,
-    //       "size": 8
-    //
-    //
-    //   };
-    // const actorList = useRecoilValue(actorListSelector(sendData));
-    //
-    // useEffect(() => {
-    //   console.log(actorList,444444444444);
-    // }, []);
-
-
+    const token = useRecoilValue(googleToken);
     const [actorList, setActorList] = useState([]);
 
     // api 요청 보내서 배우 목록 확보
@@ -73,27 +48,10 @@ const ActorList = () => {
                 console.log("GET /api/actors");
                 console.log(response);
                 setActorList(response.data.result.content)
-
             }).catch((error) => {
             console.log('실패실패ㅠㅠ');
             console.log(error);
         });
-
-        // api.get('http://localhost:8080/api/actors',
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // })
-        // .then((res) => {
-        //   setActorList(res.data.result.content)
-        //   console.log(res.data.result.content,'데이터');
-        // })
-        // .catch((error) => {
-        //   console.log('실패실패ㅠㅠ');
-        //   console.log(error);
-        // });
-
     }, [setActorList]);
 
 
@@ -116,8 +74,10 @@ const ActorList = () => {
                                     <MDBCardBody>
                                         <MDBCardTitle>{actor.title}</MDBCardTitle>
                                         <MDBCardText>
+                                            {actor.name}
+                                            {actor.gender}
+                                            {actor.age}
                                             {actor.height}
-                                            {actor.pictureUrl}
                                         </MDBCardText>
                                     </MDBCardBody>
                                 </MDBCard>
@@ -142,9 +102,9 @@ const ActorList = () => {
                     navigate("/actor/write")
                 }}/>
 
-            <div className={"page_bar"}>
-                {/* <PageBar/> */}
-            </div>
+            {/*<div className={"page_bar"}>*/}
+            {/*    <PageBar/>*/}
+            {/*</div>*/}
         </div>
     );
 };

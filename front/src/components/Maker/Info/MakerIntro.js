@@ -1,7 +1,10 @@
-import { React, useRef, useEffect, useState } from 'react';
+import {React, useRef, useEffect, useState} from 'react';
+import { useLocation } from "react-router";
 
 
 const MakerIntro = () => {
+    const { state } = useLocation();
+
     const textRef = useRef();
     const [textAreaHeight, setTextAreaHeight] = useState("auto");
     const [parentHeight, setParentHeight] = useState("auto");
@@ -21,6 +24,7 @@ const MakerIntro = () => {
             setParentHeight(`${textRef.current.scrollHeight}px`);
             setTextAreaHeight(`${textRef.current.scrollHeight}px`);
         }
+        setIntro(state.description)
     }, []);
 
     // 글의 값이 변할 때 추가로 높이를 보정해 준다.
@@ -28,6 +32,7 @@ const MakerIntro = () => {
         setTextAreaHeight("auto");
         setParentHeight(`${textRef.current.scrollHeight}px`);
         setIntro(event.target.value);
+        state.description=event.target.value
     };
 
     const handleChangeIntro = (e) => {

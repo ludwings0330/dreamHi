@@ -1,73 +1,67 @@
-import React from 'react';
-import axios from '../../../../node_modules/axios/index';
+import React, {useEffect} from 'react';
 import './ActorFilmo.css';
-
-const products = [
-  {
-    id: 1,
-    name: 'Basic Tee',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
-  },
-  {
-    id: 2,
-    name: 'Basic Tee',
-    imageSrc: 'https://i.ibb.co/FmTym4n/555.png',
-  },
-  {
-    id: 3,
-    name: 'Basic Tee',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
-  },
-  {
-    id: 4,
-    name: 'Basic Tee',
-    imageSrc: 'https://cdn.pixabay.com/photo/2022/10/16/13/17/road-7525092_640.jpg',
-  },
-
-]
-const setSelected = (idx) => {
-  document.querySelector('.photo-main').innerHTML=`<img src=${products[idx].imageSrc} alt=${products[idx].imageAlt}/>`
-
-};
-
+import ActorFilmoUpload from './ActorFilmoUpload';
+import {actorProfileId, actorFilmoUrl, actorProfile, actorFilmoLists} from 'recoil/recoilActorState'
+import {useRecoilValue, useRecoilState} from 'recoil'
+import axios from 'axios';
 
 const ActorFilmo = () => {
-  return (
-    <div className="bg-white">
+    const [actorFilmos, setActorFilmos] = useRecoilState(actorFilmoLists)
 
-      <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
-        <h1>필모그래피</h1>
+    const setSelected = (idx) => {
+        document.querySelector('.actor-filmo-main').innerHTML = `<img src=${actorFilmos[idx].url} alt=${actorFilmos[idx]}/>`
+    };
 
-        <div className="list-container">
+    console.log(actorFilmos, '안되는')
 
-          {/*메인이미지 부분*/}
-          <div className='photo-main'>
-            <img src={products[0].imageSrc} alt={products[0].imageAlt}/>
-          </div>
+    console.log(actorFilmos, '안되는222222')
+    useEffect(() => {
+        axios.get(`http://i8a702.p.ssafy.io:8085/api/actors/100001/media`)
+            .then((res) => {
+                setActorFilmos(res.data.result.pictures)
+                console.log(res.data.result.pictures, '잘 찍히나요?')
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }, [setActorFilmos]);
+
+    return (
+        <div className="bg-white">
+
+            <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+                <h1>필모그래피</h1>
+
+                <div className="list-container">
+
+                    {/*메인이미지 부분*/}
+                    <div className='actor-filmo-main'>
+                        <img src={actorFilmos[0].url} alt={actorFilmos[0].url}/>
+                    </div>
+
+                    {actorFilmos.length > 0 && actorFilmos.map((actorFilmo, idx) => (
+                        <div className='actor-filmo'
+                             key={idx}
+                             width={"200px"}
+                             height={"200px"}>
+                            <img
+                                src={actorFilmo.url}
+                                alt='image'
+                                className="object-center"
+                                onClick={() => setSelected(idx)}
+                            />
+                        </div>
+                    ))}
+
+                    <ActorFilmoUpload actorFilmos={actorFilmos} setActorFilmos={setActorFilmos}/>
 
 
-          <div className='photo-list'>
-            {products.map((product, idx) => (
-              idx === 0 ? null :
-                <div className='photo' key={product.id}>
-                  <img
-                    src={product.imageSrc}
-                    alt={product.imageAlt}
-                    width={"200px"}
-                    height={"200px"}
-                    className="object-center"
-                    onClick={() => setSelected(idx)}
-                  />
                 </div>
-            ))}
-          </div>
 
+            </div>
         </div>
 
-      </div>
-    </div>
-
-  );
+    );
 };
 
 export default ActorFilmo;
