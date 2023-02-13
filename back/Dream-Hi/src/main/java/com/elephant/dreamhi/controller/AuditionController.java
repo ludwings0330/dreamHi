@@ -2,6 +2,7 @@ package com.elephant.dreamhi.controller;
 
 import com.elephant.dreamhi.exception.NotFoundException;
 import com.elephant.dreamhi.model.dto.BookPeriod;
+import com.elephant.dreamhi.model.dto.BookResponseDto;
 import com.elephant.dreamhi.security.PrincipalDetails;
 import com.elephant.dreamhi.service.AuditionService;
 import com.elephant.dreamhi.utils.Response;
@@ -32,9 +33,28 @@ public class AuditionController {
     /**
      * @param processId      오디션의 현재 절차 ID
      * @param announcementId 현재 공고 ID
+     * @param user           현재 로그인 한 유저
+     * @return 이미 예약한 지원자의 경우 예약 일자에 대한 정보를 Response의 Body에 담아서 반환
+     * @throws NotFoundException 지원자가 아직 예약을 하지 않은 지원자일 때 발생하는 예외
+     */
+    @GetMapping("/on/{processId}/reservation")
+    @PreAuthorize("@checker.isLoginUser(#user) && @checker.hasPassedAuthority(#user, #announcementId, #processId)")
+    public ResponseEntity<Body> isBookedVolunteer(
+            @PathVariable Long processId,
+            @PathVariable Long announcementId,
+            @AuthenticationPrincipal PrincipalDetails user
+    ) throws NotFoundException {
+        BookResponseDto bookResponseDto = auditionService.findBookOfVolunteer(processId, user);
+        return Response.create(HttpStatus.OK, "이미 예약한 지원자입니다. 예약 일자를 확인해주세요.", bookResponseDto);
+    }
+
+    /**
+     * @param processId      오디션의 현재 절차 ID
+     * @param announcementId 현재 공고 ID
      * @param producerId     현재 공고를 작성한 제작사 ID
      * @param user           현재 로그인 한 유저
      * @return 예약 가능한 날짜의 시작일과 종료일을 Response의 Body에 담아서 반환
+     * @throws NotFoundException 제작사에서 화상 오디션 예약 가능한 일자를 등록하지 않은 경우에 발생하는 예외
      */
     @GetMapping("/on/{processId}/period")
     @PreAuthorize("@checker.isLoginUser(#user) && @checker.hasPassedAuthority(#user, #producerId, #announcementId, #processId)")
@@ -43,7 +63,7 @@ public class AuditionController {
             @PathVariable Long announcementId,
             @RequestParam(name = "pid", required = false) Long producerId,
             @AuthenticationPrincipal PrincipalDetails user
-    ) {
+    ) throws NotFoundException {
         BookPeriod bookPeriod = auditionService.findBookPeriod(processId);
         return Response.create(HttpStatus.OK, "예약 가능한 날짜의 시작일과 종료일을 조회했습니다.", bookPeriod);
     }
