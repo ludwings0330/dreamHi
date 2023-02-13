@@ -1,16 +1,16 @@
-import {atom, selectorFamily } from "recoil";
-import { recoilPersist } from "recoil-persist";
+import { atom, selectorFamily } from 'recoil';
+import { recoilPersist } from 'recoil-persist';
 
 const { persistAtom } = recoilPersist();
 
 export const userSimpleState = atom({
-    key: "userSimpleState",
-    default: {
-        id: "",
-        name:"",
-        pictureUrl: ""
-    },
-    effects_UNSTABLE: [persistAtom],
+  key: 'userSimpleState',
+  default: {
+    id: '',
+    name: '',
+    pictureUrl: '',
+  },
+  effects_UNSTABLE: [persistAtom],
 });
 
 // selector는 파생시킬 때 사용해야한다.
@@ -32,7 +32,8 @@ export const userSimpleState = atom({
 // })
 
 export const userTypeState = atom({
-    key: "userTypeState",
-    default: "PRODUCER",
-    effects_UNSTABLE: [persistAtom],
-})
+  key: 'userTypeState',
+  default: 'ACTOR',
+  // default: "PRODUCER",
+  effects_UNSTABLE: [persistAtom],
+});
