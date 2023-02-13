@@ -27,15 +27,19 @@ public class Session {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "announcement_id", nullable = false, updatable = false)
-    private Announcement announcement;
+    @JoinColumn(name = "process_id", nullable = false, unique = true, updatable = false)
+    private Process process;
 
     @Column(nullable = false, unique = true, updatable = false)
     private String sessionId;
 
-    public Session(Announcement announcement, String sessionId) {
-        this.announcement = announcement;
+    @Column(unique = true)
+    private String fileUrl;
+
+    public Session(Process process, String sessionId, String fileUrl) {
+        this.process = process;
         this.sessionId = sessionId;
+        this.fileUrl = fileUrl;
     }
 
 }
