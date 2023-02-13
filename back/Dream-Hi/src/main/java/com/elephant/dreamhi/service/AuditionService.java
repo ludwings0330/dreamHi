@@ -4,12 +4,15 @@ import com.elephant.dreamhi.exception.NotFoundException;
 import com.elephant.dreamhi.model.dto.BookPeriod;
 import com.elephant.dreamhi.model.dto.BookProducerDto;
 import com.elephant.dreamhi.model.dto.BookResponseDto;
+import com.elephant.dreamhi.security.PrincipalDetails;
 import java.time.LocalDate;
 import java.util.List;
 
 public interface AuditionService {
 
-    BookPeriod findBookPeriod(Long processId);
+    BookResponseDto findBookOfVolunteer(Long processId, PrincipalDetails user) throws NotFoundException;
+
+    BookPeriod findBookPeriod(Long processId) throws NotFoundException;
 
     List<BookResponseDto> findAllBookForVolunteer(Long processId, LocalDate date);
 
