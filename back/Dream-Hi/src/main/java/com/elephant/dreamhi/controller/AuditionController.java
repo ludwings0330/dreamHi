@@ -6,6 +6,7 @@ import com.elephant.dreamhi.security.PrincipalDetails;
 import com.elephant.dreamhi.service.AuditionService;
 import com.elephant.dreamhi.utils.Response;
 import com.elephant.dreamhi.utils.Response.Body;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -40,11 +41,39 @@ public class AuditionController {
     public ResponseEntity<Body> findBookPeriod(
             @PathVariable Long processId,
             @PathVariable Long announcementId,
-            @RequestParam(name = "pid") Long producerId,
+            @RequestParam(name = "pid", required = false) Long producerId,
             @AuthenticationPrincipal PrincipalDetails user
     ) {
         BookPeriod bookPeriod = auditionService.findBookPeriod(processId);
         return Response.create(HttpStatus.OK, "예약 가능한 날짜의 시작일과 종료일을 조회했습니다.", bookPeriod);
+    }
+
+    /**
+     * @param processId      오디션의 현재 절차 ID
+     * @param announcementId 현재 공고 ID
+     * @param producerId     현재 공고를 작성한 제작사 ID
+     * @param date           선택한 예약 날짜
+     * @param user           현재 로그인 한 유저
+     * @return 지원자에게는 예약 현황을, 제작사에게는 각 예약 현황에 지원한 User의 ID를 Response의 Body에 담아서 반환
+     */
+    @GetMapping("/on/{processId}/schedules")
+    @PreAuthorize("@checker.isLoginUser(#user) && @checker.hasPassedAuthority(#user, #producerId, #announcementId, #processId)")
+    public ResponseEntity<Body> findAllBook(
+            @PathVariable Long processId,
+            @PathVariable Long announcementId,
+            @RequestParam(name = "pid", required = false) Long producerId,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date,
+            @AuthenticationPrincipal PrincipalDetails user
+    ) {
+        Object bookDtos;
+
+        if (producerId == null) {
+            bookDtos = auditionService.findAllBookForVolunteer(processId, date);
+        } else {
+            bookDtos = auditionService.findAllBookForProducer(processId, date);
+        }
+
+        return Response.create(HttpStatus.OK, "요청한 일자의 예약 정보를 조회했습니다.", bookDtos);
     }
 
     /**
@@ -60,7 +89,7 @@ public class AuditionController {
     public ResponseEntity<Body> findFileUrl(
             @PathVariable Long processId,
             @PathVariable Long announcementId,
-            @RequestParam(name = "pid") Long producerId,
+            @RequestParam(name = "pid", required = false) Long producerId,
             @AuthenticationPrincipal PrincipalDetails user
     ) throws NotFoundException {
         String fileUrl = auditionService.findFileUrl(processId);
@@ -80,7 +109,7 @@ public class AuditionController {
             @PathVariable Long processId,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime now,
             @PathVariable Long announcementId,
-            @RequestParam Long producerId,
+            @RequestParam(required = false) Long producerId,
             @AuthenticationPrincipal PrincipalDetails user
     ) throws NotFoundException {
         String sessionId = auditionService.findSessionId(processId);
