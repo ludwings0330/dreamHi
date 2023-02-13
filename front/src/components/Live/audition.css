@@ -1,0 +1,29 @@
+#main-video {
+    width: 100%;
+}
+.notice-body {
+    width: 100%;
+    text-align: center;
+    margin-left: 10px;
+    font-size: 16px;
+    word-break: keep-all;
+}
+
+.notice-text {
+    /*transform: translateX(80%);*/
+}
+
+.notice-text span {
+    font-size: 14px;
+    color: #5a5a5a;
+    display: block;
+}
+
+.notice-button {
+}
+
+.notice-button .why {
+    width: 250px;
+    font-size: 14px;
+    display: inline-block;
+}

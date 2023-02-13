@@ -1,8 +1,8 @@
 /* eslint-disable react/destructuring-assignment */
-import React, { Component } from 'react';
 import styled from 'styled-components';
 import OpenViduVideoComponent from './OvVideo';
 import './UserVideo.css';
+import React from 'react';
 
 const StreamComponent = styled.div`
   display: flex;
@@ -18,24 +18,25 @@ const Nickname = styled.div`
   font-weight: bold;
 `;
 
-export default class UserVideoComponent extends Component {
-  getNicknameTag() {
-    // Gets the nickName of the user
-    return JSON.parse(this.props.streamManager.stream.connection.data)
-      .clientData;
-  }
 
-  render() {
-    return (
+
+const UserVideoComponent = (props) => {
+  const getNicknameTag = () => {
+    // Gets the nickName of the user
+    return JSON.parse(props.streamManager.stream.connection.data).clientData;
+  };
+
+  return (
       <div>
-        {this.props.streamManager !== undefined ? (
-          <StreamComponent className="streamcomponent">
-            <OpenViduVideoComponent streamManager={this.props.streamManager} />
-            <Nickname>{this.getNicknameTag()}</Nickname>
-          </StreamComponent>
+        {props.streamManager !== undefined ? (
+            <StreamComponent className="streamcomponent">
+              <OpenViduVideoComponent streamManager={props.streamManager} />
+              <Nickname>{getNicknameTag()}</Nickname>
+            </StreamComponent>
         ) : null}
       </div>
-    );
-  }
-}
+  );
+};
+
+export default UserVideoComponent;
 
