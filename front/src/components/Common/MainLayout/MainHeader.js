@@ -97,7 +97,7 @@ function MainHeader() {
                 <DropdownMenu className="dropdown-navbar" right tag="ul">
 
 
-                  <Link to={"/actor/detail"} tag="li">
+                  <Link to={"/actor/detail/:actorProfileId"} tag="li">
                     <DropdownItem className="nav-item">내 이력서</DropdownItem>
                   </Link>
 
