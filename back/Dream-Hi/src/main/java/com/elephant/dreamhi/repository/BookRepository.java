@@ -1,7 +1,7 @@
 package com.elephant.dreamhi.repository;
 
 import com.elephant.dreamhi.model.entity.Book;
-import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -14,6 +14,6 @@ public interface BookRepository extends JpaRepository<Book, Long>, BookRepositor
             + "JOIN b.process p "
             + "WHERE u.id = :userId "
             + "AND p.id = :processId ")
-    List<Book> findByUserIdAndProcessId(Long userId, Long processId);
+    Optional<Book> findByUserIdAndProcessId(Long userId, Long processId);
 
 }

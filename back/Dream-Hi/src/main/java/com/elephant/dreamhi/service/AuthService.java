@@ -8,7 +8,6 @@ import com.elephant.dreamhi.repository.BookRepository;
 import com.elephant.dreamhi.repository.VolunteerRepository;
 import com.elephant.dreamhi.security.PrincipalDetails;
 import java.time.LocalDateTime;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
@@ -62,19 +61,14 @@ public class AuthService {
     }
 
     public boolean hasBookAuthority(PrincipalDetails user, Long processId, LocalDateTime now) throws AccessDeniedException {
-        List<Book> books = bookRepository.findByUserIdAndProcessId(user.getId(), processId);
+        Book book = bookRepository.findByUserIdAndProcessId(user.getId(), processId)
+                                  .orElseThrow(() -> new AccessDeniedException("화상 오디션 예약 목록에서 찾을 수 없는 회원입니다."));
 
-        if (books.isEmpty()) {
-            throw new AccessDeniedException("화상 오디션 예약 목록에서 찾을 수 없는 회원입니다.");
+        if (now.isBefore(book.getStartTime()) || now.isAfter(book.getStartTime().plusMinutes(10L))) {
+            throw new AccessDeniedException("현재 시간에는 화상 오디션에 접속할 수 없습니다. 오디션 시작 일시에 맞추어 입장해주세요.");
         }
 
-        for (Book book : books) {
-            if (!now.isBefore(book.getStartTime()) && !now.isAfter(book.getStartTime().plusMinutes(10L))) {
-                return true;
-            }
-        }
-
-        throw new AccessDeniedException("현재 시간에는 화상 오디션에 접속할 수 없습니다. 오디션 시작 일시에 맞추어 입장해주세요.");
+        return true;
     }
 
 }
