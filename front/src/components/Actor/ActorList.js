@@ -26,6 +26,28 @@ import { useRecoilValue } from 'recoil';
 const ActorList = () => {
   const navigate = useNavigate();
   const token = useRecoilValue(googleToken);
+
+  //   const sendData = {
+  //
+  //       "filter": {
+  //           "name": "user10",
+  //           "height": 161,
+  //           "age": 61,
+  //           "gender": "MALE",
+  //           "styles": [7, 8, 20, 23],
+  //           "isFollow": false,
+  //       },
+  //       "page": 0,
+  //       "size": 8
+  //
+  //
+  //   };
+  // const actorList = useRecoilValue(actorListSelector(sendData));
+  //
+  // useEffect(() => {
+  //   console.log(actorList,444444444444);
+  // }, []);
+
   const [actorList, setActorList] = useState([]);
 
   // api 요청 보내서 배우 목록 확보
@@ -53,8 +75,22 @@ const ActorList = () => {
         console.log('실패실패ㅠㅠ');
         console.log(error);
       });
-  }, [setActorList]);
 
+    // api.get('http://localhost:8080/api/actors',
+    // {
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    // })
+    // .then((res) => {
+    //   setActorList(res.data.result.content)
+    //   console.log(res.data.result.content,'데이터');
+    // })
+    // .catch((error) => {
+    //   console.log('실패실패ㅠㅠ');
+    //   console.log(error);
+    // });
+  }, [setActorList]);
 
   return (
     <div className={'actor-body'}>
