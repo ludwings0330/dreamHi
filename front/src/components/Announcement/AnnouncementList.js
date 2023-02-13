@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom';
 import './Announcement.css';
 
 
-import SearchBar from '../Common/CommonComponent/SearchBar';
 
 import { useRecoilValue } from 'recoil';
 import { announcementListSelector, announcementListState } from 'recoil/announcement/announcementStore';
+import AnnouncementSearchBar from './AnnouncementSearchBar';
 
 
 function AnnouncementList(props) {
@@ -28,6 +28,8 @@ function AnnouncementList(props) {
   return (
     <div>
       <h2> 공고리스트페이지 </h2>
+
+      <AnnouncementSearchBar />
 
 
 
