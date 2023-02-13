@@ -55,11 +55,14 @@ public class Book {
     public static List<Book> toEntityList(Process process, AuditionCreateRequestDto auditionCreateRequestDto, long period) {
         LocalDateTime startDate = auditionCreateRequestDto.getStartDate();
         LocalDateTime endDate = auditionCreateRequestDto.getEndDate();
-        LocalDateTime curDate = startDate;
-        int startHour = startDate.getHour();
-        int startMinute = startDate.getMinute();
-        int endHour = endDate.getHour();
-        int endMinute = endDate.getMinute();
+        List<Book> books = makeBooks(process, period, endDate, auditionCreateRequestDto.getStartDate(), startDate.getHour(), startDate.getMinute(),
+                                     endDate.getHour(),
+                                     endDate.getMinute());
+        return books;
+    }
+
+    private static List<Book> makeBooks(Process process, long period, LocalDateTime endDate, LocalDateTime curDate, int startHour, int startMinute,
+                                        int endHour, int endMinute) {
         List<Book> books = new ArrayList<>();
         while (!curDate.isAfter(endDate)) {
             books.add(Book.builder()
