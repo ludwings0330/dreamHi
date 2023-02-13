@@ -11,13 +11,8 @@ import './LoginPage.css';
 function LoginPage() {
     return (
       <>
-
         <div className="app-body">
           <Login />
-          <Routes>
-            <Route path="/login" element={<Login  />} />
-            <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
-          </Routes>
         </div>
       </>
     );

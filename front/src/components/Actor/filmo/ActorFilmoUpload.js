@@ -12,6 +12,7 @@ import { actorProfile, actorFilmoUrl, actorFilmoLists, googleToken } from 'recoi
 // import css
 import '../../../components/Casting/Casting.css';
 import './ActorFilmo.css';
+import {API_BASE_URL} from "../../../constants";
 
 function ActorFilmoUpload(props) {
   console.log('test', props);
@@ -41,7 +42,7 @@ function ActorFilmoUpload(props) {
         props.setActorFilmos(props.actorFilmos.concat({ id: props.actorFilmos.length, url: url }));
         // axios.post(`http://i8a702.p.ssafy.io:8085/api/actors/${actorInfo.actorProfileId}/media`,
         axios
-          .post(`http://localhost:8080/api/actors/100001/media`, content, {
+          .post(`${API_BASE_URL}/api/actors/100001/media`, content, {
             headers: {
               Authorization: `Bearer ${token}`,
             },

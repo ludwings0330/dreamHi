@@ -7,9 +7,10 @@ import {
   actorPhotoUrl,
   actorProfile,
   actorVideoLists,
-} from 'recoil/recoilActorState';
+} from 'recoil/actor/actorStore';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import axios from 'axios';
+import {API_BASE_URL} from "../../../constants";
 
 const ActorVideo = () => {
   const { actorProfileId } = useParams();
@@ -28,7 +29,7 @@ const ActorVideo = () => {
   useEffect(() => {
     // axios.get(`http://i8a702.p.ssafy.io:8085/api/actors/100001/media`)
     axios
-      .get(`http://i8a702.p.ssafy.io:8085/api/actors/${actorProfileId}/media`)
+      .get(`${API_BASE_URL}/api/actors/${actorProfileId}/media`)
       .then((res) => {
         setActorVideos(res.data.result.videos);
         console.log(res.data.result.videos, '잘 찍히나요?');

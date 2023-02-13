@@ -18,7 +18,7 @@ import {} from './MakerList.css';
 //import common
 import SearchBar from '../Common/CommonComponent/SearchBar';
 import Button from '../Common/CommonComponent/Button';
-import { googleToken } from 'recoil/recoilActorState';
+import { googleToken } from 'recoil/actor/actorStore';
 import { makerListSelector } from 'recoil/maker/makerStore';
 
 import { useRecoilValue } from 'recoil';

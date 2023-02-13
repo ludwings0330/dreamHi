@@ -2,7 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import { ACCESS_TOKEN } from '../../constants';
 import { Navigate, useSearchParams } from '../../../node_modules/react-router-dom/dist/index';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { userSimpleInfo, userSimpleState } from 'recoil/user/userStore';
+import {userSimpleState} from "recoil/user/userStore";
+import { userSimpleInfo,  } from 'recoil/user/userStore';
 import api from 'util/APIUtils';
 import jwtApi from 'util/JwtApi';
 

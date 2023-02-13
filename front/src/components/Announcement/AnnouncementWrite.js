@@ -17,6 +17,7 @@ import {
 } from 'recoil/announcement/announcement';
 import AnnouncementWriteCasting from './AnnouncementWriteCasting';
 import ImageUpload from "imageup/ImageUpload";
+import {API_BASE_URL} from "../../constants";
 
 function AnnouncementWrite(props) {
     const token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDAwMDEiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZW1haWwiOiJkZGY5OThAZ21haWwuY29tIiwiZXhwIjoxNjc4MjU2MjEyfQ.gSBnEPdb7LPDgTMwi5fDDlEdYxgbdJ6hInbddudS9suerZhCPuHDV3P9C6ygWTacOvhfT9tS8i94LP1qSszc0w';
@@ -46,7 +47,7 @@ function AnnouncementWrite(props) {
   const postClick = () => {
     axios({
       method: 'POST',
-      url: 'http://i8a702.p.ssafy.io:8085/api/announcements',
+      url: `${API_BASE_URL}/api/announcements`,
       data: sendData,
       headers: {
         Authorization: `Bearer ${token}`,

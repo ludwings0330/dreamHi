@@ -9,9 +9,10 @@ import {
   makerFilmoUrl,
   makerProfile,
   makerFilmoLists,
-} from 'recoil/recoilMakerState';
+} from 'recoil/maker/makerStore';
 
 import {} from './MakerFilmo.css';
+import {API_BASE_URL} from "../../../constants";
 
 const MakerFilmo = () => {
   const [makerFilmos, setMakerFilmos] = useRecoilState(makerFilmoLists);
@@ -21,11 +22,10 @@ const MakerFilmo = () => {
       '.maker-filmo-main',
     ).innerHTML = `<img src=${makerFilmos[idx].url} alt=${makerFilmos[idx]}/>`;
   };
-  console.log(makerFilmos, '찍히나요');
 
   useEffect(() => {
     axios
-      .get(`http://i8a702.p.ssafy.io:8085/api/producers/100001/media`)
+      .get(`${API_BASE_URL}/api/producers/100001/media`)
       .then((res) => {
         setMakerFilmos(res.data.result.pictures);
         console.log(res.data.result.pictures, '잘 찍히나요?');

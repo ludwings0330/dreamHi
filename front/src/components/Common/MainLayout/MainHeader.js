@@ -74,7 +74,7 @@ function MainHeader() {
 
           <div className="header-top-right">
             {/*로그인 전에 보이는 버튼*/}
-            {userSimple.id == null ? (
+            {userSimple.id == null || userSimple.id === '' ? (
               <Button
                 title="로그인"
                 onClick={() => {

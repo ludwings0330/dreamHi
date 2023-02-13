@@ -8,11 +8,12 @@ import { storage } from '../../../imageup/firebase';
 import { v4 } from 'uuid';
 
 // import recoil
-import { makerProfile, makerFilmoUrl, makerFilmoLists, googleToken } from 'recoil/recoilMakerState';
+import { makerProfile, makerFilmoUrl, makerFilmoLists } from 'recoil/maker/makerStore';
 
 // import css
 import '../../../components/Casting/Casting.css';
 import './MakerFilmo.css';
+import {API_BASE_URL} from "../../../constants";
 
 function MakerFilmoUpload(props) {
   console.log('test', props);
@@ -24,7 +25,7 @@ function MakerFilmoUpload(props) {
 
   const MakerFilmosListRef = ref(storage, MakerFilmoDirectory);
 
-  const token = useRecoilValue(googleToken);
+  const token = localStorage.getItem('accessToken');
 
   const uploadFile = () => {
     if (MakerFilmoUploaded === null) return;
@@ -42,7 +43,7 @@ function MakerFilmoUpload(props) {
         props.setMakerFilmos(props.makerFilmos.concat({ id: props.makerFilmos.length, url: url }));
         // axios.post(`http://i8a702.p.ssafy.io:8085/api/actors/${actorInfo.actorProfileId}/media`,
         axios
-          .post(`http://localhost:8080/api/producers/100001/media`, content, {
+          .post(`${API_BASE_URL}/api/producers/100001/media`, content, {
             headers: {
               Authorization: `Bearer ${token}`,
             },

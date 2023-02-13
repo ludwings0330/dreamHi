@@ -12,6 +12,8 @@ import { useRecoilState } from "recoil";
 // import Button from '../CommonComponent/Button';
 
 //import css
+import './SearchBar.css';
+import {API_BASE_URL} from "../../constants";
 
 
 function AnnouncementSearchBar({ actorList, setActorList }) {
@@ -172,15 +174,16 @@ function AnnouncementSearchBar({ actorList, setActorList }) {
         </div>
 
 
-        <div className={"search-age"}>
-          <label>
-            나이
-            <input type={"number"}
-              value={age}
-              required
-              onChange={handleChangeAge} />
-          </label>
-        </div>
+                <div className={"search-age"}>
+                    <label>
+                        나이
+                        <input type={"number"}
+                               value={age}
+                               required
+                               ref={ageInputRef}
+                               onChange={handleChangeAge}/>
+                    </label>
+                </div>
 
         <div className={"search-height"}>
           <label>
