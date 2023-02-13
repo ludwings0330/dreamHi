@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -31,6 +32,7 @@ public class AnnouncementRequestDto {
 
     @NotNull
     @Future
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
 
     private String description;

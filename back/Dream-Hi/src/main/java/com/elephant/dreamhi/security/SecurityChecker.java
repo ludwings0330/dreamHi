@@ -19,7 +19,10 @@ public class SecurityChecker {
     private final AuthService authService;
 
     public boolean isLoginUser(PrincipalDetails user) throws AuthenticationException {
-        if(user.getId() == 0L) throw new DisabledException("로그인이 필요한 기능입니다.");
+        if (user.getId() == 0L) {
+            throw new DisabledException("로그인이 필요한 기능입니다.");
+        }
+
         return true;
     }
 
@@ -75,11 +78,27 @@ public class SecurityChecker {
         return authService.hasAnnouncementAuthority(user, announcementId);
     }
 
-    public boolean isPassedVolunteer(PrincipalDetails user, Long processId) {
+    public boolean hasAnnouncementAuthority(PrincipalDetails user, Long producerId, Long announcementId) {
+        return authService.hasAnnouncementAuthority(user, producerId, announcementId);
+    }
+
+    public boolean hasPassedAuthority(PrincipalDetails user, Long producerId, Long announcementId, Long processId) {
+        if (producerId != null) {
+            return hasAnnouncementAuthority(user, producerId, announcementId);
+        }
+
         return authService.isPassedVolunteer(user, processId);
     }
 
-    public boolean hasBookAuthority(PrincipalDetails user, Long processId, LocalDateTime now) {
+    public boolean hasPassedAuthority(PrincipalDetails user, Long announcementId, Long processId) {
+        return hasPassedAuthority(user, null, announcementId, processId);
+    }
+
+    public boolean hasBookAuthority(PrincipalDetails user, Long producerId, Long announcementId, Long processId, LocalDateTime now) {
+        if (producerId != null) {
+            return hasAnnouncementAuthority(user, producerId, announcementId);
+        }
+
         return authService.hasBookAuthority(user, processId, now);
     }
 

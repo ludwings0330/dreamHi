@@ -2,6 +2,8 @@ package com.elephant.dreamhi.model.dto;
 
 import com.elephant.dreamhi.model.entity.Announcement;
 import com.elephant.dreamhi.model.entity.Follow;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import java.time.LocalDate;
 import java.util.Objects;
 import javax.validation.constraints.NotNull;
@@ -33,6 +35,7 @@ public class AnnouncementDetailDto {
     private String crankPeriod;
 
     @NotNull
+    @JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate endDate;
 
     private String description;
