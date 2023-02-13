@@ -1,8 +1,10 @@
 import { React, useRef, useEffect, useState } from 'react';
+import { useLocation } from "react-router";
 
 
 //자기소개 component
 const ActorIntro = () => {
+    const { state } = useLocation();
 
     const textRef = useRef();
     const [textAreaHeight, setTextAreaHeight] = useState("auto");
@@ -23,6 +25,7 @@ const ActorIntro = () => {
             setParentHeight(`${textRef.current.scrollHeight}px`);
             setTextAreaHeight(`${textRef.current.scrollHeight}px`);
         }
+        setIntro(state.description)
     }, []);
 
     // 댓글의 값이 변할 때 추가로 높이를 보정해 준다.
@@ -30,6 +33,7 @@ const ActorIntro = () => {
         setTextAreaHeight("auto");
         setParentHeight(`${textRef.current.scrollHeight}px`);
         setIntro(event.target.value);
+        state.description=event.target.value
     };
 
     const handleChangeIntro = (e) => {

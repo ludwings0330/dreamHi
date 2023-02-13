@@ -73,6 +73,53 @@ export const googleToken = atom({
 export const actorListSelector = selectorFamily({
     key: "actorListSelector",
     get: () => async ({get}) => {
+        console.log(get,555555555555)
+        // const userSimple = get(userSimpleState);
+        const userSimple = 1;
+        console.log(userSimple);
+        // const actorFilter = get(actorFilterState);
+        const actorFilter = {
+            filter: {
+                name: "",
+                height: "",
+                age: "",
+                gender: "",
+                styles: [],
+                isFollow: "",
+            },
+            page: 0,
+            size: 8
+        };
+        console.log(actorFilter);
+
+        // api.defaults.paramsSerializer = params => {
+        //     return stringify(params);
+        // }
+        // console.log(stringify(actorFilter));
+        const data = await api.get(`/api/actors`, actorFilter)
+            .then((response) => {
+                console.log("GET /api/actors");
+                console.log(response);
+                return response.data.result.content;
+            });
+        return data;
+    },
+
+    set: ({set}, data) => {
+        console.log(data,8888888888888888);
+        set(actorListState, data);
+    }
+})
+
+export const actorDetailState = atom({
+    key: "actorDetailState",
+    default: {}
+})
+
+export const actorDetailSelector = selectorFamily({
+    key: "actorDetailSelector",
+
+    get: () => async ({get}) => {
         // const userSimple = get(userSimpleState);
         const userSimple = 1;
         console.log(userSimple);
