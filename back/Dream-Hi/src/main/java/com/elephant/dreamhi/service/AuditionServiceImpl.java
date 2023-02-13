@@ -10,6 +10,7 @@ import com.elephant.dreamhi.model.statics.StageName;
 import com.elephant.dreamhi.repository.BookRepository;
 import com.elephant.dreamhi.repository.ProcessRepository;
 import com.elephant.dreamhi.repository.SessionRepository;
+import com.elephant.dreamhi.security.PrincipalDetails;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -27,7 +28,14 @@ public class AuditionServiceImpl implements AuditionService {
     private final BookRepository bookRepository;
 
     @Override
-    public BookPeriod findBookPeriod(Long processId) {
+    public BookResponseDto findBookOfVolunteer(Long processId, PrincipalDetails user) throws NotFoundException {
+        return bookRepository.findByUserIdAndProcessId(user.getId(), processId)
+                             .map(BookResponseDto::toDto)
+                             .orElseThrow(() -> new NotFoundException("아직 예약을 하지 않은 지원자입니다."));
+    }
+
+    @Override
+    public BookPeriod findBookPeriod(Long processId) throws NotFoundException {
         return bookRepository.findBookPeriodByProcessId(processId)
                              .orElseThrow(() -> new NotFoundException("현재 절차에서 예약 가능한 기간을 찾을 수 없습니다. 제작사는 예약 기간을 등록해주세요."));
     }
@@ -43,7 +51,7 @@ public class AuditionServiceImpl implements AuditionService {
     }
 
     @Override
-    public String findFileUrl(Long processId) {
+    public String findFileUrl(Long processId) throws NotFoundException {
         return sessionRepository.findByProcessId(processId)
                                 .orElseThrow(() -> new NotFoundException("화상 오디션에 대한 세션을 찾을 수 없습니다."))
                                 .getFileUrl();
