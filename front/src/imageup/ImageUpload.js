@@ -6,8 +6,8 @@ import { v4 } from 'uuid';
 
 import '../components/Casting/Casting.css';
 import { useRecoilState, atom } from 'recoil';
-import '../recoil/announcement';
-import { announcementPictureUrl } from '../recoil/announcement';
+import 'recoil/announcement/announcement';
+import { announcementPictureUrl } from 'recoil/announcement/announcement';
 
 
 function ImageUpload(props) {
@@ -17,7 +17,7 @@ function ImageUpload(props) {
   // const imagesListRef = ref(storage, 'images/');
   const uploadFile = () => {
     if (imageUpload == null) return;
-    const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
+    const imageRef = ref(storage, `images/announcements/${imageUpload.name + v4()}`);
     uploadBytes(imageRef, imageUpload).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
         // setImageUrls((prev) => [...prev, url]);

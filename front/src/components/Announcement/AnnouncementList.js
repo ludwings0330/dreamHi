@@ -1,26 +1,73 @@
-import React, {useEffect} from 'react';
-import AnnouncementListItem from './AnnouncementListItem';
-import SearchBar from '../Common/CommonComponent/SearchBar';
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+
+import './Announcement.css';
+
+
 
 import { useRecoilValue } from 'recoil';
-import { announcementListSelector } from 'recoil/announcement/announcementStore';
+import { announcementListSelector, announcementListState } from 'recoil/announcement/announcementStore';
+import AnnouncementSearchBar from './AnnouncementSearchBar';
 
 
 function AnnouncementList(props) {
   // const { announcements, onClickItem } = props;
+  console.log('😍😎😍')
 
   const announcementList = useRecoilValue(announcementListSelector())
 
-  useEffect(() =>{
-    console.log('😁👻👻👻',announcementList)
+
+  useEffect(() => {
+    console.log('😁👻👻👻', announcementList)
+    console.log(announcementList.find((item)=>{return item.id == 50002}))
   }, [])
 
 
   // useEffect()
 
   return (
-    <div className="announcement-post-container">
+    <div>
       <h2> 공고리스트페이지 </h2>
+
+      <AnnouncementSearchBar />
+
+
+
+      {announcementList.length > 0 && announcementList.map(function (announcement) {
+        return (
+          <Link to={`/announcement/${announcement.id}`} key={announcement.id} >
+
+            <div>
+              <div className="announcement-list-item-wrapper">
+                <p>
+                  {' '}
+                  {announcement.title} - {announcement.producerName}{' '}
+                </p>
+                <div className="announcement-list-castings">
+                  {announcement.castings.map(function (cast, index) {
+                    return (
+                      <span>
+                        {cast.name}역
+                      </span>
+                    );
+                  })}
+                </div>
+                <p>{announcement.createdDate.substring(0,10)}</p>
+                <p>조회수 : {announcement.hit}</p>
+                <div>{announcement.isFollow === true ? '💙' : '🖤'}</div>
+
+                <div>{announcement.state.processState === 'RECRUITING' ? '⭕' : '❌'}</div>
+              </div>
+            </div>
+
+
+          </Link>
+
+        );
+      })}
+
+
+
 
 
       {/* <SearchBar />
@@ -37,7 +84,7 @@ function AnnouncementList(props) {
         );
       })}
 
-      <PageBar /> */}
+      */}
     </div>
   );
 }
