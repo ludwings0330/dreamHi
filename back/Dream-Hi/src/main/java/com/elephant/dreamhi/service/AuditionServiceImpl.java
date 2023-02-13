@@ -5,6 +5,7 @@ import com.elephant.dreamhi.model.dto.BookPeriodDto;
 import com.elephant.dreamhi.model.dto.BookProducerDto;
 import com.elephant.dreamhi.model.dto.BookRequestDto;
 import com.elephant.dreamhi.model.dto.BookResponseDto;
+import com.elephant.dreamhi.model.dto.BookedVolunteerDto;
 import com.elephant.dreamhi.model.entity.Book;
 import com.elephant.dreamhi.model.entity.Process;
 import com.elephant.dreamhi.model.entity.Session;
@@ -16,6 +17,7 @@ import com.elephant.dreamhi.repository.SessionRepository;
 import com.elephant.dreamhi.repository.VolunteerRepository;
 import com.elephant.dreamhi.security.PrincipalDetails;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -91,6 +93,11 @@ public class AuditionServiceImpl implements AuditionService {
                         .endTime(bookRequestDto.getEndDateTime())
                         .build();
         bookRepository.save(book);
+    }
+
+    @Override
+    public List<BookedVolunteerDto> findBookedVolunteersOnToday(Long processId) {
+        return bookRepository.findByProcessIdAndBookDate(processId, LocalDate.now(ZoneId.of("Asia/Seoul")));
     }
 
     private Process findVideoProcessByProcessId(Long processId) throws NotFoundException, IllegalArgumentException {
