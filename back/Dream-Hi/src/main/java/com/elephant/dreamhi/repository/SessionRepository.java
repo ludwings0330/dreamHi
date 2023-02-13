@@ -11,8 +11,7 @@ public interface SessionRepository extends JpaRepository<Session, Long> {
 
     @Query("SELECT s "
             + "FROM Session s "
-            + "JOIN s.announcement a "
-            + "WHERE a.id = :announcementId ")
-    Optional<Session> findLatestSessionByAnnouncementId(Long announcementId);
+            + "WHERE s.process.id = :processId")
+    Optional<Session> findByProcessId(Long processId);
 
 }
