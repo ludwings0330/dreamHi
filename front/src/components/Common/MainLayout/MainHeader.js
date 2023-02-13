@@ -52,7 +52,7 @@ function MainHeader() {
 
   return (
     <Navbar>
-      <Container className={'main-container'}>
+      <Container id={'main-container'}>
         <div className="header-top">
           {/*메인로고 이미지*/}
           <div>

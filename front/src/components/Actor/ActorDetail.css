@@ -1,0 +1,47 @@
+@font-face {
+  font-family: 'LINESeedKR-Bd';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2')
+    format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+#actor-detail-full {
+  display: flex;
+  padding-left: 150px;
+  padding-top: 50px;
+}
+
+#actor-main-profile {
+  width: 40%;
+  box-sizing: border-box;
+  padding: 2em;
+  text-align: center;
+  border: black;
+  border-style: solid;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#actor-main-profile > img {
+  width: 50%;
+  height: 50%;
+}
+
+#actor-detail-info {
+  width: 60%;
+  box-sizing: border-box;
+  font-family: 'LINESeedKR-Bd';
+  font-size: 25px;
+  display: inline-block;
+  padding: 2em;
+  justify-content: center;
+  padding-left: 150px;
+}
+
+.actor-description-content {
+  font-size: 45px;
+  color: #7ea6f4;
+}

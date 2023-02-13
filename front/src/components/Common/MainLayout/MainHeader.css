@@ -1,3 +1,16 @@
+@font-face {
+  font-family: 'LINESeedKR-Bd';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2')
+    format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+#main-container {
+  max-width: 100% !important;
+  font-family: 'LINESeedKR-Bd';
+}
+
 .header-main {
   flex-flow: column;
 }
@@ -24,10 +37,6 @@
 .header-bottom {
   margin-top: 20px;
   margin-left: 30px;
-}
-
-.main-container {
-  max-width: 100% !important;
 }
 
 .header-line {

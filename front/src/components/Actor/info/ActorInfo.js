@@ -121,7 +121,7 @@ const ActorInfo = () => {
 
   return (
     <>
-      <form className={'actor-info'}>
+      <form id={'actor-info'}>
         <div>
           <label>
             한줄소개

@@ -16,7 +16,7 @@ const ActorFilmo = ({ actorId }) => {
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
-        <h1>필모그래피</h1>
+        <h1 className={'actor-filmo-title'}>필모그래피</h1>
 
         <div className="list-container">
           {/*메인이미지 부분*/}

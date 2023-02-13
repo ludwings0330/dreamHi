@@ -40,7 +40,7 @@ const ActorIntro = () => {
   };
 
   return (
-    <div style={parentStyle}>
+    <div style={parentStyle} id={'actor-intro'}>
       <h4>자기소개</h4>
       <textarea
         className={'actor-intro'}
