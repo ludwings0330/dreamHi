@@ -20,12 +20,12 @@ const ActorWrite = () => {
     console.log(state,"state 전달 디테일에서 수정 인풋");
 
     return (
-            <>
+            <> 
               <h1 className={"main-title"}>이력서 작성</h1>
-               <ActorIntroduce />
-              <ActorFilmo />
-              <ActorPhoto />
-              <ActorVideo />
+                <ActorIntroduce />
+                <ActorFilmo/>
+                <ActorPhoto/>
+                <ActorVideo/>
                 <Button
                     title="등록하기"
                     onClick={() => {

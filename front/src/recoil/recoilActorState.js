@@ -32,6 +32,14 @@ export const actorPhotoLists = atom({
   }]
 })
 
+export const actorFilmoLists = atom({
+  key: 'actorFilmoLists',
+  default: [{
+    id: '0',
+    url: 'https://firebasestorage.googleapis.com/v0/b/dreamhi-17f24.appspot.com/o/images%2Fblank-profile-picture-973460_640.png?alt=media&token=0fd71f6c-3c8f-451c-958a-d321645845bf'
+  }]
+})
+
 export const actorVideoLists = atom({
   key: 'actorVideoLists',
   default: [{

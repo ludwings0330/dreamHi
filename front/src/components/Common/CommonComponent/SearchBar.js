@@ -27,10 +27,9 @@ const SearchBar = ({actorList, setActorList}) => {
                 isFollow: false,
 
         };
+        
         api.get(`/api/actors`,
             {params: {
-
-
 
                     name: name,
                     height: height,
@@ -38,8 +37,6 @@ const SearchBar = ({actorList, setActorList}) => {
                     gender: selectGender,
                     styles: checkedStyles,
                     isFollow: false,
-
-
 
                 }})
             .then((response) => {

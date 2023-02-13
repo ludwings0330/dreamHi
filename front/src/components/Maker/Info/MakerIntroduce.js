@@ -109,12 +109,7 @@ const MakerIntroduce = () => {
                 {/*제작사소개 부분*/}
                 {/*컴포넌트로 추가*/}
                 <MakerIntro />
-                
-
-                {/* 개인정보 입력 후 저장버튼*/}
-                <div className="bg-gray-50 px-4 py-5 text-right">
-                  <Button title="저장"/>
-                </div>
+          
 
       </div>
 
