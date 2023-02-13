@@ -55,14 +55,15 @@ const ActorList = () => {
       });
   }, [setActorList]);
 
+
   return (
-    <div>
+    <div className={'actor-body'}>
       <SearchBar actorList={actorList} setActorList={setActorList} />
       <div>
         <MDBRow className="row-cols-1 row-cols-md-4 g-4">
           {actorList.length > 0 &&
             actorList.map((actor, idx) => (
-              <Link to={`/actor/detail/${actor.actorProfileId}`} key={idx}>
+              <Link to={`/actor/detail/${actor.actorProfileId}`} key={idx} style={{ textDecoration: "none" }}>
                 <MDBCol key={idx} className="h-100">
                   <MDBCard className="h-100">
                     <MDBCardImage
@@ -73,12 +74,23 @@ const ActorList = () => {
                       object-fit="cover"
                     />
                     <MDBCardBody>
-                      <MDBCardTitle>{actor.title}</MDBCardTitle>
+                      <MDBCardTitle className="card-text">
+                        {actor.title}
+                      </MDBCardTitle>
                       <MDBCardText>
-                        {actor.name}
-                        {actor.gender}
-                        {actor.age}
-                        {actor.height}
+                        <div className='card-info'>
+                          <span>이름 : {actor.name}</span>
+                          <span>성별 : {actor.gender === "MALE" ? "남자" : "여자"} </span>
+                          <span>나이 : {actor.age}</span>
+                          <span>키 : {actor.height}cm</span>
+                          <p>스타일 :</p>
+                          <div className='card-info-style'>
+                            {actor.styles.map((style, idx) => (
+                              <span>{style.description}</span>
+                            ))}
+                          </div>
+                        </div>
+                        {actor.styles.description}
                       </MDBCardText>
                     </MDBCardBody>
                   </MDBCard>
@@ -104,9 +116,7 @@ const ActorList = () => {
         }}
       />
 
-      {/*<div className={"page_bar"}>*/}
-      {/*    <PageBar/>*/}
-      {/*</div>*/}
+      <div className={'page_bar'}>{/* <PageBar/> */}</div>
     </div>
   );
 };
