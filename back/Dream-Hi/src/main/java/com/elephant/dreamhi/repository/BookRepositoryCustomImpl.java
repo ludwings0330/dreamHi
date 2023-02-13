@@ -106,9 +106,9 @@ public class BookRepositoryCustomImpl implements BookRepositoryCustom {
                                                            START_TIME,
                                                            END_TIME))
                            .from(book)
-                           .join(book.volunteer, volunteer).fetchJoin()
-                           .join(volunteer.user, user).fetchJoin()
-                           .join(actorProfile.user, user).fetchJoin()
+                           .join(book.volunteer, volunteer)
+                           .join(volunteer.user, user)
+                           .join(actorProfile.user, user)
                            .where(book.process.id.eq(processId),
                                   START_DATE.eq(today.toString()))
                            .fetch();
