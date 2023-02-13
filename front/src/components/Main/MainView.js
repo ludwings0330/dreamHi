@@ -11,9 +11,9 @@ function MainView() {
       <div className="main-img">
         <MainBanner />
       </div>
-        <div>
-            <BestAnnouncement />
-        </div>
+      <div>
+          <BestAnnouncement />
+      </div>
     </div>
   );
 };
