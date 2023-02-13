@@ -1,6 +1,9 @@
 package com.elephant.dreamhi.model.entity;
 
+import com.elephant.dreamhi.model.dto.AuditionCreateRequestDto;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -48,5 +51,29 @@ public class Book {
     @Column(nullable = false)
     @ColumnDefault("0")
     private Boolean reserved;
+
+    public static List<Book> toEntityList(Process process, AuditionCreateRequestDto auditionCreateRequestDto, long period) {
+        LocalDateTime startDate = auditionCreateRequestDto.getStartDate();
+        LocalDateTime endDate = auditionCreateRequestDto.getEndDate();
+        LocalDateTime curDate = startDate;
+        int startHour = startDate.getHour();
+        int startMinute = startDate.getMinute();
+        int endHour = endDate.getHour();
+        int endMinute = endDate.getMinute();
+        List<Book> books = new ArrayList<>();
+        while (!curDate.isAfter(endDate)) {
+            books.add(Book.builder()
+                          .process(process)
+                          .startTime(curDate)
+                          .endTime(curDate.plusMinutes(period))
+                          .build());
+            if (curDate.getHour() == endHour && curDate.getMinute() == endMinute) {
+                curDate = curDate.plusDays(1).withHour(startHour).withMinute(startMinute);
+                continue;
+            }
+            curDate = curDate.plusMinutes(period);
+        }
+        return books;
+    }
 
 }
