@@ -1,19 +1,19 @@
 .main-body {
-    position: relative;
-    bottom: 0;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 15px;
-    width: 80%;
+  position: relative;
+  bottom: 0;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
+  width: 80%;
 }
 
 .main-img {
-    width: 100%;
+  width: 100%;
 }
 
 .main-content {
-    display: flex;
-    justify-content: space-around;
-    margin: 40px;
-    margin-bottom: fill;
+  display: flex;
+  justify-content: space-around;
+  margin: 40px;
+  margin-bottom: fill;
 }
