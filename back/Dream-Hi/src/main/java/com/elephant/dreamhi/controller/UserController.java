@@ -30,7 +30,7 @@ public class UserController {
      *
      * @param principalDetails : 현재 로그인한 주체
      * @return UserSimpleDto
-     * @throws org.springframework.security.core.userdetails.UsernameNotFoundException : id 조회 결과 없을 시 발생
+     * @throws UsernameNotFoundException : id 조회 결과 없을 시 발생
      */
     @GetMapping("/api/my")
     @PreAuthorize("@checker.isLoginUser(#principalDetails)")
