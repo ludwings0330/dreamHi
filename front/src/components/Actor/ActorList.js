@@ -16,7 +16,7 @@ import {
 import "./ActorList.css";
 
 // import components
-import PageBar from '../Common/CommonComponent/PageBar';
+// import PageBar from '../Common/CommonComponent/PageBar';
 import SearchBar from '../Common/CommonComponent/SearchBar';
 import Button from '../Common/CommonComponent/Button';
 import {googleToken} from 'recoil/recoilActorState'
@@ -143,7 +143,7 @@ const ActorList = () => {
                 }}/>
 
             <div className={"page_bar"}>
-                <PageBar/>
+                {/* <PageBar/> */}
             </div>
         </div>
     );
