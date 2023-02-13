@@ -75,6 +75,10 @@ public class SecurityChecker {
         return authService.hasAnnouncementAuthority(user, announcementId);
     }
 
+    public boolean isPassedVolunteer(PrincipalDetails user, Long processId) {
+        return authService.isPassedVolunteer(user, processId);
+    }
+
     public boolean hasBookAuthority(PrincipalDetails user, Long processId, LocalDateTime now) {
         return authService.hasBookAuthority(user, processId, now);
     }

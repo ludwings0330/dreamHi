@@ -5,6 +5,7 @@ import com.elephant.dreamhi.model.statics.FilmoType;
 import com.elephant.dreamhi.model.statics.ProducerRole;
 import com.elephant.dreamhi.repository.AuthRepository;
 import com.elephant.dreamhi.repository.BookRepository;
+import com.elephant.dreamhi.repository.VolunteerRepository;
 import com.elephant.dreamhi.security.PrincipalDetails;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,6 +19,7 @@ public class AuthService {
 
     private final AuthRepository authRepository;
     private final BookRepository bookRepository;
+    private final VolunteerRepository volunteerRepository;
 
     public boolean hasEditorAuthority(Long userId, Long producerId) {
         ProducerRole role = authRepository.findRoleByUser_IdAndProducer_Id(userId, producerId)
@@ -48,6 +50,11 @@ public class AuthService {
         Long producerId = authRepository.findProducerIdByAnnouncementId(announcementId).orElse(-1L);
 
         return hasEditorAuthority(user.getId(), producerId);
+    }
+
+    public boolean isPassedVolunteer(PrincipalDetails user, Long processId) {
+        return volunteerRepository.findByUserIdAndProcessId(user.getId(), processId)
+                                  .isPresent();
     }
 
     public boolean hasBookAuthority(PrincipalDetails user, Long processId, LocalDateTime now) throws AccessDeniedException {
