@@ -4,12 +4,14 @@ import com.elephant.dreamhi.exception.NotFoundException;
 import com.elephant.dreamhi.model.dto.BookPeriodDto;
 import com.elephant.dreamhi.model.dto.BookRequestDto;
 import com.elephant.dreamhi.model.dto.BookResponseDto;
+import com.elephant.dreamhi.model.dto.BookedVolunteerDto;
 import com.elephant.dreamhi.security.PrincipalDetails;
 import com.elephant.dreamhi.service.AuditionService;
 import com.elephant.dreamhi.utils.Response;
 import com.elephant.dreamhi.utils.Response.Body;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -47,6 +49,30 @@ public class AuditionController {
     ) throws NotFoundException {
         BookResponseDto bookResponseDto = auditionService.findBookOfVolunteer(processId, user);
         return Response.create(HttpStatus.OK, "이미 예약한 지원자입니다. 예약 일자를 확인해주세요.", bookResponseDto);
+    }
+
+    /**
+     * @param processId      오디션의 현재 절차 ID
+     * @param announcementId 현재 공고 ID
+     * @param producerId     현재 공고를 작성한 제작사 ID
+     * @param user           현재 로그인 한 유저
+     * @return 오늘 예약된 화상 오디션 지원자가 있으면 '200 OK'와 지원자의 목록을 Response의 Body에 담아서 반환한다. 없으면 '204 NO_CONTENT'를 전달한다.
+     */
+    @GetMapping("/on/{processId}/volunteers/today")
+    @PreAuthorize("@checker.isLoginUser(#user) && @checker.hasAnnouncementAuthority(#user, #producerId, #announcementId)")
+    public ResponseEntity<Body> findBookedVolunteersOnToday(
+            @PathVariable Long processId,
+            @PathVariable Long announcementId,
+            @RequestParam(name = "pid") Long producerId,
+            @AuthenticationPrincipal PrincipalDetails user
+    ) {
+        List<BookedVolunteerDto> bookedVolunteerDtos = auditionService.findBookedVolunteersOnToday(processId);
+
+        if (bookedVolunteerDtos.isEmpty()) {
+            return Response.noContent();
+        }
+
+        return Response.create(HttpStatus.OK, "금일 예약된 화상 오디션 지원자를 조회했습니다.", bookedVolunteerDtos);
     }
 
     /**
