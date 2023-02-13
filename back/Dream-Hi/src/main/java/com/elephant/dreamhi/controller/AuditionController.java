@@ -1,6 +1,7 @@
 package com.elephant.dreamhi.controller;
 
 import com.elephant.dreamhi.exception.NotFoundException;
+import com.elephant.dreamhi.model.dto.BookPeriod;
 import com.elephant.dreamhi.security.PrincipalDetails;
 import com.elephant.dreamhi.service.AuditionService;
 import com.elephant.dreamhi.utils.Response;
@@ -28,13 +29,34 @@ public class AuditionController {
     private final AuditionService auditionService;
 
     /**
-     * @param processId 오디션의 현재 절차 ID
-     * @param user      현재 로그인 한 유저
+     * @param processId      오디션의 현재 절차 ID
+     * @param announcementId 현재 공고 ID
+     * @param producerId     현재 공고를 작성한 제작사 ID
+     * @param user           현재 로그인 한 유저
+     * @return 예약 가능한 날짜의 시작일과 종료일을 Response의 Body에 담아서 반환
+     */
+    @GetMapping("/on/{processId}/period")
+    @PreAuthorize("@checker.isLoginUser(#user) && @checker.hasPassedAuthority(#user, #producerId, #announcementId, #processId)")
+    public ResponseEntity<Body> findBookPeriod(
+            @PathVariable Long processId,
+            @PathVariable Long announcementId,
+            @RequestParam(name = "pid") Long producerId,
+            @AuthenticationPrincipal PrincipalDetails user
+    ) {
+        BookPeriod bookPeriod = auditionService.findBookPeriod(processId);
+        return Response.create(HttpStatus.OK, "예약 가능한 날짜의 시작일과 종료일을 조회했습니다.", bookPeriod);
+    }
+
+    /**
+     * @param processId      오디션의 현재 절차 ID
+     * @param announcementId 현재 공고 ID
+     * @param producerId     현재 공고를 작성한 제작사 ID
+     * @param user           현재 로그인 한 유저
      * @return 화상 오디션을 위한 파일 URL 조회 결과를 Response의 Body에 담아서 반환
      * @throws NotFoundException 현재 절차 ID에 대하여 사전에 저장해 둔 세션 정보가 없을 때 발생하는 예외
      */
     @GetMapping("/on/{processId}/file")
-    @PreAuthorize("@checker.isLoginUser(#user) && @checker.isPassedVolunteer(#user, #producerId, #announcementId, #processId)")
+    @PreAuthorize("@checker.isLoginUser(#user) && @checker.hasPassedAuthority(#user, #producerId, #announcementId, #processId)")
     public ResponseEntity<Body> findFileUrl(
             @PathVariable Long processId,
             @PathVariable Long announcementId,
