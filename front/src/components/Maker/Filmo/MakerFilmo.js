@@ -11,7 +11,7 @@ const MakerFilmo = ({ makerInfo }) => {
   const setSelected = (idx) => {
     document.querySelector(
       '.maker-filmo-main',
-    ).innerHTML = `<img src=${makerFilmos[idx].url} alt=${makerFilmos[idx]}/>`;
+    ).innerHTML = `<img src=${makerFilmos[idx].photoUrl} alt=${makerFilmos[idx]}/>`;
   };
 
   return (
@@ -25,6 +25,9 @@ const MakerFilmo = ({ makerInfo }) => {
               {/*메인이미지 부분*/}
               <div className="maker-filmo-main">
                 <img src={makerFilmos[0].photoUrl} alt={makerFilmos[0].photoUrl} />
+                <p>
+                  필모 이름 : {makerFilmos[0].title}, 필모 설명 : {makerFilmos[0].description},
+                </p>
               </div>
 
               {makerFilmos.map((makerFilmo, idx) => (
