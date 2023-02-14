@@ -68,8 +68,6 @@ const ActorProfile = () => {
     setFileImage('');
   };
 
-  console.log(fileImage, 25151251515125);
-
   return (
       <>
         <h1>이미지 미리보기</h1>

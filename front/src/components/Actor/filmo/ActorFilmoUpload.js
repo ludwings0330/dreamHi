@@ -16,17 +16,11 @@ import { API_BASE_URL } from '../../../constants';
 import jwtApi from '../../../util/JwtApi';
 
 const ActorFilmoUpload = ({ actorId }) => {
-  console.log(actorId);
   const [actorFilmos, setActorFilmos] = useRecoilState(actorFilmoLists);
   const [ActorFilmoUploaded, setActorFilmoUploaded] = useState(null);
   const ActorFilmoDirectory = useRecoilValue(actorFilmoUrl);
   const actorInfo = useRecoilValue(actorProfile);
 
-  const ActorFilmosListRef = ref(storage, ActorFilmoDirectory);
-
-  const token = localStorage.getItem('accessToken');
-  console.log('actor filmos');
-  console.log(actorFilmos);
   const uploadFile = () => {
     if (ActorFilmoUploaded === null) {
       return;
@@ -50,17 +44,13 @@ const ActorFilmoUpload = ({ actorId }) => {
           .post(`${API_BASE_URL}/api/filmographies`, { ...content })
           .then((response) => {
             !actorFilmos && setActorFilmos([]);
-            console.log(response);
 
             setActorFilmos([
               ...actorFilmos,
               { id: response.data.result, photoUrl: content.photoUrl },
             ]);
-
-            console.log(actorFilmos);
           })
           .catch((e) => {
-            console.log('필모그래피 추가시 에러 발생');
             console.log(e);
           });
       });
@@ -73,7 +63,7 @@ const ActorFilmoUpload = ({ actorId }) => {
     <div>
       <div className="photo-list">
         <div className="file-box">
-          <label htmlFor="file-photo">
+          <label htmlFor="file-filmo">
             <img
               src="/img/plus.png"
               width={'200px'}
@@ -85,7 +75,7 @@ const ActorFilmoUpload = ({ actorId }) => {
 
           <input
             type="file"
-            id="file-photo"
+            id="file-filmo"
             onChange={(e) => setActorFilmoUploaded(e.target.files[0])}
           />
           <button onClick={uploadFile}>사진 올리기</button>

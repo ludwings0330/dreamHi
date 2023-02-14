@@ -10,10 +10,10 @@ import {
 import { useRecoilValue, useRecoilState } from 'recoil';
 import axios from 'axios';
 import { API_BASE_URL } from '../../../constants';
+import jwtApi from '../../../util/JwtApi';
 
-const ActorPhoto = () => {
+const ActorPhoto = ({ actorInfo }) => {
   const [actorPhotos, setActorPhotos] = useRecoilState(actorPhotoLists);
-  // const actorPhotos = useRecoilValue(actorPhotoLists);
 
   const setSelected = (idx) => {
     document.querySelector(
@@ -21,49 +21,35 @@ const ActorPhoto = () => {
     ).innerHTML = `<img src=${actorPhotos[idx].url} alt=${actorPhotos[idx]}/>`;
   };
 
-  console.log(actorPhotos, '안되는');
-
-  console.log(actorPhotos, '안되는222222');
-  useEffect(() => {
-    axios
-      .get(`${API_BASE_URL}/api/actors/100001/media`)
-      .then((res) => {
-        setActorPhotos(res.data.result.pictures);
-        console.log(res.data.result.pictures, '잘 찍히나요?');
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [setActorPhotos]);
-
   return (
-    <div className="bg-white">
-      <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
-        <h1>프로필사진</h1>
-
-        <div className="list-container">
-          {/*메인이미지 부분*/}
-          <div className="actor-photo-main">
-            <img src={actorPhotos[0].url} alt={actorPhotos[0].url} />
-          </div>
-
-          {actorPhotos.length > 0 &&
-            actorPhotos.map((actorPhoto, idx) => (
-              <div className="actor-photo" key={idx} width={'200px'} height={'200px'}>
-                <img
-                  src={actorPhoto.url}
-                  alt="image"
-                  object-fit={'contain'}
-                  className="object-center"
-                  onClick={() => setSelected(idx)}
-                />
+    <>
+      <div className="bg-white">
+        <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+          <h1>프로필사진</h1>
+          {actorPhotos && actorPhotos.length > 0 ? (
+            <div className="list-container">
+              {/*메인이미지 부분*/}
+              <div className="actor-photo-main">
+                <img src={actorPhotos[0].url} alt={actorPhotos[0].url} />
               </div>
-            ))}
 
-          <ActorPhotoUpload actorPhotos={actorPhotos} setActorPhotos={setActorPhotos} />
+              {actorPhotos.map((actorPhoto, idx) => (
+                <div className="actor-photo" key={actorPhoto.id} width={'200px'} height={'200px'}>
+                  <img
+                    src={actorPhoto.url}
+                    alt="image"
+                    object-fit={'contain'}
+                    className="object-center"
+                    onClick={() => setSelected(idx)}
+                  />
+                </div>
+              ))}
+            </div>
+          ) : null}
+          <ActorPhotoUpload actorInfo={actorInfo} />
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
