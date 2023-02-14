@@ -51,10 +51,10 @@ public class ControllerLogAop {
             HttpStatus status = response.getStatusCode();
             Optional<Body> body = Optional.ofNullable(response.getBody());
             String message = "";
-            String result = "";
+            Object result = "";
             if(body.isPresent()) {
                 message = body.get().getMessage();
-                result = (String) Optional.ofNullable(body.get().getResult()).orElseGet(()->"");
+                result = body.get().getResult();
             }
             log.info(" => Response Data    {} : {} \t{}", status, message, result);
         }
