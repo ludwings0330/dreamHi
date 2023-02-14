@@ -137,6 +137,11 @@ export const announcementListDetailCastingState = atom({
   default: {},
 });
 
+export const announcementListDetailCastingState = atom({
+  key: 'announcementListDetailCastingState',
+  default: {},
+});
+
 export const announcementListDetailCastingSelector = selectorFamily({
   key: 'announcementListDetailCastingSelector',
   get:
