@@ -45,6 +45,8 @@ function AnnouncementDetailButton(props) {
   let button;
   if (buttonState == '지원하기') {
     button = <AnnouncementApply />;
+  } else {
+    button = <Button title={'지원완료'} />;
   }
 
   return (

@@ -79,7 +79,7 @@ function AnnouncementList(props) {
                 <Grid container spacing={2}>
                   <Grid item xs={2}>
                     <Chip
-                      label={announcement.state.processState === 'RECRUITING' ? '모집중' : '마감'}
+                      label={announcement.state === 'RECRUITING' ? '모집중' : '마감'}
                       variant="outlined"
                       color="primary"
                     />

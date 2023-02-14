@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../Common/CommonComponent/Button';
 import AnnouncementDetailItem from './AnnouncementDetailItem';
@@ -7,9 +7,11 @@ import {
   announcementListDetailSelector,
   announcementDetailId,
   announcementListSelector,
+  announcementListDetailState,
 } from 'recoil/announcement/announcementStore';
 import AnnouncementDetailProcess from './AnnouncementDetailProcess';
 import AnnouncementDetailButton from './AnnouncementDetailButton';
+import jwtApi from 'util/JwtApi';
 
 function AnnouncementDetail(props) {
   console.log(1234);
@@ -19,7 +21,19 @@ function AnnouncementDetail(props) {
   console.log('🐳🐳', announcementId);
 
   const announcement = useRecoilValue(announcementListDetailSelector(announcementId));
-  console.log('1414', announcement);
+  const [annouoncementData, setAnnouncementData] = useRecoilState(announcementListDetailState);
+
+  useEffect(() => {
+    jwtApi.get(`/api/announcements/${announcementId}`).then((response) => {
+      console.log('get /api/announcement Detail Data');
+      console.log(response);
+      console.log(response.data.result);
+      setAnnouncementData(response.data.result);
+      console.log('141415', annouoncementData);
+    });
+  }, []);
+
+  console.log('1414', annouoncementData);
 
   // const announcement = announcementList.find((item) => {
   //     console.log(announcementId)

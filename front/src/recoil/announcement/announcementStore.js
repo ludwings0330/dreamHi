@@ -115,11 +115,6 @@ export const announcementListDetailSelector = selectorFamily({
       }
       return data;
     },
-
-  set: ({ set }, data) => {
-    console.log('detailstate😁😁😁', data);
-    set(announcementListDetailState, data);
-  },
 });
 
 export const announcementListDetailCastingState = atom({
