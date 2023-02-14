@@ -1,6 +1,7 @@
 import { atom, selectorFamily } from 'recoil';
 import jwtApi from 'util/JwtApi';
 import api from 'util/APIUtils';
+import dayjs from 'dayjs';
 import { qs, stringify } from 'qs';
 import { userSimpleState } from 'recoil/user/userStore';
 import { recoilPersist } from 'recoil-persist';
@@ -87,7 +88,22 @@ export const announcementListSelector = selectorFamily({
 
 export const announcementListDetailState = atom({
   key: 'announcementListDetailState',
-  default: {},
+  default: {
+    id: 1,
+    title: '슬램덩크',
+    producer: {
+      id: 1,
+      name: 'test-1',
+    },
+    payment: '협의 후 결정',
+    crankPeriod: '6개월 예정',
+    endDate: dayjs('2023.02.28T12:36:20'),
+    hit: 150,
+    description: '상세 설명',
+    url: 'www.aws.dwdocn',
+    isFollow: false,
+    isEditor: true,
+  },
 });
 
 export const announcementListDetailSelector = selectorFamily({
