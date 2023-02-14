@@ -1,15 +1,16 @@
 import React from 'react';
 
+import { Box, Container } from '../../node_modules/@mui/material/index';
+import Divider from '@mui/material/Divider';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import Grid from '@mui/material/Grid';
 import BasicNotice from 'components/Calendar/notice/BasicNotice';
 import { useRecoilValue } from 'recoil';
 import ActorTimeTable from 'components/Calendar/ActorTimeTable';
 import { announcementListDetailState } from 'recoil/announcement/announcementStore';
 import DateCalendar from 'components/Calendar/DateCalendar';
-import Attachment from 'components/Calendar/notice/Attachment';
-import { IconButton, Tooltip, Box, Container, Stack, Divider, Grid } from '@mui/material';
-import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+
 function ActorAuditionPage() {
   const announcementDetail = useRecoilValue(announcementListDetailState);
 
@@ -50,14 +51,6 @@ function ActorAuditionPage() {
         <Grid item xs={5}>
           <Container>
             <BasicNotice />
-            <Stack direction="row" alignItems="center" justifyContent="flex-end" mt={3} ml={2}>
-              <Attachment />
-              <Tooltip title="예약" placement="bottom">
-                <IconButton color="primary" aria-label="upload file">
-                  <EventAvailableIcon fontSize="large" />
-                </IconButton>
-              </Tooltip>
-            </Stack>
           </Container>
         </Grid>
       </Grid>
