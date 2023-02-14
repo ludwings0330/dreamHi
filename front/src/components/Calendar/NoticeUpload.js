@@ -38,8 +38,8 @@ export default function NoticeUpload() {
       // 💥💥💥 db에 url 저장 -> 구현해야함
       const status = noticeFileUpload(process, fileData);
       if (status === 201) {
-        setFiles([]);
-        setfileData([]);
+        setFiles(() => []);
+        setfileData(() => []);
       }
     }
   }, [fileData]);
