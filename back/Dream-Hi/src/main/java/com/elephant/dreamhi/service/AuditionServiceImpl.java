@@ -66,7 +66,7 @@ public class AuditionServiceImpl implements AuditionService {
     }
 
     @Override
-    public List<NoticeFile> findFileUrl(Long processId) throws NotFoundException {
+    public List<NoticeFile> findFileUrl(Long processId) {
         return noticeFileRepository.findByProcessId(processId);
     }
 
@@ -99,7 +99,6 @@ public class AuditionServiceImpl implements AuditionService {
     @Transactional
     public void createAuditionSchedule(Long processId, BookPeriodSaveDto bookPeriodSaveDto) throws NotFoundException {
         Process process = findVideoProcess(processId).setSessionId(UUID.randomUUID().toString());
-
         List<Book> books = Book.toEntityList(process, bookPeriodSaveDto, VIDEO_TIME_TAKE);
         Long totalVolunteerCount = volunteerRepository.countByCurrentProcessId(processId);
 
@@ -114,11 +113,9 @@ public class AuditionServiceImpl implements AuditionService {
     @Transactional
     public void saveAllNoticeFiles(Long processId, List<FileDto> fileDtos) throws NotFoundException {
         Process process = findVideoProcess(processId);
-
         List<NoticeFile> noticeFiles = fileDtos.stream()
                                                .map(fileDto -> NoticeFile.toEntity(process, fileDto))
                                                .collect(Collectors.toList());
-
         noticeFileRepository.saveAll(noticeFiles);
     }
 
