@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import TextField from '@mui/material/TextField';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -6,11 +6,7 @@ import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
 import Grid from '@mui/material/Grid';
 import { Paper } from '../../../node_modules/@mui/material/index';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import {
-  selectedDateState,
-  checkTimeState,
-  auditionPeriodSelector,
-} from 'recoil/book/bookStore';
+import { selectedDateState, checkTimeState, auditionPeriodSelector } from 'recoil/book/bookStore';
 import { useEffect } from 'react';
 
 export default function DateCalendar() {

@@ -2,7 +2,6 @@ import { atom, selectorFamily } from 'recoil';
 import jwtApi from 'util/JwtApi';
 import api from 'util/APIUtils';
 import dayjs from 'dayjs';
-import { qs, stringify } from 'qs';
 import { userSimpleState } from 'recoil/user/userStore';
 import { recoilPersist } from 'recoil-persist';
 
@@ -102,7 +101,7 @@ export const announcementListDetailState = atom({
     description: '상세 설명',
     url: 'www.aws.dwdocn',
     isFollow: false,
-    isEditor: true,
+    isEditor: false,
   },
 });
 

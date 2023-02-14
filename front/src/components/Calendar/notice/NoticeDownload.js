@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { getDownloadURL, listAll, ref, uploadBytes } from 'firebase/storage';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { storage } from 'imageup/firebase';
 import { v4 } from 'uuid';
-import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
-import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import Tooltip from '@mui/material/Tooltip';
-import { Paper } from '../../../node_modules/@mui/material/index';
-import BasicNotice from './BasicNotice';
 import { useRecoilValue } from 'recoil';
 import {
   auditionStartState,
@@ -19,8 +15,6 @@ import {
 } from 'recoil/book/bookStore';
 import { noticeFileUpload } from 'service/fileService';
 import { vlounteerUserIdState } from 'recoil/volunteer/volunteerStore';
-import { userTypeState } from 'recoil/user/userStore';
-import VolunteerCard from 'components/Audition/VolunteerCard';
 
 export default function NoticeUpload() {
   const [files, setFiles] = useState([]);
@@ -73,11 +67,6 @@ export default function NoticeUpload() {
 
   return (
     <>
-      {userType === 'producer'.toUpperCase() && checkVolunteerUserId != null ? (
-        <VolunteerCard />
-      ) : (
-        <BasicNotice />
-      )}
       <Stack direction="row" alignItems="center" justifyContent="flex-end" mt={3} ml={2}>
         <input multiple type="file" onChange={changeFiles} />
         <Tooltip title="다운로드" placement="bottom">
@@ -85,11 +74,6 @@ export default function NoticeUpload() {
             <AttachFileIcon />
           </IconButton>
         </Tooltip>
-        {/* <Tooltip title="일정 확정" placement="bottom">
-            <IconButton color="primary" aria-label="upload file" onClick={createSchedule}>
-                    <EventAvailableIcon />
-            </IconButton>
-        </Tooltip> */}
       </Stack>
     </>
   );

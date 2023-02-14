@@ -5,7 +5,7 @@ import Divider from '@mui/material/Divider';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import Grid from '@mui/material/Grid';
-import BasicNotice from 'components/Calendar/BasicNotice';
+import BasicNotice from 'components/Calendar/notice/BasicNotice';
 import { useRecoilValue } from 'recoil';
 import ActorTimeTable from 'components/Calendar/ActorTimeTable';
 import { announcementListDetailState } from 'recoil/announcement/announcementStore';

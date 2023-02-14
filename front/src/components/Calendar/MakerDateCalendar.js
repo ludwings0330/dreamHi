@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import dayjs from 'dayjs';
 import TextField from '@mui/material/TextField';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -6,14 +6,12 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
 import Grid from '@mui/material/Grid';
 import { Paper } from '../../../node_modules/@mui/material/index';
-import { useRecoilValue, useRecoilState } from 'recoil';
-import { userTypeState } from 'recoil/user/userStore';
+import { useRecoilState } from 'recoil';
 import { auditionStartState, auditionEndState } from 'recoil/book/bookStore';
 
 export default function MakerDateCalendar() {
   const [startDate, setStartDate] = useRecoilState(auditionStartState);
   const [endDate, setEndDate] = useRecoilState(auditionEndState);
-  const userType = useRecoilValue(userTypeState);
 
   return (
     <Grid

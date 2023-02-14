@@ -1,12 +1,8 @@
 import { atom, selectorFamily } from 'recoil';
-import { recoilPersist } from 'recoil-persist';
 import dayjs from 'dayjs';
-import { getAuditionPeriod } from 'service/audition/scheduleService';
 import { announcementListDetailState } from 'recoil/announcement/announcementStore';
 import { announcementProcessState } from 'recoil/process/processStore';
 import jwtApi from 'util/JwtApi';
-
-// const { persistAtom } = recoilPersist();
 
 export const auditionPeriodState = atom({
   key: 'auditionPeriodState',
@@ -23,25 +19,18 @@ export const auditionPeriodSelector = selectorFamily({
       console.log(announcementDetail);
       console.log(processDetail);
 
-      let data = {};
-      if (announcementDetail.isEditor) {
-        data = await jwtApi
-          .get(
-            `/api/announcements/${announcementDetail.id}/audition/on/${processDetail.processId}/period`,
-            {
-              params: { pid: announcementDetail.producer.id },
-            },
-          )
-          .then((response) => response.data.result)
-          .catch(() => {});
-      } else {
-        data = await jwtApi
-          .get(
-            `/api/announcements/${announcementDetail.id}/audition/on/${processDetail.processId}/period`,
-          )
-          .then((response) => response.data.result)
-          .catch(() => {});
-      }
+      const params = {
+        pid: announcementDetail.isEditor ? announcementDetail.producer.id : null,
+      };
+      const data = await jwtApi
+        .get(
+          `/api/announcements/${announcementDetail.id}/audition/on/${processDetail.processId}/period`,
+          {
+            params: params,
+          },
+        )
+        .then((response) => response.data.result)
+        .catch(() => {});
       return data;
     },
   set: ({ set }, data) => {
@@ -59,8 +48,8 @@ export const auditionEndState = atom({
   default: dayjs(new Date()).add(7, 'day'),
 });
 
-export const auditionSelectState = atom({
-  key: 'auditionSelectState',
+export const selectedDateState = atom({
+  key: 'selectedDateState',
   default: null,
 });
 
@@ -91,36 +80,27 @@ export const booksSelector = selectorFamily({
   get:
     () =>
     async ({ get }) => {
-      const date = get(auditionSelectState);
+      const date = get(selectedDateState);
+      if (date === null) {
+        return [];
+      }
       const announcementDetail = get(announcementListDetailState);
       const processDetail = get(announcementProcessState);
       // const auditionSelectState
-      // console.log('Selector => ', date);
+      console.log('Selector => ', date);
+      const params = {
+        pid: announcementDetail.isEditor ? announcementDetail.producer.id : null,
+        date: date.format('YYYY-MM-DD'),
+      };
 
-      const data = await jwtApi.get(`/api/announcements/${announcementDetail.id}/audition/on/${processDetail.processId}/schedules`,)
+      const data = await jwtApi
+        .get(
+          `/api/announcements/${announcementDetail.id}/audition/on/${processDetail.processId}/schedules`,
+          { params: params },
+        )
+        .then((response) => response.data.result);
+      console.log(data);
 
-      let bookList = [
-        { id: 1, time: '09:00', isBook: Math.random() >= 0.5 },
-        { id: 2, time: '09:30', isBook: Math.random() >= 0.5 },
-        { id: 3, time: '10:00', isBook: Math.random() >= 0.5 },
-        { id: 4, time: '10:30', isBook: Math.random() >= 0.5 },
-        { id: 5, time: '11:00', isBook: Math.random() >= 0.5 },
-        { id: 6, time: '11:30', isBook: Math.random() >= 0.5 },
-        { id: 7, time: '12:00', isBook: Math.random() >= 0.5 },
-        { id: 8, time: '12:30', isBook: Math.random() >= 0.5 },
-        { id: 9, time: '13:00', isBook: Math.random() >= 0.5 },
-        { id: 10, time: '13:30', isBook: Math.random() >= 0.5 },
-        { id: 11, time: '14:00', isBook: Math.random() >= 0.5 },
-        { id: 12, time: '14:30', isBook: Math.random() >= 0.5 },
-        { id: 13, time: '15:00', isBook: Math.random() >= 0.5 },
-        { id: 14, time: '15:30', isBook: Math.random() >= 0.5 },
-        { id: 15, time: '16:00', isBook: Math.random() >= 0.5 },
-        { id: 16, time: '16:30', isBook: Math.random() >= 0.5 },
-        { id: 17, time: '17:00', isBook: Math.random() >= 0.5 },
-        { id: 18, time: '17:30', isBook: Math.random() >= 0.5 },
-        { id: 19, time: '18:00', isBook: Math.random() >= 0.5 },
-        { id: 20, time: '18:30', isBook: Math.random() >= 0.5 },
-      ];
-      return bookList;
+      return data;
     },
 });

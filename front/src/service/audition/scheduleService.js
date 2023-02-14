@@ -3,10 +3,9 @@ import Swal from 'sweetalert2';
 import jwtApi from 'util/JwtApi';
 
 // 일정 등록
-const createAuditionSchedule = async (processId, payload) => {
-  //   await jwtApi.post(`/api/announcements/process/${processId}/audition`, payload).then(success);
+const createAuditionSchedule = async (announcementId, processId, payload) => {
   const result = await jwtApi
-    .post(`/api/announcements/process/${processId}/audition`, payload)
+    .post(`/api/announcements/${announcementId}/audition/on/${processId}/schedules`, payload)
     .then((response) => {
       console.log(response);
       console.log(response.status);

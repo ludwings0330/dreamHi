@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import dayjs from 'dayjs';
+import React from 'react';
 import TextField from '@mui/material/TextField';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import Grid from '@mui/material/Grid';
-import Divider from '@mui/material/Divider';
 import Box from '@mui/material/Box';
 import { useRecoilState } from 'recoil';
 import { auditionEndTimeState, auditionStartTimeState } from 'recoil/book/bookStore';
@@ -35,8 +33,6 @@ export default function TimeRangeSelect() {
               renderInput={(params) => <TextField {...params} />}
             />
           </Grid>
-
-          {/* <Divider  oriental="vertical" /> */}
 
           <Grid item xs={4}>
             <TimePicker
