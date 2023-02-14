@@ -2,6 +2,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 import styled from 'styled-components';
+import BannerSection from './BannerSection';
 
 const Wrapper = styled.div`
   display: block;
@@ -29,10 +30,7 @@ export default function MainBanner() {
       {/* ...settings: 위의 객체 내용이 들어옴 */}
       <Slider {...settings}>
         <div>
-          <Image src="/img/test.png" alt="banner"></Image>
-        </div>
-        <div>
-          <Image src="/img/test.png" alt="banner"></Image>
+          <BannerSection />
         </div>
         <div>
           <Image src="/img/test.png" alt="banner"></Image>

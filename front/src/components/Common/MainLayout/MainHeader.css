@@ -6,17 +6,19 @@
   font-style: normal;
 }
 
-#main-container {
-  max-width: 100% !important;
+#main-navbar {
   font-family: 'LINESeedKR-Bd';
+  max-width: 100% !important;
 }
 
-.header-main {
-  flex-flow: column;
+.main-container {
+  max-width: 100% !important;
+  padding-right: 30px;
+  padding-left: 10px;
 }
 
 .header-logo {
-  width: 250px;
+  width: 280px;
   object-fit: cover;
 }
 
@@ -30,21 +32,23 @@
 .header-top-right {
   width: 200px;
   display: flex;
-  margin-top: 20px;
+  margin-top: 35px;
   justify-content: flex-end;
 }
 
 .header-bottom {
-  margin-top: 20px;
   margin-left: 30px;
 }
 
 .header-line {
-  width: 100%;
-
-  height: 5px;
-
+  max-width: 100%;
+  height: 3px;
   background: #7ea6f4;
-
   border: 0;
+  margin: 0;
+  margin-top: 10px;
+}
+
+.nav-item {
+  font-size: 18px;
 }

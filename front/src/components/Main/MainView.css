@@ -1,19 +1,45 @@
-.main-body {
-  position: relative;
-  bottom: 0;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 15px;
-  width: 80%;
-}
-
-.main-img {
-  width: 100%;
-}
-
-.main-content {
+.mainview-header {
+  background-image: url('./img/film.png');
+  background-position: center;
+  background-size: cover;
+  height: 700px;
   display: flex;
-  justify-content: space-around;
-  margin: 40px;
-  margin-bottom: fill;
+  align-items: center;
+  justify-content: center;
+}
+
+.mainview-header .mainview-title {
+  text-align: center;
+}
+.mainview-header .mainview-title img {
+  width: 100px;
+}
+.mainview-header .mainview-title h1 {
+  font-size: 40px;
+  color: #444;
+  letter-spacing: 0.2em;
+  margin-bottom: 0;
+}
+
+.mainview-header .mainview-title p {
+  margin-top: 0;
+  margin-bottom: 30px;
+  color: #444;
+}
+
+.mainview-header .mainview-title button {
+  background: black;
+  color: white;
+  border: 2px solid white;
+  border-radius: 5px;
+  padding: 10px 30px;
+  font-size: 14px;
+  transition: 0.5s ease;
+}
+
+.mainview-header .mainview-title button:hover {
+  transition: 0.5s ease;
+  border: 2px solid black;
+  background: transparent;
+  color: black;
 }
