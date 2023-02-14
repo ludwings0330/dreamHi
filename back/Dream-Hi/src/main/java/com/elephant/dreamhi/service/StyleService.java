@@ -27,12 +27,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class StyleService {
 
-    @Value("${app.style-tag-size}")
-    private Integer styleTagSize;
     private final ActorRepository actorRepository;
     private final ActorStyleRelationRepository actorStyleRelationRepository;
     private final CastingStyleRelationRepository castingStyleRelationRepository;
     private final StyleRepository styleRepository;
+    @Value("${app.style-tag-size}")
+    private Integer styleTagSize;
 
     /**
      * 배우 스타일 태그 수정 - delete And save
@@ -44,9 +44,11 @@ public class StyleService {
     @Transactional
     public void updateActorStyleTags(ActorProfileRequestDto actorProfileRequestDto) throws FullResourceException, DataIntegrityViolationException {
         List<ActorStyleRelation> actorStyleRelations = actorStyleRelationRepository.findByActorProfileId(actorProfileRequestDto.getActorProfileId());
-        if( actorStyleRelations.size() + actorProfileRequestDto.getDeleteStyles().size() - actorProfileRequestDto.getInsertStyles().size() > styleTagSize )
+        if (actorStyleRelations.size() + actorProfileRequestDto.getDeleteStyles().size() - actorProfileRequestDto.getInsertStyles().size()
+                > styleTagSize) {
             throw new FullResourceException("최대 저장 개수를 초과했습니다.");
-        actorStyleRelationRepository.deleteAllInStlyeIdQuery(actorProfileRequestDto.getActorProfileId(), actorProfileRequestDto.getDeleteStyles());
+        }
+        actorStyleRelationRepository.deleteAllInStyleIdQuery(actorProfileRequestDto.getActorProfileId(), actorProfileRequestDto.getDeleteStyles());
         insertAllStyles(actorProfileRequestDto);
     }
 
