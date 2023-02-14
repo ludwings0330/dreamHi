@@ -47,8 +47,8 @@ public class MediaFileController {
     @PreAuthorize("@checker.isLoginUser(#principalDetails)")
     public ResponseEntity<?> addMediaFile(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable Long actorId,
                                           @RequestBody MediaFileRequestDto mediaFileRequestDto) {
-        mediaFileService.addMediaFile(principalDetails.getId(), actorId, mediaFileRequestDto);
-        return Response.accepted();
+        Long id = mediaFileService.addMediaFile(principalDetails.getId(), actorId, mediaFileRequestDto);
+        return Response.accepted(id);
     }
 
     /**
