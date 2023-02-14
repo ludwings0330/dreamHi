@@ -122,6 +122,11 @@ export const announcementListDetailSelector = selectorFamily({
   },
 });
 
+export const announcementListDetailCastingState = atom({
+  key: 'announcementListDetailCastingState',
+  default: {},
+});
+
 export const announcementListDetailCastingSelector = selectorFamily({
   key: 'announcementListDetailCastingSelector',
   get:

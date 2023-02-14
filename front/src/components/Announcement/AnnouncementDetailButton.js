@@ -8,6 +8,7 @@ import {
   announcementListDetailProcessSelector,
 } from 'recoil/process/processStore';
 import { Tag } from '../../../node_modules/@mui/icons-material/index';
+import AnnouncementApply from './AnnouoncementApply';
 
 function AnnouncementDetailButton(props) {
   const { processData } = props;
@@ -41,26 +42,9 @@ function AnnouncementDetailButton(props) {
     setButtonStateFromProcessData(processData);
   }, []);
 
-  //   if (processData.processState == 'RECRUITING' && processData.userStageName == 'SUBMIT') {
-  //     setButtonState('지원 완료');
-  //   } else if (
-  //     processData.processState == 'IN_PROGRESS' &&
-  //     processData.userStageName == 'IN_PROGRESS'
-  //   ) {
-  //     setButtonState('오디션 진행중');
-  //   } else if (processData.processState == 'IN_PROGRESS' && processData.userStageName == 'FAIL') {
-  //     setButtonState('불합격');
-  //   } else if (processData.processState == 'FINISH' && processData.userStageName == 'PASS') {
-  //     setButtonState('합격');
-  //   } else if (processData.processState !== 'RECRUITING') {
-  //     setButtonState('모집 마감');
-  //   } else if (processData.processState == 'RECRUITING' && processData.userStageName == 'NONE') {
-  //     setButtonState('지원하기');
-  //   }
-
   let button;
   if (buttonState == '지원하기') {
-    button = <Button title="지원하기" />;
+    button = <AnnouncementApply />;
   }
 
   return (

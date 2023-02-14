@@ -11,3 +11,11 @@ const SearchAnnouncement = async (payload, success, fail) => {
 };
 
 export { SearchAnnouncement };
+
+const applyActorProfile = async (announcementId, body, payload, success, fail) => {
+  await jwtApi
+    .post(`/api/announcements/${announcementId}/volunteers`, payload, { params: payload })
+    .then(success)
+    .catch(fail);
+};
+export { applyActorProfile };
