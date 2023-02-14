@@ -12,7 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @AllArgsConstructor
 @Data
 @Builder
-public class AuditionCreateRequestDto {
+public class BookPeriodSaveDto {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
