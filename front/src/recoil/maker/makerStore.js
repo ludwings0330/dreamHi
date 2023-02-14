@@ -18,7 +18,7 @@ export const makerMemberLists = atom({
 
 export const makerAnnouncementLists = atom({
   key: 'makerAnnouncementLists',
-  default: [],
+  default: null,
 });
 
 export const makerProfile = atom({

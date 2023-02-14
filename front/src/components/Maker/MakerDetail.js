@@ -11,6 +11,7 @@ import { makerAnnouncementLists, makerFilmoLists, makerMemberLists } from 'recoi
 import jwtApi from '../../util/JwtApi';
 import MakerFilmo from './Filmo/MakerFilmo';
 import MakerMembers from './MakerMembers/MakerMembers';
+import MakerAnnouncements from './AnnouncementList/MakerAnnouncementList';
 
 const MakerDetail = () => {
   const navigate = useNavigate();
@@ -71,6 +72,7 @@ const MakerDetail = () => {
   return (
     <>
       <div>
+        <h1>기본 정보 </h1>
         <div className="photo" width={'400px'} height={'500px'}>
           제작사 이미지 :
           <img src={makerInfo.pictureUrl} alt="image" className="object-center" />
@@ -79,14 +81,17 @@ const MakerDetail = () => {
         <div>제작사 이름 : {makerInfo.name}</div>
         <div>제작사 설명 : {makerInfo.description}</div>
       </div>
-
+      <hr />
       <MakerFilmo makerInfo={makerInfo} />
+      <hr />
       <MakerMembers makerInfo={makerInfo} />
+      <hr />
+      <MakerAnnouncements makerInfo={makerInfo} />
+      <hr />
 
       <Button variant="contained" onClick={() => navigate('/maker/write', { state: makerInfo })}>
         수정하기
       </Button>
-
       <Button variant="contained" onClick={() => navigate('/maker/delete')}>
         삭제하기
       </Button>
