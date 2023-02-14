@@ -7,31 +7,59 @@ import { useRecoilValue } from 'recoil';
 import {
   announcementListSelector,
   announcementListState,
+  announcementFilterState,
 } from 'recoil/announcement/announcementStore';
 import AnnouncementSearchBar from './AnnouncementSearchBar';
+import { SearchAnnouncement } from './AnnouncementAxios';
 
 // import Css
 import { styled } from '../../../node_modules/@mui/material/styles';
 import Box from '../../../node_modules/@mui/material/Box';
 import Grid from '../../../node_modules/@mui/material/Grid';
 import Chip from '../../../node_modules/@mui/material/Chip';
+import { useState } from 'react';
+import { useRecoilState } from 'recoil';
 
 // import { styled } from '../../../node_modules/@mui/material/styles'
 
 function AnnouncementList(props) {
   // const { announcements, onClickItem } = props;
   console.log('😍😎😍');
+  // let list = [];
+  // const [list, setList] = useState([]);
 
-  const announcementList = useRecoilValue(announcementListSelector());
+  // const [announcementList, setAnnouncementList] = useState(list);
+  // const searchList = useRecoilValue(announcementListState);
+  // setAnnouncementList(searchList);
+  // setAnnouncementList(useRecoilValue(announcementListState));
+  const [announcementList, setAnnouncementList] = useRecoilState(announcementListState);
+
+  // const announcementList = useRecoilValue(announcementListState);
+
+  // const [announcementList, setAnnouncementList] = useState();
+  const sendData = useRecoilValue(announcementFilterState);
 
   useEffect(() => {
-    console.log('😁👻👻👻', announcementList);
-    console.log(
-      announcementList.find((item) => {
-        return item.id == 50002;
-      }),
+    SearchAnnouncement(
+      sendData,
+      (response) => {
+        console.log('announcement Search', response);
+        console.log('😎😋', response.data.result.content);
+        // list = response.data.result.content;
+        setAnnouncementList(() => response.data.result.content);
+      },
+      () => {},
     );
-  }, []);
+  }, [sendData]);
+
+  // console.log(list);
+  // setAnnouncementList(useRecoilValue(announcementListState));
+
+  console.log('😁👻👻👻', announcementList);
+
+  // useEffect(() => {
+  //   SearchAnnouncement
+  // }, [])
 
   return (
     <div>

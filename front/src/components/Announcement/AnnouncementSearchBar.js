@@ -16,42 +16,11 @@ import { useRecoilState } from 'recoil';
 
 //import css
 
-function AnnouncementSearchBar({ actorList, setActorList }) {
-  // const search = () => {
-  //   setSearchData({
-  //     name: name,
-  //   });
-
-  //   api
-  //     .get(`/api/actors`, {
-  //       params: {
-  //         name: name,
-  //         height: height,
-  //         age: age,
-  //         gender: selectGender,
-  //         styles: checkedStyles,
-  //         isFollow: false,
-  //       },
-  //     })
-  //     .then((response) => {
-  //       console.log('GET /api/actors');
-  //       console.log(response, '검색한다22222222');
-  //       if (response.data.result.content == 'undefined') {
-  //       }
-  //       console.log(response.data.result.content, '검색한다');
-  //       setActorList(response.data.result.content);
-  //     })
-  //     .catch((error) => {
-  //       setActorList([]);
-
-  //       console.log('실패실패ㅠㅠ');
-  //       console.log(error);
-  //     });
-  // };
-
+function AnnouncementSearchBar() {
   //필터 -> 이름, 키, 나이, 성별, 스타일태그 + 검색
 
   const navigate = useNavigate();
+  const [list, setList] = useRecoilState(announcementListState);
 
   //이름 관련
   const [name, setName] = useState('');
@@ -110,31 +79,27 @@ function AnnouncementSearchBar({ actorList, setActorList }) {
   };
 
   const searchData = {
-    searchCondition: {
-      minHeight: height,
-      maxHeight: '',
-      minAge: age,
-      maxAge: '',
-      gender: selectGender,
-      keyword: name,
-      styles: checkedStyles,
-      isFollow: '',
-      isVolunteer: '',
-    },
+    minHeight: height,
+    maxHeight: '',
+    minAge: age,
+    maxAge: '',
+    gender: selectGender,
+    keyword: name,
+    styles: checkedStyles,
+    isFollow: '',
+    isVolunteer: '',
     page: 0,
     size: 10,
   };
 
   console.log('💩🤖🤖', searchData);
 
-  const [list, setList] = useRecoilState(announcementListState);
-
   const searchAnnouncement = async () => {
     await SearchAnnouncement(
       searchData,
       (response) => {
         console.log('announcement Search Filter', response);
-        setList(response);
+        setList(response.data.result.content);
       },
       () => {},
     );
@@ -194,7 +159,7 @@ function AnnouncementSearchBar({ actorList, setActorList }) {
           })}
         </div>
 
-        <div className={'search-button'} onClick={() => searchAnnouncement()}>
+        <div onClick={() => searchAnnouncement()}>
           {/* <div className={'search-button'}> */}
           검색
           {/* <Button
