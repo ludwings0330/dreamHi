@@ -11,3 +11,6 @@ export const NAVER_AUTH_URL =
   API_BASE_URL + '/oauth2/authorization/naver?redirect_uri=' + OAUTH2_REDIRECT_URI;
 export const KAKAO_AUTH_URL =
   API_BASE_URL + '/oauth2/authorization/kakao?redirect_uri=' + OAUTH2_REDIRECT_URI;
+
+export const FILE_REGEX = '.';
+export const FILE_FOLDER = 'audition/';

@@ -37,6 +37,7 @@ import Live from './components/Live/Live';
 
 //import collection
 import Collection from './components/Collection/Collection';
+import ScheduleCreatePage from 'pages/ScheduleCreatePage';
 
 function App() {
   return (
@@ -62,6 +63,8 @@ function App() {
         <Route path={'/actor/write'} element={<ActorWrite />} />
         <Route path={'/actor/delete'} element={<ActorDelete />} />
         {/*//오디션페이지 관련 이동*/}
+        //오디션페이지 관련 이동
+        <Route path={'/schedule'} element={<ScheduleCreatePage />} />
         <Route path={'/audition'} element={<AuditionPage />} />
         <Route path={'/audition/meeting'} element={<AuditionMeeting />} />
         {/*화상면접 관련 이동*/}

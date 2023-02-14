@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PictureDto {
+public class FileDto {
 
     private String originName;
     private String savedName;
