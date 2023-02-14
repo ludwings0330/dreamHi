@@ -41,6 +41,10 @@ public class Response {
         return create(HttpStatus.ACCEPTED, "accepted");
     }
 
+    public static ResponseEntity<Body> accepted(Object result) {
+        return create(HttpStatus.ACCEPTED, "accepted", result);
+    }
+
     @Builder
     @Getter
     @Data

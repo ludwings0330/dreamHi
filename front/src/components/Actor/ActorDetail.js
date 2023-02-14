@@ -10,6 +10,8 @@ import { actorFilmoLists, actorPhotoLists, actorVideoLists } from 'recoil/actor/
 import jwtApi from '../../util/JwtApi';
 import { Button } from '@mui/material';
 import ActorFilmo from './filmo/ActorFilmo';
+import ActorPhoto from './photo/ActorPhoto';
+import ActorVideo from './video/ActorVideo';
 
 const ActorDetail = () => {
   const { state } = useLocation();
@@ -28,22 +30,21 @@ const ActorDetail = () => {
       const actorInfo = await jwtApi
         .get(`/api/users/${userId}/actor-profile`)
         .then((response) => response.data.result);
+
       setActorInfo(actorInfo);
-      console.log(actorInfo);
 
       const media = await jwtApi.get(`/api/actors/${actorInfo.actorProfileId}/media`);
-      setActorPhotos(media.data.result.picture);
+      setActorPhotos(media.data.result.pictures);
       setActorVideos(media.data.result.videos);
-      console.log(media);
 
       // 필모그래피 정보아무것도 안줫을때 너무 조회를 많이함 최대 5 개만 가져오도록 수정.
       const filmographies = await jwtApi.get(`/api/filmographies`, {
         params: { actorId: actorInfo.actorProfileId },
       });
+
       setActorFilmos(filmographies.data.result);
-      console.log(filmographies);
     };
-    console.log(actorInfo);
+
     fetchData();
   }, []);
 
@@ -66,22 +67,21 @@ const ActorDetail = () => {
         actorInfo.styles.map((actor, idx) => <div key={idx}>{actor['description']}</div>)}
       <div>{actorInfo.phone}</div>
       <div>{actorInfo.email}</div>
-      <ActorFilmo />
-      {/*<ActorPhoto />*/}
-      {/*<ActorVideo />*/}
+      <ActorFilmo actorId={actorInfo.actorProfileId} />
+      <ActorPhoto actorInfo={actorInfo} />
+      <ActorVideo actorInfo={actorInfo} />
 
       <Button
         title="수정하기"
-        onClick={() => {
-          navigate('/actor/write', { state: actorInfo });
-        }}
-      />
-      <Button
-        title="삭제하기"
-        onClick={() => {
-          navigate('/actor/delete');
-        }}
-      />
+        variant="contained"
+        onClick={() => navigate('/actor/write', { state: actorInfo })}
+      >
+        수정하기
+      </Button>
+
+      <Button variant="contained" title="삭제하기" onClick={() => navigate('/actor/delete')}>
+        삭제하기
+      </Button>
     </>
   );
 };

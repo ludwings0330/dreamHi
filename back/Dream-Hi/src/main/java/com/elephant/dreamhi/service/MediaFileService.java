@@ -24,12 +24,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class MediaFileService {
 
+    private final ActorProfileMediaFileRepository actorProfileMediaFileRepository;
+    private final ActorRepository actorRepository;
     @Value("${app.image-size}")
     private Integer imageSize;
     @Value("${app.video-size}")
     private Integer videoSize;
-    private final ActorProfileMediaFileRepository actorProfileMediaFileRepository;
-    private final ActorRepository actorRepository;
 
     public MediaFileResponseDto findMediaFilesByActorProfileId(Long id) {
         List<ActorProfileMediaFile> mediaFiles = actorProfileMediaFileRepository.findAllByActorProfile_Id(id);
@@ -46,7 +46,7 @@ public class MediaFileService {
      * @throws FullResourceException : 저장 공간 부족
      */
     @Transactional
-    public void addMediaFile(Long userId, Long actorProfileId, MediaFileRequestDto mediaFileRequestDto)
+    public Long addMediaFile(Long userId, Long actorProfileId, MediaFileRequestDto mediaFileRequestDto)
             throws AccessDeniedException, FullResourceException {
         ActorProfile actorProfile = actorRepository.findByIdAndUser_Id(actorProfileId, userId)
                                                    .orElseThrow(
@@ -56,6 +56,8 @@ public class MediaFileService {
 
         ActorProfileMediaFile mediaFile = mediaFileRequestDto.toEntity();
         mediaFile.changeActorProfile(actorProfile);
+
+        return actorProfile.getId();
     }
 
 
@@ -75,7 +77,7 @@ public class MediaFileService {
         if (actorProfile.isEmpty()) {
             throw new AccessDeniedException(userId + " 유저는 " + actorProfileId + "번 프로필 삭제 권한이 없습니다.");
         }
-        
+
         actorProfileMediaFileRepository.deleteById(actorProfileMediaFileId);
     }
 

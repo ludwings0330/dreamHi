@@ -47,9 +47,9 @@ public class FilmographyController {
     @PreAuthorize("@checker.isLoginUser(#user) && @checker.hasFilmographyAuthority(#user, #requestDto)")
     public ResponseEntity<Body> addFilmography(@RequestBody FilmographyRequestDto requestDto,
                                                @AuthenticationPrincipal PrincipalDetails user) throws AccessDeniedException, NotFoundException {
-        filmographyService.addFilmography(requestDto);
+        Long id = filmographyService.addFilmography(requestDto);
 
-        return Response.create(HttpStatus.CREATED, "필모그래피 생성 성공");
+        return Response.create(HttpStatus.CREATED, "필모그래피 생성 성공", id);
     }
 
     @DeleteMapping("/api/filmographies/{filmographyId}")
