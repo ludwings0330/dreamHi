@@ -4,6 +4,7 @@ import com.elephant.dreamhi.model.entity.Process;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -11,6 +12,6 @@ public interface ProcessRepository extends JpaRepository<Process, Long>, Process
 
     @Modifying
     @Query("DELETE Process p WHERE p.announcement.id = :announcementId")
-    void deleteAllByAnnouncementId(Long announcementId);
+    void deleteAllByAnnouncementId(@Param("announcementId") Long announcementId);
 
 }

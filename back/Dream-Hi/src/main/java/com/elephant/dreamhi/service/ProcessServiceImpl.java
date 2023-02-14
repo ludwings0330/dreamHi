@@ -1,18 +1,12 @@
 package com.elephant.dreamhi.service;
 
-import com.elephant.dreamhi.exception.NotFoundException;
-import com.elephant.dreamhi.model.dto.FileDto;
 import com.elephant.dreamhi.model.dto.ProcessSaveDto;
 import com.elephant.dreamhi.model.dto.ProcessStageDto;
 import com.elephant.dreamhi.model.entity.Announcement;
-import com.elephant.dreamhi.model.entity.NoticeFile;
 import com.elephant.dreamhi.model.entity.Process;
 import com.elephant.dreamhi.model.entity.Volunteer;
-import com.elephant.dreamhi.model.statics.ProcessState;
-import com.elephant.dreamhi.model.statics.StageName;
 import com.elephant.dreamhi.model.statics.UserStageName;
 import com.elephant.dreamhi.repository.AnnouncementRepository;
-import com.elephant.dreamhi.repository.NoticeFileRepository;
 import com.elephant.dreamhi.repository.ProcessRepository;
 import com.elephant.dreamhi.repository.VolunteerRepository;
 import com.elephant.dreamhi.security.PrincipalDetails;
@@ -28,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class ProcessServiceImpl implements ProcessService {
 
-    private final NoticeFileRepository noticeFileRepository;
     private final AnnouncementRepository announcementRepository;
     private final ProcessRepository processRepository;
     private final VolunteerRepository volunteerRepository;
@@ -94,22 +87,6 @@ public class ProcessServiceImpl implements ProcessService {
         volunteerRepository.updatePassVolunteers(announcement.getId(), process);
 
         return processId;
-    }
-
-    /**
-     * 공지, 대본 파일 업로드 메소드
-     *
-     * @param processId
-     * @param fileDtos
-     * @throws NotFoundException : processId에 해당하는 채용 절차가 존재하지 않을 경우 발생합니다.
-     */
-    @Override
-    @Transactional
-    public void saveAllNoticeFiles(Long processId, List<FileDto> fileDtos) throws NotFoundException {
-        Process process = processRepository.findByIdAndStageAndState(processId, StageName.VIDEO, ProcessState.IN_PROGRESS)
-                                           .orElseThrow(() -> new NotFoundException("해당 프로세스를 찾을 수 없습니다."));
-        List<NoticeFile> noticeFiles = NoticeFile.toEntityList(process, fileDtos);
-        noticeFileRepository.saveAll(noticeFiles);
     }
 
 }

@@ -2,9 +2,11 @@ package com.elephant.dreamhi.controller;
 
 import com.elephant.dreamhi.exception.NotFoundException;
 import com.elephant.dreamhi.model.dto.BookPeriodDto;
+import com.elephant.dreamhi.model.dto.BookPeriodSaveDto;
 import com.elephant.dreamhi.model.dto.BookRequestDto;
 import com.elephant.dreamhi.model.dto.BookResponseDto;
 import com.elephant.dreamhi.model.dto.BookedVolunteerDto;
+import com.elephant.dreamhi.model.dto.FileDto;
 import com.elephant.dreamhi.security.PrincipalDetails;
 import com.elephant.dreamhi.service.AuditionService;
 import com.elephant.dreamhi.utils.Response;
@@ -12,6 +14,7 @@ import com.elephant.dreamhi.utils.Response.Body;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -139,7 +142,11 @@ public class AuditionController {
             @RequestParam(name = "pid", required = false) Long producerId,
             @AuthenticationPrincipal PrincipalDetails user
     ) throws NotFoundException {
-        String fileUrl = auditionService.findFileUrl(processId);
+        List<FileDto> fileUrl = auditionService.findFileUrl(processId)
+                                               .stream()
+                                               .map(FileDto::toDto)
+                                               .collect(Collectors.toList());
+
         return Response.create(HttpStatus.OK, "화상 오디션을 위한 파일 URL를 조회했습니다.", fileUrl);
     }
 
@@ -164,29 +171,6 @@ public class AuditionController {
     }
 
     /**
-     * @param processId      오디션의 현재 절차 ID, stage가 화상 오디션이어야 한다.
-     * @param fileUrl        화상 오디션을 위한 참고 파일을 저장해 둔 URL
-     * @param announcementId 현재 공고 ID
-     * @param producerId     현재 공고를 작성한 제작사 ID
-     * @param user           현재 로그인 한 유저
-     * @return 화상 오디션에 대한 세션 정보를 저장하는 데 성공한 경우
-     * @throws NotFoundException        오디션의 현재 절차를 조회할 수 없을 때 발생하는 예외
-     * @throws IllegalArgumentException 현재 절차의 stage가 화상 오디션이 아닐 때 발생하는 예외
-     */
-    @PostMapping("/on/{processId}")
-    @PreAuthorize("@checker.isLoginUser(#user) && @checker.hasAnnouncementAuthority(#user, #producerId, #announcementId)")
-    public ResponseEntity<Body> saveSession(
-            @PathVariable Long processId,
-            @RequestBody String fileUrl,
-            @PathVariable Long announcementId,
-            @RequestBody Long producerId,
-            @AuthenticationPrincipal PrincipalDetails user
-    ) throws NotFoundException, IllegalArgumentException {
-        auditionService.saveSession(processId, fileUrl);
-        return Response.create(HttpStatus.ACCEPTED, "화상 오디션을 위한 세션 정보를 저장했습니다.");
-    }
-
-    /**
      * 프론트에서 넘겨주는 데이터의 한계로 한 명의 유저가 한 개의 배역에만 지원했다고 가정했습니다. 추후에 수정한다면 프론트에서 배역별로 일정을 받아야 하고, 배역별로 권한을 확인하는 방향으로 수정해야 합니다.
      *
      * @param processId      오디션의 현재 절차 ID, stage가 화상 오디션이어야 한다.
@@ -194,8 +178,7 @@ public class AuditionController {
      * @param announcementId 현재 공고 ID
      * @param user           현재 로그인 한 유저
      * @return 화상 오디션 예약에 성공한 경우 '201 CREATED' 반환
-     * @throws NotFoundException        오디션의 현재 절차를 조회할 수 없을 때 발생하는 예외
-     * @throws IllegalArgumentException 현재 절차의 stage가 화상 오디션이 아닐 때 발생하는 예외
+     * @throws NotFoundException 화상 오디션인 절차를 조회할 수 없을 때 발생하는 예외
      */
     @PostMapping("/on/{processId}/book")
     @PreAuthorize("@checker.isLoginUser(#user) && @checker.hasPassedAuthority(#user, #announcementId, #processId)")
@@ -204,9 +187,44 @@ public class AuditionController {
             @RequestBody BookRequestDto bookRequestDto,
             @PathVariable Long announcementId,
             @AuthenticationPrincipal PrincipalDetails user
-    ) throws NotFoundException, IllegalArgumentException {
+    ) throws NotFoundException {
         auditionService.saveBookOfVolunteer(processId, bookRequestDto, user);
         return Response.create(HttpStatus.CREATED, "지원자의 화상 오디션 일정을 예약했습니다.");
+    }
+
+    /**
+     * 오디션 일정 추가
+     */
+    @PostMapping("/on/{processId}/schedules")
+    @PreAuthorize("@checker.isLoginUser(#user) && @checker.hasAnnouncementAuthority(#user, #announcementId)")
+    public ResponseEntity<Body> createAuditionSchedule(
+            @PathVariable Long processId,
+            @RequestBody BookPeriodSaveDto bookPeriodSaveDto,
+            @PathVariable Long announcementId,
+            @AuthenticationPrincipal PrincipalDetails user
+    ) throws NotFoundException {
+        auditionService.createAuditionSchedule(processId, bookPeriodSaveDto);
+        return Response.create(HttpStatus.CREATED, "오디션 일정 생성 성공");
+    }
+
+    /**
+     * 오디션 화상 면접 절차 중 공지사항 및 대본 파일 업로드 메소드
+     *
+     * @param user      : 현재 접근중 주체
+     * @param processId : 현재 채용 절차 id
+     * @param fileDtos  : 업로드할 파일 데이터
+     * @return 201 CREATED
+     */
+    @PostMapping("/on/{processId}/files")
+    @PreAuthorize("@checker.isLoginUser(#user) && @checker.hasAnnouncementAuthority(#user, #announcementId)")
+    public ResponseEntity<Body> saveAllNoticeFiles(
+            @PathVariable Long processId,
+            @RequestBody List<FileDto> fileDtos,
+            @PathVariable Long announcementId,
+            @AuthenticationPrincipal PrincipalDetails user
+    ) throws NotFoundException {
+        auditionService.saveAllNoticeFiles(processId, fileDtos);
+        return Response.create(HttpStatus.CREATED, "공지사항 및 대본 파일 업로드 성공");
     }
 
 }

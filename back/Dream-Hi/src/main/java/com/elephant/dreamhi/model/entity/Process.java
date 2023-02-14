@@ -46,6 +46,9 @@ public class Process {
     @Enumerated(EnumType.STRING)
     private StageName stage;
 
+    @Column(unique = true)
+    private String sessionId;
+
     public static Process getInstanceForRecruiting(Announcement announcement) {
         return Process.builder()
                       .announcement(announcement)
@@ -67,6 +70,11 @@ public class Process {
                       .stage(processSaveDto.getStage())
                       .state(processSaveDto.getState())
                       .build();
+    }
+
+    public Process setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+        return this;
     }
 
 }

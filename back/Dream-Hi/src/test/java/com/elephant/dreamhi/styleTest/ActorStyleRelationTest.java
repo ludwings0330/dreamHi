@@ -126,12 +126,12 @@ public class ActorStyleRelationTest {
         Long actorProfileId = 1L;
 
         // When
-        Integer result = actorStyleRelationRepository.deleteAllInStlyeIdQuery(actorProfileId, deleteStyles);
+        Integer result = actorStyleRelationRepository.deleteAllInStyleIdQuery(actorProfileId, deleteStyles);
         System.out.println("result = " + result);
 
         // Then
         assertThat(result).usingRecursiveComparison()
-                           .isEqualTo(2);
+                          .isEqualTo(2);
     }
 
     @Test
@@ -164,7 +164,7 @@ public class ActorStyleRelationTest {
 
         // Then
         assertThat(byActorProfileId.size()).usingRecursiveComparison()
-                .isEqualTo(8);
+                                           .isEqualTo(8);
     }
 
 }
