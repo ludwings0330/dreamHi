@@ -1,8 +1,6 @@
 package com.elephant.dreamhi.model.entity;
 
 import com.elephant.dreamhi.model.dto.FileDto;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,11 +14,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicInsert;
 
 @Entity
 @Table(name = "notice_file")
-@DynamicInsert
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -32,7 +28,7 @@ public class NoticeFile {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "process_id", nullable = false)
+    @JoinColumn(name = "process_id", nullable = false, updatable = false)
     private Process process;
 
     // url
@@ -47,16 +43,13 @@ public class NoticeFile {
     @Column(nullable = false)
     private String originName;
 
-    public static List<NoticeFile> toEntityList(Process process, List<FileDto> fileDtos) {
-        List<NoticeFile> noticeFiles = new ArrayList<>();
-        fileDtos.forEach(f -> noticeFiles.add(NoticeFile.builder()
-                                                        .process(process)
-                                                        .url(f.getUrl())
-                                                        .savedName(f.getSavedName())
-                                                        .originName(f.getOriginName())
-                                                        .build())
-        );
-        return noticeFiles;
+    public static NoticeFile toEntity(Process process, FileDto fileDto) {
+        return NoticeFile.builder()
+                         .process(process)
+                         .url(fileDto.getUrl())
+                         .savedName(fileDto.getSavedName())
+                         .originName(fileDto.getOriginName())
+                         .build();
     }
 
 }
