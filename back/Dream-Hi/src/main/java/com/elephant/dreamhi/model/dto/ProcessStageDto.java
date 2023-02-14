@@ -71,7 +71,7 @@ public class ProcessStageDto {
                                                       return UserStageName.IN_PROGRESS;
                                                   })
                                                   .max(Comparator.comparingInt(UserStageName::getPriority))
-                                                  .get();
+                                                  .orElse(UserStageName.NONE);
 
         return dtoBuilder.userStageName(resultStageName).build();
     }
