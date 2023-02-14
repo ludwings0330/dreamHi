@@ -31,14 +31,11 @@ import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
@@ -60,43 +57,47 @@ public class AnnouncementRepositoryCustomImpl implements AnnouncementRepositoryC
     }
 
     @Override
-    public Page<AnnouncementSimpleDto> findAllByCondition(AnnouncementSearchCondition condition, Pageable pageable, Long userId) {
-        JPAQuery<Long> query = getQueryToFindAnnouncementIdsByCondition(condition, userId);
-        long totalCount = query.fetch().size();
-        List<Long> announcementIds = query.orderBy(announcement.id.desc())
-                                          .offset(pageable.getOffset())
-                                          .limit(pageable.getPageSize())
-                                          .fetch();
+    public long findTotalCountByCondition(AnnouncementSearchCondition condition, Long userId) {
+        return getQueryToFindAnnouncementIdsByCondition(condition, userId).fetch().size();
+    }
+
+
+    @Override
+    public List<Long> findAnnouncementIdsByCondition(AnnouncementSearchCondition condition, Pageable pageable, Long userId) {
+        return getQueryToFindAnnouncementIdsByCondition(condition, userId).orderBy(announcement.id.desc())
+                                                                          .offset(pageable.getOffset())
+                                                                          .limit(pageable.getPageSize())
+                                                                          .fetch();
+    }
+
+    @Override
+    public List<AnnouncementSimpleDto> findAllByIds(List<Long> announcementIds, Boolean isFollow) {
         log.info("조회할 공고 ID: {}", announcementIds);
 
-        if (announcementIds.isEmpty()) {
-            return PageableExecutionUtils.getPage(Collections.emptyList(), pageable, () -> totalCount);
-        }
+        List<AnnouncementSimpleDto> announcementSimpleDtos = queryFactory.selectFrom(announcement)
+                                                                         .join(announcement.producer, producer)
+                                                                         .join(announcement.castings, casting)
+                                                                         .where(announcement.id.in(announcementIds))
+                                                                         .distinct()
+                                                                         .transform(
+                                                                                 groupBy(announcement.id).list(Projections.constructor(
+                                                                                         AnnouncementSimpleDto.class,
+                                                                                         announcement.id,
+                                                                                         announcement.title,
+                                                                                         producer.name,
+                                                                                         Expressions.asBoolean(isFollow),
+                                                                                         announcement.createdDate,
+                                                                                         announcement.hit,
+                                                                                         list(Projections.constructor(
+                                                                                                 CastingSimpleDto.class,
+                                                                                                 casting.headcount,
+                                                                                                 casting.name
+                                                                                         ))
+                                                                                 ))
+                                                                         );
 
-        List<AnnouncementSimpleDto> contents = queryFactory.selectFrom(announcement)
-                                                           .join(announcement.producer, producer)
-                                                           .join(announcement.castings, casting)
-                                                           .where(announcement.id.in(announcementIds))
-                                                           .distinct()
-                                                           .transform(
-                                                                   groupBy(announcement.id).list(Projections.constructor(
-                                                                           AnnouncementSimpleDto.class,
-                                                                           announcement.id,
-                                                                           announcement.title,
-                                                                           producer.name,
-                                                                           Expressions.asBoolean(condition.getIsFollow()),
-                                                                           announcement.createdDate,
-                                                                           announcement.hit,
-                                                                           list(Projections.constructor(
-                                                                                   CastingSimpleDto.class,
-                                                                                   casting.headcount,
-                                                                                   casting.name
-                                                                           ))
-                                                                   ))
-                                                           );
-        log.info("조회된 공고 목록 : {}", contents);
-
-        return PageableExecutionUtils.getPage(contents, pageable, () -> totalCount);
+        log.info("조회된 공고 목록 : {}", announcementSimpleDtos);
+        return announcementSimpleDtos;
     }
 
     @Override
@@ -150,7 +151,7 @@ public class AnnouncementRepositoryCustomImpl implements AnnouncementRepositoryC
                                                                                                                       .from(userProducerRelation)
                                                                                                                       .where(
                                                                                                                               userProducerRelation.user.id.eq(userId),
-                                                                                                                              producerEq(announcementId)
+                                                                                                                              userProducerWrite(announcementId)
                                                                                                                       )
                                                                                                                       .eq(ProducerRole.EDITOR)
                                                                                                 ).then(Boolean.TRUE)
@@ -195,7 +196,8 @@ public class AnnouncementRepositoryCustomImpl implements AnnouncementRepositoryC
                                    keywordLike(condition.getKeyword()),
                                    styleIn(condition.getStyles()),
                                    followEq(condition.getIsFollow(), userId),
-                                   volunteerEq(condition.getIsVolunteer(), userId)
+                                   volunteerEq(condition.getIsVolunteer(), userId),
+                                   producerEq(condition.getProducerId())
                            );
     }
 
@@ -291,7 +293,15 @@ public class AnnouncementRepositoryCustomImpl implements AnnouncementRepositoryC
         );
     }
 
-    private BooleanExpression producerEq(Long announcementId) {
+    private BooleanExpression producerEq(Long producerId) {
+        if (producerId == null || producerId == 0L) {
+            return null;
+        }
+
+        return producer.id.eq(producerId);
+    }
+
+    private BooleanExpression userProducerWrite(Long announcementId) {
         return userProducerRelation.producer.id.eq(
                 JPAExpressions.select(producer.id)
                               .from(announcement)
