@@ -24,12 +24,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class MediaFileService {
 
+    @Value("${app.image-size}")
+    private static Integer imageSize;
+    @Value("${app.video-size}")
+    private static Integer videoSize;
+
     private final ActorProfileMediaFileRepository actorProfileMediaFileRepository;
     private final ActorRepository actorRepository;
-    @Value("${app.image-size}")
-    private Integer imageSize;
-    @Value("${app.video-size}")
-    private Integer videoSize;
 
     public MediaFileResponseDto findMediaFilesByActorProfileId(Long id) {
         List<ActorProfileMediaFile> mediaFiles = actorProfileMediaFileRepository.findAllByActorProfile_Id(id);
@@ -74,6 +75,7 @@ public class MediaFileService {
     public void deleteMediaFile(Long userId, Long actorProfileId, Long actorProfileMediaFileId)
             throws AccessDeniedException, EmptyResultDataAccessException {
         Optional<ActorProfile> actorProfile = actorRepository.checkValidateModify(actorProfileId, userId);
+
         if (actorProfile.isEmpty()) {
             throw new AccessDeniedException(userId + " 유저는 " + actorProfileId + "번 프로필 삭제 권한이 없습니다.");
         }

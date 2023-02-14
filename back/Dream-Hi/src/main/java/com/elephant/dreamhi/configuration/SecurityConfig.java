@@ -72,4 +72,5 @@ public class SecurityConfig {
 
         return http.addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class).build();
     }
+
 }
