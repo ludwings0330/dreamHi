@@ -1,66 +1,66 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { booksSelector, checkTimeState } from 'recoil/book/bookStore';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValueLoadable } from 'recoil';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Radio from '@mui/material/Radio';
-import RadioGroup, { useRadioGroup } from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 export default function ActorTimeTable() {
-  const [books, setBooks] = useRecoilState(booksSelector());
+  const books = useRecoilValueLoadable(booksSelector());
   const [checkTime, setCheckTime] = useRecoilState(checkTimeState);
-
   const handleCheck = (e) => {
     setCheckTime(e.target.value);
   };
 
   useEffect(() => {
-    console.log(books);
     console.log(checkTime);
   }, [checkTime]);
-  return (
-    <Box sx={{ mt: 3, mb: 3 }}>
-      <Grid container spacing={{ xs: 2 }} columns={{ xs: 8 }}>
-        {books.map((book, index) => (
-          <Grid item xs={2} sm={4} md={4} key={index}>
-            {/* <TimeDetail book={book} /> */}
-            <Box
-              sx={{
-                // display: book.isBook ? "none" : "block",
-                boxShadow: 3,
-                borderRadius: 5,
-                // fontWeight: 'bold',
-                bgcolor: book.isBook || book.id == checkTime ? '#051094' : '#52B2BF',
-                // fontSize: 18,
-                // color: "#FFFFFF",
-                opacity: book.isBook ? [1, 1, 0.1] : [1, 1, 0.8],
-              }}
-              textAlign="center"
-            >
-              <FormControlLabel
-                label={book.time}
-                control={
-                  <Radio
-                    checked={checkTime === book.id}
-                    value={book.id}
-                    disabled={book.isBook}
-                    onChange={handleCheck}
+
+  switch (books.state) {
+    case 'hasValue':
+      return (
+        <Box sx={{ mt: 3, mb: 3 }}>
+          <Grid container spacing={{ xs: 2 }} columns={{ xs: 8 }}>
+            {books.contents.map((book, index) => (
+              <Grid item xs={2} sm={4} md={4} key={index}>
+                <Box
+                  sx={{
+                    boxShadow: 3,
+                    borderRadius: 5,
+                    bgcolor: book.startTime === checkTime ? '#051094' : '#52B2BF',
+                    opacity: book.reserved ? [1, 1, 0.1] : [1, 1, 0.8],
+                  }}
+                  textAlign="center"
+                >
+                  <FormControlLabel
+                    label={`${book.startTime.match(/[0-9]+:[0-9]+/)}`}
+                    control={
+                      <Radio
+                        checked={checkTime === book.startTime}
+                        value={book.startTime}
+                        disabled={book.reserved}
+                        onChange={handleCheck}
+                        sx={{
+                          color: '#FFFFFF',
+                        }}
+                      />
+                    }
                     sx={{
                       color: '#FFFFFF',
+                      display: 'block',
                     }}
-                  />
-                }
-                sx={{
-                  color: '#FFFFFF',
-                  display: 'block',
-                }}
-              ></FormControlLabel>
-            </Box>
+                  ></FormControlLabel>
+                </Box>
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
-    </Box>
-  );
+        </Box>
+      );
+    case 'loading':
+      return <div>Loading...</div>;
+    case 'hasError':
+    default:
+      return <div>Error...</div>;
+  }
 }
