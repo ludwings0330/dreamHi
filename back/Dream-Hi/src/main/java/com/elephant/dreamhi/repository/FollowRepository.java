@@ -31,6 +31,6 @@ public interface FollowRepository extends JpaRepository<Follow, Long>, FollowRep
     Follow save(Follow follow);
 
     @Query("SELECT f.announcement.id FROM Follow f WHERE f.follower.id = :followerId AND f.type = 'ANNOUNCEMENT'")
-    Set<Long> findAnnouncementIdsByFollowerId(Long followerId);
+    Set<Long> findAnnouncementIdsByFollowerId(@Param("followerId") Long followerId);
 
 }
