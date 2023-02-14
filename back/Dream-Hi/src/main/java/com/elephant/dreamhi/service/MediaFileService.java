@@ -9,6 +9,7 @@ import com.elephant.dreamhi.model.statics.MediaType;
 import com.elephant.dreamhi.repository.ActorProfileMediaFileRepository;
 import com.elephant.dreamhi.repository.ActorRepository;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +49,8 @@ public class MediaFileService {
     public void addMediaFile(Long userId, Long actorProfileId, MediaFileRequestDto mediaFileRequestDto)
             throws AccessDeniedException, FullResourceException {
         ActorProfile actorProfile = actorRepository.findByIdAndUser_Id(actorProfileId, userId)
-                                                   .orElseThrow(() -> new AccessDeniedException(userId +" 유저는 " + actorProfileId + " 프로필 수정 권한이 없습니다."));
+                                                   .orElseThrow(
+                                                           () -> new AccessDeniedException(userId + " 유저는 " + actorProfileId + " 프로필 수정 권한이 없습니다."));
 
         checkStorageSize(mediaFileRequestDto, actorProfile);
 
@@ -69,7 +71,11 @@ public class MediaFileService {
     @Transactional
     public void deleteMediaFile(Long userId, Long actorProfileId, Long actorProfileMediaFileId)
             throws AccessDeniedException, EmptyResultDataAccessException {
-        actorRepository.checkValidateModify(actorProfileId, userId).orElseThrow(() -> new AccessDeniedException(userId + " 유저는 " + actorProfileId + "번 프로필 삭제 권한이 없습니다."));
+        Optional<ActorProfile> actorProfile = actorRepository.checkValidateModify(actorProfileId, userId);
+        if (actorProfile.isEmpty()) {
+            throw new AccessDeniedException(userId + " 유저는 " + actorProfileId + "번 프로필 삭제 권한이 없습니다.");
+        }
+        
         actorProfileMediaFileRepository.deleteById(actorProfileMediaFileId);
     }
 

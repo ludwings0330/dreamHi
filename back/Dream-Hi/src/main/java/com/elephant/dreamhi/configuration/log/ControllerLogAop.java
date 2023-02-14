@@ -1,6 +1,7 @@
 package com.elephant.dreamhi.configuration.log;
 
 import com.elephant.dreamhi.utils.Response.Body;
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -48,8 +49,13 @@ public class ControllerLogAop {
             ResponseEntity<Body> response = (ResponseEntity<Body>) returnObj;
             // return 파라미터
             HttpStatus status = response.getStatusCode();
-            String message = status.equals(HttpStatus.OK) ? response.getBody().getMessage() : "";
-            Object result = status.equals(HttpStatus.OK) ? response.getBody().getResult() : "";
+            Optional<Body> body = Optional.ofNullable(response.getBody());
+            String message = "";
+            String result = "";
+            if(body.isPresent()) {
+                message = body.get().getMessage();
+                result = (String) Optional.ofNullable(body.get().getResult()).orElseGet(()->"");
+            }
             log.info(" => Response Data    {} : {} \t{}", status, message, result);
         }
         log.info("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
