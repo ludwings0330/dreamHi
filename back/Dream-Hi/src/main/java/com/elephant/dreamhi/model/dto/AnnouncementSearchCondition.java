@@ -29,6 +29,8 @@ public class AnnouncementSearchCondition {
 
     private Long[] styles;
 
+    private Long producerId;
+
     private Boolean isFollow = Boolean.FALSE;
 
     private Boolean isVolunteer = Boolean.FALSE;

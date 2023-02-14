@@ -1,11 +1,15 @@
 package com.elephant.dreamhi.repository;
 
+import static com.elephant.dreamhi.model.entity.QAnnouncement.announcement;
 import static com.elephant.dreamhi.model.entity.QProcess.process;
+import static com.querydsl.core.group.GroupBy.groupBy;
 
 import com.elephant.dreamhi.model.entity.Process;
 import com.elephant.dreamhi.model.statics.ProcessState;
 import com.elephant.dreamhi.model.statics.StageName;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -36,6 +40,14 @@ public class ProcessRepositoryCustomImpl implements ProcessRepositoryCustom {
                                    process.state.eq(processState))
                             .fetchOne()
         );
+    }
+
+    @Override
+    public Map<Long, Process> findLastProcessesByAnnouncementIds(List<Long> announcementIds) {
+        return queryFactory.selectFrom(process)
+                           .join(process.announcement, announcement)
+                           .where(announcement.id.in(announcementIds))
+                           .transform(groupBy(announcement.id).as(process));
     }
 
 }

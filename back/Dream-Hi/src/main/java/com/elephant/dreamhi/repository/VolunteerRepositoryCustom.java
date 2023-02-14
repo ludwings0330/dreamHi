@@ -12,7 +12,7 @@ import org.springframework.data.domain.Page;
 
 public interface VolunteerRepositoryCustom {
 
-    List<Volunteer> findByUserIdAndAnnouncementId(Long userId, Long announcementId);
+    List<Volunteer> findAllByUserIdAndAnnouncementId(Long userId, Long announcementId);
 
     Map<VolunteerState, Long> getVolunteerStateSummary(VolunteerSearchCondition condition);
 
@@ -27,5 +27,7 @@ public interface VolunteerRepositoryCustom {
     void updateAll(Long announcementId, Process process);
 
     void deleteAllByAnnouncementId(Long announcementId);
+
+    Map<Long, List<Volunteer>> findAllByUserIdAndAnnouncementIds(Long userId, List<Long> announcementIds);
 
 }

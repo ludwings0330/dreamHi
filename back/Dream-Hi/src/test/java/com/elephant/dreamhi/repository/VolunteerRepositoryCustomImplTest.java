@@ -20,7 +20,7 @@ class VolunteerRepositoryCustomImplTest {
 
     @Test
     void findByUserIdAndAnnouncementId() {
-        volunteerRepository.findByUserIdAndAnnouncementId(1L, 1L);
+        volunteerRepository.findAllByUserIdAndAnnouncementId(1L, 1L);
     }
 
 }
