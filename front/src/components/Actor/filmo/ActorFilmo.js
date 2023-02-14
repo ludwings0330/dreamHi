@@ -18,7 +18,7 @@ const ActorFilmo = ({ actorId }) => {
       <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
         <h1 className={'actor-filmo-title'}>필모그래피</h1>
 
-        <div className="list-container">
+        <div className={'actor-filmo-list'}>
           {/*메인이미지 부분*/}
           {actorFilmos && actorFilmos.length > 0 ? (
             <div className="actor-filmo-main">
@@ -28,7 +28,7 @@ const ActorFilmo = ({ actorId }) => {
           {actorFilmos &&
             actorFilmos.length > 0 &&
             actorFilmos.map((filmography, idx) => (
-              <div className="actor-filmo" key={filmography.id} width={'200px'} height={'200px'}>
+              <div className="actor-filmo" key={filmography.id}>
                 <img
                   src={filmography.photoUrl}
                   alt="image"

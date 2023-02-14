@@ -52,7 +52,7 @@ function MainHeader() {
 
   return (
     <Navbar>
-      <Container id={'main-container'}>
+      <Container id={'mainheader-container'}>
         <div className="header-top">
           {/*메인로고 이미지*/}
           <div>
@@ -80,7 +80,7 @@ function MainHeader() {
               <UncontrolledDropdown>
                 <DropdownToggle caret color="default" nav onClick={(e) => e.preventDefault()}>
                   <b className="caret d-none d-lg-block d-xl-block" />
-                  <CgProfile size="40" color="#7EA6F4" />
+                  <CgProfile size="50" color="#7EA6F4" />
                 </DropdownToggle>
 
                 <DropdownMenu className="dropdown-navbar" end tag="ul">

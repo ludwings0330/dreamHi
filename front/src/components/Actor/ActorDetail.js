@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 //import component
 import { useLocation } from 'react-router';
+import {} from './ActorDetail.css';
 
 //import recoil
 import { actorFilmoLists, actorPhotoLists, actorVideoLists } from 'recoil/actor/actorStore';
@@ -54,19 +55,24 @@ const ActorDetail = () => {
 
   return (
     <>
-      <div className="photo" width={'400px'} height={'500px'}>
-        <img src={actorInfo.pictureUrl} alt="image" className="object-center" />
-      </div>
-      <div>{actorInfo.description}</div>
+      <div id={'actor-detail-full'}>
+        <div id={'actor-main-profile'}>
+          <img src={actorInfo.pictureUrl} alt="image" className="object-center" />
+        </div>
 
-      <div>{actorInfo.title}</div>
-      <div>{actorInfo.gender}</div>
-      <div>{actorInfo.age}</div>
-      <div>{actorInfo.height}</div>
-      {actorInfo.styles.length > 0 &&
-        actorInfo.styles.map((actor, idx) => <div key={idx}>{actor['description']}</div>)}
-      <div>{actorInfo.phone}</div>
-      <div>{actorInfo.email}</div>
+        <div id={'actor-detail-info'}>
+          <div className={'actor-description-content'}>{actorInfo.description}</div>
+          <div>{actorInfo.title}</div>
+          <div>{actorInfo.gender}</div>
+          <div>{actorInfo.age}</div>
+          <div>{actorInfo.height}</div>
+          {actorInfo.styles.length > 0 &&
+            actorInfo.styles.map((actor, idx) => <div key={idx}>{actor['description']}</div>)}
+          <div>{actorInfo.phone}</div>
+          <div>{actorInfo.email}</div>
+        </div>
+      </div>
+
       <ActorFilmo actorId={actorInfo.actorProfileId} />
       <ActorPhoto actorInfo={actorInfo} />
       <ActorVideo actorInfo={actorInfo} />

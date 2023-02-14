@@ -90,7 +90,7 @@ const ActorList = () => {
 
       <Button title="글작성" onClick={() => navigate('/actor/write')} />
 
-      <div className={'page_bar'}>{/* <PageBar/> */}</div>
+      {/*<div className={'page_bar'}>/!* <PageBar/> *!/</div>*/}
     </div>
   );
 };

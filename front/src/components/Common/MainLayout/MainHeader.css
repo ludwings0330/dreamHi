@@ -6,7 +6,7 @@
   font-style: normal;
 }
 
-#main-navbar {
+#mainheader-container {
   font-family: 'LINESeedKR-Bd';
   max-width: 100% !important;
 }
@@ -27,6 +27,7 @@
   display: flex;
   justify-content: space-between;
   margin-top: 1px;
+  padding-left: 48px;
 }
 
 .header-top-right {

@@ -108,20 +108,27 @@ const SearchBar = ({ actorList, setActorList }) => {
   return (
     <>
       {/*최상위 tag에는 id로 할당하자*/}
-      <form id={'actor-info'}>
+      <form id={'actor-search-info'}>
         <div className="actor-info-top">
           <div className={'search-name'}>
             <label>
-              <span>이름</span>
-              <input type={'text'} value={name} ref={nameInputRef} onChange={handleChangeName} />
+              <span className={'name-search-span'}>이름</span>
+              <input
+                type={'text'}
+                className={'name-search-input'}
+                value={name}
+                ref={nameInputRef}
+                onChange={handleChangeName}
+              />
             </label>
           </div>
 
           <div className={'search-gender'}>
             <label>
-              <span>성별</span>
+              <span className={'gender-search-span'}>성별</span>
               <select
                 name="gender"
+                className={'gender-search-input'}
                 onChange={handleSelectGender}
                 value={selectGender}
                 ref={genderInputRef}
@@ -134,10 +141,11 @@ const SearchBar = ({ actorList, setActorList }) => {
 
           <div className={'search-age'}>
             <label>
-              <span>나이</span>
+              <span className={'age-search-span'}>나이</span>
               <input
                 size="5"
                 type={'number'}
+                className={'age-search-input'}
                 value={age}
                 ref={ageInputRef}
                 onChange={handleChangeAge}
@@ -147,9 +155,10 @@ const SearchBar = ({ actorList, setActorList }) => {
 
           <div className={'search-height'}>
             <label>
-              <span>키</span>
+              <span className={'height-search-span'}>키</span>
               <input
                 type={'number'}
+                className={'height-search-input'}
                 value={height}
                 ref={heightInputRef}
                 onChange={handleChangeHeight}
@@ -159,7 +168,7 @@ const SearchBar = ({ actorList, setActorList }) => {
         </div>
 
         <div className={'search-styles'}>
-          <span>스타일</span>
+          <span className={'style-search-span'}>스타일</span>
           <div className={'search-styles-items'}>
             <MDBContainer>
               <MDBRow>
@@ -168,6 +177,7 @@ const SearchBar = ({ actorList, setActorList }) => {
                     <label key={item.id} className="items">
                       <input
                         key={item.id}
+                        className={'style-check-box'}
                         type={'checkbox'}
                         value={item.id}
                         onChange={(e) => {
@@ -175,7 +185,7 @@ const SearchBar = ({ actorList, setActorList }) => {
                         }}
                         checked={checkedStyles.includes(item.id)}
                       />
-                      <span>{item.description}</span>
+                      <span className={'style-search-items-label'}>{item.description}</span>
                     </label>
                   </MDBCol>
                 ))}
