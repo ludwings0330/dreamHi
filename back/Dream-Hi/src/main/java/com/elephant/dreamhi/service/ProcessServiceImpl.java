@@ -11,6 +11,9 @@ import com.elephant.dreamhi.repository.ProcessRepository;
 import com.elephant.dreamhi.repository.VolunteerRepository;
 import com.elephant.dreamhi.security.PrincipalDetails;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,6 +29,30 @@ public class ProcessServiceImpl implements ProcessService {
     private final ProcessRepository processRepository;
     private final VolunteerRepository volunteerRepository;
 
+    @Override
+    public Map<Long, ProcessStageDto> findProcessAndStages(List<Long> announcementIds, PrincipalDetails user) {
+        Map<Long, Process> lastProcessByAnnouncementId = processRepository.findLastProcessesByAnnouncementIds(announcementIds);
+
+        if (user.isGuest()) {
+            return lastProcessByAnnouncementId.entrySet()
+                                              .stream()
+                                              .collect(Collectors.toMap(
+                                                      Entry::getKey,
+                                                      e -> new ProcessStageDto(e.getValue(), UserStageName.NONE)
+                                              ));
+        }
+
+        Map<Long, List<Volunteer>> volunteersByAnnouncementId = volunteerRepository.findAllByUserIdAndAnnouncementIds(user.getId(), announcementIds);
+        return volunteersByAnnouncementId.entrySet()
+                                         .stream()
+                                         .collect(Collectors.toMap(
+                                                 Entry::getKey,
+                                                 e -> ProcessStageDto.toDto(
+                                                         lastProcessByAnnouncementId.get(e.getKey()), e.getValue()
+                                                 )
+                                         ));
+    }
+
     /**
      * @param announcementId 현재 공고의 ID
      * @param user           현재 로그인한 유저
@@ -40,7 +67,7 @@ public class ProcessServiceImpl implements ProcessService {
             return new ProcessStageDto(lastProcess, UserStageName.NONE);
         }
 
-        List<Volunteer> volunteers = volunteerRepository.findByUserIdAndAnnouncementId(user.getId(), announcementId);
+        List<Volunteer> volunteers = volunteerRepository.findAllByUserIdAndAnnouncementId(user.getId(), announcementId);
         return ProcessStageDto.toDto(lastProcess, volunteers);
     }
 
