@@ -1,7 +1,5 @@
 import { atom, selectorFamily } from 'recoil';
-import jwtApi from 'util/JwtApi';
 import api from 'util/APIUtils';
-import { qs, stringify } from 'qs';
 
 export const makerListState = atom({
   key: 'makerListState',
@@ -11,6 +9,16 @@ export const makerListState = atom({
 export const makerProfileId = atom({
   key: 'makerProfileId',
   default: 'locker',
+});
+
+export const makerMemberLists = atom({
+  key: 'makerMemberLists',
+  default: [],
+});
+
+export const makerAnnouncementLists = atom({
+  key: 'makerAnnouncementLists',
+  default: [],
 });
 
 export const makerProfile = atom({
@@ -26,7 +34,7 @@ export const makerFilmoUrl = atom({
 export const makerFilmoLists = atom({
   key: 'makerFilmoLists',
   default: null,
-})
+});
 
 export const makerPhotoUrl = atom({
   key: 'makerPhotoUrl',
@@ -83,7 +91,9 @@ export const makerDetailSelector = selectorFamily({
       const data = await api.get(`/api/producers`).then((response) => {
         console.log('GET /api/producerss');
         console.log(response);
-        if (response.status === 204) return [];
+        if (response.status === 204) {
+          return [];
+        }
         return response.data.result;
       });
       console.log('data : ', data);

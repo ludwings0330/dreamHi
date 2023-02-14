@@ -1,110 +1,95 @@
 import React, { useEffect, useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import api from 'util/APIUtils';
-import { useLocation } from 'react-router';
+import { useRecoilState } from 'recoil';
+import { useNavigate, useParams } from 'react-router-dom';
 
 //import component
-import MakerIntroduce from './Info/MakerIntroduce';
-import MakerFilmo from './Filmo/MakerFilmo';
-import MakerPeopleList from './MakerPeopleList/MakerPeopleList';
-import MakerAnnouncementList from './AnnouncementList/MakerAnnouncementList';
-import Button from '../Common/CommonComponent/Button';
+// import Button from '../Common/CommonComponent/Button';
+import { Button } from '@mui/material';
 
 //import recoil
-import {
-  makerProfile,
-  makerFilmoUrl,
-  makerPhotoUrl,
-  makerFilmoLists,
-} from 'recoil/maker/makerStore';
-import {API_BASE_URL} from "../../constants";
+import { makerAnnouncementLists, makerFilmoLists, makerMemberLists } from 'recoil/maker/makerStore';
+import jwtApi from '../../util/JwtApi';
+import MakerFilmo from './Filmo/MakerFilmo';
+import MakerMembers from './MakerMembers/MakerMembers';
 
 const MakerDetail = () => {
-  const { state } = useLocation();
-
   const navigate = useNavigate();
-  const { makerProfileId } = useParams();
-  const token = localStorage.getItem('accessToken');
-
+  const { makerId } = useParams();
   const [makerFilmos, setMakerFilmos] = useRecoilState(makerFilmoLists);
+  const [makerMembers, setMakerMembers] = useRecoilState(makerMemberLists);
+  const [makerAnnouncements, setMakerAnnouncements] = useRecoilState(makerAnnouncementLists);
+  const [makerInfo, setMakerInfo] = useState({});
 
-  const [makerInfo, setMakerInfo] = useState({
-    name: '',
-    pictureUrl: '',
-    description: '',
-    isFollow: true,
-  });
+  const getProducerDetailInfo = () => {
+    jwtApi
+      .get(`/api/producers/${makerId}`)
+      .then((response) => {
+        console.log(response.data.result);
+        setMakerInfo(response.data.result);
+      })
+      .catch((e) => console.log(e));
+  };
+
+  const getProducerFilmos = () => {
+    jwtApi
+      .get(`/api/filmographies`, { params: { producerId: makerId } })
+      .then((response) => {
+        console.log(response.data.result);
+        setMakerFilmos(response.data.result);
+      })
+      .catch((e) => console.log(e));
+  };
+  const getProducerMembers = () => {
+    jwtApi
+      .get(`/api/producers/${makerId}/users`)
+      .then((response) => {
+        console.log(response.data.result);
+        setMakerMembers(response.data.result);
+      })
+      .catch((e) => console.log(e));
+  };
+
+  const getProducerAnnouncements = () => {
+    jwtApi.get(`/api/announcements`, { params: { producerId: makerId } }).then((response) => {
+      console.log(response.data.result);
+      setMakerAnnouncements(response.data.result);
+    });
+  };
 
   // api 요청 보내서 제작사 목록 확보
   useEffect(() => {
-    if (state != null) {
-      console.log(state, '등록하기에서 state값');
-
-      const data = {
-        name: state.name,
-        description: state.description,
-      };
-
-      //수정
-      axios
-        .put(`${API_BASE_URL}/api/producers`, data, {
-          headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDAwMDEiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZW1haWwiOiJkZGY5OThAZ21haWwuY29tIiwiZXhwIjoxNjc4MjU2MjEyfQ.gSBnEPdb7LPDgTMwi5fDDlEdYxgbdJ6hInbddudS9suerZhCPuHDV3P9C6ygWTacOvhfT9tS8i94LP1qSszc0w`,
-          },
-        })
-        .then((res) => {
-          console.log(res, 'get 이후');
-          state = res.data.result;
-        })
-        .catch((error) => {
-          console.log(error, '에러 발생');
-        });
-    }
-    //상세 조회
-    axios
-      .get(`${API_BASE_URL}/api/producers/${makerProfileId}`, {
-        headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDAwMDEiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZW1haWwiOiJkZGY5OThAZ21haWwuY29tIiwiZXhwIjoxNjc4MjU2MjEyfQ.gSBnEPdb7LPDgTMwi5fDDlEdYxgbdJ6hInbddudS9suerZhCPuHDV3P9C6ygWTacOvhfT9tS8i94LP1qSszc0w`,
-        },
-      })
-      .then((res) => {
-        console.log(res.data.result, '잘 찍히는지 확인');
-        setMakerInfo(res.data.result);
-
-        console.log(makerInfo, '잘 찍히는지 확인');
-        state = makerInfo;
-      })
-      .catch((error) => {
-        console.log(error, '실패 확인필요');
-      });
-  }, [setMakerInfo]);
-
-  const [makerFilmoUrl, setMakerFilmoUrl] = useRecoilState(makerFilmoUrl);
-  const [makerPhotoUrl, setMakerPhotoUrl] = useRecoilState(makerFilmoUrl);
+    //제작사 정보 조회
+    getProducerDetailInfo();
+    // 제작사 필모그래피 조회
+    getProducerFilmos();
+    // 제작진 조회
+    getProducerMembers();
+    // 제작사 올린 공고 조회
+    getProducerAnnouncements();
+  }, []);
 
   return (
     <>
-      <div className="photo" width={'400px'} height={'500px'}>
-        <img src={makerInfo.picrtureUrl} alt="image" className="object-center" />
+      <div>
+        <div className="photo" width={'400px'} height={'500px'}>
+          제작사 이미지 :
+          <img src={makerInfo.pictureUrl} alt="image" className="object-center" />
+        </div>
+
+        <div>제작사 이름 : {makerInfo.name}</div>
+        <div>제작사 설명 : {makerInfo.description}</div>
       </div>
 
-      <div>{makerInfo.title}</div>
-      <div>{makerInfo.description}</div>
+      <MakerFilmo makerInfo={makerInfo} />
+      <MakerMembers makerInfo={makerInfo} />
 
-      <Button
-        title="수정하기"
-        onClick={() => {
-          navigate('/maker/write', { state: makerInfo });
-        }}
-      />
-      <Button
-        title="삭제하기"
-        onClick={() => {
-          navigate('/maker/delete');
-        }}
-      />
+      <Button variant="contained" onClick={() => navigate('/maker/write', { state: makerInfo })}>
+        수정하기
+      </Button>
+
+      <Button variant="contained" onClick={() => navigate('/maker/delete')}>
+        삭제하기
+      </Button>
     </>
   );
 };

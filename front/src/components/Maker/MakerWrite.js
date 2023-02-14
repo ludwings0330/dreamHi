@@ -5,7 +5,7 @@ import { useLocation } from 'react-router';
 //import component
 import MakerIntroduce from './Info/MakerIntroduce';
 import MakerFilmo from './Filmo/MakerFilmo';
-import MakerPeopleList from './MakerPeopleList/MakerPeopleList';
+import MakerMembers from './MakerMembers/MakerMembers';
 import MakerAnnouncementList from './AnnouncementList/MakerAnnouncementList';
 import Button from '../Common/CommonComponent/Button';
 
@@ -20,7 +20,7 @@ const MakerWrite = () => {
       <h1 className={'main-title'}>제작사 작성</h1>
       <MakerIntroduce />
       <MakerFilmo />
-      <MakerPeopleList />
+      <MakerMembers />
       <MakerAnnouncementList />
       <Button
         title="등록하기"

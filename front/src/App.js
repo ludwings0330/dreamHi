@@ -71,7 +71,7 @@ function App() {
         <Route path={'/live'} element={<Live />} />
         {/*//제작사페이지 관련 이동*/}
         <Route path={'/maker/list'} element={<MakerList />} />
-        <Route path={'/maker/detail/:makerProfileId'} element={<MakerDetail />} />
+        <Route path={'/maker/detail/:makerId'} element={<MakerDetail />} />
         <Route path={'/maker/write'} element={<MakerWrite />} />
         {/*//모아보기페이지 관련 이동*/}
         <Route path={'/collection'} element={<Collection />} />
