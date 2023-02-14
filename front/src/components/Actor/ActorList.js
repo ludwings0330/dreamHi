@@ -16,30 +16,28 @@ import './ActorList.css';
 import SearchBar from '../Common/CommonComponent/SearchBar';
 import Button from '../Common/CommonComponent/Button';
 import jwtApi from '../../util/JwtApi';
+import Paging from '../Common/CommonComponent/Paging';
 
 const ActorList = () => {
   const navigate = useNavigate();
-  const token = localStorage.getItem('accessToken');
-
   const [actorList, setActorList] = useState([]);
+  const [pageable, setPageable] = useState();
   const [actorFilter, setActorFilter] = useState({
-    filter: {
-      name: '',
-      height: '',
-      age: '',
-      gender: '',
-      styles: [],
-      isFollow: '',
-    },
+    name: '',
+    height: '',
+    age: '',
+    gender: '',
+    styles: [],
+    isFollow: '',
     page: 0,
     size: 8,
   });
   // api 요청 보내서 배우 목록 확보
   useEffect(() => {
-    jwtApi.get(`/api/actors`, actorFilter).then((response) => {
-      console.log('get /api/actors');
-      console.log(response);
+    jwtApi.get(`/api/actors`, { params: actorFilter }).then((response) => {
       setActorList(response.data.result.content);
+      setPageable(response.data.result.pageable);
+      console.log(response.data.result.pageable);
     });
   }, [actorFilter]);
 
@@ -90,7 +88,7 @@ const ActorList = () => {
 
       <Button title="글작성" onClick={() => navigate('/actor/write')} />
 
-      {/*<div className={'page_bar'}>/!* <PageBar/> *!/</div>*/}
+      <Paging contents={pageable} action={setActorFilter} />
     </div>
   );
 };
