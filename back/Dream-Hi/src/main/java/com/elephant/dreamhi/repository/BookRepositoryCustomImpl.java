@@ -88,7 +88,7 @@ public class BookRepositoryCustomImpl implements BookRepositoryCustom {
                                                            volunteer.user.id
                            ))
                            .from(book)
-                           .join(book.volunteer, volunteer)
+                           .leftJoin(book.volunteer, volunteer)
                            .where(book.process.id.eq(processId),
                                   START_DATE.eq(date.toString()))
                            .fetch();
