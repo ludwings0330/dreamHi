@@ -5,10 +5,8 @@ import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Builder
@@ -31,9 +29,9 @@ public class AnnouncementSearchCondition {
 
     private Long producerId;
 
-    private Boolean isFollow = Boolean.FALSE;
+    private Boolean isFollow;
 
-    private Boolean isVolunteer = Boolean.FALSE;
+    private Boolean isVolunteer;
 
     public Boolean getIsFollow() {
         return Objects.requireNonNullElse(this.isFollow, Boolean.FALSE);
