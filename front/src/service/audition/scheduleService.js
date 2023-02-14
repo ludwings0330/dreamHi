@@ -18,4 +18,13 @@ const createAuditionSchedule = async (processId, payload) => {
 };
 // 파일 업로드
 
-export { createAuditionSchedule };
+const getAuditionPeriod = (announcementId, processId, producerId, success, fail) => {
+  jwtApi
+    .get(`/api/announcements/${announcementId}/audition/on/${processId}/period`, {
+      params: producerId,
+    })
+    .then(success)
+    .catch(fail);
+};
+
+export { createAuditionSchedule, getAuditionPeriod };

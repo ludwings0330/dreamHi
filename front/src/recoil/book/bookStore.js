@@ -1,8 +1,53 @@
 import { atom, selectorFamily } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 import dayjs from 'dayjs';
+import { getAuditionPeriod } from 'service/audition/scheduleService';
+import { announcementListDetailState } from 'recoil/announcement/announcementStore';
+import { announcementProcessState } from 'recoil/process/processStore';
+import jwtApi from 'util/JwtApi';
 
 // const { persistAtom } = recoilPersist();
+
+export const auditionPeriodState = atom({
+  key: 'auditionPeriodState',
+  default: {},
+});
+
+export const auditionPeriodSelector = selectorFamily({
+  key: 'auditionPeriodSelector',
+  get:
+    () =>
+    async ({ get }) => {
+      const announcementDetail = get(announcementListDetailState);
+      const processDetail = get(announcementProcessState);
+      console.log(announcementDetail);
+      console.log(processDetail);
+
+      let data = {};
+      if (announcementDetail.isEditor) {
+        data = await jwtApi
+          .get(
+            `/api/announcements/${announcementDetail.id}/audition/on/${processDetail.processId}/period`,
+            {
+              params: { pid: announcementDetail.producer.id },
+            },
+          )
+          .then((response) => response.data.result)
+          .catch(() => {});
+      } else {
+        data = await jwtApi
+          .get(
+            `/api/announcements/${announcementDetail.id}/audition/on/${processDetail.processId}/period`,
+          )
+          .then((response) => response.data.result)
+          .catch(() => {});
+      }
+      return data;
+    },
+  set: ({ set }, data) => {
+    set(auditionPeriodState, data);
+  },
+});
 
 export const auditionStartState = atom({
   key: 'auditionStartState',
@@ -16,7 +61,7 @@ export const auditionEndState = atom({
 
 export const auditionSelectState = atom({
   key: 'auditionSelectState',
-  default: dayjs(new Date()),
+  default: null,
 });
 
 export const auditionStartTimeState = atom({
@@ -45,8 +90,15 @@ export const booksSelector = selectorFamily({
   key: 'booksSelector',
   get:
     () =>
-    ({ get }) => {
+    async ({ get }) => {
       const date = get(auditionSelectState);
+      const announcementDetail = get(announcementListDetailState);
+      const processDetail = get(announcementProcessState);
+      // const auditionSelectState
+      // console.log('Selector => ', date);
+
+      const data = await jwtApi.get(`/api/announcements/${announcementDetail.id}/audition/on/${processDetail.processId}/schedules`,)
+
       let bookList = [
         { id: 1, time: '09:00', isBook: Math.random() >= 0.5 },
         { id: 2, time: '09:30', isBook: Math.random() >= 0.5 },
