@@ -1,4 +1,6 @@
 import { atom, selectorFamily } from 'recoil';
+import { announcementListDetailState } from 'recoil/announcement/announcementStore';
+import { announcementProcessState } from 'recoil/process/processStore';
 import jwtApi from 'util/JwtApi';
 
 export const volunteersState = atom({
@@ -59,5 +61,20 @@ export const totlaVolunteerSelector = selectorFamily({
         .get(`/api/announcements/process/${processId}/volunteer-count`)
         .then((response) => response.data.result);
       return data;
+    },
+});
+
+export const volunteerBookedState = atom({
+  key: 'volunteerBookedState',
+  default: false,
+});
+
+export const volunteerBookedSelector = selectorFamily({
+  key: 'volunteerBookedSelector',
+  get:
+    () =>
+    async ({ get }) => {
+      const announcementDetail = get(announcementListDetailState);
+      const processDetail = get(announcementProcessState);
     },
 });

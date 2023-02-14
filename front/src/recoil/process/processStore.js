@@ -6,7 +6,12 @@ import { userSimpleState } from 'recoil/user/userStore';
 
 export const announcementProcessState = atom({
   key: 'announcementProcessState',
-  default: {},
+  default: {
+    processId: 94586,
+    processState: 'IN_PROGRESS',
+    stageName: 'VIDEO',
+    userStageName: 'IN_PROGRESS',
+  },
 });
 
 export const announcementListDetailProcessSelector = selectorFamily({
