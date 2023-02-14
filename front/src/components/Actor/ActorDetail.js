@@ -66,22 +66,21 @@ const ActorDetail = () => {
         actorInfo.styles.map((actor, idx) => <div key={idx}>{actor['description']}</div>)}
       <div>{actorInfo.phone}</div>
       <div>{actorInfo.email}</div>
-      <ActorFilmo />
+      <ActorFilmo actorId={actorInfo.actorProfileId} />
       {/*<ActorPhoto />*/}
       {/*<ActorVideo />*/}
 
       <Button
         title="수정하기"
-        onClick={() => {
-          navigate('/actor/write', { state: actorInfo });
-        }}
-      />
-      <Button
-        title="삭제하기"
-        onClick={() => {
-          navigate('/actor/delete');
-        }}
-      />
+        variant="contained"
+        onClick={() => navigate('/actor/write', { state: actorInfo })}
+      >
+        수정하기
+      </Button>
+
+      <Button variant="contained" title="삭제하기" onClick={() => navigate('/actor/delete')}>
+        삭제하기
+      </Button>
     </>
   );
 };
