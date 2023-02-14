@@ -1,9 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MakerIntro from './MakerIntro';
 import Button from '../../Common/CommonComponent/Button';
 
-const MakerIntroduce = () => {
+const MakerIntroduce = (e) => {
   const navigate = useNavigate();
 
   //제작사 한줄 소개
@@ -28,6 +28,10 @@ const MakerIntroduce = () => {
     URL.revokeObjectURL(fileImage);
     setFileImage('');
   };
+
+  useEffect(() => {
+    setTitle(e.makerInfo.description);
+  });
 
   return (
     <>
@@ -95,7 +99,12 @@ const MakerIntroduce = () => {
 
         {/*제작사소개 부분*/}
         {/*컴포넌트로 추가*/}
-        <MakerIntro />
+        <MakerIntro makerInfo={e} />
+
+        {/* 개인정보 입력 후 저장버튼*/}
+        <div className="bg-gray-50 px-4 py-5 text-right">
+          <Button title="저장" />
+        </div>
       </div>
     </>
   );

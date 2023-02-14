@@ -46,7 +46,7 @@ const ActorList = () => {
   return (
     <div className={'actor-body'}>
       <SearchBar actorList={actorList} setActorList={setActorList} />
-      <div>
+      <div id={'actor-list-main'}>
         <MDBRow className="row-cols-1 row-cols-md-4 g-4">
           {actorList.map((actor) => (
             <Link
@@ -90,7 +90,7 @@ const ActorList = () => {
 
       <Button title="글작성" onClick={() => navigate('/actor/write')} />
 
-      <div className={'page_bar'}>{/* <PageBar/> */}</div>
+      {/*<div className={'page_bar'}>/!* <PageBar/> *!/</div>*/}
     </div>
   );
 };
