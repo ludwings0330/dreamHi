@@ -1,28 +1,26 @@
 import React from 'react';
 import AnnouncementWriteItem from './AnnouncementWriteItem';
 import Button from '../Common/CommonComponent/Button';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { writeAnnouncement } from './AnnouncementAxios';
 
-import {useRecoilValue} from 'recoil';
+import { useRecoilValue } from 'recoil';
 import {
-    announcementCastingState,
-    announcementCrankPeriod,
-    announcementDescription,
-    announcementEndDate,
-    announcementPayment,
-    announcementPictureUrl,
-    announcementProducerId,
-    announcementTitle,
+  announcementCastingState,
+  announcementCrankPeriod,
+  announcementDescription,
+  announcementEndDate,
+  announcementPayment,
+  announcementPictureUrl,
+  announcementProducerId,
+  announcementTitle,
 } from 'recoil/announcement/announcement';
 import AnnouncementWriteCasting from './AnnouncementWriteCasting';
-import ImageUpload from "imageup/ImageUpload";
-import {API_BASE_URL} from "../../constants";
+import ImageUpload from 'imageup/ImageUpload';
 
 function AnnouncementWrite(props) {
-    const token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDAwMDEiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZW1haWwiOiJkZGY5OThAZ21haWwuY29tIiwiZXhwIjoxNjc4MjU2MjEyfQ.gSBnEPdb7LPDgTMwi5fDDlEdYxgbdJ6hInbddudS9suerZhCPuHDV3P9C6ygWTacOvhfT9tS8i94LP1qSszc0w';
-
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const announcementImg = useRecoilValue(announcementPictureUrl);
   const announcementCasting = useRecoilValue(announcementCastingState);
@@ -35,7 +33,7 @@ function AnnouncementWrite(props) {
 
   const sendData = {
     title: dataTitle,
-    producerId: 50002,
+    producerId: 50003,
     payment: dataPayment,
     crankPeriod: dataCrankPeriod,
     endDate: dataEndDate,
@@ -44,24 +42,14 @@ function AnnouncementWrite(props) {
     castings: announcementCasting,
   };
 
-  const postClick = () => {
-    axios({
-      method: 'POST',
-      url: `${API_BASE_URL}/api/announcements`,
-      data: sendData,
-      headers: {
-        Authorization: `Bearer ${token}`,
+  const postClick = async () => {
+    await writeAnnouncement(
+      sendData,
+      (response) => {
+        console.log('😎😍😘🥰', response);
       },
-    })
-      .then((res) => {
-        alert('성공');
-        console.log(res.data);
-      })
-      .catch((error) => {
-        console.log('실패실패');
-        console.log(error);
-        console.log(sendData)
-      });
+      () => {},
+    );
   };
 
   return (
@@ -75,11 +63,11 @@ function AnnouncementWrite(props) {
       />
       {/*<button onClick={postClick}>Post</button>*/}
       {/*<p> { ImgUrl} </p>*/}
-        <ImageUpload/>
+      <ImageUpload />
       <AnnouncementWriteItem />
       <AnnouncementWriteCasting />
-        
-        <button onClick={postClick}>공고다공고</button>
+
+      <button onClick={postClick}>공고다공고</button>
 
       {/*<Button*/}
       {/*  title="공고 등록 하기"*/}
