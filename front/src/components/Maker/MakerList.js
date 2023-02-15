@@ -16,22 +16,28 @@ import {
 import SearchBar from '../Common/CommonComponent/SearchBar';
 import Button from '../Common/CommonComponent/Button';
 import jwtApi from '../../util/JwtApi';
+import Paging from "../Common/CommonComponent/Paging";
 
 const MakerList = () => {
   const navigate = useNavigate();
   const [MakerList, setMakerList] = useState([]);
-
+  const [pageable, setPageable] = useState(null);
+  const [makerFilter, setMakerFilter] = useState({
+    page: 0,
+  });
   // api 요청 보내서 제작사 목록 확보
   useEffect(() => {
     jwtApi
-      .get(`/api/producers`)
+      .get(`/api/producers`, {params: makerFilter})
       .then((response) => {
+        console.log(response.data.result);
         setMakerList(response.data.result.content);
+        setPageable(response.data.result);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [makerFilter]);
 
   return (
     <div>
@@ -67,16 +73,12 @@ const MakerList = () => {
           navigate('/maker/write');
         }}
       />
+
+      {(pageable)?(
+          <Paging totalPages={pageable.totalPages} action={setMakerFilter} />
+      ):null}
     </div>
   );
 };
-
-// <Link to={"/maker/detail"}>
-//     <div className="maker">
-//         <div className="maker_img"><img src="/img/elephant.png" className="actor_img"/></div>
-//         <h5 className="maker_title"> 제작사 소개</h5>
-//         <p className="maker_des"> 제작사 소개 요약</p>
-//     </div>
-// </Link>
 
 export default MakerList;

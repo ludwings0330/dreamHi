@@ -36,8 +36,7 @@ const ActorList = () => {
   useEffect(() => {
     jwtApi.get(`/api/actors`, { params: actorFilter }).then((response) => {
       setActorList(response.data.result.content);
-      setPageable(response.data.result.pageable);
-      console.log(response.data.result.pageable);
+      setPageable(response.data.result);
     });
   }, [actorFilter]);
 
@@ -87,8 +86,9 @@ const ActorList = () => {
       </div>
 
       <Button title="글작성" onClick={() => navigate('/actor/write')} />
-
-      <Paging contents={pageable} action={setActorFilter} />
+      {(pageable)?(
+          <Paging totalPages={pageable.totalPages} action={setActorFilter} />
+      ):null}
     </div>
   );
 };
