@@ -177,7 +177,50 @@ http://dreamhi.p-e.kr
 ### front-end
 
 ```
-추가예정
+|-- components
+|   |-- Actor
+|   |   |-- filmo
+|   |   |-- info
+|   |   |-- photo
+|   |   `-- video
+|   |-- Announcement
+|   |-- Audition
+|   |-- Calendar
+|   |-- Casting
+|   |-- Collection
+|   |-- Common
+|   |   |-- CommonComponent
+|   |   `-- MainLayout
+|   |-- Live
+|   |-- Main
+|   `-- Maker
+|       |-- AnnouncementList
+|       |-- Filmo
+|       |-- Info
+|       `-- MakerMembers
+|-- constants
+|-- imageup
+|-- img
+|   `-- Icons
+|-- lib
+|   `-- styles
+|-- pages
+|   `-- Login
+|-- recoil
+|   |-- actor
+|   |-- announcement
+|   |-- book
+|   |-- maker
+|   |-- process
+|   |-- user
+|   `-- volunteer
+|-- service
+|   `-- audition
+|-- user
+|   |-- login
+|   `-- oauth2
+`-- util
+
 ```
 
 ## 📝 프로젝트 산출물
