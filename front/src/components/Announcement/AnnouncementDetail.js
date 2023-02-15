@@ -24,6 +24,7 @@ function AnnouncementDetail(props) {
   const announcement = useRecoilValue(announcementListDetailSelector(announcementId));
   const [annouoncementData, setAnnouncementData] = useRecoilState(announcementListDetailState);
   setAnnouncementData(announcement);
+  console.log('announcement', announcement);
 
   // useEffect(() => {
   //   jwtApi.get(`/api/announcements/${announcementId}`).then((response) => {
@@ -68,7 +69,7 @@ function AnnouncementDetail(props) {
 
       {/* <AnnouncementDetailButton key={announcementId} announcement={announcement} /> */}
 
-      <AnnouncementFollow />
+      <AnnouncementFollow isFollow={announcement.isFollow} />
     </div>
   );
 }

@@ -12,9 +12,8 @@ import jwtApi from '../../util/JwtApi';
 import ActorDetail from 'components/Actor/ActorDetail';
 
 const ApplyModal = ({ isOpen, onRequestClose }) => {
-  const user = useRecoilValue(userSimpleState);
-  const userId = user.id;
-  console.log('😎😋', userId);
+  let user = useRecoilValue(userSimpleState);
+
   const announcementData = useRecoilValue(announcementListDetailState);
   const announcementId = announcementData.id;
   console.log('💕💕💕💕', announcementData);
@@ -38,7 +37,7 @@ const ApplyModal = ({ isOpen, onRequestClose }) => {
 
   return (
     <Modal isOpen={isOpen} onRequestClose={onRequestClose}>
-      <ActorDetail userId={userId} />
+      <ActorDetail userId={user.id} />
       모달이당
       <Button title={'지원취소'} onClick={onRequestClose} />
       <Button title={'프로필 제출'} onClick={profileApply} />

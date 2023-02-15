@@ -13,23 +13,24 @@ import jwtApi from 'util/JwtApi';
 import Chip from '../../../node_modules/@mui/material/Chip';
 import { styled } from '../../../node_modules/@mui/material/styles';
 
-function AnnouncementFollow() {
+function AnnouncementFollow(props) {
   const { announcementId } = useParams();
   console.log('🐳🐳🐳🐳', announcementId);
+  const { isFollow } = props;
 
   const announcement = useRecoilValue(announcementListDetailSelector(announcementId));
   const [annouoncementData, setAnnouncementData] = useRecoilState(announcementListDetailState);
   setAnnouncementData(announcement);
-  const [followAnnouncement, setFollowAnnouncement] = useRecoilState(followAnnouncementState);
+  const [followAnnouncement, setFollowAnnouncement] = useState(isFollow);
   const sendData = { type: 'ANNOUNCEMENT', id: announcementId };
 
-  useEffect(() => {
-    jwtApi.get(`api/follow`, { params: sendData }).then((response) => {
-      console.log('😫🥱🥱', response.data.result);
-      setFollowAnnouncement(response.data.result);
-    });
-  }, [followAnnouncement, annouoncementData]);
-  console.log('followAnnouncement', followAnnouncement);
+  // useEffect(() => {
+  //   jwtApi.get(`api/follow`, { params: sendData }).then((response) => {
+  //     console.log('😫🥱🥱', response.data.result);
+  //     setFollowAnnouncement(response.data.result);
+  //   });
+  // }, [followAnnouncement, annouoncementData]);
+  // console.log('followAnnouncement', followAnnouncement);
 
   const handleClick = async () => {
     try {
@@ -53,7 +54,7 @@ function AnnouncementFollow() {
     <div>
       <Chip
         onClick={handleClick}
-        label={followAnnouncement == true ? '팔로우' : '언팔로우'}
+        label={followAnnouncement == true ? '팔로잉중' : '언팔로잉중'}
         variant="outlined"
         color="primary"
       />

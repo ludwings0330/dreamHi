@@ -55,7 +55,7 @@ export const announcementListSelector = selectorFamily({
       console.log('😎😎😎😎😎', announcementFilter);
       const userSimple = get(userSimpleState);
       let data = null;
-      if (userSimple.id) {
+      if (userSimple) {
         console.log('LOGIN API');
         data = await jwtApi
           .get(`/api/announcements`, { params: announcementFilter })
@@ -97,7 +97,7 @@ export const announcementListDetailSelector = selectorFamily({
     async ({ get }) => {
       const userSimple = get(userSimpleState);
       let data = null;
-      if (userSimple.id) {
+      if (userSimple) {
         data = await jwtApi.get(`/api/announcements/${announcementDetailId}`).then((response) => {
           console.log('logedin');
           console.log('Get/api/announcment/announcementDetailId');
@@ -129,7 +129,7 @@ export const announcementListDetailCastingSelector = selectorFamily({
     async ({ get }) => {
       const userSimple = get(userSimpleState);
       let data = null;
-      if (userSimple.id) {
+      if (userSimple) {
         data = await jwtApi
           .get(`/api/announcements/${announcementDetailId}/castings`)
           .then((response) => {
