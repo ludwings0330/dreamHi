@@ -152,3 +152,9 @@ export const announcementListDetailCastingSelector = selectorFamily({
       return data;
     },
 });
+
+export const followAnnouncementState = atom({
+  key: 'followAnnouncementState',
+  default: '',
+  effects_UNSTABLE: [persistAtom],
+});

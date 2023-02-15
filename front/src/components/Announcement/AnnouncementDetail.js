@@ -11,6 +11,7 @@ import {
 } from 'recoil/announcement/announcementStore';
 import AnnouncementDetailProcess from './AnnouncementDetailProcess';
 import AnnouncementDetailButton from './AnnouncementDetailButton';
+import AnnouncementFollow from './AnnouncementFollow';
 import jwtApi from 'util/JwtApi';
 
 function AnnouncementDetail(props) {
@@ -38,8 +39,6 @@ function AnnouncementDetail(props) {
     console.log('change AnnouncementData', annouoncementData);
   }, [annouoncementData]);
 
-  console.log('1414', annouoncementData);
-
   // const announcement = announcementList.find((item) => {
   //     console.log(announcementId)
   //     console.log(item)
@@ -63,11 +62,13 @@ function AnnouncementDetail(props) {
       />
 
       <br />
-      <AnnouncementDetailProcess key={announcementId} announcement={announcement} />
+      <AnnouncementDetailProcess announcement={announcement} />
 
-      <AnnouncementDetailItem key={announcementId} announcement={announcement} />
+      <AnnouncementDetailItem announcement={announcement} />
 
       {/* <AnnouncementDetailButton key={announcementId} announcement={announcement} /> */}
+
+      <AnnouncementFollow />
     </div>
   );
 }

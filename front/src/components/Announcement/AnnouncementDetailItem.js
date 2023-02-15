@@ -6,8 +6,6 @@ import AnnouncementDetailCasting from './AnnouncementDetailCasting';
 function AnnouncementDetailItem(props) {
   const { announcement } = props;
   const { announcementId } = announcement.id;
-  console.log(99977733115);
-  console.log(announcement);
   return (
     <div>
       <div>
