@@ -87,4 +87,12 @@ public class Book {
         return books;
     }
 
+    public void reverse() {
+        if (reserved) {
+            throw new IllegalStateException("이미 예약된 화상 오디션입니다.");
+        }
+
+        this.reserved = true;
+    }
+
 }
