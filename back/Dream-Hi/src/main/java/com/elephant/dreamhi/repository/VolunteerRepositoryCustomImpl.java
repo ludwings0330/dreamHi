@@ -23,7 +23,6 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.support.PageableExecutionUtils;
@@ -61,7 +60,7 @@ public class VolunteerRepositoryCustomImpl implements VolunteerRepositoryCustom 
 
     @Override
     public Page<VolunteerSimpleInfo> findVolunteersByCondition(VolunteerSearchCondition condition) {
-        long totalCount = Objects.requireNonNullElse(getQueryByCondition(condition).select(volunteer.count()).fetchOne(), 0L);
+        long totalCount = getQueryByCondition(condition).select(volunteer.id).fetch().size();
         final List<VolunteerSimpleInfo> fetch = getQueryByCondition(condition).select(new QVolunteerSearchResponseDto_VolunteerSimpleInfo(
                                                                                       user.id, user.picture.url, user.name, volunteer.state,
                                                                                       actorProfile.height, actorProfile.age,

@@ -14,7 +14,6 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,12 +28,7 @@ public class ProducerRepositoryCustomImpl implements ProducerRepositoryCustom {
 
     @Override
     public Page<ProducerListResponseDto> findProducersByCondition(ProducerSearchCondition condition, Pageable pageable) {
-        long totalCount = Objects.requireNonNullElse(
-                getQueryByCondition(condition).select(producer.count())
-                                              .fetchOne(),
-                0L
-        );
-
+        long totalCount = getQueryByCondition(condition).select(producer.id).fetch().size();
         final List<ProducerListResponseDto> fetch = getQueryByCondition(condition).select(Projections.fields(
                                                                                           ProducerListResponseDto.class,
                                                                                           producer.id,

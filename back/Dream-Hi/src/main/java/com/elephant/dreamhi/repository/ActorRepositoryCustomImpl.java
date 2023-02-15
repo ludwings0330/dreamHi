@@ -22,7 +22,6 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -50,7 +49,7 @@ public class ActorRepositoryCustomImpl implements ActorRepositoryCustom {
 
     @Override
     public Page<ActorListResponseDto> findActorsWithFiltering(ActorSearchCondition condition, Pageable pageable) {
-        long totalCount = Objects.requireNonNullElse(findActorsIndexWithFiltering(condition).select(actorProfile.count()).fetchOne(), 0L);
+        long totalCount = findActorsIndexWithFiltering(condition).select(actorProfile.id).fetch().size();
         HashSet<Long> actorIds = new HashSet<>(findActorsIndexWithFiltering(condition).select(actorProfile.id).distinct()
                                                                                       .offset(pageable.getOffset())
                                                                                       .limit(pageable.getPageSize())
