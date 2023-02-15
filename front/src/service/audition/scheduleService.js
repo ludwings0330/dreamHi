@@ -24,5 +24,16 @@ const getAuditionPeriod = (announcementId, processId, producerId, success, fail)
     .then(success)
     .catch(fail);
 };
+// /api/announcements/{announcementId}/audition/on/{processId}/book/{bookId}
+const updateBook = async (announcementId, processId, bookId) => {
+  await jwtApi
+    .post(`/api/announcements/${announcementId}/audition/on/${processId}/book/${bookId}`)
+    .then((response) => {
+      if (response.status === 201) {
+        console.log('성공적으로 예약');
+        window.location.replace('/audition/actor');
+      }
+    });
+};
 
-export { createAuditionSchedule, getAuditionPeriod };
+export { createAuditionSchedule, getAuditionPeriod, updateBook };

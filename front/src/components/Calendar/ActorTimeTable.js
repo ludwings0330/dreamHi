@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { booksSelector, checkTimeState } from 'recoil/book/bookStore';
 import { useRecoilState, useRecoilValueLoadable } from 'recoil';
 import Grid from '@mui/material/Grid';
@@ -8,9 +8,12 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 
 export default function ActorTimeTable() {
   const books = useRecoilValueLoadable(booksSelector());
+  const [checkId, setCheckId] = useState();
   const [checkTime, setCheckTime] = useRecoilState(checkTimeState);
   const handleCheck = (e) => {
-    setCheckTime(e.target.value);
+    console.log('Check ', e);
+    setCheckId(e.id);
+    setCheckTime(e);
   };
 
   useEffect(() => {
@@ -28,7 +31,7 @@ export default function ActorTimeTable() {
                   sx={{
                     boxShadow: 3,
                     borderRadius: 5,
-                    bgcolor: book.startDateTime === checkTime ? '#051094' : '#52B2BF',
+                    bgcolor: book.id === checkId ? '#051094' : '#52B2BF',
                     opacity: book.reserved ? [1, 1, 0.1] : [1, 1, 0.8],
                   }}
                   textAlign="center"
@@ -37,10 +40,10 @@ export default function ActorTimeTable() {
                     label={`${book.startDateTime.match(/[0-9]+:[0-9]+/)}`}
                     control={
                       <Radio
-                        checked={checkTime === book.startDateTime}
-                        value={book.startDateTime}
+                        checked={checkId === book.id}
+                        value={book.id}
                         disabled={book.reserved}
-                        onChange={handleCheck}
+                        onChange={() => handleCheck(book)}
                         sx={{
                           color: '#FFFFFF',
                         }}

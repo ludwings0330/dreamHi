@@ -125,6 +125,7 @@ export const isBookedSelector = selectorFamily({
           `/api/announcements/${announcementDetail.id}/audition/on/${processDetail.processId}/reservation`,
         )
         .then((response) => response.data.result);
+      console.log("IsBooked", data);
       return data;
     },
 });
