@@ -69,6 +69,7 @@ function AnnouncementList(props) {
 
       {announcementList.length > 0 &&
         announcementList.map(function (announcement) {
+          console.log(announcement);
           return (
             <Link
               to={`/announcement/${announcement.id}`}
@@ -79,7 +80,7 @@ function AnnouncementList(props) {
                 <Grid container spacing={2}>
                   <Grid item xs={2}>
                     <Chip
-                      label={announcement.state === 'RECRUITING' ? '모집중' : '마감'}
+                      label={announcement.state == 'RECRUITING' ? '모집중' : '마감'}
                       variant="outlined"
                       color="primary"
                     />
@@ -107,22 +108,6 @@ function AnnouncementList(props) {
             </Link>
           );
         })}
-
-      {/* <SearchBar />
-
-      {announcements.map(function (announcement, index) {
-        return (
-          <AnnouncementListItem
-            key={announcements[0].result.list[0].id}
-            announcement={announcement}
-            onClick={() => {
-              onClickItem(announcement);
-            }}
-          />
-        );
-      })}
-
-      */}
     </div>
   );
 }
