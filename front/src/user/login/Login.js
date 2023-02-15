@@ -12,7 +12,7 @@ import {Navigate} from "react-router-dom";
 const Login = ({ authenticated, location }) => {
   const [userSimple, setUserSimple] = useRecoilState(userSimpleState);
 
-  if (userSimple.id !== undefined && userSimple.id !== '') {
+  if (userSimple) {
     return (
       <div><Navigate to={"/"} replace={true}/></div>
     );
