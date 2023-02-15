@@ -24,7 +24,7 @@ const getAuditionPeriod = (announcementId, processId, producerId, success, fail)
     .then(success)
     .catch(fail);
 };
-// /api/announcements/{announcementId}/audition/on/{processId}/book/{bookId}
+
 const updateBook = async (announcementId, processId, bookId) => {
   await jwtApi
     .post(`/api/announcements/${announcementId}/audition/on/${processId}/book/${bookId}`)
