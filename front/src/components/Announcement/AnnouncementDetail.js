@@ -22,16 +22,21 @@ function AnnouncementDetail(props) {
 
   const announcement = useRecoilValue(announcementListDetailSelector(announcementId));
   const [annouoncementData, setAnnouncementData] = useRecoilState(announcementListDetailState);
+  setAnnouncementData(announcement);
+
+  // useEffect(() => {
+  //   jwtApi.get(`/api/announcements/${announcementId}`).then((response) => {
+  //     console.log('get /api/announcement Detail Data');
+  //     console.log('😀😀😀😀😀😀', response.data);
+  //     console.log(response.data.result);
+  //     setAnnouncementData(response.data.result);
+  //     console.log('141415', annouoncementData);
+  //   });
+  // }, []);
 
   useEffect(() => {
-    jwtApi.get(`/api/announcements/${announcementId}`).then((response) => {
-      console.log('get /api/announcement Detail Data');
-      console.log(response);
-      console.log(response.data.result);
-      setAnnouncementData(response.data.result);
-      console.log('141415', annouoncementData);
-    });
-  }, []);
+    console.log('change AnnouncementData', annouoncementData);
+  }, [annouoncementData]);
 
   console.log('1414', annouoncementData);
 

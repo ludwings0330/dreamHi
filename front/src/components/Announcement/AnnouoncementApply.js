@@ -7,9 +7,14 @@ import {
   announcementListDetailState,
   announcementListDetailCastingSelector,
 } from 'recoil/announcement/announcementStore';
+import { userSimpleState } from 'recoil/user/userStore';
 import jwtApi from '../../util/JwtApi';
+import ActorDetail from 'components/Actor/ActorDetail';
 
 const ApplyModal = ({ isOpen, onRequestClose }) => {
+  const user = useRecoilValue(userSimpleState);
+  const userId = user.id;
+  console.log('😎😋', userId);
   const announcementData = useRecoilValue(announcementListDetailState);
   const announcementId = announcementData.id;
   console.log('💕💕💕💕', announcementData);
@@ -20,18 +25,20 @@ const ApplyModal = ({ isOpen, onRequestClose }) => {
   const castings = data.map((casting) => casting.id);
   console.log(castings);
 
-  const profileApply = (announcementId) => {
-    jwtApi.post(`/api/announcements/${announcementId}/volunteers`, castings).then((response) => {
-      console.log('post/apply/profile');
-      console.log(response);
-    });
+  const profileApply = () => {
+    jwtApi
+      .post(`/api/announcements/${announcementId}/volunteers`, { castingIds: castings })
+      .then((response) => {
+        console.log('post/apply/profile');
+        console.log(response);
+      });
   };
 
   // const castings = useRecoilValue(announcementListDetailCastingSelector);
 
   return (
     <Modal isOpen={isOpen} onRequestClose={onRequestClose}>
-      {/* <ActorWrite/> */}
+      <ActorDetail userId={userId} />
       모달이당
       <Button title={'지원취소'} onClick={onRequestClose} />
       <Button title={'프로필 제출'} onClick={profileApply} />

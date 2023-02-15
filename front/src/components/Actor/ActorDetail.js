@@ -14,11 +14,13 @@ import ActorFilmo from './filmo/ActorFilmo';
 import ActorPhoto from './photo/ActorPhoto';
 import ActorVideo from './video/ActorVideo';
 
-const ActorDetail = () => {
+const ActorDetail = (props) => {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const { userId } = useParams();
-
+  let { userId } = useParams();
+  if (!userId) {
+    userId = props.userId;
+  }
   const [actorFilmos, setActorFilmos] = useRecoilState(actorFilmoLists);
   const [actorPhotos, setActorPhotos] = useRecoilState(actorPhotoLists);
   const [actorVideos, setActorVideos] = useRecoilState(actorVideoLists);
