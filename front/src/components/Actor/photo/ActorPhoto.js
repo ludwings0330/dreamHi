@@ -12,10 +12,11 @@ import axios from 'axios';
 import { API_BASE_URL } from '../../../constants';
 import jwtApi from '../../../util/JwtApi';
 import {} from './ActorPhoto.css';
+import { userSimpleState } from '../../../recoil/user/userStore';
 
 const ActorPhoto = ({ actorInfo }) => {
   const [actorPhotos, setActorPhotos] = useRecoilState(actorPhotoLists);
-
+  const [userInfo, setUserInfo] = useRecoilState(userSimpleState);
   const setSelected = (idx) => {
     document.querySelector(
       '.actor-photo-main',
@@ -47,7 +48,9 @@ const ActorPhoto = ({ actorInfo }) => {
               ))}
             </div>
           ) : null}
-          <ActorPhotoUpload actorInfo={actorInfo} />
+
+          {userInfo.id === actorInfo.userId ? <ActorPhotoUpload actorInfo={actorInfo} /> : null}
+
         </div>
       </div>
     </>

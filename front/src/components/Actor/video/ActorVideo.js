@@ -3,10 +3,11 @@ import './ActorVideo.css';
 import ActorVideoUpload from './ActorVideoUpload';
 import { actorVideoLists } from 'recoil/actor/actorStore';
 import { useRecoilValue, useRecoilState } from 'recoil';
+import { userSimpleState } from '../../../recoil/user/userStore';
 
 const ActorVideo = ({ actorInfo }) => {
-  const actorProfileId = actorInfo.actorProfileId;
   const [actorVideos, setActorVideos] = useRecoilState(actorVideoLists);
+  const [userInfo, setUserInfo] = useRecoilState(userSimpleState);
 
   const setSelected = (idx) => {
     document.querySelector(
@@ -34,8 +35,7 @@ const ActorVideo = ({ actorInfo }) => {
             ))}
           </div>
         ) : null}
-
-        <ActorVideoUpload actorInfo={actorInfo} />
+        {userInfo.id === actorInfo.userId ? <ActorVideoUpload actorInfo={actorInfo} /> : null}
       </div>
     </>
   );
