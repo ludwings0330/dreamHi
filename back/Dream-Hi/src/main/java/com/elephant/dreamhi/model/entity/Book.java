@@ -87,11 +87,11 @@ public class Book {
         return books;
     }
 
-    public void reverse() {
+    public void reverse(Volunteer volunteer) {
         if (reserved) {
             throw new IllegalStateException("이미 예약된 화상 오디션입니다.");
         }
-
+        this.volunteer = volunteer;
         this.reserved = true;
     }
 

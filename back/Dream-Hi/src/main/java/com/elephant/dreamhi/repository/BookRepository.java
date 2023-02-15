@@ -17,4 +17,6 @@ public interface BookRepository extends JpaRepository<Book, Long>, BookRepositor
             + "AND p.id = :processId ")
     Optional<Book> findByUserIdAndProcessId(@Param("userId") Long userId, @Param("processId") Long processId);
 
+    Optional<Book> findByIdAndVolunteerIdIsNull(Long id);
+
 }

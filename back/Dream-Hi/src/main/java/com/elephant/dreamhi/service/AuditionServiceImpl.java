@@ -10,6 +10,7 @@ import com.elephant.dreamhi.model.dto.FileDto;
 import com.elephant.dreamhi.model.entity.Book;
 import com.elephant.dreamhi.model.entity.NoticeFile;
 import com.elephant.dreamhi.model.entity.Process;
+import com.elephant.dreamhi.model.entity.Volunteer;
 import com.elephant.dreamhi.model.statics.ProcessState;
 import com.elephant.dreamhi.model.statics.StageName;
 import com.elephant.dreamhi.repository.BookRepository;
@@ -20,6 +21,7 @@ import com.elephant.dreamhi.security.PrincipalDetails;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -80,10 +82,12 @@ public class AuditionServiceImpl implements AuditionService {
 
     @Override
     @Transactional
-    public void updateReserved(Long bookId) throws NotFoundException, IllegalStateException {
-        bookRepository.findById(bookId)
-                      .orElseThrow(() -> new NotFoundException("예약 가능한 시간대가 아닙니다."))
-                      .reverse();
+    public void updateReserved(Long bookId, Long userId) throws NotFoundException, IllegalStateException {
+        Optional<Book> book = bookRepository.findByIdAndVolunteerIdIsNull(bookId);
+        if(book.isEmpty()) throw new NotFoundException("예약 가능한 시간대가 아닙니다.");
+        Optional<Volunteer> volunteer = volunteerRepository.findByUserId(userId);
+        if(volunteer.isEmpty()) throw new IllegalArgumentException("예약할 수 없습니다.");
+        book.get().reverse(volunteer.get());
     }
 
     @Override
