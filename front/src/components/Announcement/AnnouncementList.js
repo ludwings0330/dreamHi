@@ -63,8 +63,6 @@ function AnnouncementList(props) {
 
   return (
     <div>
-      <h2> 공고리스트페이지 </h2>
-
       <AnnouncementSearchBar />
 
       {announcementList.length > 0 &&

@@ -14,55 +14,26 @@ import AnnouncementDetailButton from './AnnouncementDetailButton';
 import AnnouncementFollow from './AnnouncementFollow';
 import jwtApi from 'util/JwtApi';
 
+// import Css
+import { styled } from '../../../node_modules/@mui/material/styles';
+import Box from '../../../node_modules/@mui/material/Box';
+import Grid from '../../../node_modules/@mui/material/Grid';
+import Chip from '../../../node_modules/@mui/material/Chip';
+
 function AnnouncementDetail(props) {
-  console.log(1234);
   const navigate = useNavigate();
-  // const announcementList = useRecoilValue(announcementListSelector())
   const { announcementId } = useParams();
-  console.log('🐳🐳', announcementId);
 
   const announcement = useRecoilValue(announcementListDetailSelector(announcementId));
   const [annouoncementData, setAnnouncementData] = useRecoilState(announcementListDetailState);
   setAnnouncementData(announcement);
-  console.log('announcement', announcement);
-
-  // useEffect(() => {
-  //   jwtApi.get(`/api/announcements/${announcementId}`).then((response) => {
-  //     console.log('get /api/announcement Detail Data');
-  //     console.log('😀😀😀😀😀😀', response.data);
-  //     console.log(response.data.result);
-  //     setAnnouncementData(response.data.result);
-  //     console.log('141415', annouoncementData);
-  //   });
-  // }, []);
 
   useEffect(() => {
     console.log('change AnnouncementData', annouoncementData);
   }, [annouoncementData]);
 
-  // const announcement = announcementList.find((item) => {
-  //     console.log(announcementId)
-  //     console.log(item)
-  //     return item.id == announcementId
-  // })
-
-  // const announcementDetail = AnnouncementDetailData
-
-  // const announcementDetail = AnnouncementDetailData.find((item) => {
-  //   return item.result.id == announcementId
-  // })
-
   return (
     <div>
-      <h1>공고상세페이지</h1>
-      <Button
-        title="뒤로 가기"
-        onClick={() => {
-          navigate('/announcement');
-        }}
-      />
-
-      <br />
       <AnnouncementDetailProcess announcement={announcement} />
 
       <AnnouncementDetailItem announcement={announcement} />
