@@ -1,48 +1,28 @@
-.login-container {
+@font-face {
+  font-family: 'LINESeedKR-Bd';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2')
+    format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+#login-whole {
+  font-family: 'LINESeedKR-Bd';
   text-align: center;
+  align-items: center;
 }
 
 .login-content {
-  background: #fff;
-  box-shadow: 0 1px 5px rgba(126, 166, 244, 0.47);
-  border-radius: 2px;
-  width: 800px;
-  height: 600px;
+  width: 100%;
   display: inline-block;
-  margin-top: 30px;
+  margin-top: 100px;
   vertical-align: middle;
   position: relative;
-  padding: 35px;
 }
 
-.social-btn {
-  margin-bottom: 60px;
-  font-weight: 400;
-  font-size: 16px;
-}
-
-.social-btn img {
-  height: 60px;
-  float: left;
-  margin-top: 10px;
-}
-
-.social-btn.google img {
-  margin-top: 7px;
-  width: 230px;
-  height: 70px;
-  margin-bottom: 60px;
-}
-
-.social-btn.naver img {
-  margin-top: 7px;
-  margin-bottom: 60px;
-}
-
-.social-btn.kakao img {
-  margin-top: 7px;
-  width: 230px;
-  margin-bottom: 60px;
+.login-content p {
+  font-size: 18px;
+  color: #444444;
 }
 
 .login-title {
@@ -51,4 +31,28 @@
   margin-top: 0;
   margin-bottom: 30px;
   color: rgba(0, 0, 0, 0.71);
+}
+
+#social-login {
+  flex-direction: column;
+  margin-top: 50px;
+  margin-bottom: 100px;
+}
+
+.google-login {
+  margin-bottom: 20px;
+}
+
+.naver-login {
+  margin-bottom: 20px;
+}
+
+.naver-login img {
+  width: 382px;
+  height: 92px;
+}
+
+.kakao-login img {
+  width: 382px;
+  height: 92px;
 }

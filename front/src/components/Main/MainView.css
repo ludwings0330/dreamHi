@@ -1,5 +1,17 @@
+@font-face {
+  font-family: 'LINESeedKR-Bd';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2')
+    format('woff2');
+  font-weight: 1000;
+  font-style: normal;
+}
+
+#mainview-whole {
+  font-family: 'LINESeedKR-Bd';
+}
+
 .mainview-header {
-  /*background-image: url("");*/
+  background-image: url('https://images.pexels.com/photos/2510428/pexels-photo-2510428.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
   background-position: center;
   background-size: cover;
   height: 700px;
@@ -16,7 +28,8 @@
 }
 .mainview-header .mainview-title h1 {
   font-size: 40px;
-  color: #444;
+  color: white;
+  font-size: 60px;
   letter-spacing: 0.2em;
   margin-bottom: 0;
 }
@@ -24,7 +37,9 @@
 .mainview-header .mainview-title p {
   margin-top: 0;
   margin-bottom: 30px;
-  color: #444;
+  font-size: 30px;
+  letter-spacing: 0.15em;
+  color: white;
 }
 
 .mainview-header .mainview-title button {
@@ -33,7 +48,7 @@
   border: 2px solid white;
   border-radius: 5px;
   padding: 10px 30px;
-  font-size: 14px;
+  font-size: 20px;
   transition: 0.5s ease;
 }
 

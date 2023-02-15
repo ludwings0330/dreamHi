@@ -56,15 +56,16 @@ const ActorList = () => {
                   <MDBCardImage
                     src={actor.pictureUrl}
                     alt={`${actor.name}'s picture`}
+                    className={'actor-list-img'}
                     position="top"
                     height="200px"
                     object-fit="cover"
                   />
                   <MDBCardBody>
-                    <MDBCardTitle className="card-text">{actor.title}</MDBCardTitle>
+                    <MDBCardTitle className="actor-card-title">{actor.title}</MDBCardTitle>
                     <MDBCardText>
                       <span className="card-info">
-                        <span>이름 : {actor.name}</span>
+                        <span className={'actor-name-info-span'}>이름 : {actor.name}</span>
                         <span>성별 : {actor.gender === 'MALE' ? '남자' : '여자'} </span>
                         <span>나이 : {actor.age}</span>
                         <span>키 : {actor.height}cm</span>
@@ -85,10 +86,12 @@ const ActorList = () => {
         </MDBRow>
       </div>
 
-      <Button title="글작성" onClick={() => navigate('/actor/write')} />
+      <div className={'actor-insert-button'}>
+      <Button title="배우등록" onClick={() => navigate('/actor/write')} />
       {(pageable)?(
           <Paging totalPages={pageable.totalPages} action={setActorFilter} />
       ):null}
+      </div>
     </div>
   );
 };
