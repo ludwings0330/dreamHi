@@ -2,6 +2,8 @@ import React from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
+import {useRecoilValue} from "recoil";
+import {isBookedSelector} from "../../../recoil/book/bookStore";
 
 function Item(props) {
   const { sx, ...other } = props;
@@ -34,6 +36,8 @@ Item.propTypes = {
 };
 
 export default function ActorAuditionNotice() {
+  const isBooked = useRecoilValue((isBookedSelector()));
+
   return (
     <>
       <Item>
@@ -46,7 +50,12 @@ export default function ActorAuditionNotice() {
             fontSize: 15,
           }}
         >
-          1️⃣ 오디션 진행 가능한 시간대를 확인하고 예약해주세요.
+          {
+            isBooked.reserved ?
+           "1️⃣ 오디션 시작 후 5분 이내에 입장해주세요."
+                :
+           "1️⃣ 오디션 진행 가능한 시간대를 확인하고 예약해주세요."
+          }
         </Typography>
       </Item>
 
