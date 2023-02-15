@@ -51,7 +51,7 @@ public class AuditionController {
             @AuthenticationPrincipal PrincipalDetails user
     ) throws NotFoundException {
         BookResponseDto bookResponseDto = auditionService.findBookOfVolunteer(processId, user);
-        return Response.create(HttpStatus.OK, "이미 예약한 지원자입니다. 예약 일자를 확인해주세요.", bookResponseDto);
+        return Response.create(HttpStatus.OK, "예약 일자를 확인해주세요.", bookResponseDto);
     }
 
     /**

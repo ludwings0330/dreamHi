@@ -43,14 +43,14 @@ public class ProcessServiceImpl implements ProcessService {
         }
 
         Map<Long, List<Volunteer>> volunteersByAnnouncementId = volunteerRepository.findAllByUserIdAndAnnouncementIds(user.getId(), announcementIds);
-        return volunteersByAnnouncementId.entrySet()
-                                         .stream()
-                                         .collect(Collectors.toMap(
-                                                 Entry::getKey,
-                                                 e -> ProcessStageDto.toDto(
-                                                         lastProcessByAnnouncementId.get(e.getKey()), e.getValue()
-                                                 )
-                                         ));
+        return lastProcessByAnnouncementId.entrySet()
+                                          .stream()
+                                          .collect(Collectors.toMap(
+                                                  Entry::getKey,
+                                                  e -> ProcessStageDto.toDto(
+                                                          e.getValue(), volunteersByAnnouncementId.get(e.getKey())
+                                                  )
+                                          ));
     }
 
     /**

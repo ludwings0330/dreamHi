@@ -46,7 +46,7 @@ public class AuditionServiceImpl implements AuditionService {
     public BookResponseDto findBookOfVolunteer(Long processId, PrincipalDetails user) throws NotFoundException {
         return bookRepository.findByUserIdAndProcessId(user.getId(), processId)
                              .map(BookResponseDto::toDto)
-                             .orElseThrow(() -> new NotFoundException("아직 예약을 하지 않은 지원자입니다."));
+                             .orElseGet(BookResponseDto::new);
     }
 
     @Override
