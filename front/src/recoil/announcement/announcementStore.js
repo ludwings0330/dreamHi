@@ -3,6 +3,9 @@ import jwtApi from 'util/JwtApi';
 import api from 'util/APIUtils';
 import { qs, stringify } from 'qs';
 import { userSimpleState } from 'recoil/user/userStore';
+import { recoilPersist } from 'recoil-persist';
+
+const { persistAtom } = recoilPersist();
 
 export const announcementListState = atom({
   key: 'announcementListState',
@@ -12,20 +15,19 @@ export const announcementListState = atom({
 export const announcementFilterState = atom({
   key: 'announcementFilterState',
   default: {
-    searchCondition: {
-      minHeight: '',
-      maxHeight: '',
-      minAge: '',
-      maxAge: '',
-      gender: '',
-      keyword: '',
-      styles: [],
-      isFollow: '',
-      isVolunteer: '',
-    },
+    minHeight: '',
+    maxHeight: '',
+    minAge: '',
+    maxAge: '',
+    gender: '',
+    styles: [],
+    keyword: '',
+    isFollow: '',
+    isVolunteer: '',
     page: 0,
     size: 10,
   },
+  effects_UNSTABLE: [persistAtom],
 });
 
 export const announcementListSelector = selectorFamily({
@@ -113,11 +115,11 @@ export const announcementListDetailSelector = selectorFamily({
       }
       return data;
     },
+});
 
-  set: ({ set }, data) => {
-    console.log('detailstate😁😁😁', data);
-    set(announcementListDetailState, data);
-  },
+export const announcementListDetailCastingState = atom({
+  key: 'announcementListDetailCastingState',
+  default: {},
 });
 
 export const announcementListDetailCastingSelector = selectorFamily({
