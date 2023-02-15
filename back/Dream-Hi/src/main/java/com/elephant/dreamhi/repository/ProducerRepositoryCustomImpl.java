@@ -4,16 +4,17 @@ import static com.elephant.dreamhi.model.entity.QFollow.follow;
 import static com.elephant.dreamhi.model.entity.QProducer.producer;
 import static com.elephant.dreamhi.model.entity.QUser.user;
 import static com.elephant.dreamhi.model.entity.QUserProducerRelation.userProducerRelation;
+import static com.querydsl.jpa.JPAExpressions.select;
 
 import com.elephant.dreamhi.model.dto.ProducerListResponseDto;
 import com.elephant.dreamhi.model.dto.ProducerMemberDto;
 import com.elephant.dreamhi.model.dto.ProducerSearchCondition;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,21 +29,23 @@ public class ProducerRepositoryCustomImpl implements ProducerRepositoryCustom {
 
     @Override
     public Page<ProducerListResponseDto> findProducersByCondition(ProducerSearchCondition condition, Pageable pageable) {
-        JPAQuery<ProducerListResponseDto> query = queryFactory.select(
-                                                                      Projections.fields(
-                                                                              ProducerListResponseDto.class,
-                                                                              producer.id,
-                                                                              producer.name,
-                                                                              producer.picture.url.as("pictureUrl")
-                                                                      ))
-                                                              .from(producer)
-                                                              .where(nameEq(condition.getName()),
-                                                                     followEq(condition.getIsFollow(), condition.getUserId()),
-                                                                     involveEq(condition.getUserId(), condition.getInvolve()));
+        long totalCount = Objects.requireNonNullElse(
+                getQueryByCondition(condition).select(producer.count())
+                                              .fetchOne(),
+                0L
+        );
 
-        final List<ProducerListResponseDto> fetch = query.offset(pageable.getOffset()).limit(pageable.getPageSize()).fetch();
+        final List<ProducerListResponseDto> fetch = getQueryByCondition(condition).select(Projections.constructor(
+                                                                                          ProducerListResponseDto.class,
+                                                                                          producer.id,
+                                                                                          producer.name,
+                                                                                          producer.picture.url.as("pictureUrl")
+                                                                                  ))
+                                                                                  .offset(pageable.getOffset())
+                                                                                  .limit(pageable.getPageSize())
+                                                                                  .fetch();
 
-        return PageableExecutionUtils.getPage(fetch, pageable, () -> query.fetch().size());
+        return PageableExecutionUtils.getPage(fetch, pageable, () -> totalCount);
     }
 
     @Override
@@ -62,8 +65,7 @@ public class ProducerRepositoryCustomImpl implements ProducerRepositoryCustom {
         }
 
         return producer.id.in(
-                JPAExpressions
-                        .select(follow.producer.id)
+                select(follow.producer.id)
                         .from(follow)
                         .where(follow.follower.id.eq(userId)));
     }
@@ -73,9 +75,16 @@ public class ProducerRepositoryCustomImpl implements ProducerRepositoryCustom {
     }
 
     private BooleanExpression involveEq(Long userId, Boolean involve) {
-        return (involve != null) ? producer.id.in(JPAExpressions.select(userProducerRelation.producer.id)
-                                                                .from(userProducerRelation)
-                                                                .where(userProducerRelation.user.id.eq(userId))) : null;
+        return (involve != null) ? producer.id.in(select(userProducerRelation.producer.id)
+                                                          .from(userProducerRelation)
+                                                          .where(userProducerRelation.user.id.eq(userId))) : null;
+    }
+
+    private JPAQuery<?> getQueryByCondition(ProducerSearchCondition condition) {
+        return queryFactory.from(producer)
+                           .where(nameEq(condition.getName()),
+                                  followEq(condition.getIsFollow(), condition.getUserId()),
+                                  involveEq(condition.getUserId(), condition.getInvolve()));
     }
 
 }
