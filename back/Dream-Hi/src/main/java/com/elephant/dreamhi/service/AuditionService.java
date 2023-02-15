@@ -4,7 +4,6 @@ import com.elephant.dreamhi.exception.NotFoundException;
 import com.elephant.dreamhi.model.dto.BookPeriodDto;
 import com.elephant.dreamhi.model.dto.BookPeriodSaveDto;
 import com.elephant.dreamhi.model.dto.BookProducerDto;
-import com.elephant.dreamhi.model.dto.BookRequestDto;
 import com.elephant.dreamhi.model.dto.BookResponseDto;
 import com.elephant.dreamhi.model.dto.BookedVolunteerDto;
 import com.elephant.dreamhi.model.dto.FileDto;
@@ -29,7 +28,7 @@ public interface AuditionService {
 
     List<BookedVolunteerDto> findBookedVolunteersOnToday(Long processId);
 
-    void saveBookOfVolunteer(Long processId, BookRequestDto bookRequestDto, PrincipalDetails user) throws NotFoundException;
+    void updateReserved(Long bookId) throws NotFoundException, IllegalStateException;
 
     void createAuditionSchedule(Long processId, BookPeriodSaveDto bookPeriodSaveDto) throws NotFoundException;
 

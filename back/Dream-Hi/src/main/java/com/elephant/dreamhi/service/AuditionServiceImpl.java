@@ -4,14 +4,12 @@ import com.elephant.dreamhi.exception.NotFoundException;
 import com.elephant.dreamhi.model.dto.BookPeriodDto;
 import com.elephant.dreamhi.model.dto.BookPeriodSaveDto;
 import com.elephant.dreamhi.model.dto.BookProducerDto;
-import com.elephant.dreamhi.model.dto.BookRequestDto;
 import com.elephant.dreamhi.model.dto.BookResponseDto;
 import com.elephant.dreamhi.model.dto.BookedVolunteerDto;
 import com.elephant.dreamhi.model.dto.FileDto;
 import com.elephant.dreamhi.model.entity.Book;
 import com.elephant.dreamhi.model.entity.NoticeFile;
 import com.elephant.dreamhi.model.entity.Process;
-import com.elephant.dreamhi.model.entity.Volunteer;
 import com.elephant.dreamhi.model.statics.ProcessState;
 import com.elephant.dreamhi.model.statics.StageName;
 import com.elephant.dreamhi.repository.BookRepository;
@@ -82,17 +80,10 @@ public class AuditionServiceImpl implements AuditionService {
 
     @Override
     @Transactional
-    public void saveBookOfVolunteer(Long processId, BookRequestDto bookRequestDto, PrincipalDetails user) throws NotFoundException {
-        Process process = findVideoProcess(processId);
-        Volunteer volunteer = volunteerRepository.findByUserIdAndProcessId(user.getId(), processId).get(0);
-
-        Book book = Book.builder()
-                        .volunteer(volunteer)
-                        .process(process)
-                        .startTime(bookRequestDto.getStartDateTime())
-                        .endTime(bookRequestDto.getEndDateTime())
-                        .build();
-        bookRepository.save(book);
+    public void updateReserved(Long bookId) throws NotFoundException, IllegalStateException {
+        bookRepository.findById(bookId)
+                      .orElseThrow(() -> new NotFoundException("예약 가능한 시간대가 아닙니다."))
+                      .reverse();
     }
 
     @Override
