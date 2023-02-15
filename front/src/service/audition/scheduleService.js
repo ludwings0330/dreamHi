@@ -1,4 +1,3 @@
-import { ACCESS_TOKEN } from 'constants/index';
 import Swal from 'sweetalert2';
 import jwtApi from 'util/JwtApi';
 
