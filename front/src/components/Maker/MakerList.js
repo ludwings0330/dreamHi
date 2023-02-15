@@ -11,12 +11,13 @@ import {
   MDBCol,
   MDBRow,
 } from 'mdb-react-ui-kit';
+import {} from './MakerList.css';
 
 //import common
-import SearchBar from '../Common/CommonComponent/SearchBar';
+import SearchMakerBar from '../Common/CommonComponent/SearchMakerBar';
 import Button from '../Common/CommonComponent/Button';
 import jwtApi from '../../util/JwtApi';
-import Paging from "../Common/CommonComponent/Paging";
+import Paging from '../Common/CommonComponent/Paging';
 
 const MakerList = () => {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ const MakerList = () => {
   // api 요청 보내서 제작사 목록 확보
   useEffect(() => {
     jwtApi
-      .get(`/api/producers`, {params: makerFilter})
+      .get(`/api/producers`, { params: makerFilter })
       .then((response) => {
         console.log(response.data.result);
         setMakerList(response.data.result.content);
@@ -40,8 +41,8 @@ const MakerList = () => {
   }, [makerFilter]);
 
   return (
-    <div>
-      <SearchBar />
+    <>
+      <SearchMakerBar />
       <div>
         <MDBRow className="row-cols-1 row-cols-md-4 g-4">
           {MakerList.length > 0 &&
@@ -74,10 +75,8 @@ const MakerList = () => {
         }}
       />
 
-      {(pageable)?(
-          <Paging totalPages={pageable.totalPages} action={setMakerFilter} />
-      ):null}
-    </div>
+      {pageable ? <Paging totalPages={pageable.totalPages} action={setMakerFilter} /> : null}
+    </>
   );
 };
 
