@@ -43,7 +43,7 @@ const MakerList = () => {
   return (
     <>
       <SearchMakerBar />
-      <div>
+      <div id={'maker-list-main'}>
         <MDBRow className="row-cols-1 row-cols-md-4 g-4">
           {MakerList.length > 0 &&
             MakerList.map((maker, idx) => (
@@ -53,13 +53,14 @@ const MakerList = () => {
                     <MDBCardImage
                       src={maker.pictureUrl}
                       alt={`${maker.name}'s picture`}
+                      className={'maker-list-img'}
                       position="top"
                       height="200px"
                       object-fit="cover"
                     />
                     <MDBCardBody>
-                      <MDBCardTitle>{maker.name}</MDBCardTitle>
-                      <MDBCardText>{maker.name}</MDBCardText>
+                      <MDBCardTitle className={'maker-card-title'}>{maker.name}</MDBCardTitle>
+                      <MDBCardText className={'maker-card-name'}>{maker.name}</MDBCardText>
                     </MDBCardBody>
                   </MDBCard>
                 </MDBCol>
@@ -68,12 +69,14 @@ const MakerList = () => {
         </MDBRow>
       </div>
 
-      <Button
-        title="글작성"
-        onClick={() => {
-          navigate('/maker/write');
-        }}
-      />
+      <div className={'maker-insert-button'}>
+        <Button
+          title="제작사 등록"
+          onClick={() => {
+            navigate('/maker/write');
+          }}
+        />
+      </div>
 
       {pageable ? <Paging totalPages={pageable.totalPages} action={setMakerFilter} /> : null}
     </>

@@ -61,10 +61,10 @@ const ActorFilmoUpload = ({ actorId }) => {
 
   return (
     <>
-      <div className="actor-list">
+      <div id="actor-list-plus-section">
         <div className="file-box">
           <label htmlFor="file-filmo">
-            <img src="/img/plus.png" object-fit={'cover'} className="object-center" />
+            <img src="/img/plus.png" object-fit={'cover'} className={"filmo-plus-button"} />
           </label>
 
           <input
@@ -72,7 +72,9 @@ const ActorFilmoUpload = ({ actorId }) => {
             id="file-filmo"
             onChange={(e) => setActorFilmoUploaded(e.target.files[0])}
           />
-          <button onClick={uploadFile}>사진 올리기</button>
+          <button 
+              className={'actor-filmo-upload-button'}
+              onClick={uploadFile}>사진 올리기</button>
         </div>
       </div>
     </>

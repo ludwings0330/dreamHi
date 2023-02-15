@@ -6,8 +6,16 @@
   font-style: normal;
 }
 
-.actor-filmo-title {
+#actor-filmo-whole {
+  display: flex;
   font-family: 'LINESeedKR-Bd';
+  margin-top: 50px;
+  margin-left: 50px;
+  margin-bottom: 50px;
+  flex-direction: column;
+}
+.actor-filmo-list-main {
+  display: flex;
 }
 
 .actor-filmo-list {
@@ -15,44 +23,54 @@
   width: 100%;
   height: 300px;
   display: flex;
-  border: black solid 1px;
+  border: 1px solid #eee;
+  border-radius: 5px;
 }
 
-/*.actor-photo-main {*/
-/*    flex:1;*/
-/*}*/
 .actor-filmo-main > img {
   aspect-ratio: 1;
-  max-width: 250px;
-  max-height: 250px;
-  border: black solid 1px;
+  max-width: 300px;
+  max-height: 300px;
 }
 
 .actor-filmo {
-  flex: 2;
   display: inline-block;
-  border: black solid 1px;
+  border: 1px solid #eee;
+  border-radius: 5px;
 }
 
 .actor-filmo img {
   border-radius: 10px;
   object-fit: contain;
-  border: black solid 1px;
 }
 
-.file-box {
-  display: inline-block;
+.actor-filmo-list-item {
+  width: 250px;
+  height: 250px;
 }
 
-.file-box label {
+/*filmo-upload 부분 css*/
+#actor-list-plus-section {
+  font-family: 'LINESeedKR-Bd';
+  padding-top: 238px;
 }
 
-.file-box input[type='file'] {
-  position: absolute;
-  width: 0;
-  height: 0;
-  padding: 0;
-  overflow: hidden;
-  border: 0;
-  display: none;
+.filmo-plus-button {
+  width: 30px;
+  height: 30px;
+}
+
+.actor-filmo-upload-button {
+  background: rgba(68, 68, 68, 0.5);
+  color: white;
+  border: 2px solid white;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: 0.5s ease;
+}
+.actor-filmo-upload-button:hover {
+  transition: 0.5s ease;
+  border: 2px solid black;
+  background: transparent;
+  color: black;
 }

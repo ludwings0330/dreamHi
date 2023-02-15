@@ -89,10 +89,6 @@ function MainHeader() {
                     <DropdownItem className="nav-item">내 제작사</DropdownItem>
                   </Link>
 
-                  <Link to={'/collection'} tag="li">
-                    <DropdownItem className="nav-item">모아보기</DropdownItem>
-                  </Link>
-
                   <Link to={'/'} tag="li">
                     <DropdownItem className="nav-item" onClick={logoutClick}>
                       로그아웃
