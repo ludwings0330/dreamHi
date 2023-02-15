@@ -7,30 +7,26 @@ import AxiosTry from '../components/Announcement/AxiosTry';
 import { useRecoilValue } from 'recoil';
 import { userSimpleState } from 'recoil/user/userStore';
 
-
-
 function AnnouncementPage(props) {
-  
   const navigate = useNavigate();
-  const userSimple = useRecoilValue(userSimpleState)
-
+  const userSimple = useRecoilValue(userSimpleState);
 
   return (
     <>
       <Button
         title="글 작성하기"
         onClick={() => {
-          if(userSimple.id) {
-            navigate("/announcement/write")
+          if (userSimple) {
+            navigate('/announcement/write');
           } else {
-            navigate("/login")
+            navigate('/login');
           }
         }}
       />
 
       <AnnouncementList />
 
-{/* 
+      {/* 
       <AnnouncementList
         announcements={AnnouncementData}
         onClickItem={(item) => {
@@ -38,11 +34,9 @@ function AnnouncementPage(props) {
           navigate(`/announcement/${item.result.list[0].id}`);
         }}
       /> */}
-        {/*<button onClick={getData}> Getdata </button>*/}
+      {/*<button onClick={getData}> Getdata </button>*/}
     </>
-
   );
 }
-
 
 export default AnnouncementPage;

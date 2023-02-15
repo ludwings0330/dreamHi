@@ -17,6 +17,13 @@ function AnnouncementDetailCasting(props) {
             <div className="announcement-content"> 성별 : {casting.gender} </div>
             <div className="announcement-content"> 인원 : {casting.headcount} 명 </div>
             <div className="announcement-content"> 기타 상세 : {casting.description} </div>
+            <div className="announcement-content">
+              {' '}
+              스타일 :{' '}
+              {casting.styles.map(function (style, index) {
+                return <li key={style.id}>{style.description}</li>;
+              })}{' '}
+            </div>
           </div>
         );
       })}

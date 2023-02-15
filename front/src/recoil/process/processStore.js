@@ -16,7 +16,7 @@ export const announcementListDetailProcessSelector = selectorFamily({
     async ({ get }) => {
       const userSimple = get(userSimpleState);
       let data = null;
-      if (userSimple.id) {
+      if (userSimple) {
         data = await jwtApi
           .get(`/api/announcements/${announcementDetailId}/process`)
           .then((response) => {

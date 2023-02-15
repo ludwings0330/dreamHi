@@ -7,10 +7,13 @@ import {
   announcementProcessState,
   announcementListDetailProcessSelector,
 } from 'recoil/process/processStore';
+import { userSimpleState } from 'recoil/user/userStore';
 import { Tag } from '../../../node_modules/@mui/icons-material/index';
 import AnnouncementApply from './AnnouoncementApply';
 
 function AnnouncementDetailButton(props) {
+  const user = useRecoilValue(userSimpleState);
+
   const { processData } = props;
   console.log(processData);
   //   const { announcementId } = announcement.id;
@@ -35,6 +38,8 @@ function AnnouncementDetailButton(props) {
       setButtonState('모집 마감');
     } else if (processData.processState == 'RECRUITING' && processData.userStageName == 'NONE') {
       setButtonState('지원하기');
+    } else {
+      setButtonState('지원불가');
     }
   }
 
@@ -43,7 +48,7 @@ function AnnouncementDetailButton(props) {
   }, []);
 
   let button;
-  if (buttonState == '지원하기') {
+  if (buttonState == '지원하기' && user) {
     button = <AnnouncementApply />;
   } else {
     button = <Button title={'지원완료'} />;

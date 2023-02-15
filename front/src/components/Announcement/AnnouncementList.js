@@ -97,7 +97,7 @@ function AnnouncementList(props) {
                   </Grid>
                   <Grid item xs={8} className="announcement-list-castings casting-text">
                     {announcement.castings.map(function (cast, index) {
-                      return <span>{cast.name}역</span>;
+                      return <span key={cast.id}> {cast.name}역</span>;
                     })}
                   </Grid>
                   <Grid item xs={2}>

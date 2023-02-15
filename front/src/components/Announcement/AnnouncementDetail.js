@@ -68,7 +68,7 @@ function AnnouncementDetail(props) {
 
       {/* <AnnouncementDetailButton key={announcementId} announcement={announcement} /> */}
 
-      <AnnouncementFollow />
+      <AnnouncementFollow isFollow={announcement.isFollow} />
     </div>
   );
 }
