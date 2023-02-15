@@ -25,14 +25,14 @@
 }
 #mainpage__banner__title {
   font-weight: 700;
-  font-size: 45px;
+  font-size: 40px;
   line-height: 52px;
   margin-bottom: 50px;
   color: #484848;
 }
 #mainpage__banner__main {
   font-weight: 800;
-  font-size: 60px;
+  font-size: 50px;
   line-height: 78px;
   text-align: right;
   letter-spacing: 3px;
@@ -40,7 +40,7 @@
 }
 #mainpage__banner__description {
   font-weight: 300;
-  font-size: 25px;
+  font-size: 20px;
   line-height: 25px;
   letter-spacing: 2px;
 

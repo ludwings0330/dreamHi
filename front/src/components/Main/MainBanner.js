@@ -32,12 +32,6 @@ export default function MainBanner() {
         <div>
           <BannerSection />
         </div>
-        <div>
-          <Image src="/img/test.png" alt="banner"></Image>
-        </div>
-        <div>
-          <Image src="/img/test.png" alt="banner"></Image>
-        </div>
       </Slider>
     </Wrapper>
   );

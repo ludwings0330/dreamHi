@@ -87,7 +87,10 @@ const ActorDetail = (props) => {
         수정하기
       </Button>
 
-      <Button variant="contained" title="삭제하기" onClick={() => navigate('/actor/delete')}>
+      <Button
+          variant="contained"
+          title="삭제하기"
+          onClick={() => navigate('/actor/delete')}>
         삭제하기
       </Button>
     </>
