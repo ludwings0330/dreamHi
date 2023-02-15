@@ -36,7 +36,6 @@ import AuditionMeeting from './components/Audition/AuditionMeeting';
 import Live from './components/Live/Live';
 
 //import collection
-import Collection from './components/Collection/Collection';
 import ScheduleCreatePage from 'pages/ScheduleCreatePage';
 
 function App() {
@@ -73,8 +72,6 @@ function App() {
         <Route path={'/maker/list'} element={<MakerList />} />
         <Route path={'/maker/detail/:makerId'} element={<MakerDetail />} />
         <Route path={'/maker/write'} element={<MakerWrite />} />
-        {/*//모아보기페이지 관련 이동*/}
-        <Route path={'/collection'} element={<Collection />} />
         {/*//로그인 관련 이동*/}
         <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
       </Routes>

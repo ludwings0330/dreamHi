@@ -87,11 +87,9 @@ const ActorList = () => {
       </div>
 
       <div className={'actor-insert-button'}>
-      <Button title="배우등록" onClick={() => navigate('/actor/write')} />
-      {(pageable)?(
-          <Paging totalPages={pageable.totalPages} action={setActorFilter} />
-      ):null}
+        <Button title="배우등록" onClick={() => navigate('/actor/write')} />
       </div>
+      {pageable ? <Paging totalPages={pageable.totalPages} action={setActorFilter} /> : null}
     </div>
   );
 };

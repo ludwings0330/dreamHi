@@ -11,12 +11,13 @@ import {
   MDBCol,
   MDBRow,
 } from 'mdb-react-ui-kit';
+import {} from './MakerList.css';
 
 //import common
-import SearchBar from '../Common/CommonComponent/SearchBar';
+import SearchMakerBar from '../Common/CommonComponent/SearchMakerBar';
 import Button from '../Common/CommonComponent/Button';
 import jwtApi from '../../util/JwtApi';
-import Paging from "../Common/CommonComponent/Paging";
+import Paging from '../Common/CommonComponent/Paging';
 
 const MakerList = () => {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ const MakerList = () => {
   // api 요청 보내서 제작사 목록 확보
   useEffect(() => {
     jwtApi
-      .get(`/api/producers`, {params: makerFilter})
+      .get(`/api/producers`, { params: makerFilter })
       .then((response) => {
         console.log(response.data.result);
         setMakerList(response.data.result.content);
@@ -40,9 +41,9 @@ const MakerList = () => {
   }, [makerFilter]);
 
   return (
-    <div>
-      <SearchBar />
-      <div>
+    <>
+      <SearchMakerBar />
+      <div id={'maker-list-main'}>
         <MDBRow className="row-cols-1 row-cols-md-4 g-4">
           {MakerList.length > 0 &&
             MakerList.map((maker, idx) => (
@@ -52,13 +53,14 @@ const MakerList = () => {
                     <MDBCardImage
                       src={maker.pictureUrl}
                       alt={`${maker.name}'s picture`}
+                      className={'maker-list-img'}
                       position="top"
                       height="200px"
                       object-fit="cover"
                     />
                     <MDBCardBody>
-                      <MDBCardTitle>{maker.name}</MDBCardTitle>
-                      <MDBCardText>{maker.name}</MDBCardText>
+                      <MDBCardTitle className={'maker-card-title'}>{maker.name}</MDBCardTitle>
+                      <MDBCardText className={'maker-card-name'}>{maker.name}</MDBCardText>
                     </MDBCardBody>
                   </MDBCard>
                 </MDBCol>
@@ -67,17 +69,17 @@ const MakerList = () => {
         </MDBRow>
       </div>
 
-      <Button
-        title="글작성"
-        onClick={() => {
-          navigate('/maker/write');
-        }}
-      />
+      <div className={'maker-insert-button'}>
+        <Button
+          title="제작사 등록"
+          onClick={() => {
+            navigate('/maker/write');
+          }}
+        />
+      </div>
 
-      {(pageable)?(
-          <Paging totalPages={pageable.totalPages} action={setMakerFilter} />
-      ):null}
-    </div>
+      {pageable ? <Paging totalPages={pageable.totalPages} action={setMakerFilter} /> : null}
+    </>
   );
 };
 

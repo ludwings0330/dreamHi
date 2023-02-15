@@ -1,37 +1,36 @@
-.maker_container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  width: 100%;
-  margin-top: 10%;
+@font-face {
+    font-family: 'LINESeedKR-Bd';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2')
+    format('woff2');
+    font-weight: 700;
+    font-style: normal;
 }
-.maker {
-  width: 25%;
-  height: 100%;
-  margin-bottom: 4%;
-  margin-right: 4%;
-  margin-left: 4%;
-  border: 1px solid #d2e1ff;
-  border-radius: 20px;
+
+#maker-list-main {
+    font-family: 'LINESeedKR-Bd';
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-bottom: 10px;
 }
-.maker_img {
-  max-width: 95%;
-  max-height: 100%;
-  text-align: center;
+.h-100 {
+    border: 1px solid #eee;
+    border-radius: 5px;
+    height: 350px;
+    margin-bottom: 0;
 }
-.maker_title {
-  font-size: 1.3rem;
-  font-weight: 600;
-  margin: 4%;
-  text-align: center;
+.maker-card-title {
+    color: black;
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 40px;
 }
-.maker_des {
-  font-size: 0.8rem;
-  margin: 2% 3% 2% 4%;
-  text-align: center;
+.maker-card-name {
+    color: black;
+    font-size: 20px;
+    display: flex;
 }
-.maker_bar {
-  display: block;
-  text-align: center;
-  padding: 20%;
+.maker-insert-button {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 1250px;
 }

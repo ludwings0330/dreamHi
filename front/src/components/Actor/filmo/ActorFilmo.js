@@ -14,35 +14,36 @@ const ActorFilmo = ({ actorId }) => {
   };
 
   return (
-    <div className="bg-white">
-      <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+    <>
+      <div id="actor-filmo-whole">
         <h1 className={'actor-filmo-title'}>필모그래피</h1>
+        <div className="actor-filmo-list-main">
 
-        <div className={'actor-filmo-list'}>
-          {/*메인이미지 부분*/}
-          {actorFilmos && actorFilmos.length > 0 ? (
-            <div className="actor-filmo-main">
-              <img src={actorFilmos[0].photoUrl} alt={actorFilmos[0].photoUrl} />
-            </div>
-          ) : null}
-          {actorFilmos &&
-            actorFilmos.length > 0 &&
-            actorFilmos.map((filmography, idx) => (
-              <div className="actor-filmo" key={filmography.id}>
-                <img
-                  src={filmography.photoUrl}
-                  alt="image"
-                  className="object-center"
-                  loading={'lazy'}
-                  onClick={() => setSelected(idx)}
-                />
+          <div className={'actor-filmo-list'}>
+            {/*메인이미지 부분*/}
+            {actorFilmos && actorFilmos.length > 0 ? (
+              <div className="actor-filmo-main">
+                <img src={actorFilmos[0].photoUrl} alt={actorFilmos[0].photoUrl} />
               </div>
-            ))}
-
+            ) : null}
+            {actorFilmos &&
+              actorFilmos.length > 0 &&
+              actorFilmos.map((filmography, idx) => (
+                <div className="actor-filmo" key={filmography.id}>
+                  <img
+                    src={filmography.photoUrl}
+                    alt="image"
+                    className="actor-filmo-list-item"
+                    loading={'lazy'}
+                    onClick={() => setSelected(idx)}
+                  />
+                </div>
+              ))}
+          </div>
           <ActorFilmoUpload actorId={actorId} />
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
