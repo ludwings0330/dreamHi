@@ -3,11 +3,14 @@ import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+import Stack from '@mui/material/Stack';
 import ActorAuditionNotice from './ActorAuditionNotice';
 import MakerAuditionNotice from './MakerAuditionNotice';
 import { useRecoilValue } from 'recoil';
 import { announcementTitle } from 'recoil/announcement/announcement';
 import { announcementListDetailState } from '../../../recoil/announcement/announcementStore';
+import Attachment from "./Attachment";
+import ReservationButton from "../ReservationButton";
 
 function Item(props) {
   const { sx, ...other } = props;
@@ -80,6 +83,10 @@ export default function BasicNotice() {
         >
           {!announcementDetail.isEditor ? <ActorAuditionNotice /> : <MakerAuditionNotice />}
         </Box>
+        <Stack direction="row" alignItems="center" justifyContent="flex-end" mt={3} ml={2}>
+          <Attachment />
+          <ReservationButton />
+        </Stack>
       </Box>
     </Paper>
   );
