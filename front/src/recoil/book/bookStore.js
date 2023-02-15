@@ -1,7 +1,13 @@
 import { atom, selectorFamily } from 'recoil';
 import dayjs from 'dayjs';
-import { announcementListDetailState } from 'recoil/announcement/announcementStore';
-import { announcementProcessState } from 'recoil/process/processStore';
+import {
+  announcementListDetailSelector,
+  announcementListDetailState,
+} from 'recoil/announcement/announcementStore';
+import {
+  announcementListDetailProcessSelector,
+  announcementProcessState,
+} from 'recoil/process/processStore';
 import jwtApi from 'util/JwtApi';
 
 export const auditionPeriodState = atom({
@@ -101,6 +107,24 @@ export const booksSelector = selectorFamily({
         .then((response) => response.data.result);
       console.log(data);
 
+      return data;
+    },
+});
+
+export const isBookedSelector = selectorFamily({
+  key: 'isBookedSelector',
+  get:
+    () =>
+    async ({ get }) => {
+      // const announcementDetail = get(announcementListDetailSelector());
+      // const processDetail = get(announcementListDetailProcessSelector());
+      const announcementDetail = get(announcementListDetailState);
+      const processDetail = get(announcementProcessState);
+      const data = await jwtApi
+        .get(
+          `/api/announcements/${announcementDetail.id}/audition/on/${processDetail.processId}/reservation`,
+        )
+        .then((response) => response.data.result);
       return data;
     },
 });
