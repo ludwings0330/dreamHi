@@ -25,6 +25,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,11 +33,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Slf4j
 public class AuditionServiceImpl implements AuditionService {
 
     @Value("${app.schedule-period}")
-    private static Long VIDEO_TIME_TAKE;
 
+    private Long VIDEO_TIME_TAKE;
     private final ProcessRepository processRepository;
     private final VolunteerRepository volunteerRepository;
     private final BookRepository bookRepository;
@@ -93,8 +95,14 @@ public class AuditionServiceImpl implements AuditionService {
     @Override
     @Transactional
     public void createAuditionSchedule(Long processId, BookPeriodSaveDto bookPeriodSaveDto) throws NotFoundException {
+        log.info("{} {}",processId, bookPeriodSaveDto);
         Process process = findVideoProcess(processId).setSessionId(UUID.randomUUID().toString());
+        log.info("{} {} {} {}", process.getId(), process.getState(), process.getStage(), process.getSessionId());
+        log.info("{}", VIDEO_TIME_TAKE);
         List<Book> books = Book.toEntityList(process, bookPeriodSaveDto, VIDEO_TIME_TAKE);
+        books.forEach(b -> {
+            log.info("{} {} {}", b.getId(), b.getStartTime(), b.getEndTime());
+        });
         Long totalVolunteerCount = volunteerRepository.countByCurrentProcessId(processId);
 
         if (books.size() < totalVolunteerCount) {

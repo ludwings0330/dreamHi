@@ -61,12 +61,12 @@ export const selectedDateState = atom({
 
 export const auditionStartTimeState = atom({
   key: 'auditionStartTimeState',
-  default: dayjs('09:00', 'HH:mm'),
+  default: dayjs(new Date()).set('h', 9).set('m', 0),
 });
 
 export const auditionEndTimeState = atom({
   key: 'auditionEndTimeState',
-  default: dayjs('18:00', 'HH:mm'),
+  default: dayjs(new Date()).set('h', 18).set('m', 0),
 });
 export const checkTimeState = atom({
   key: 'checkTimeState',
