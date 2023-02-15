@@ -48,7 +48,7 @@ public class ProcessStageDto {
                                                            .stageName(lastProcess.getStage());
 
         // 지원을 안한 경우
-        if (volunteers.isEmpty()) {
+        if (volunteers == null || volunteers.isEmpty()) {
             return dtoBuilder.userStageName(UserStageName.NONE).build();
         }
 

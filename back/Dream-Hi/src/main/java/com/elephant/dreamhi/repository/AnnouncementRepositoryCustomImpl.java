@@ -246,9 +246,8 @@ public class AnnouncementRepositoryCustomImpl implements AnnouncementRepositoryC
             return null;
         }
 
-        String likeKeyword = "%" + keyword + "%";
-        return announcement.title.like(likeKeyword)
-                                 .or(producer.name.like(likeKeyword));
+        return announcement.title.contains(keyword)
+                                 .or(producer.name.contains(keyword));
     }
 
     private BooleanExpression styleIn(Long[] styles) {
