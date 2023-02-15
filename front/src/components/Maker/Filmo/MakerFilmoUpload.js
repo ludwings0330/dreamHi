@@ -1,59 +1,51 @@
 /* eslint-disable jsx-a11y/alt-text */
-import { useState, useEffect } from 'react';
-import { ref, uploadBytes, getDownloadURL, listAll } from 'firebase/storage';
-import { useRecoilValue, useRecoilState } from 'recoil';
-import axios from 'axios';
+import {useState} from 'react';
+import {getDownloadURL, ref, uploadBytes} from 'firebase/storage';
+import {useRecoilState, useRecoilValue} from 'recoil';
 
-import { storage } from '../../../imageup/firebase';
-import { v4 } from 'uuid';
+import {storage} from '../../../imageup/firebase';
+import {v4} from 'uuid';
 
 // import recoil
-import { makerProfile, makerFilmoUrl, makerFilmoLists } from 'recoil/maker/makerStore';
+import {makerFilmoLists, makerFilmoUrl} from 'recoil/maker/makerStore';
 
 // import css
 import '../../../components/Casting/Casting.css';
 import './MakerFilmo.css';
-import {API_BASE_URL} from "../../../constants";
+import jwtApi from '../../../util/JwtApi';
+import {useParams} from 'react-router-dom';
 
-function MakerFilmoUpload(props) {
-  console.log('test', props);
-  //setActorPhotos
-  console.log(props.makerFilmos);
+const MakerFilmoUpload = ({ makerInfo }) => {
+  const { makerId } = useParams();
   const [MakerFilmoUploaded, setMakerFilmoUploaded] = useState(null);
   const MakerFilmoDirectory = useRecoilValue(makerFilmoUrl);
-  const makerInfo = useRecoilValue(makerProfile);
-
-  const MakerFilmosListRef = ref(storage, MakerFilmoDirectory);
-
-  const token = localStorage.getItem('accessToken');
+  const [makerFilmos, setMakerFilmos] = useRecoilState(makerFilmoLists);
 
   const uploadFile = () => {
-    if (MakerFilmoUploaded === null) return;
+    if (MakerFilmoUploaded === null) {
+      return;
+    }
+
     const imageRef = ref(storage, `${MakerFilmoDirectory}/${MakerFilmoUploaded.name + v4()}`);
     uploadBytes(imageRef, MakerFilmoUploaded).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
         // setActPhotoUrl(url);
         const content = {
+          title: '제작사 필모그래피',
+          description: '제작사 필모 설명',
           originName: `${makerInfo.name}'s picture`,
           savedName: `picture ${makerInfo.name}`,
-          type: 'PICTURE',
-          url: url,
+          producerId: makerId,
+          photoUrl: url,
         };
         console.log('파베', url);
-        props.setMakerFilmos(props.makerFilmos.concat({ id: props.makerFilmos.length, url: url }));
-        // axios.post(`http://i8a702.p.ssafy.io:8085/api/actors/${actorInfo.actorProfileId}/media`,
-        axios
-          .post(`${API_BASE_URL}/api/producers/100001/media`, content, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+
+        jwtApi
+          .post(`/api/filmographies`, content)
+          .then((response) => {
+            setMakerFilmos([...makerFilmos, { id: response.data.result, photoUrl: url }]);
           })
-          .then((res) => {
-            console.log('post success', res);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+          .catch((e) => console.log(e));
       });
     });
   };
@@ -62,7 +54,7 @@ function MakerFilmoUpload(props) {
     <div>
       <div className="photo-list">
         <div className="file-box">
-          <label for="file-photo">
+          <label htmlFor="file-filmo">
             <img
               src="/img/plus.png"
               width={'200px'}
@@ -73,7 +65,7 @@ function MakerFilmoUpload(props) {
           </label>
           <input
             type="file"
-            id="file-photo"
+            id="file-filmo"
             onChange={(e) => {
               setMakerFilmoUploaded(e.target.files[0]);
             }}
@@ -83,6 +75,6 @@ function MakerFilmoUpload(props) {
       </div>
     </div>
   );
-}
+};
 
 export default MakerFilmoUpload;

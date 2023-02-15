@@ -1,46 +1,43 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import api from 'util/APIUtils';
 
 //import CSS
 import {
   MDBCard,
-  MDBCardImage,
   MDBCardBody,
-  MDBCardTitle,
+  MDBCardImage,
   MDBCardText,
-  MDBRow,
+  MDBCardTitle,
   MDBCol,
+  MDBRow,
 } from 'mdb-react-ui-kit';
-import {} from './MakerList.css';
 
 //import common
 import SearchBar from '../Common/CommonComponent/SearchBar';
 import Button from '../Common/CommonComponent/Button';
-import { makerListSelector } from 'recoil/maker/makerStore';
-
-import { useRecoilValue } from 'recoil';
+import jwtApi from '../../util/JwtApi';
+import Paging from "../Common/CommonComponent/Paging";
 
 const MakerList = () => {
   const navigate = useNavigate();
-  const token = localStorage.getItem('accessToken')
   const [MakerList, setMakerList] = useState([]);
-
+  const [pageable, setPageable] = useState(null);
+  const [makerFilter, setMakerFilter] = useState({
+    page: 0,
+  });
   // api 요청 보내서 제작사 목록 확보
   useEffect(() => {
-    api
-      .get(`/api/producers`)
+    jwtApi
+      .get(`/api/producers`, {params: makerFilter})
       .then((response) => {
-        console.log('GET /api/producers');
-        console.log(response);
+        console.log(response.data.result);
         setMakerList(response.data.result.content);
+        setPageable(response.data.result);
       })
       .catch((error) => {
-        console.log('실패실패ㅠㅠ');
         console.log(error);
       });
-  }, [setMakerList]);
+  }, [makerFilter]);
 
   return (
     <div>
@@ -49,7 +46,7 @@ const MakerList = () => {
         <MDBRow className="row-cols-1 row-cols-md-4 g-4">
           {MakerList.length > 0 &&
             MakerList.map((maker, idx) => (
-              <Link to={`/maker/detail/${maker.makerProfileId}`} key={idx}>
+              <Link to={`/maker/detail/${maker.id}`} key={idx}>
                 <MDBCol key={idx} className="h-100">
                   <MDBCard className="h-100">
                     <MDBCardImage
@@ -60,8 +57,8 @@ const MakerList = () => {
                       object-fit="cover"
                     />
                     <MDBCardBody>
-                      <MDBCardTitle>{maker.title}</MDBCardTitle>
-                      <MDBCardText>{maker.title}</MDBCardText>
+                      <MDBCardTitle>{maker.name}</MDBCardTitle>
+                      <MDBCardText>{maker.name}</MDBCardText>
                     </MDBCardBody>
                   </MDBCard>
                 </MDBCol>
@@ -76,16 +73,12 @@ const MakerList = () => {
           navigate('/maker/write');
         }}
       />
+
+      {(pageable)?(
+          <Paging totalPages={pageable.totalPages} action={setMakerFilter} />
+      ):null}
     </div>
   );
 };
-
-// <Link to={"/maker/detail"}>
-//     <div className="maker">
-//         <div className="maker_img"><img src="/img/elephant.png" className="actor_img"/></div>
-//         <h5 className="maker_title"> 제작사 소개</h5>
-//         <p className="maker_des"> 제작사 소개 요약</p>
-//     </div>
-// </Link>
 
 export default MakerList;

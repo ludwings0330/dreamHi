@@ -34,19 +34,16 @@ function MainHeader() {
   const [userSimple, setUserSimple] = useRecoilState(userSimpleState);
 
   const logoutClick = async () => {
-    let isLogout = !userSimple ? false : await logout();
+    setUserSimple(null);
+    localStorage.removeItem('accessToken');
 
-    if (isLogout) {
-      Swal.fire({
-        title: '감사합니다 😀',
-        text: '로그아웃!!',
-        icon: 'success',
-      }).then(function () {
-        window.location.href = '/';
-      });
-    }
-
-    setUserSimple({});
+    Swal.fire({
+      title: '감사합니다 😀',
+      text: '로그아웃!!',
+      icon: 'success',
+    }).then(function () {
+      window.location.href = '/';
+    });
   };
   useEffect(() => {}, [userSimple]);
 
@@ -69,7 +66,7 @@ function MainHeader() {
           {/*{(userSimple.name != undefined) ? `name : ${userSimple.name}` : null}*/}
           <div className="header-top-right">
             {/*로그인 전에 보이는 버튼*/}
-            {userSimple.id === undefined || userSimple.id === '' ? (
+            {!userSimple ? (
               <Button
                 title="로그인"
                 onClick={() => {
