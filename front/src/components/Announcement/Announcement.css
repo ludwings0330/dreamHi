@@ -13,6 +13,8 @@
   border-width: 0.1rem;
   font-family: 'LINESeedKR-Bd';
   margin: 2rem;
+  margin-left: 7rem;
+  margin-right: 7rem;
   padding: 1.5rem;
 }
 
@@ -23,94 +25,6 @@
 
 .casting-text {
   font-size: medium;
-}
-
-.search-name {
-  float: left;
-  width: 25%;
-}
-
-.name-input {
-  width: 200px;
-  height: 50px;
-  font-size: 20px;
-  border: 0;
-  border-radius: 15px;
-  outline: none;
-  padding-left: 80px;
-  background-color: rgb(233, 233, 233);
-}
-
-.name-label {
-  font-size: 30px;
-}
-
-.search-gender {
-  float: left;
-  width: 25%;
-}
-.gender-input {
-  width: 200px;
-  height: 50px;
-  font-size: 20px;
-  border: 0;
-  border-radius: 15px;
-  outline: none;
-  padding-left: 80px;
-  background-color: rgb(233, 233, 233);
-}
-
-.gender-label {
-  font-size: 30px;
-}
-
-.search-age {
-  float: left;
-  width: 25%;
-}
-.age-input {
-  width: 200px;
-  height: 50px;
-  font-size: 20px;
-  border: 0;
-  border-radius: 15px;
-  outline: none;
-  padding-left: 80px;
-  background-color: rgb(233, 233, 233);
-}
-
-.age-label {
-  font-size: 30px;
-}
-
-.search-height {
-  float: left;
-  width: 25%;
-}
-.height-input {
-  width: 200px;
-  height: 50px;
-  font-size: 20px;
-  border: 0;
-  border-radius: 15px;
-  outline: none;
-  padding-left: 80px;
-  background-color: rgb(233, 233, 233);
-}
-
-.height-label {
-  font-size: 30px;
-}
-
-.search-styles {
-}
-
-.style-label {
-  font-size: 30px;
-}
-
-.style-check-label {
-  font-size: 25px;
 }
 
 .style-checkbox ::before {
@@ -127,17 +41,113 @@
   background-color: blue;
 }
 
-.search-button {
+/* Search bar */
+
+#announcement-search-info {
   border-style: solid;
-  border-color: black;
-  border-width: medium;
-  border-radius: 15px;
-  font-size: 30px;
-  width: 100px;
-  text-align: center;
-  margin-left: 1200px;
-  margin-bottom: 10px;
+  border-radius: 20px;
+  border-color: rgb(233, 233, 233);
+  border-width: 0.2rem;
+  font-family: 'LINESeedKR-Bd';
+  padding-left: 5rem;
+  padding-right: 5rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  margin: 2rem;
+  margin-left: 7rem;
+  margin-right: 7rem;
+  height: 10rem;
 }
+
+.search-title {
+  float: left;
+  width: 25%;
+}
+
+.text-search-span {
+  font-size: 20px;
+}
+
+.text-search-input {
+  margin-left: 1rem;
+  width: 10rem;
+  height: 2rem;
+  font-size: 18px;
+  font-weight: 10;
+  text-align: center;
+  border: 0;
+  border-radius: 15px;
+  outline: none;
+  background-color: rgb(233, 233, 233);
+}
+
+.gender-search-input {
+  margin-left: 151remx;
+  width: 7rem;
+  height: 2rem;
+  font-size: 20px;
+  text-align: center;
+  border: 0;
+  border-radius: 15px;
+  outline: none;
+  background-color: rgb(233, 233, 233);
+}
+
+.number-search-input {
+  margin-left: 1rem;
+  width: 7rem;
+  height: 2rem;
+  font-size: 18px;
+  font-weight: 10;
+  text-align: center;
+  border: 0;
+  border-radius: 15px;
+  outline: none;
+  background-color: rgb(233, 233, 233);
+}
+
+.search-age {
+  float: left;
+  width: 25%;
+}
+
+.search-height {
+  float: left;
+  width: 25%;
+}
+
+.search-styles {
+  float: left;
+  margin-top: 2rem;
+}
+
+.style-checkbox {
+  border: 1px solid gray;
+  margin-left: 0.5rem;
+}
+
+.style-search-items-label {
+  font-size: 17px;
+  margin-right: 0rem;
+}
+.style-search-span {
+  font-size: 20px;
+}
+
+.search-buttons {
+  margin-left: 2rem;
+  border: none;
+  background-color: #7ea6f4;
+  padding-left: 1.2rem;
+  padding-right: 1.2rem;
+}
+
+.search-button-text {
+  font-size: 20px;
+  font-family: 'LINESeedKR-Bd';
+}
+
+/* 원래 있던 것 _ 안쓸듯?? */
 
 .announcement-list-item-wrapper {
   width: calc(80%);
