@@ -23,6 +23,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.support.PageableExecutionUtils;
@@ -60,28 +61,21 @@ public class VolunteerRepositoryCustomImpl implements VolunteerRepositoryCustom 
 
     @Override
     public Page<VolunteerSimpleInfo> findVolunteersByCondition(VolunteerSearchCondition condition) {
-        final JPAQuery<VolunteerSimpleInfo> query = queryFactory.select(
-                                                                        new QVolunteerSearchResponseDto_VolunteerSimpleInfo(
-                                                                                user.id, user.picture.url, user.name, volunteer.state,
-                                                                                actorProfile.height, actorProfile.age,
-                                                                                actorProfile.id.in(
-                                                                                        JPAExpressions.select(QFollow.follow.actor.id)
-                                                                                                      .from(QFollow.follow)
-                                                                                                      .where(QFollow.follow.follower.id.eq(condition.getUserId()))
-                                                                                )
-                                                                        )
-                                                                )
-                                                                .from(volunteer)
-                                                                .join(volunteer.user, user)
-                                                                .join(actorProfile).on(actorProfile.user.id.eq(user.id))
-                                                                .where(volunteer.process.id.eq(condition.getProcessId()),
-                                                                       volunteer.casting.id.eq(condition.getCastingId()),
-                                                                       stateEq(condition.getState()));
-        final List<VolunteerSimpleInfo> fetch = query.offset(condition.getPageable().getOffset())
-                                                     .limit(condition.getPageable().getPageSize())
-                                                     .fetch();
+        long totalCount = Objects.requireNonNullElse(getQueryByCondition(condition).select(volunteer.count()).fetchOne(), 0L);
+        final List<VolunteerSimpleInfo> fetch = getQueryByCondition(condition).select(new QVolunteerSearchResponseDto_VolunteerSimpleInfo(
+                                                                                      user.id, user.picture.url, user.name, volunteer.state,
+                                                                                      actorProfile.height, actorProfile.age,
+                                                                                      actorProfile.id.in(
+                                                                                              JPAExpressions.select(QFollow.follow.actor.id)
+                                                                                                            .from(QFollow.follow)
+                                                                                                            .where(QFollow.follow.follower.id.eq(condition.getUserId()))
+                                                                                      )
+                                                                              ))
+                                                                              .offset(condition.getPageable().getOffset())
+                                                                              .limit(condition.getPageable().getPageSize())
+                                                                              .fetch();
 
-        return PageableExecutionUtils.getPage(fetch, condition.getPageable(), () -> query.fetch().size());
+        return PageableExecutionUtils.getPage(fetch, condition.getPageable(), () -> totalCount);
     }
 
     @Override
@@ -92,6 +86,18 @@ public class VolunteerRepositoryCustomImpl implements VolunteerRepositoryCustom 
                     .where(volunteer.announcement.id.eq(announcementId),
                            volunteer.state.eq(VolunteerState.PASS))
                     .execute();
+    }
+
+    private JPAQuery<?> getQueryByCondition(VolunteerSearchCondition condition) {
+        return queryFactory.from(volunteer)
+                           .join(volunteer.user, user)
+                           .join(actorProfile)
+                           .on(actorProfile.user.id.eq(user.id))
+                           .where(volunteer.process.id.eq(
+                                          condition.getProcessId()),
+                                  volunteer.casting.id.eq(
+                                          condition.getCastingId()),
+                                  stateEq(condition.getState()));
     }
 
 //    @Override
