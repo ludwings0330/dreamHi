@@ -35,7 +35,7 @@ public class ProducerRepositoryCustomImpl implements ProducerRepositoryCustom {
                 0L
         );
 
-        final List<ProducerListResponseDto> fetch = getQueryByCondition(condition).select(Projections.constructor(
+        final List<ProducerListResponseDto> fetch = getQueryByCondition(condition).select(Projections.fields(
                                                                                           ProducerListResponseDto.class,
                                                                                           producer.id,
                                                                                           producer.name,
