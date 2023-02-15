@@ -68,8 +68,8 @@ public class BookRepositoryCustomImpl implements BookRepositoryCustom {
     public List<BookResponseDto> findAllForVolunteerByProcessIdAndDate(Long processId, LocalDate date) {
         return queryFactory.select(Projections.constructor(BookResponseDto.class,
                                                            book.id,
-                                                           START_TIME,
-                                                           END_TIME,
+                                                           book.startTime,
+                                                           book.endTime,
                                                            Expressions.asBoolean(book.reserved)
                            ))
                            .from(book)
