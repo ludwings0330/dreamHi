@@ -28,17 +28,17 @@ export default function ActorTimeTable() {
                   sx={{
                     boxShadow: 3,
                     borderRadius: 5,
-                    bgcolor: book.startTime === checkTime ? '#051094' : '#52B2BF',
+                    bgcolor: book.startDateTime === checkTime ? '#051094' : '#52B2BF',
                     opacity: book.reserved ? [1, 1, 0.1] : [1, 1, 0.8],
                   }}
                   textAlign="center"
                 >
                   <FormControlLabel
-                    label={`${book.startTime.match(/[0-9]+:[0-9]+/)}`}
+                    label={`${book.startDateTime.match(/[0-9]+:[0-9]+/)}`}
                     control={
                       <Radio
-                        checked={checkTime === book.startTime}
-                        value={book.startTime}
+                        checked={checkTime === book.startDateTime}
+                        value={book.startDateTime}
                         disabled={book.reserved}
                         onChange={handleCheck}
                         sx={{

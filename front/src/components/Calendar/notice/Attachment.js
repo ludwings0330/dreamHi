@@ -1,11 +1,9 @@
-import React, { useCallback, useState } from 'react';
-import { storage } from 'imageup/firebase';
+import React from 'react';
 import DownloadIcon from '@mui/icons-material/Download';
 import { Box, Tooltip, IconButton } from '@mui/material';
 import { noticeFileSelector } from '../../../recoil/file/fileStore';
 import { useRecoilValue } from 'recoil';
 import { downloadFile } from 'util/FileUtil';
-import axios from "axios";
 
 export default function Attachment() {
   const noticeFiles = useRecoilValue(noticeFileSelector());
