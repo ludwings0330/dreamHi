@@ -36,9 +36,7 @@ export default function NoticeUpload() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(fileData);
     if (files.length == fileData.length && fileData.length != 0) {
-      // 💥💥💥 db에 url 저장 -> 구현해야함
       const status = noticeFileUpload(announcementDetail.id, processDetail.processId, fileData);
       if (status === 201) {
         setFiles(() => []);
@@ -114,11 +112,8 @@ export default function NoticeUpload() {
           processDetail.processId,
           payload,
         );
-        console.log('일정 생성 성공 후 네비게이션 진행', status);
         if (status === 201) {
-          console.log('일정 생성 성공 후 네비게이션 진행');
           navigate('/casting');
-          console.log('일정 생성 성공 후 네비게이션 진행 후 ');
         }
       }
     });

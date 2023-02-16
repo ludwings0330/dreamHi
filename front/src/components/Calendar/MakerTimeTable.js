@@ -12,17 +12,9 @@ export default function MakerTimeTable() {
   const [checkVolunteerUserId, setVolunteerCheckUserId] = useRecoilState(volunteerUserIdState);
 
   const handleCheck = (e) => {
-    console.log('Handle Check UserID');
-    console.log(e.target.value);
     setVolunteerCheckUserId(e.target.value);
   };
 
-  useEffect(() => {}, [books]);
-
-  useEffect(() => {
-    console.log('set 됐나??');
-    console.log(checkVolunteerUserId);
-  }, [checkVolunteerUserId]);
   switch (books.state) {
     case 'hasValue':
       console.log(books);
