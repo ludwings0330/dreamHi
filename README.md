@@ -212,14 +212,13 @@
 ---
 
 - [회의록](output/meeting-log)
-- [기능 명세서](output/기능명세서/README.md) ( updated 23.01.16 )
-- [프로토타입](output/prototype/README.md)
-- [시퀀스 다이어그램](output/sequence-diagram/README.md) ( updated 23.01.23 )
-- [시스템 아키텍처](output/architecture/README.md)
-- [와이어프레임](output/prototype/README.md)
 - [컨벤션](output/docs/README.md)
+- [기능 명세서](output/기능명세서/README.md)
+- [프로토타입](output/prototype/README.md)
+- [시퀀스 다이어그램](output/sequence-diagram/README.md)
 - [API](output/api/README.md)
 - [ERD](output/erd/README.md)
+- [시스템 아키텍처](output/architecture/README.md)
 - [E2E 테스트 케이스](https://docs.google.com/spreadsheets/d/16IVVm1V1fmuVT7mTiPPC1_Gx9Uwhbqojm7hqa-oafSk/edit#gid=0)
 - [발표 자료](output/presentation/README.md)
 
@@ -227,4 +226,21 @@
 
 ---
 
-- 추가예정
+1. 낮은 조회 성능 : JPA를 사용할 때 발생하는 N + 1 문제 해결
+   - Fetch Join
+   - Batch Size, Bulk Select
+
+2. JWT를 백엔드에서 프론트엔드로 전달할 때, Refresh Token에 대한 정책
+   - Access Token만 프론트엔드로 전달하는 것을 선택
+   - 혹여나 Access Token이 탈취된 사실을 알게 되었을 때, DB에서 Refresh Token을 삭제하는 식으로 더 빠른 대응이 가능하기 때문
+
+3. 인증과 인가의 모호함
+   - 게스트 유저를 서버에서 강제로 로그인 시킴으로서 모든 유저는 사실상 항상 인증된 상태
+   - 이러한 문제를 해결하기 위해 인가를 위해 사용하는 `@PreAuthorize`를 인증에도 함께 활용
+   - 최종적으로는 인증과 인가를 담당하는 빈을 등록하여 책임을 위임하였으나 다소 아쉬움이 있음
+
+4. 오픈비두 서버와 기존 서버의 충돌
+   - 기존의 NGINX가 80 포트를 사용 중
+   - 오픈비두 관련 이미지들을 컨테이너로 올릴 때 NGINX 컨테이너가 포함되어 있었고, 해당 컨테이너도 80 포트를 사용
+   - 80 포트의 충돌로 인해 제대로 작동하지 않음
+   - 기존에 사용하던 NGINX를 삭제하고 새로운 NGINX 컨테이너에 오픈비두 서버, 백엔드 서버, 프론트엔드 관련 설정을 추가하여 해결 
