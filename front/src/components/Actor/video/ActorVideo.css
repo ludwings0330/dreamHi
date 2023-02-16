@@ -6,51 +6,72 @@
   font-style: normal;
 }
 
-.actor-video {
+#actor-video-whole {
+  display: flex;
   font-family: 'LINESeedKR-Bd';
+  margin-top: 50px;
+  margin-left: 50px;
+  margin-bottom: 50px;
+  flex-direction: column;
 }
-
-.actor-video-whole {
-  padding: 30px;
-  width: 100%;
-  height: 300px;
+.actor-video-list-main {
   display: flex;
 }
 
-/*.actor-photo-main {*/
-/*    flex:1;*/
-/*}*/
-.actor-video-main > img {
-  aspect-ratio: 1;
-  max-width: 250px;
-  max-height: 250px;
-}
-
 .actor-video-list {
-  flex: 2;
-  display: inline-block;
+  padding: 10px;
+  width: 100%;
+  height: 300px;
+  display: flex;
+  border: 1px solid #eee;
+  border-radius: 5px;
 }
 
-.actor-video-list img {
+.actor-video-main > video {
+  aspect-ratio: 1;
+  max-width: 300px;
+  max-height: 300px;
+}
+
+.actor-video {
+  display: inline-block;
+  border: 1px solid #eee;
+  border-radius: 5px;
+}
+
+.actor-video video {
   border-radius: 10px;
   object-fit: contain;
-  width: 100px;
-  height: 100px;
 }
 
-.file-box {
-  display: inline-block;
+.actor-video-list-item {
+  width: 250px;
+  height: 250px;
 }
 
-.file-box label {
+/*video-upload 부분 css*/
+#video-list-plus-section {
+  font-family: 'LINESeedKR-Bd';
+  padding-top: 238px;
 }
 
-.file-box input[type='file'] {
-  position: absolute;
-  width: 0;
-  height: 0;
-  padding: 0;
-  overflow: hidden;
-  border: 0;
-  display: none;
+.video-plus-button {
+  width: 30px;
+  height: 30px;
+}
+
+.actor-video-upload-button {
+  background: rgba(68, 68, 68, 0.5);
+  color: white;
+  border: 2px solid white;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: 0.5s ease;
+}
+
+.actor-video-upload-button:hover {
+  transition: 0.5s ease;
+  border: 2px solid black;
+  background: transparent;
+  color: black;
 }

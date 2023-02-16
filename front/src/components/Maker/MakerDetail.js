@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 //import component
 // import Button from '../Common/CommonComponent/Button';
 import { Button } from '@mui/material';
+import {} from './MakerDetail.css';
 
 //import recoil
 import { makerAnnouncementLists, makerFilmoLists, makerMemberLists } from 'recoil/maker/makerStore';
@@ -71,16 +72,17 @@ const MakerDetail = () => {
 
   return (
     <>
-      <div>
-        <h1>기본 정보 </h1>
-        <div className="photo" width={'400px'} height={'500px'}>
+      <div id={'maker-detail-whole'}>
+        <h1 className={'maker-detail-title'}>기본 정보 </h1>
+        <div className="maker-image-section">
           제작사 이미지 :
-          <img src={makerInfo.pictureUrl} alt="image" className="object-center" />
+          <img src={makerInfo.pictureUrl} alt="image" className="maker-first-image" />
         </div>
 
-        <div>제작사 이름 : {makerInfo.name}</div>
-        <div>제작사 설명 : {makerInfo.description}</div>
+        <div className={'maker-name'}>제작사 이름 : {makerInfo.name}</div>
+        <div className={'maker-description'}>제작사 설명 : {makerInfo.description}</div>
       </div>
+
       <hr />
       <MakerFilmo makerInfo={makerInfo} />
       <hr />

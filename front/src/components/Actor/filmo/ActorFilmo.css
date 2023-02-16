@@ -68,6 +68,7 @@
   font-size: 16px;
   transition: 0.5s ease;
 }
+
 .actor-filmo-upload-button:hover {
   transition: 0.5s ease;
   border: 2px solid black;

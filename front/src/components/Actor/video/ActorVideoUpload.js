@@ -49,17 +49,11 @@ function ActorVideoUpload({ actorInfo }) {
   };
 
   return (
-    <div>
-      <div className="Video-list">
+    <>
+      <div id="video-list-plus-section">
         <div className="file-box">
           <label htmlFor="file-video">
-            <img
-              src="/img/plus.png"
-              width={'200px'}
-              height={'200px'}
-              object-fit={'cover'}
-              className="object-center"
-            />
+            <img src="/img/plus.png" object-fit={'cover'} className={'video-plus-button'} />
           </label>
           <input
             type="file"
@@ -68,10 +62,12 @@ function ActorVideoUpload({ actorInfo }) {
               setActorVideoUploaded(e.target.files[0]);
             }}
           />
-          <button onClick={uploadFile}>동영상 올리기</button>
+          <button className={'actor-video-upload-button'} onClick={uploadFile}>
+            동영상 올리기
+          </button>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
