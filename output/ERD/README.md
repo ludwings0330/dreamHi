@@ -31,7 +31,7 @@
 ---
 
 ### 지원자 관리
-<img src="../images/API_volunteer.png" width="500">
+<img src="../images/ERD_volunteer.png" width="500">
 
 ---
 
