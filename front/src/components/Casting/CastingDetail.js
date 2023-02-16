@@ -13,11 +13,16 @@ import {
   Button,
   ButtonGroup
 } from 'reactstrap';
+import {useLocation} from "react-router-dom";
 
 function CastingDetail(props) {
   const [rSelected, setRSelected] = useState(null)
   const [posts, setPosts] = useState([])
   const [page, setPage] = useState(1)
+  const location = useLocation();
+
+  const announcementId = location.state.announcementId;
+  const castingId = location.state.castingId;
 
   const limit = 8
   const offset = (page - 1) * limit

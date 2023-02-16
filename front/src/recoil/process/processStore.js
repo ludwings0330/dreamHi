@@ -3,15 +3,14 @@ import jwtApi from 'util/JwtApi';
 import api from 'util/APIUtils';
 import { qs, stringify } from 'qs';
 import { userSimpleState } from 'recoil/user/userStore';
+import { recoilPersist } from 'recoil-persist';
+
+const { persistAtom } = recoilPersist();
 
 export const announcementProcessState = atom({
   key: 'announcementProcessState',
-  default: {
-    processId: 94591,
-    processState: 'IN_PROGRESS',
-    stageName: 'VIDEO',
-    userStageName: 'IN_PROGRESS',
-  },
+  default: {},
+  effects_UNSTABLE: [persistAtom],
 });
 
 export const announcementListDetailProcessSelector = selectorFamily({

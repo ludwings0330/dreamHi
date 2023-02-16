@@ -1,11 +1,9 @@
 import { atom, selectorFamily } from 'recoil';
 import dayjs from 'dayjs';
 import {
-  announcementListDetailSelector,
   announcementListDetailState,
 } from 'recoil/announcement/announcementStore';
 import {
-  announcementListDetailProcessSelector,
   announcementProcessState,
 } from 'recoil/process/processStore';
 import jwtApi from 'util/JwtApi';
@@ -22,8 +20,6 @@ export const auditionPeriodSelector = selectorFamily({
     async ({ get }) => {
       const announcementDetail = get(announcementListDetailState);
       const processDetail = get(announcementProcessState);
-      console.log(announcementDetail);
-      console.log(processDetail);
 
       const params = {
         pid: announcementDetail.isEditor ? announcementDetail.producer.id : null,
@@ -92,11 +88,9 @@ export const booksSelector = selectorFamily({
       }
       const announcementDetail = get(announcementListDetailState);
       const processDetail = get(announcementProcessState);
-      // const auditionSelectState
-      console.log('Selector => ', date);
       const params = {
         pid: announcementDetail.isEditor ? announcementDetail.producer.id : null,
-        date: date.format('YYYY-MM-DD'),
+        date: dayjs(date).format('YYYY-MM-DD'),
       };
 
       const data = await jwtApi
@@ -105,7 +99,6 @@ export const booksSelector = selectorFamily({
           { params: params },
         )
         .then((response) => response.data.result);
-      console.log(data);
 
       return data;
     },
@@ -116,8 +109,6 @@ export const isBookedSelector = selectorFamily({
   get:
     () =>
     async ({ get }) => {
-      // const announcementDetail = get(announcementListDetailSelector());
-      // const processDetail = get(announcementListDetailProcessSelector());
       const announcementDetail = get(announcementListDetailState);
       const processDetail = get(announcementProcessState);
       const data = await jwtApi
@@ -125,7 +116,6 @@ export const isBookedSelector = selectorFamily({
           `/api/announcements/${announcementDetail.id}/audition/on/${processDetail.processId}/reservation`,
         )
         .then((response) => response.data.result);
-      console.log("IsBooked", data);
       return data;
     },
 });

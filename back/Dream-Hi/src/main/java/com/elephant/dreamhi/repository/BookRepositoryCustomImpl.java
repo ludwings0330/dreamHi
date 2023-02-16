@@ -82,8 +82,8 @@ public class BookRepositoryCustomImpl implements BookRepositoryCustom {
     public List<BookProducerDto> findAllForProducerByProducerIdAndDate(Long processId, LocalDate date) {
         return queryFactory.select(Projections.constructor(BookProducerDto.class,
                                                            book.id,
-                                                           START_TIME,
-                                                           END_TIME,
+                                                           book.startTime,
+                                                           book.endTime,
                                                            Expressions.asBoolean(book.reserved),
                                                            volunteer.user.id
                            ))

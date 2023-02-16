@@ -14,6 +14,8 @@ public class VolunteerSearchResponseDto {
 
     private String castingName;
 
+    private Integer headCount;
+
     @Builder.Default
     private Map<VolunteerState, Long> stateSummary;
 

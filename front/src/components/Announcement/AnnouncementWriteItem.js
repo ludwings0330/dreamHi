@@ -11,6 +11,7 @@ import {
   announcementTitle,
 } from 'recoil/announcement/announcement';
 import { useRecoilState } from 'recoil';
+import './AnnouncementWrite.css';
 
 function AnnouncementWriteItem(props) {
   const [dataArray, setDataArray] = useState([]);
@@ -42,37 +43,13 @@ function AnnouncementWriteItem(props) {
 
   const formattedDate = dataEndDate.toISOString().substr(0, 10);
 
-  setEndDate(formattedDate)
-
-  // useEffect(() => {
-  //   return () => {
-  //     setEndDate(formattedDate);
-  //     console.log(22222, endDate);
-  //   };
-  // }, [dataEndDate]);
-  //
-  // useEffect(() => {
-  //   return () => {
-  //     setEndDate(formattedDate);
-  //     console.log(33333, endDate);
-  //   };
-  // }, []);
-
-  // setEndDate(formattedDate)
+  setEndDate(formattedDate);
 
   console.log('🤯🤯🤯🤯', endDate);
 
-  // const addTitle = (e) => {
-  //     setDataArray([...dataArray, dataTitle])
-  //     setDataTitle('')
-  //
-  //     console.log('❤❤',dataArray)
-  //     console.log('💗💗💗💗',dataTitle)
-  // }
-
   return (
-    <div>
-      <p>
+    <div id="announcement-write-info ">
+      <div>
         <label>작품명</label> :{' '}
         <input
           type="text"
@@ -82,9 +59,9 @@ function AnnouncementWriteItem(props) {
           maxLength={20}
           onChange={handleDataTitle}
         />
-      </p>
+      </div>
 
-      <p>
+      <div>
         <label>급여</label> :{' '}
         <input
           type="text"
@@ -94,9 +71,9 @@ function AnnouncementWriteItem(props) {
           maxLength={20}
           onChange={handleDataPayment}
         />
-      </p>
+      </div>
 
-      <p>
+      <div>
         <label>촬영 기간</label> :{' '}
         <input
           type="text"
@@ -106,7 +83,7 @@ function AnnouncementWriteItem(props) {
           maxLength={20}
           onChange={handleDataCrankPeriod}
         />
-      </p>
+      </div>
 
       <div>
         <label>공고 마감 날짜</label>
@@ -116,10 +93,7 @@ function AnnouncementWriteItem(props) {
           value={dataEndDate}
           dateFormat="yyyy-MM-dd"
         />
-        <br />
-        <p>Selected date: {formattedDate}</p>
       </div>
-      {/*<button onClick={addTitle}>추가</button>*/}
     </div>
   );
 }

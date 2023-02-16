@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { booksSelector, checkTimeState } from 'recoil/book/bookStore';
 import { useRecoilState, useRecoilValueLoadable } from 'recoil';
 import Grid from '@mui/material/Grid';
@@ -11,14 +11,9 @@ export default function ActorTimeTable() {
   const [checkId, setCheckId] = useState();
   const [checkTime, setCheckTime] = useRecoilState(checkTimeState);
   const handleCheck = (e) => {
-    console.log('Check ', e);
     setCheckId(e.id);
     setCheckTime(e);
   };
-
-  useEffect(() => {
-    console.log(checkTime);
-  }, [checkTime]);
 
   switch (books.state) {
     case 'hasValue':

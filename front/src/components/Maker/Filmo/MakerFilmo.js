@@ -26,7 +26,7 @@ const MakerFilmo = ({ makerInfo }) => {
               <div className="maker-filmo-main">
                 <img src={makerFilmos[0].photoUrl} alt={makerFilmos[0].photoUrl} />
                 <p>
-                  필모 이름 : {makerFilmos[0].title}, 필모 설명 : {makerFilmos[0].description},
+                  필모 이름 : {makerFilmos[0].title} <br/> 필모 설명 : {makerFilmos[0].description},
                 </p>
               </div>
 
