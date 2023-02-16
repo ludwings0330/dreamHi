@@ -15,8 +15,7 @@ const MakerAnnouncements = ({ makerInfo }) => {
       {makerAnnouncements
         ? makerAnnouncements.content.map((announcement) => (
             <div key={announcement.id}>
-              {announcement.title}, {announcement.id}, {announcement.title},{' '}
-              {announcement.createdDate}, {announcement.state}
+              {announcement.title}, {announcement.id}, {announcement.createdDate},{' '}
             </div>
           ))
         : null}

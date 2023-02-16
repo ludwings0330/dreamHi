@@ -14,12 +14,12 @@ import '../../../components/Casting/Casting.css';
 import './ActorFilmo.css';
 import { API_BASE_URL } from '../../../constants';
 import jwtApi from '../../../util/JwtApi';
+import { userSimpleState } from '../../../recoil/user/userStore';
 
-const ActorFilmoUpload = ({ actorId }) => {
+const ActorFilmoUpload = ({ actorInfo }) => {
   const [actorFilmos, setActorFilmos] = useRecoilState(actorFilmoLists);
   const [ActorFilmoUploaded, setActorFilmoUploaded] = useState(null);
   const ActorFilmoDirectory = useRecoilValue(actorFilmoUrl);
-  const actorInfo = useRecoilValue(actorProfile);
 
   const uploadFile = () => {
     if (ActorFilmoUploaded === null) {
@@ -37,7 +37,7 @@ const ActorFilmoUpload = ({ actorId }) => {
           photoUrl: url,
           title: 'title-filmography',
           description: 'description-filmography',
-          actorId: actorId,
+          actorId: actorInfo.actorProfileId,
         };
 
         jwtApi

@@ -13,10 +13,11 @@ import { Button } from '@mui/material';
 import ActorFilmo from './filmo/ActorFilmo';
 import ActorPhoto from './photo/ActorPhoto';
 import ActorVideo from './video/ActorVideo';
+import { userSimpleState } from '../../recoil/user/userStore';
 
 const ActorDetail = (props) => {
-  const { state } = useLocation();
   const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useRecoilState(userSimpleState);
   let { userId } = useParams();
   if (!userId) {
     userId = props.userId;
@@ -75,24 +76,25 @@ const ActorDetail = (props) => {
         </div>
       </div>
 
-      <ActorFilmo actorId={actorInfo.actorProfileId} />
+      <ActorFilmo actorInfo={actorInfo} />
       <ActorPhoto actorInfo={actorInfo} />
       <ActorVideo actorInfo={actorInfo} />
 
-      <Button
-        title="수정하기"
-        variant="contained"
-        onClick={() => navigate('/actor/write', { state: actorInfo })}
-      >
-        수정하기
-      </Button>
+      {userInfo.id === actorInfo.userId ? (
+        <>
+          <Button
+            title="수정하기"
+            variant="contained"
+            onClick={() => navigate('/actor/write', { state: actorInfo })}
+          >
+            수정하기
+          </Button>
 
-      <Button
-          variant="contained"
-          title="삭제하기"
-          onClick={() => navigate('/actor/delete')}>
-        삭제하기
-      </Button>
+          <Button variant="contained" title="삭제하기" onClick={() => navigate('/actor/delete')}>
+            삭제하기
+          </Button>
+        </>
+      ) : null}
     </>
   );
 };

@@ -3,9 +3,11 @@ import './ActorFilmo.css';
 import ActorFilmoUpload from './ActorFilmoUpload';
 import { actorFilmoLists } from 'recoil/actor/actorStore';
 import { useRecoilState } from 'recoil';
+import { userSimpleState } from '../../../recoil/user/userStore';
 
-const ActorFilmo = ({ actorId }) => {
+const ActorFilmo = ({ actorInfo }) => {
   const [actorFilmos, setActorFilmos] = useRecoilState(actorFilmoLists);
+  const [userInfo, setUserInfo] = useRecoilState(userSimpleState);
 
   const setSelected = (idx) => {
     document.querySelector(
@@ -14,11 +16,10 @@ const ActorFilmo = ({ actorId }) => {
   };
 
   return (
-    <>
-      <div id="actor-filmo-whole">
+    <div className="bg-white">
+      <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
         <h1 className={'actor-filmo-title'}>필모그래피</h1>
         <div className="actor-filmo-list-main">
-
           <div className={'actor-filmo-list'}>
             {/*메인이미지 부분*/}
             {actorFilmos && actorFilmos.length > 0 ? (
@@ -40,10 +41,10 @@ const ActorFilmo = ({ actorId }) => {
                 </div>
               ))}
           </div>
-          <ActorFilmoUpload actorId={actorId} />
+          {userInfo.id === actorInfo.userId ? <ActorFilmoUpload actorInfo={actorInfo} /> : null}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
