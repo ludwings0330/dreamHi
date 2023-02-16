@@ -80,7 +80,7 @@ const ActorDetail = (props) => {
       <ActorPhoto actorInfo={actorInfo} />
       <ActorVideo actorInfo={actorInfo} />
 
-      {userInfo.id === actorInfo.userId ? (
+      {userInfo && userInfo.id === actorInfo.userId ? (
         <>
           <Button
             title="수정하기"

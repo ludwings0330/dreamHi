@@ -41,7 +41,7 @@ const ActorFilmo = ({ actorInfo }) => {
                 </div>
               ))}
           </div>
-          {userInfo.id === actorInfo.userId ? <ActorFilmoUpload actorInfo={actorInfo} /> : null}
+          {userInfo && userInfo.id === actorInfo.userId ? <ActorFilmoUpload actorInfo={actorInfo} /> : null}
         </div>
       </div>
     </div>
