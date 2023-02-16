@@ -30,7 +30,8 @@ const ActorFilmo = ({ actorInfo }) => {
             {actorFilmos &&
               actorFilmos.length > 0 &&
               actorFilmos.map((filmography, idx) => (
-                <div className="actor-filmo" key={filmography.id}>
+                <div className="actor-filmo"
+                     key={filmography.id}>
                   <img
                     src={filmography.photoUrl}
                     alt="image"
