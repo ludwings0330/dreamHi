@@ -102,6 +102,7 @@ public class VolunteerService {
         responseDto.setCastingId(condition.getCastingId());
         Casting casting = castingRepository.findById(condition.getCastingId()).orElseThrow(() -> new NotFoundException("존재하지 않는 배역입니다."));
         responseDto.setCastingName(casting.getName());
+        responseDto.setHeadCount(casting.getHeadcount());
 
         // 해당 배역에 지원한 유저들 모두 구하기 (필터링 -> state)
         final Page<VolunteerSimpleInfo> volunteersByCondition = volunteerRepository.findVolunteersByCondition(condition);
@@ -131,6 +132,7 @@ public class VolunteerService {
 
     /**
      * 현재 채용 절차에 해당하는 지원자 수 조회
+     *
      * @param processId
      * @return volunteer count
      */
