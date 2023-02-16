@@ -8,7 +8,7 @@ import '../components/Casting/Casting.css';
 import { useRecoilState, atom } from 'recoil';
 import 'recoil/announcement/announcement';
 import { announcementPictureUrl } from 'recoil/announcement/announcement';
-
+import '../components/Announcement/AnnouncementWrite.css';
 
 function ImageUpload(props) {
   const [imageUpload, setImageUpload] = useState(null);
@@ -21,17 +21,15 @@ function ImageUpload(props) {
     uploadBytes(imageRef, imageUpload).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
         // setImageUrls((prev) => [...prev, url]);
-        setImageUrls((prev) => (url));
-        console.log(23242525)
-        console.log(url)
-        console.log(232323)
+        setImageUrls((prev) => url);
+        console.log(23242525);
+        console.log(url);
+        console.log(232323);
         console.log(imageUrls, 'imimimimage');
         // const annoumcementImg = atom({
         //   key: 'annoumcementImg',
         //   default: 'https://firebasestorage.googleapis.com/v0/b/dreamhi-17f24.appspot.com/o/logo.png?alt=media&token=a3ff4d49-9210-44d1-94e3-6d9d2dd64f22'
         // })
-
-
       });
     });
   };
@@ -60,12 +58,6 @@ function ImageUpload(props) {
   //   });
   // }, []);
 
-
-
-
-
-
-
   // useEffect(() => {
   //   listAll(imagesListRef).then((response) => {
   //     console.log(3434343434);
@@ -79,14 +71,6 @@ function ImageUpload(props) {
   //     });
   //   });
   // }, []);
-
-
-
-
-
-
-
-
 
   // console.log(1414141141);
   // console.log(imageUrls);
@@ -112,6 +96,9 @@ function ImageUpload(props) {
 
   return (
     <div>
+      <div id="announcement-write-img">
+        <img src={imageUrls} />
+      </div>
       <input
         type="file"
         onChange={(event) => {
@@ -124,15 +111,8 @@ function ImageUpload(props) {
         //   props.onChange(imageUrls[imageUrls.length - 1]);
         // }}
       >
-        Upload Image
+        이미지 업로드
       </button>
-      <div>
-        {/*{imageUrls.map((url) => {*/}
-        {/*  return <img src={url} />;*/}
-        {/*})}*/}
-
-        <img src={imageUrls} />
-      </div>
     </div>
   );
 }

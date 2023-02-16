@@ -11,6 +11,11 @@ import {
 } from 'recoil/announcement/announcementStore';
 import { useRecoilState } from 'recoil';
 
+// import Css
+import { MDBBtn, MDBCol, MDBContainer, MDBRow } from 'mdb-react-ui-kit';
+import './Announcement.css';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 //import component
 // import Button from '../CommonComponent/Button';
 
@@ -108,18 +113,28 @@ function AnnouncementSearchBar() {
   return (
     <>
       {/*최상위 tag에는 id로 할당하자*/}
-      <form id={'actor-info'}>
-        <div className={'search-name'}>
+      <form id="announcement-search-info">
+        <div className="search-title">
           <label>
-            이름
-            <input type={'text'} value={name} onChange={handleChangeName} />
+            <span className="text-search-span">공고 제목</span>
+            <input
+              className="text-search-input"
+              type="text"
+              value={name}
+              onChange={handleChangeName}
+            />
           </label>
         </div>
 
-        <div className={'search-gender'}>
+        <div className={'search-title'}>
           <label>
-            성별
-            <select name="gender" onChange={handleSelectGender} value={selectGender}>
+            <span className="text-search-span">배역 성별</span>
+            <select
+              className="gender-search-input"
+              name="gender"
+              onChange={handleSelectGender}
+              value={selectGender}
+            >
               <option value="male">남</option>
               <option value="female">여</option>
             </select>
@@ -128,24 +143,37 @@ function AnnouncementSearchBar() {
 
         <div className={'search-age'}>
           <label>
-            나이
-            <input type={'number'} value={age} onChange={handleChangeAge} />
+            <span className="text-search-span">배역 나이</span>
+            <input
+              className="number-search-input"
+              type={'number'}
+              value={age}
+              onChange={handleChangeAge}
+            />
           </label>
         </div>
 
         <div className={'search-height'}>
           <label>
-            키
-            <input type={'number'} value={height} onChange={handleChangeHeight} />
+            <span className="text-search-span">배역 키</span>
+            <input
+              className="number-search-input"
+              type={'number'}
+              value={height}
+              onChange={handleChangeHeight}
+            />
           </label>
         </div>
 
         <div className={'search-styles'}>
-          <label>스타일</label>
+          <label>
+            <span className="text-search-span">배역 스타일 </span>
+          </label>
           {stylesList.map((item) => {
             return (
               <label key={item.id}>
                 <input
+                  className="style-checkbox"
                   type={'checkbox'}
                   value={item.id}
                   onChange={(e) => {
@@ -153,21 +181,14 @@ function AnnouncementSearchBar() {
                   }}
                   checked={checkedStyles.includes(item.id) ? true : false}
                 />
-                {item.description}
+                <span className={'style-search-items-label'}> {item.description} </span>
               </label>
             );
           })}
+          <Button onClick={searchAnnouncement} className="search-buttons">
+            <span className="search-button-text">검색</span>
+          </Button>
         </div>
-
-        <div onClick={() => searchAnnouncement()}>
-          {/* <div className={'search-button'}> */}
-          검색
-          {/* <Button
-             title="검색"
-
-         /> */}
-        </div>
-        <hr />
       </form>
     </>
   );
