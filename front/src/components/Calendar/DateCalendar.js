@@ -15,10 +15,6 @@ export default function DateCalendar() {
   const [checkTime, setCheckTime] = useRecoilState(checkTimeState);
   const period = useRecoilValue(auditionPeriodSelector());
 
-  useEffect(() => {
-    console.log('일 변경 시 checkTime 수정');
-    console.log(checkTime);
-  }, [checkTime]);
   return (
     <Grid
       container

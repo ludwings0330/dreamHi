@@ -9,8 +9,9 @@ import MakerAuditionNotice from './MakerAuditionNotice';
 import { useRecoilValue } from 'recoil';
 import { announcementTitle } from 'recoil/announcement/announcement';
 import { announcementListDetailState } from '../../../recoil/announcement/announcementStore';
-import Attachment from "./Attachment";
-import ReservationButton from "../ReservationButton";
+import Attachment from './Attachment';
+import ReservationButton from '../ReservationButton';
+import MakerAuditionButton from '../MakerAuditionButton';
 
 function Item(props) {
   const { sx, ...other } = props;
@@ -32,9 +33,6 @@ function Item(props) {
 }
 
 Item.propTypes = {
-  /**
-   * The system prop that allows defining system overrides as well as additional CSS styles.
-   */
   sx: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])),
     PropTypes.func,
@@ -78,14 +76,13 @@ export default function BasicNotice() {
             flexDirection: 'column',
             justifyContent: 'space-between',
             height: 500,
-            // alignItems: 'flex-start',
           }}
         >
-          {!announcementDetail.isEditor ? <ActorAuditionNotice /> : <MakerAuditionNotice />}
+          {announcementDetail.isEditor ? <MakerAuditionNotice /> : <ActorAuditionNotice /> }
         </Box>
         <Stack direction="row" alignItems="center" justifyContent="flex-end" mt={3} ml={2}>
           <Attachment />
-          <ReservationButton />
+          {announcementDetail.isEditor ? <MakerAuditionButton /> : <ReservationButton />}
         </Stack>
       </Box>
     </Paper>

@@ -7,8 +7,8 @@ export const volunteersState = atom({
   default: [],
 });
 
-export const vlounteerUserIdState = atom({
-  key: 'vlounteerUserIdState',
+export const volunteerUserIdState = atom({
+  key: 'volunteerUserIdState',
   default: null,
 });
 
@@ -25,3 +25,18 @@ export const totalVolunteerSelector = selectorFamily({
       return data;
     },
 });
+
+export const volunteerDetailSelector = selectorFamily({
+  key: "volunteerDetailSelector",
+  get: () => async ({get}) => {
+    const userId = get(volunteerUserIdState);
+    if(userId === null) return 'loading';
+    // /api/users/{userId}/actor-profile
+    const data = await jwtApi.get(`/api/users/${userId}/actor-profile`)
+    .then(response => {
+      console.log(response);
+      return response.data.result;
+    });
+    return data;
+  }
+})

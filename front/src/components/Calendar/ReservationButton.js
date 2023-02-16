@@ -80,7 +80,6 @@ function ReservationButton() {
             },
           )
           .then((response) => {
-            console.log(response);
             updateSessionIdState(response.data.result);
             navigate(`/live`);
             return response.data.result;
