@@ -10,6 +10,7 @@ import {
 import { userSimpleState } from 'recoil/user/userStore';
 import { Tag } from '../../../node_modules/@mui/icons-material/index';
 import AnnouncementApply from './AnnouoncementApply';
+import './AnnouncementWrite.css';
 
 function AnnouncementDetailButton(props) {
   const user = useRecoilValue(userSimpleState);
@@ -50,15 +51,13 @@ function AnnouncementDetailButton(props) {
   let button;
   if (buttonState == '지원하기' && user) {
     button = <AnnouncementApply />;
+  } else if (buttonState == '지원 완료') {
+    button = <Button title={'지원 완료'} />;
   } else {
-    button = <Button title={'지원완료'} />;
+    button = <Button title={'지원 불가'} />;
   }
 
-  return (
-    <div>
-      {button} {/* <Button title={buttonState} />{' '} */}
-    </div>
-  );
+  return <div className="announcement-process-button">{button}</div>;
 }
 
 export default AnnouncementDetailButton;
