@@ -5,11 +5,11 @@ import Box from '@mui/material/Box';
 import Radio from '@mui/material/Radio';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { booksSelector } from 'recoil/book/bookStore';
-import { vlounteerUserIdState } from '../../recoil/volunteer/volunteerStore';
+import { volunteerUserIdState } from '../../recoil/volunteer/volunteerStore';
 
 export default function MakerTimeTable() {
   const books = useRecoilValueLoadable(booksSelector());
-  const [checkVolunteerUserId, setVolunteerCheckUserId] = useRecoilState(vlounteerUserIdState);
+  const [checkVolunteerUserId, setVolunteerCheckUserId] = useRecoilState(volunteerUserIdState);
 
   const handleCheck = (e) => {
     console.log('Handle Check UserID');
@@ -46,7 +46,7 @@ export default function MakerTimeTable() {
                   textAlign="center"
                 >
                   <FormControlLabel
-                    label={`${book.startTime.match(/[0-9]+:[0-9]+/)}`}
+                    label={`${book.startDateTime.match(/[0-9]+:[0-9]+/)}`}
                     control={
                       <Radio
                         checked={checkVolunteerUserId == book.userId}
