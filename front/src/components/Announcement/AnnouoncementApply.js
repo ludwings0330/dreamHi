@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from '../../../node_modules/react-router-dom/dist/index';
 import Modal from 'react-modal';
 import ActorWrite from 'components/Actor/ActorWrite';
 import Button from 'components/Common/CommonComponent/Button';
@@ -13,7 +14,7 @@ import ActorDetail from 'components/Actor/ActorDetail';
 
 const ApplyModal = ({ isOpen, onRequestClose }) => {
   let user = useRecoilValue(userSimpleState);
-
+  const navigate = useNavigate();
   const announcementData = useRecoilValue(announcementListDetailState);
   const announcementId = announcementData.id;
   console.log('💕💕💕💕', announcementData);
@@ -30,6 +31,8 @@ const ApplyModal = ({ isOpen, onRequestClose }) => {
       .then((response) => {
         console.log('post/apply/profile');
         console.log(response);
+        alert('지원이 완료되었습니다.');
+        navigate('/announcement');
       });
   };
 

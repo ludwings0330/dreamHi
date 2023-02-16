@@ -32,6 +32,10 @@ function AnnouncementDetail(props) {
     console.log('change AnnouncementData', annouoncementData);
   }, [annouoncementData]);
 
+  useEffect(() => {
+    console.log('herehere');
+  }, []);
+
   return (
     <div>
       <AnnouncementDetailProcess announcement={announcement} />

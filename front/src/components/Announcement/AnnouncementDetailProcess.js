@@ -5,6 +5,11 @@ import {
   announcementProcessState,
 } from 'recoil/process/processStore';
 import AnnouncementDetailButton from './AnnouncementDetailButton';
+import { styled } from '../../../node_modules/@mui/material/styles';
+import Box from '../../../node_modules/@mui/material/Box';
+import Grid from '../../../node_modules/@mui/material/Grid';
+import Chip from '../../../node_modules/@mui/material/Chip';
+import './AnnouncementDetail.css';
 
 export default function AnnouncementDetailProcess(props) {
   const { announcement } = props;
@@ -17,9 +22,14 @@ export default function AnnouncementDetailProcess(props) {
 
   return (
     <div>
-      {processData.processState === 'RECRUITING' ? '⭕' : '❌'}
+      <div className="announcement-detail-process">
+        <Chip
+          label={processData.processState == 'RECRUITING' ? '모집중' : '마감'}
+          variant="outlined"
+          color="primary"
+        />
+      </div>
       <AnnouncementDetailButton key={processData.id} processData={processData} />
-      <p>너는 어딨는데??</p>
     </div>
   );
 }

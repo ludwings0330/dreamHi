@@ -3,6 +3,10 @@ import React from 'react';
 import Button from '../Common/CommonComponent/Button';
 import AnnouncementDetailCasting from './AnnouncementDetailCasting';
 import './AnnouncementDetail.css';
+import { styled } from '../../../node_modules/@mui/material/styles';
+import Box from '../../../node_modules/@mui/material/Box';
+import Grid from '../../../node_modules/@mui/material/Grid';
+import Chip from '../../../node_modules/@mui/material/Chip';
 
 function AnnouncementDetailItem(props) {
   const { announcement } = props;
@@ -22,10 +26,9 @@ function AnnouncementDetailItem(props) {
           <p>모집 마감: {announcement.endDate}</p>
         </div>
       </div>
-      <h5 id="announcement-detail-full">배역 상세</h5>
-      <div id="announcement-detail-full">
+      <Grid id="announcement-write-full">
         <AnnouncementDetailCasting key={announcementId} announcement={announcement} />
-      </div>
+      </Grid>
       <h6 id="announcement-detail-full">상세내용: {announcement.description}</h6>
     </div>
   );
