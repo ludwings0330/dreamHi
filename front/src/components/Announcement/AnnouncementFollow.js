@@ -1,4 +1,4 @@
-import Button from 'components/Common/CommonComponent/Button';
+// import Button from 'components/Common/CommonComponent/Button';
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilValue, useRecoilState } from 'recoil';
@@ -12,6 +12,9 @@ import {
 import jwtApi from 'util/JwtApi';
 import Chip from '../../../node_modules/@mui/material/Chip';
 import { styled } from '../../../node_modules/@mui/material/styles';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import Button from '@mui/material/Button';
 
 function AnnouncementFollow(props) {
   const { announcementId } = useParams();
@@ -36,7 +39,7 @@ function AnnouncementFollow(props) {
     try {
       if (followAnnouncement == false) {
         await jwtApi.post('api/follow', sendData).then((response) => {
-          console.log('😫🥱🥱', response);
+          console.log('😫🥱', response);
           setFollowAnnouncement(true);
         });
       } else if (followAnnouncement == true) {
@@ -51,14 +54,13 @@ function AnnouncementFollow(props) {
   };
 
   return (
-    <div>
+    <div className="announcement-follow-chip">
       <Chip
         onClick={handleClick}
-        label={followAnnouncement == true ? '팔로잉중' : '언팔로잉중'}
+        label={followAnnouncement == true ? <FavoriteIcon /> : <FavoriteBorderIcon />}
         variant="outlined"
         color="primary"
       />
-      {/* <Button onClick={handleClick} title={followAnnouncement == true ? '팔로우' : '언팔로우'} /> */}
     </div>
   );
 }

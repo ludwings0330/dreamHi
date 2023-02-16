@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useNavigate, useParams, Link } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../Common/CommonComponent/Button';
 import AnnouncementDetailItem from './AnnouncementDetailItem';
 import { useRecoilValue, useRecoilState } from 'recoil';
@@ -13,7 +13,6 @@ import AnnouncementDetailProcess from './AnnouncementDetailProcess';
 import AnnouncementDetailButton from './AnnouncementDetailButton';
 import AnnouncementFollow from './AnnouncementFollow';
 import jwtApi from 'util/JwtApi';
-import CastingPage from '../../pages/CastingPage';
 
 // import Css
 import { styled } from '../../../node_modules/@mui/material/styles';
@@ -39,21 +38,12 @@ function AnnouncementDetail(props) {
 
   return (
     <div>
-      <h1>공고상세페이지</h1>
-      <Button title="뒤로 가기" onClick={() => navigate('/announcement')} />
-
-      <br />
       <AnnouncementDetailProcess announcement={announcement} />
 
+      <AnnouncementFollow isFollow={announcement.isFollow} />
       <AnnouncementDetailItem announcement={announcement} />
 
       {/* <AnnouncementDetailButton key={announcementId} announcement={announcement} /> */}
-
-      <AnnouncementFollow isFollow={announcement.isFollow} />
-
-      <Link to="/casting" state={{ announcementId: announcement.id }}>
-        지원자 관리
-      </Link>
     </div>
   );
 }
