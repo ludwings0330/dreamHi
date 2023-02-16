@@ -30,9 +30,9 @@
   - 아이디어 선정
 - 2023.01.10(화) ~ 2023.01.13(금)
   - [기능명세서 작성](output/기능명세서/README.md)
-  - [와이어프레임 제작](output/프로토타입/README.md)
+  - [와이어프레임 제작](output/prototype/README.md)
 - 2023.01.16(월) ~ 2023.01.27(금)
-  - [프로토타입 제작](output/프로토타입/README.md)
+  - [프로토타입 제작](output/prototype/README.md)
   - [ERD 작성](output/ERD/README.md)
   - [시퀀스 다이어그램 작성](output/시퀀스 다이어그램/README.md)
 - 2023.01.30(월) ~ 2023.02.10(금)
@@ -43,7 +43,7 @@
   - OpenVidu 적용
 - 2023.02.13(월) ~ 2023.02.15(금)
   - [FrontEnd 구현](#-기술-스택)
-  - E2E 테스트 및 버그 수정
+  - [E2E 테스트 및 버그 수정](https://docs.google.com/spreadsheets/d/16IVVm1V1fmuVT7mTiPPC1_Gx9Uwhbqojm7hqa-oafSk/edit#gid=0)
   - 산출물 문서화
 
 ## 📝 DreamHi - 배경
@@ -215,10 +215,10 @@
 
 - [회의록](output/meeting-log)
 - [기능 명세서](output/기능명세서/README.md) ( updated 23.01.16 )
-- [프로토타입](output/프로토타입/README.md)
+- [프로토타입](output/prototype/README.md)
 - [시퀀스 다이어그램](output/시퀀스 다이어그램/README.md) ( updated 23.01.23 )
 - [시스템 아키텍처](#-시스템-아키텍처)
-- [와이어프레임](output/프로토타입/README.md)
+- [와이어프레임](output/prototype/README.md)
 - [컨벤션](output/docs/README.md)
 - [API](output/API/README.md)
 - [ERD](output/ERD/README.md)
