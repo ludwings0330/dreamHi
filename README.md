@@ -116,8 +116,8 @@
 
 ### Dev-ops
 - Docker
-- jenkins
-- nginx
+- Jenkins
+- NGINX
 
 ## ✅ 협업 툴
 
@@ -223,7 +223,7 @@
 - [API](output/api/README.md)
 - [ERD](output/erd/README.md)
 - [E2E 테스트 케이스](https://docs.google.com/spreadsheets/d/16IVVm1V1fmuVT7mTiPPC1_Gx9Uwhbqojm7hqa-oafSk/edit#gid=0)
-- [발표 자료](output/발표 자료/README.md)
+- [발표 자료](output/presentation/README.md)
 
 ## 🔥 트러블 슈팅
 
