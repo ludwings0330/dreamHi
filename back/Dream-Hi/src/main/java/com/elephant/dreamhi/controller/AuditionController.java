@@ -203,7 +203,7 @@ public class AuditionController {
             @PathVariable Long announcementId,
             @AuthenticationPrincipal PrincipalDetails user
     ) throws NotFoundException, IllegalStateException {
-        auditionService.updateReserved(bookId);
+        auditionService.updateReserved(bookId, user.getId());
         return Response.create(HttpStatus.CREATED, "지원자의 화상 오디션 일정을 예약했습니다.");
     }
 

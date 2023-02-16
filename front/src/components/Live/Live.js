@@ -5,21 +5,32 @@ import UserVideoComponent from './UserVideoComponent';
 import './App.css';
 import { Grid, Divider } from '@mui/material';
 import Notice from './Notice';
+import { useRecoilValue } from 'recoil';
+import { sessionIdState } from '../../recoil/audition/auditionStore';
+import { userSimpleState } from '../../recoil/user/userStore';
 const APPLICATION_SERVER_URL = 'https://dreamhi.p-e.kr/';
 
-const AuditionMeeting = (props) => {
-  const [state, setState] = useState({
-    mySessionId: 'SessionA',
-    myUserName: 'Participant' + Math.floor(Math.random() * 100),
-    session: undefined,
-    mainStreamManager: undefined, // Main video of the page. Will be the 'publisher' or one of the 'subscribers'
-    publisher: undefined,
-    subscribers: [],
-  });
+const AuditionMeeting = () => {
+  const sessionId = useRecoilValue(sessionIdState);
+  const userSimple = useRecoilValue(userSimpleState);
+  const [state, setState] = useState({});
+
+  useEffect(() => {
+    const init = {
+      mySessionId: sessionId,
+      myUserName: userSimple.name,
+      session: undefined,
+      mainStreamManager: undefined, // Main video of the page. Will be the 'publisher' or one of the 'subscribers'
+      publisher: undefined,
+      subscribers: [],
+    };
+    setState(() => init);
+  }, []);
 
   let OV = null;
 
   useEffect(() => {
+    console.log(state);
     window.addEventListener('beforeunload', onbeforeunload);
     return () => {
       window.removeEventListener('beforeunload', onbeforeunload);

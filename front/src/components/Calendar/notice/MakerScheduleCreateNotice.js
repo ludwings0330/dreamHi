@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
-import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { useRecoilValue } from 'recoil';
 import { announcementTitle } from 'recoil/announcement/announcement';
-import { userTypeState } from 'recoil/user/userStore';
+import { announcementListDetailState } from '../../../recoil/announcement/announcementStore';
 
 function Item(props) {
   const { sx, ...other } = props;
@@ -38,9 +37,12 @@ Item.propTypes = {
   ]),
 };
 
-export default function BasicNotice() {
+export default function MakerScheduleCreateNotice() {
   const title = useRecoilValue(announcementTitle);
-  const userType = useRecoilValue(userTypeState);
+  const announcementDetail = useRecoilValue(announcementListDetailState);
+  useEffect(() => {
+    console.log(announcementDetail);
+  }, []);
   return (
     <Paper
       elevation={8}
@@ -55,7 +57,6 @@ export default function BasicNotice() {
           color: '#41424C',
         }}
       >
-        {/* announcement title 가져오기 */}
         <Typography variant="h5" align="center">
           {title}
         </Typography>
@@ -85,9 +86,7 @@ export default function BasicNotice() {
                 fontSize: 15,
               }}
             >
-              {userType === 'producer'.toUpperCase()
-                ? '1️⃣ 오디션을 진행할 기간과 진행 가능한 시간대를 설정해주세요.'
-                : '1️⃣ 오디션 진행 가능한 시간대를 확인하고 예약해주세요.'}
+              1️⃣ 오디션 진행 가능한 시간대를 설정해주세요.
             </Typography>
           </Item>
 
@@ -100,7 +99,7 @@ export default function BasicNotice() {
                 fontSize: 15,
               }}
             >
-              {'2️⃣ 면접은 30분 단위로 진행됩니다.'}
+              2️⃣ 면접은 30분 단위로 진행됩니다.
             </Typography>
           </Item>
 
@@ -113,9 +112,7 @@ export default function BasicNotice() {
                 fontSize: 15,
               }}
             >
-              {userType === 'producer'.toUpperCase()
-                ? '3️⃣ 공지사항 및 대본은 하단 버튼을 통해 업로드해주세요.'
-                : '3️⃣ 공지사항 및 대본은 하단 버튼을 통해 다운로드해주세요.'}
+              3️⃣ 공지사항 및 대본은 하단 버튼을 통해 업로드해주세요.
             </Typography>
           </Item>
         </Box>

@@ -108,6 +108,22 @@ function AnnouncementList(props) {
             </Link>
           );
         })}
+
+      {/* <SearchBar />
+
+      {announcements.map(function (announcement, index) {
+        return (
+          <AnnouncementListItem
+            key={announcements[0].result.list[0].id}
+            announcement={announcement}
+            onClick={() => {
+              onClickItem(announcement);
+            }}
+          />
+        );
+      })}
+
+      */}
     </div>
   );
 }

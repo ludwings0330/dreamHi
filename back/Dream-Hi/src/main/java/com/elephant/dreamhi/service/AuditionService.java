@@ -28,7 +28,7 @@ public interface AuditionService {
 
     List<BookedVolunteerDto> findBookedVolunteersOnToday(Long processId);
 
-    void updateReserved(Long bookId) throws NotFoundException, IllegalStateException;
+    void updateReserved(Long bookId, Long userId) throws NotFoundException, IllegalStateException;
 
     void createAuditionSchedule(Long processId, BookPeriodSaveDto bookPeriodSaveDto) throws NotFoundException;
 

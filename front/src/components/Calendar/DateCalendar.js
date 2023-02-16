@@ -1,28 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import dayjs from 'dayjs';
 import TextField from '@mui/material/TextField';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
-import { Box, ThemeProvider, createTheme } from '@mui/system';
 import Grid from '@mui/material/Grid';
 import { Paper } from '../../../node_modules/@mui/material/index';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { userTypeState } from 'recoil/user/userStore';
-import {
-  auditionStartState,
-  auditionEndState,
-  auditionSelectState,
-  checkTimeState,
-} from 'recoil/book/bookStore';
+import { selectedDateState, checkTimeState, auditionPeriodSelector } from 'recoil/book/bookStore';
 import { useEffect } from 'react';
 
-export default function ActorDateCalendar() {
-  const [startDate, setStartDate] = useRecoilState(auditionStartState);
-  const [endDate, setEndDate] = useRecoilState(auditionEndState);
-  const userType = useRecoilValue(userTypeState);
-  const [selectDate, setSelectDate] = useRecoilState(auditionSelectState);
+export default function DateCalendar() {
+  const [selectedDate, setSelectedDate] = useRecoilState(selectedDateState);
   const [checkTime, setCheckTime] = useRecoilState(checkTimeState);
+  const period = useRecoilValue(auditionPeriodSelector());
+
   useEffect(() => {
     console.log('일 변경 시 checkTime 수정');
     console.log(checkTime);
@@ -51,20 +43,18 @@ export default function ActorDateCalendar() {
             <StaticDatePicker
               toolbarTitle="📅 오디션 일정 예약"
               onChange={(newDate) => {
-                console.log('일 변경 시 checkTime 수정');
-                console.log(checkTime);
-                setSelectDate(newDate);
+                setSelectedDate(newDate);
                 setCheckTime();
               }}
-              value={selectDate}
+              value={selectedDate}
               renderInput={(params) => <TextField {...params} />}
               componentsProps={{
                 actionBar: {
                   actions: ['today', 'clear'],
                 },
               }}
-              minDate={startDate}
-              maxDate={endDate}
+              minDate={dayjs(period.startDate).isBefore(new Date()) ? new Date() : period.startDate}
+              maxDate={period.endDate}
             />
           </Paper>
         </Grid>

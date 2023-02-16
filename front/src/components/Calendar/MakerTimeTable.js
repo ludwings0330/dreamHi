@@ -1,74 +1,78 @@
-import React, { useEffect, useState } from 'react';
-import { checkTimeState } from 'recoil/book/bookStore';
-import { useRecoilState } from 'recoil';
+import React, { useEffect } from 'react';
+import { useRecoilState, useRecoilValueLoadable } from 'recoil';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Radio from '@mui/material/Radio';
-import RadioGroup, { useRadioGroup } from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { volunteersSelector, vlounteerUserIdState } from 'recoil/volunteer/volunteerStore';
+import { booksSelector } from 'recoil/book/bookStore';
+import { vlounteerUserIdState } from '../../recoil/volunteer/volunteerStore';
 
 export default function MakerTimeTable() {
-  const [volunteers, setVolunteers] = useRecoilState(volunteersSelector());
-  // const [checkTime, setCheckTime] = useRecoilState(checkTimeState);
+  const books = useRecoilValueLoadable(booksSelector());
   const [checkVolunteerUserId, setVolunteerCheckUserId] = useRecoilState(vlounteerUserIdState);
 
   const handleCheck = (e) => {
-    console.log('Handle Check');
+    console.log('Handle Check UserID');
     console.log(e.target.value);
     setVolunteerCheckUserId(e.target.value);
   };
 
+  useEffect(() => {}, [books]);
+
   useEffect(() => {
-    console.log('RPODUCER');
-    console.log(volunteers);
+    console.log('set 됐나??');
     console.log(checkVolunteerUserId);
   }, [checkVolunteerUserId]);
-  return (
-    <Box sx={{ mt: 3, mb: 3 }}>
-      <Grid container spacing={{ xs: 2 }} columns={{ xs: 8 }}>
-        {volunteers.map((volunteer, index) => (
-          <Grid item xs={2} sm={4} md={4} key={index}>
-            {/* <TimeDetail book={book} /> */}
-            <Box
-              sx={{
-                // display: book.isBook ? "none" : "block",
-                boxShadow: 3,
-                borderRadius: 5,
-                // fontWeight: 'bold',
-                bgcolor:
-                  volunteer.userId == null || volunteer.userId == checkVolunteerUserId
-                    ? '#051094'
-                    : '#52B2BF',
-                // fontSize: 18,
-                // color: "#FFFFFF",
-                opacity: !volunteer.isBook ? [1, 1, 0.1] : [1, 1, 0.8],
-              }}
-              textAlign="center"
-            >
-              <FormControlLabel
-                label={volunteer.time}
-                control={
-                  <Radio
-                    checked={checkVolunteerUserId == volunteer.userId}
-                    value={volunteer.userId}
-                    disabled={!volunteer.isBook}
-                    onChange={handleCheck}
+  switch (books.state) {
+    case 'hasValue':
+      console.log(books);
+      return (
+        <Box sx={{ mt: 3, mb: 3 }}>
+          <Grid container spacing={{ xs: 2 }} columns={{ xs: 8 }}>
+            {books.contents.map((book, index) => (
+              <Grid item xs={2} sm={4} md={4} key={index}>
+                <Box
+                  sx={{
+                    boxShadow: 3,
+                    borderRadius: 5,
+                    bgcolor:
+                      !book.reserved || book.userId != checkVolunteerUserId ? '#52B2BF' : '#051094',
+                    // bgcolor: book.userId === checkVolunteerUserId ? '#051094' : '#52B2BF',
+                    opacity:
+                      !book.reserved || book.userId === checkVolunteerUserId
+                        ? [1, 1, 0.1]
+                        : [1, 1, 0.8],
+                  }}
+                  textAlign="center"
+                >
+                  <FormControlLabel
+                    label={`${book.startTime.match(/[0-9]+:[0-9]+/)}`}
+                    control={
+                      <Radio
+                        checked={checkVolunteerUserId == book.userId}
+                        value={book.userId}
+                        disabled={!book.reserved}
+                        onChange={handleCheck}
+                        sx={{
+                          color: '#FFFFFF',
+                        }}
+                      />
+                    }
                     sx={{
                       color: '#FFFFFF',
+                      display: 'block',
                     }}
-                  />
-                }
-                sx={{
-                  color: '#FFFFFF',
-                  display: 'block',
-                }}
-              ></FormControlLabel>
-            </Box>
+                  ></FormControlLabel>
+                </Box>
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
-    </Box>
-  );
+        </Box>
+      );
+    case 'loading':
+      return <div>Loading...</div>;
+    case 'hasError':
+    default:
+      return <div>Error...</div>;
+  }
 }

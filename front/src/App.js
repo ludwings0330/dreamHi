@@ -31,7 +31,8 @@ import AnnouncementWrite from './components/Announcement/AnnouncementWrite';
 import AnnouncementDetail from './components/Announcement/AnnouncementDetail';
 
 //import audition
-import AuditionPage from './pages/AuditionPage';
+import MakerAuditionPage from './pages/MakerAuditionPage';
+import ActorAuditionPage from './pages/ActorAuditionPage';
 import AuditionMeeting from './components/Audition/AuditionMeeting';
 import Live from './components/Live/Live';
 
@@ -64,7 +65,8 @@ function App() {
         {/*//오디션페이지 관련 이동*/}
         //오디션페이지 관련 이동
         <Route path={'/schedule'} element={<ScheduleCreatePage />} />
-        <Route path={'/audition'} element={<AuditionPage />} />
+        <Route path={'/audition/maker'} element={<MakerAuditionPage />} />
+        <Route path={'/audition/actor'} element={<ActorAuditionPage />} />
         <Route path={'/audition/meeting'} element={<AuditionMeeting />} />
         {/*화상면접 관련 이동*/}
         <Route path={'/live'} element={<Live />} />

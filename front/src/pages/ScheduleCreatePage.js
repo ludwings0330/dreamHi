@@ -1,20 +1,18 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
-import { Box, Container, Button } from '../../node_modules/@mui/material/index';
+import { Box, Container } from '../../node_modules/@mui/material/index';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
 import MakerDateCalendar from 'components/Calendar/MakerDateCalendar';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimeRangeSelect from 'components/Calendar/TimeRangeSelect';
-import NoticeUpload from 'components/Calendar/NoticeUpload';
+import NoticeUpload from 'components/Calendar/notice/NoticeUpload';
 import { useRecoilValue } from 'recoil';
-import { totlaVolunteerSelector } from 'recoil/volunteer/volunteerStore';
+import { totalVolunteerSelector } from 'recoil/volunteer/volunteerStore';
 
 function ScheduleCreatePage() {
-  const navigate = useNavigate();
-  const totalVolunteer = useRecoilValue(totlaVolunteerSelector());
+  const totalVolunteer = useRecoilValue(totalVolunteerSelector());
   return (
     <Container
       justify="center"
