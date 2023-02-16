@@ -1,0 +1,14 @@
+spring:
+  profiles:
+    active: local
+    include:
+      - dbconfig
+      - jwt
+      - security
+      - ssl
+  #  config:
+#    import:
+#      - application-dbconfig.yml
+#      - application-jwt.yml
+#      - application-security.yml
+
