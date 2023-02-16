@@ -49,50 +49,50 @@ public class ActorRepositoryCustomImpl implements ActorRepositoryCustom {
 
     @Override
     public Page<ActorListResponseDto> findActorsWithFiltering(ActorSearchCondition condition, Pageable pageable) {
-        JPAQuery<Long> query = findActorsIndexWithFiltering(condition, pageable);
-        HashSet<Long> actorIds = new HashSet<>(query.offset(pageable.getOffset()).limit(pageable.getPageSize()).fetch());
+        long totalCount = findActorsIndexWithFiltering(condition).select(actorProfile.id).fetch().size();
+        HashSet<Long> actorIds = new HashSet<>(findActorsIndexWithFiltering(condition).select(actorProfile.id).distinct()
+                                                                                      .offset(pageable.getOffset())
+                                                                                      .limit(pageable.getPageSize())
+                                                                                      .fetch());
 
-        Long totalSize = Long.valueOf(query.fetch().size());
         if (actorIds.isEmpty()) {
-            return PageableExecutionUtils.getPage(new ArrayList<>(), pageable, () -> totalSize);
+            return PageableExecutionUtils.getPage(new ArrayList<>(), pageable, () -> totalCount);
         }
 
-        List<ActorListResponseDto> actorListResponseDto = jpaQueryFactory
-                .selectFrom(actorProfile)
-                .join(actorProfile.user, user)
-                .leftJoin(actorStyleRelation)
-                .on(actorStyleRelation.actorProfile.id.eq(actorProfile.id))
-                .leftJoin(actorStyleRelation.style, style)
-                .where(actorProfile.id.in(actorIds))
-                .transform(
-                        groupBy(actorProfile.id).list(
-                                Projections.constructor(
-                                        ActorListResponseDto.class,
-                                        user.id.as("userId"),
-                                        user.name,
-                                        user.picture.url.as("pictureUrl"),
-                                        actorProfile.id.as("actorProfileId"),
-                                        actorProfile.title,
-                                        actorProfile.gender,
-                                        actorProfile.age,
-                                        actorProfile.height,
-                                        list(
-                                                Projections.constructor(StyleDto.class,
-                                                                        style.id,
-                                                                        style.description
-                                                )
-                                        ),
-                                        Expressions.asBoolean(false).as("isFollow")
-                                )
-                        )
-                );
+        List<ActorListResponseDto> actorListResponseDto = jpaQueryFactory.selectFrom(actorProfile)
+                                                                         .join(actorProfile.user, user)
+                                                                         .leftJoin(actorStyleRelation)
+                                                                         .on(actorStyleRelation.actorProfile.id.eq(actorProfile.id))
+                                                                         .leftJoin(actorStyleRelation.style, style)
+                                                                         .where(actorProfile.id.in(actorIds))
+                                                                         .transform(
+                                                                                 groupBy(actorProfile.id).list(
+                                                                                         Projections.constructor(
+                                                                                                 ActorListResponseDto.class,
+                                                                                                 user.id.as("userId"),
+                                                                                                 user.name,
+                                                                                                 user.picture.url.as("pictureUrl"),
+                                                                                                 actorProfile.id.as("actorProfileId"),
+                                                                                                 actorProfile.title,
+                                                                                                 actorProfile.gender,
+                                                                                                 actorProfile.age,
+                                                                                                 actorProfile.height,
+                                                                                                 list(
+                                                                                                         Projections.constructor(StyleDto.class,
+                                                                                                                                 style.id,
+                                                                                                                                 style.description
+                                                                                                         )
+                                                                                                 ),
+                                                                                                 Expressions.asBoolean(false).as("isFollow")
+                                                                                         )
+                                                                                 )
+                                                                         );
 
-        return PageableExecutionUtils.getPage(actorListResponseDto, pageable, () -> totalSize);
+        return PageableExecutionUtils.getPage(actorListResponseDto, pageable, () -> totalCount);
     }
 
-    private JPAQuery<Long> findActorsIndexWithFiltering(ActorSearchCondition condition, Pageable pageable) {
-        return jpaQueryFactory.selectDistinct(actorProfile.id)
-                              .from(actorProfile)
+    private JPAQuery<?> findActorsIndexWithFiltering(ActorSearchCondition condition) {
+        return jpaQueryFactory.from(actorProfile)
                               .join(actorProfile.user, user).on(actorProfile.visible.isTrue())
                               .leftJoin(actorStyleRelation).on(actorStyleRelation.actorProfile.id.eq(actorProfile.id))
                               .leftJoin(actorStyleRelation.style, style)

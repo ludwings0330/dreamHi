@@ -2,6 +2,8 @@ package com.elephant.dreamhi.model.dto;
 
 import com.elephant.dreamhi.model.entity.Announcement;
 import com.elephant.dreamhi.model.entity.Follow;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import java.time.LocalDate;
 import java.util.Objects;
 import javax.validation.constraints.NotNull;
@@ -33,6 +35,7 @@ public class AnnouncementDetailDto {
     private String crankPeriod;
 
     @NotNull
+    @JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate endDate;
 
     private String description;
@@ -45,8 +48,11 @@ public class AnnouncementDetailDto {
     @NotNull
     private Boolean isFollow;
 
+    @NotNull
+    private Boolean isEditor;
+
     public AnnouncementDetailDto(Long id, String title, Long producerId, String producerName, String payment, String crankPeriod,
-                                 LocalDate endDate, String description, Integer hit, String pictureUrl, Boolean isFollow) {
+                                 LocalDate endDate, String description, Integer hit, String pictureUrl, Boolean isFollow, Boolean isEditor) {
         this.id = id;
         this.title = title;
         this.producer = new ProducerAnnouncementDto(producerId, producerName);
@@ -57,6 +63,7 @@ public class AnnouncementDetailDto {
         this.hit = hit;
         this.pictureUrl = pictureUrl;
         this.isFollow = isFollow;
+        this.isEditor = isEditor;
     }
 
     /**

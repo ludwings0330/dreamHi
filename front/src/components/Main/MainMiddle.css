@@ -1,0 +1,38 @@
+@font-face {
+  font-family: 'LINESeedKR-Bd';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2')
+    format('woff2');
+  font-weight: 1000;
+  font-style: normal;
+}
+
+#mainmiddle-whole {
+  font-family: 'LINESeedKR-Bd';
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+}
+
+.mainmiddle-whole .mainmiddle-top-ten .mainmiddle-weekly {
+  flex-direction: column;
+  text-align: center;
+  font-size: 70px;
+  color: #444;
+}
+.mainmiddle-whole .mainmiddle-top-ten .mainmiddle-weekly h1 {
+  letter-spacing: 0.2em;
+}
+.mainmiddle-whole .mainmiddle-top-ten .mainmiddle-weekly p {
+  font-size: 10px;
+}
+
+.mainmiddle-top-ten {
+  margin-bottom: 50px;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.mainmiddle-weekly {
+  margin-bottom: 50px;
+  margin-left: 20px;
+}

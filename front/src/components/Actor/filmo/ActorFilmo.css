@@ -1,33 +1,76 @@
-.list-container {
-    padding: 30px;
-    width: 100%;
-    height: 300px;
-    display: flex;
-
+@font-face {
+  font-family: 'LINESeedKR-Bd';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2')
+    format('woff2');
+  font-weight: 700;
+  font-style: normal;
 }
 
-.photo-main {
-    flex:1;
+#actor-filmo-whole {
+  display: flex;
+  font-family: 'LINESeedKR-Bd';
+  margin-top: 50px;
+  margin-left: 50px;
+  margin-bottom: 50px;
+  flex-direction: column;
 }
-.photo-main > img {aspect-ratio: 1; max-width: 250px; max-height: 250px; }
-
-.photo-list {
-    flex: 2;
-    display: inline-block;
-
-}
-.photo{
-    display: inline-block;
-    padding-right: 20px;
-    padding-bottom: 20px;
+.actor-filmo-list-main {
+  display: flex;
 }
 
-.photo > img {
-    max-width: 125px;
-    max-height: 125px;
-    aspect-ratio: 1;
+.actor-filmo-list {
+  padding: 10px;
+  width: 100%;
+  height: 300px;
+  display: flex;
+  border: 1px solid #eee;
+  border-radius: 5px;
 }
 
-img {
-    border-radius: 10px;
+.actor-filmo-main > img {
+  aspect-ratio: 1;
+  max-width: 300px;
+  max-height: 300px;
+}
+
+.actor-filmo {
+  display: inline-block;
+  border: 1px solid #eee;
+  border-radius: 5px;
+}
+
+.actor-filmo img {
+  border-radius: 10px;
+  object-fit: contain;
+}
+
+.actor-filmo-list-item {
+  width: 250px;
+  height: 250px;
+}
+
+/*filmo-upload 부분 css*/
+#actor-list-plus-section {
+  font-family: 'LINESeedKR-Bd';
+  padding-top: 238px;
+}
+
+.filmo-plus-button {
+  width: 30px;
+  height: 30px;
+}
+
+.actor-filmo-upload-button {
+  background: rgba(68, 68, 68, 0.5);
+  color: white;
+  border: 2px solid white;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: 0.5s ease;
+}
+.actor-filmo-upload-button:hover {
+  transition: 0.5s ease;
+  border: 2px solid black;
+  background: transparent;
+  color: black;
 }

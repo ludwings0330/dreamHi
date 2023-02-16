@@ -1,104 +1,95 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil'
-
 // import css
 import {
   MDBCard,
-  MDBCardImage,
   MDBCardBody,
-  MDBCardTitle,
+  MDBCardImage,
   MDBCardText,
+  MDBCardTitle,
+  MDBCol,
   MDBRow,
-  MDBCol
 } from 'mdb-react-ui-kit';
-import "./ActorList.css";
+import './ActorList.css';
 
 // import components
-import PageBar from '../Common/CommonComponent/PageBar';
 import SearchBar from '../Common/CommonComponent/SearchBar';
 import Button from '../Common/CommonComponent/Button';
-import { googleToken } from 'recoil/recoilActorState'
-
+import jwtApi from '../../util/JwtApi';
+import Paging from '../Common/CommonComponent/Paging';
 
 const ActorList = () => {
   const navigate = useNavigate();
-  const token = useRecoilValue(googleToken)
-
   const [actorList, setActorList] = useState([]);
-
+  const [pageable, setPageable] = useState();
+  const [actorFilter, setActorFilter] = useState({
+    name: '',
+    height: '',
+    age: '',
+    gender: '',
+    styles: [],
+    isFollow: '',
+    page: 0,
+    size: 8,
+  });
   // api 요청 보내서 배우 목록 확보
   useEffect(() => {
-    axios.get('http://i8a702.p.ssafy.io:8085/api/actors',
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        setActorList(res.data.result.content)
-        console.log(res.data.result.content,'데이터');
-      })
-      .catch((error) => {
-        console.log('실패실패ㅠㅠ');
-        console.log(error);
-      });
-
-  }, [setActorList]);
-  
-  
-
-  
+    jwtApi.get(`/api/actors`, { params: actorFilter }).then((response) => {
+      setActorList(response.data.result.content);
+      setPageable(response.data.result);
+    });
+  }, [actorFilter]);
 
   return (
-    <div>
-      <SearchBar />
-      <div>
-      <MDBRow className='row-cols-1 row-cols-md-4 g-4'>
-        {actorList.length > 0 && actorList.map((actor, idx) => (
-          <Link to={`/actor/detail/${actor.actorProfileId}`} key={idx}>
-            <MDBCol key={idx} className='h-100'>
-              <MDBCard className='h-100'>
-                <MDBCardImage
-                  src={actor.pictureUrl}
-                  alt={`${actor.name}'s picture`}
-                  position='top'
-                  height='200px'
-                  object-fit='cover'
-                />
-                <MDBCardBody>
-                  <MDBCardTitle>{actor.title}</MDBCardTitle>
-                  <MDBCardText>
-                    {actor.height}
-                    {actor.pictureUrl}
-                  </MDBCardText>
-                </MDBCardBody>
-              </MDBCard>
-            </MDBCol>
-          </Link>
-        ))}
-      </MDBRow>
+    <div className={'actor-body'}>
+      <SearchBar actorList={actorList} setActorList={setActorList} />
+      <div id={'actor-list-main'}>
+        <MDBRow className="row-cols-1 row-cols-md-4 g-4">
+          {actorList.map((actor) => (
+            <Link
+              to={`/actor/detail/${actor.userId}`}
+              key={actor.userId}
+              style={{ textDecoration: 'none' }}
+            >
+              <MDBCol className="h-100">
+                <MDBCard className="h-100">
+                  <MDBCardImage
+                    src={actor.pictureUrl}
+                    alt={`${actor.name}'s picture`}
+                    className={'actor-list-img'}
+                    position="top"
+                    height="200px"
+                    object-fit="cover"
+                  />
+                  <MDBCardBody>
+                    <MDBCardTitle className="actor-card-title">{actor.title}</MDBCardTitle>
+                    <MDBCardText>
+                      <span className="card-info">
+                        <span className={'actor-name-info-span'}>이름 : {actor.name}</span>
+                        <span>성별 : {actor.gender === 'MALE' ? '남자' : '여자'} </span>
+                        <span>나이 : {actor.age}</span>
+                        <span>키 : {actor.height}cm</span>
+                        <span>스타일 :</span>
+                        <span className="card-info-style">
+                          {actor.styles.map((style, idx) => (
+                            <span key={idx}>{style.description}</span>
+                          ))}
+                        </span>
+                      </span>
+                      {actor.styles.description}
+                    </MDBCardText>
+                  </MDBCardBody>
+                </MDBCard>
+              </MDBCol>
+            </Link>
+          ))}
+        </MDBRow>
       </div>
-      {/*<Link to={`/actor/detail/`}>*/}
-      {/*  <div className="actor">*/}
-      {/*    <div className="actor_img">*/}
-      {/*      <img src="/img/elephant.png" />*/}
-      {/*    </div>*/}
-      {/*    <h5 className="actor_title"> 배우 소개</h5>*/}
-      {/*    <p className="actor_des"> 배우 소개 요약</p>*/}
-      {/*  </div>*/}
-      {/*</Link>*/}
 
-      <Button
-        title="글작성"
-        onClick={() => {
-          navigate("/actor/write")
-        }} />
-
-      <div className={"page_bar"}>
-        <PageBar />
+      <div className={'actor-insert-button'}>
+        <Button title="배우등록" onClick={() => navigate('/actor/write')} />
       </div>
+      {pageable ? <Paging totalPages={pageable.totalPages} action={setActorFilter} /> : null}
     </div>
   );
 };

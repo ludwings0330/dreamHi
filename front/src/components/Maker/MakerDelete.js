@@ -1,11 +1,7 @@
 import React from 'react';
 
 const MakerDelete = () => {
-  return (
-    <div>
-      
-    </div>
-  );
+  return <div></div>;
 };
 
 export default MakerDelete;

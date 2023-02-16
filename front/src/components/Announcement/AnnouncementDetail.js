@@ -1,55 +1,77 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import AnnouncementData from '../../dummydata/announcementData.json'
-import AnnouncementDetailData from '../../dummydata/announcementDetailData.json'
-import Button from "../Common/CommonComponent/Button";
+import Button from '../Common/CommonComponent/Button';
 import AnnouncementDetailItem from './AnnouncementDetailItem';
-
+import { useRecoilValue, useRecoilState } from 'recoil';
+import {
+  announcementListDetailSelector,
+  announcementDetailId,
+  announcementListSelector,
+  announcementListDetailState,
+} from 'recoil/announcement/announcementStore';
+import AnnouncementDetailProcess from './AnnouncementDetailProcess';
+import AnnouncementDetailButton from './AnnouncementDetailButton';
+import AnnouncementFollow from './AnnouncementFollow';
+import jwtApi from 'util/JwtApi';
 
 function AnnouncementDetail(props) {
-    const navigate = useNavigate()
-    const { announcementId } = useParams()
-    const announcement = AnnouncementData.find((item) => {
-        console.log(33333333)
-        console.log(item.result.list[0].id)
-        console.log(55555555555)
-        console.log(announcementId)
-        return item.result.list[0].id == announcementId
-    })
-    const announcementDetail = AnnouncementDetailData
-    console.log(AnnouncementDetailData.result.id)
-    console.log(AnnouncementDetailData.result.description)
-    console.log(announcementDetail)
+  console.log(1234);
+  const navigate = useNavigate();
+  // const announcementList = useRecoilValue(announcementListSelector())
+  const { announcementId } = useParams();
+  console.log('🐳🐳', announcementId);
 
+  const announcement = useRecoilValue(announcementListDetailSelector(announcementId));
+  const [annouoncementData, setAnnouncementData] = useRecoilState(announcementListDetailState);
+  setAnnouncementData(announcement);
+  console.log('announcement', announcement);
 
-    // const announcementDetail = AnnouncementDetailData.find((item) => {
-    //   console.log(777777777777)
-    //   console.log(item.result.id)
-    //   return item.result.id == announcementId
-    // })
+  // useEffect(() => {
+  //   jwtApi.get(`/api/announcements/${announcementId}`).then((response) => {
+  //     console.log('get /api/announcement Detail Data');
+  //     console.log('😀😀😀😀😀😀', response.data);
+  //     console.log(response.data.result);
+  //     setAnnouncementData(response.data.result);
+  //     console.log('141415', annouoncementData);
+  //   });
+  // }, []);
 
+  useEffect(() => {
+    console.log('change AnnouncementData', annouoncementData);
+  }, [annouoncementData]);
 
-    return (
-        <div>
-            <h1>공고상세페이지</h1>
-            <Button
-                title="뒤로 가기"
-                onClick={() => {
-                    navigate("/announcement")
-                }}
-            />
+  // const announcement = announcementList.find((item) => {
+  //     console.log(announcementId)
+  //     console.log(item)
+  //     return item.id == announcementId
+  // })
 
-            <br />
+  // const announcementDetail = AnnouncementDetailData
 
-            {announcement.result.list[0].state === '모집중' ? '⭕' : '❌'}
+  // const announcementDetail = AnnouncementDetailData.find((item) => {
+  //   return item.result.id == announcementId
+  // })
 
+  return (
+    <div>
+      <h1>공고상세페이지</h1>
+      <Button
+        title="뒤로 가기"
+        onClick={() => {
+          navigate('/announcement');
+        }}
+      />
 
-            <AnnouncementDetailItem
-                key={announcementDetail.result.id}
-                announcementDetail={announcementDetail}/>
+      <br />
+      <AnnouncementDetailProcess announcement={announcement} />
 
-        </div>
-    );
+      <AnnouncementDetailItem announcement={announcement} />
+
+      {/* <AnnouncementDetailButton key={announcementId} announcement={announcement} /> */}
+
+      <AnnouncementFollow isFollow={announcement.isFollow} />
+    </div>
+  );
 }
 
 export default AnnouncementDetail;

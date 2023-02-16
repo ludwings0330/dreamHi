@@ -16,6 +16,6 @@ public interface ActorStyleRelationRepository extends JpaRepository<ActorStyleRe
             + "WHERE asr.actorProfile.id = :actorProfileId "
             + "AND asr.style.id in :deleteStyles")
     @Modifying
-    Integer deleteAllInStlyeIdQuery(@Param("actorProfileId") Long actorProfileId, @Param("deleteStyles") List<Long> deleteStyles);
+    Integer deleteAllInStyleIdQuery(@Param("actorProfileId") Long actorProfileId, @Param("deleteStyles") List<Long> deleteStyles);
 
 }

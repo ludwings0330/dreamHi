@@ -11,22 +11,51 @@ import com.elephant.dreamhi.repository.ProcessRepository;
 import com.elephant.dreamhi.repository.VolunteerRepository;
 import com.elephant.dreamhi.security.PrincipalDetails;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional(readOnly = true)
 public class ProcessServiceImpl implements ProcessService {
 
     private final AnnouncementRepository announcementRepository;
     private final ProcessRepository processRepository;
     private final VolunteerRepository volunteerRepository;
 
+    @Override
+    public Map<Long, ProcessStageDto> findProcessAndStages(List<Long> announcementIds, PrincipalDetails user) {
+        Map<Long, Process> lastProcessByAnnouncementId = processRepository.findLastProcessesByAnnouncementIds(announcementIds);
+
+        if (user.isGuest()) {
+            return lastProcessByAnnouncementId.entrySet()
+                                              .stream()
+                                              .collect(Collectors.toMap(
+                                                      Entry::getKey,
+                                                      e -> new ProcessStageDto(e.getValue(), UserStageName.NONE)
+                                              ));
+        }
+
+        Map<Long, List<Volunteer>> volunteersByAnnouncementId = volunteerRepository.findAllByUserIdAndAnnouncementIds(user.getId(), announcementIds);
+        return lastProcessByAnnouncementId.entrySet()
+                                          .stream()
+                                          .collect(Collectors.toMap(
+                                                  Entry::getKey,
+                                                  e -> ProcessStageDto.toDto(
+                                                          e.getValue(), volunteersByAnnouncementId.get(e.getKey())
+                                                  )
+                                          ));
+    }
+
     /**
      * @param announcementId 현재 공고의 ID
-     * @param user 현재 로그인한 유저
+     * @param user           현재 로그인한 유저
      * @return 현재 공고에서 유저의 상태를 반환
      */
     @Override
@@ -35,10 +64,10 @@ public class ProcessServiceImpl implements ProcessService {
                                                .orElseThrow(() -> new IllegalArgumentException("공고의 진행 상황을 찾을 수 없습니다. 유효하지 않은 공고ID 입니다."));
 
         if (user.isGuest()) {
-            return new ProcessStageDto(lastProcess.getState(), UserStageName.NONE);
+            return new ProcessStageDto(lastProcess, UserStageName.NONE);
         }
 
-        List<Volunteer> volunteers = volunteerRepository.findByUserIdAndAnnouncementId(user.getId(), announcementId);
+        List<Volunteer> volunteers = volunteerRepository.findAllByUserIdAndAnnouncementId(user.getId(), announcementId);
         return ProcessStageDto.toDto(lastProcess, volunteers);
     }
 
@@ -48,6 +77,7 @@ public class ProcessServiceImpl implements ProcessService {
      * @param announcementId 현재 공고의 ID
      */
     @Override
+    @Transactional
     public void saveProcessWithRecruiting(Long announcementId) {
         Announcement announcement = announcementRepository.getReferenceById(announcementId);
         Process process = Process.getInstanceForInProgress(announcement);
@@ -61,15 +91,16 @@ public class ProcessServiceImpl implements ProcessService {
      * @param processSaveDto 공고ID, 새로운 절차, 새로운 오디션 단계
      */
     @Override
-    public void saveProcessWithoutRecruiting(ProcessSaveDto processSaveDto) {
+    @Transactional
+    public Long saveProcessWithoutRecruiting(ProcessSaveDto processSaveDto) {
 //        Announcement announcement = announcementRepository.findByAnnouncementId(processSaveDto.getAnnouncementId())
 //                                                          .orElseThrow(() -> new NotFoundException("[ProcessServiceImpl.saveProcess] 해당 공고를 찾을 수 없습니다."));
 
         Announcement announcement = announcementRepository.getReferenceById(processSaveDto.getAnnouncementId());
         Process process = Process.toEntity(announcement, processSaveDto);
-        processRepository.save(process);
+        Long processId = processRepository.save(process).getId();
 
-         // 모집 완료인 경우
+        // 모집 완료인 경우
 //        if (process.getState() == ProcessState.FINISH) {
 //            announcement.getCastings().forEach(casting -> {
 //                int volunteerCount = volunteerRepository.countPassVolunteersByCastingId(casting.getId()).intValue();
@@ -81,6 +112,8 @@ public class ProcessServiceImpl implements ProcessService {
 //        }
 
         volunteerRepository.updatePassVolunteers(announcement.getId(), process);
+
+        return processId;
     }
 
 }

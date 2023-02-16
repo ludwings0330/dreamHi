@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import AnnouncementWriteItem from './AnnouncementWriteItem';
 import Button from '../Common/CommonComponent/Button';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { writeAnnouncement } from './AnnouncementAxios';
 
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import {
   announcementCastingState,
   announcementCrankPeriod,
@@ -14,9 +15,9 @@ import {
   announcementPictureUrl,
   announcementProducerId,
   announcementTitle,
-} from '../../recoil/announcement';
+} from 'recoil/announcement/announcement';
 import AnnouncementWriteCasting from './AnnouncementWriteCasting';
-import MultiSelect from './SelectExample';
+import ImageUpload from 'imageup/ImageUpload';
 
 function AnnouncementWrite(props) {
   const navigate = useNavigate();
@@ -30,11 +31,9 @@ function AnnouncementWrite(props) {
   const dataEndDate = useRecoilValue(announcementEndDate);
   const dataDescription = useRecoilValue(announcementDescription);
 
-  const token = {};
-
   const sendData = {
     title: dataTitle,
-    producerId: dataProducerId,
+    producerId: 50003,
     payment: dataPayment,
     crankPeriod: dataCrankPeriod,
     endDate: dataEndDate,
@@ -43,23 +42,14 @@ function AnnouncementWrite(props) {
     castings: announcementCasting,
   };
 
-  const postClick = () => {
-    axios({
-      method: 'POST',
-      url: 'http://i8a702.p.ssafy.io:8085/api/producers?name={sendData.name}',
-      data: sendData,
-      headers: {
-        Authorization: `Bearer${token}`,
+  const postClick = async () => {
+    await writeAnnouncement(
+      sendData,
+      (response) => {
+        console.log('😎😍😘🥰', response);
       },
-    })
-      .then((res) => {
-        alert('성공');
-        console.log(res.data);
-      })
-      .catch((error) => {
-        console.log('실패실패');
-        console.log(error);
-      });
+      () => {},
+    );
   };
 
   return (
@@ -72,17 +62,19 @@ function AnnouncementWrite(props) {
         }}
       />
       {/*<button onClick={postClick}>Post</button>*/}
-      <img src={announcementImg} />
       {/*<p> { ImgUrl} </p>*/}
+      <ImageUpload />
       <AnnouncementWriteItem />
       <AnnouncementWriteCasting />
 
-      <Button
-        title="공고 등록 하기"
-        onClick={() => {
-          postClick();
-        }}
-      />
+      <button onClick={postClick}>공고다공고</button>
+
+      {/*<Button*/}
+      {/*  title="공고 등록 하기"*/}
+      {/*  onClick={() => {*/}
+      {/*    postClick();*/}
+      {/*  }}*/}
+      {/*/>*/}
 
       {/*<MultiSelect/>*/}
 

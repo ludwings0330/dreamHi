@@ -1,0 +1,13 @@
+#main-header {
+  max-width: 100%;
+}
+
+#main-footer {
+  bottom: 0;
+}
+
+#main-content {
+  height: 100%;
+  min-height: 100%;
+  position: relative;
+}

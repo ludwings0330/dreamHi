@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { announcementCastingState } from '../../recoil/announcement';
+import { announcementCastingState } from 'recoil/announcement/announcement';
 
 function AnnouncementWriteCasting(props) {
   // 전역으로 들고 다닐 casting array
@@ -18,7 +18,6 @@ function AnnouncementWriteCasting(props) {
     gender: [],
     styles: [],
   });
-
 
   // style map 함수 쓰기 위해 따로 빼서 array 로
   const styles = [
@@ -42,7 +41,6 @@ function AnnouncementWriteCasting(props) {
     setCasting({ ...casting, [e.target.name]: e.target.value });
   };
 
-
   // headcount state 및 변경 함수
   const [headcount, setHeadcount] = useState(0);
   const updateHeadcount = (value) => {
@@ -51,7 +49,6 @@ function AnnouncementWriteCasting(props) {
       headcount: value,
     });
   };
-
 
   //minHeight, maxHeight 설정 함수
   const updateMinHeight = (value) => {
@@ -62,12 +59,11 @@ function AnnouncementWriteCasting(props) {
   };
 
   const updateMaxHeight = (value) => {
-      setCasting({
-        ...casting,
-        maxHeight: value,
-      });
+    setCasting({
+      ...casting,
+      maxHeight: value,
+    });
   };
-
 
   // minAge, maxAge 설정 함수
   const updateMinAge = (value) => {
@@ -78,22 +74,18 @@ function AnnouncementWriteCasting(props) {
   };
 
   const updateMaxAge = (value) => {
-      setCasting({
-        ...casting,
-        maxAge: value,
-      });
-    };
-
-
+    setCasting({
+      ...casting,
+      maxAge: value,
+    });
+  };
 
   //성별 설정 함수
-  const [gender, setGender]= useState("");
+  const [gender, setGender] = useState('');
   const handleGenderChange = (event) => {
     setGender(event.target.value);
     setCasting({ ...casting, [event.target.name]: event.target.value });
   };
-
-
 
   //스타일 설정 함수
   const [selectedStyles, setSelectedStyles] = useState([]);
@@ -103,16 +95,15 @@ function AnnouncementWriteCasting(props) {
     const clickedValue = e.target.value;
     if (selectedStyles.includes(clickedValue)) {
       setSelectedStyles(selectedStyles.filter((style) => style !== clickedValue));
-    } else if (selectedStyles.length >= MAX_SELECTED_OPTIONS){
-      alert('최대 5개 까지만 선택가능합니다')
-    } else if (selectedStyles.length < MAX_SELECTED_OPTIONS){
-      setCasting({...casting, styles : [...selectedStyles, clickedValue]});
+    } else if (selectedStyles.length >= MAX_SELECTED_OPTIONS) {
+      alert('최대 5개 까지만 선택가능합니다');
+    } else if (selectedStyles.length < MAX_SELECTED_OPTIONS) {
+      setCasting({ ...casting, styles: [...selectedStyles, clickedValue] });
       setSelectedStyles([...selectedStyles, clickedValue]);
-    };
+    }
 
-    console.log(555666777)
-    console.log(casting)
-
+    console.log(555666777);
+    console.log(casting);
 
     console.log(18181818);
     console.log(selectedStyles);
@@ -120,16 +111,19 @@ function AnnouncementWriteCasting(props) {
 
   //배역 추가 함수
   const addCasting = (e) => {
-
     // e.preventDefault()
     console.log(242422424);
     console.log(casting);
     console.log(announcementCastingState);
-    console.log(casting.maxHeight)
-    console.log(casting.minHeight)
-    if (parseInt(casting.minHeight) > parseInt(casting.maxHeight)){alert('키 범위가 잘못되었습니다.')}
-    else if (parseInt(casting.minAge) > parseInt(casting.maxAge)){alert('나이 범위가 잘못되었습니다.')}
-    else {setCastingsArray([...castingsArray, casting])}
+    console.log(casting.maxHeight);
+    console.log(casting.minHeight);
+    if (parseInt(casting.minHeight) > parseInt(casting.maxHeight)) {
+      alert('키 범위가 잘못되었습니다.');
+    } else if (parseInt(casting.minAge) > parseInt(casting.maxAge)) {
+      alert('나이 범위가 잘못되었습니다.');
+    } else {
+      setCastingsArray([...castingsArray, casting]);
+    }
 
     setCasting({
       name: '',
@@ -143,7 +137,7 @@ function AnnouncementWriteCasting(props) {
       styles: [],
     });
 
-    console.log(castingsArray, '😭😭😭😭😭😭')
+    console.log(castingsArray, '😭😭😭😭😭😭');
   };
 
   //배역 삭제 함수
@@ -151,30 +145,34 @@ function AnnouncementWriteCasting(props) {
     let newArray = [...castingsArray];
     newArray.splice(index, 1);
     setCastingsArray(newArray);
-    console.log(announcementCastingState)
-    console.log(castingsArray)
+    console.log(announcementCastingState);
+    console.log(castingsArray);
   };
 
   useEffect(() => {
-    setSelectedStyles(casting.styles)
-    setGender(casting.gender)
+    setSelectedStyles(casting.styles);
+    setGender(casting.gender);
 
-    console.log('🐳🐳🐳🐳🐳')
-    console.log('🤑🤑🤑',casting)
-    console.log(castingsArray, '😭😭😭😭😭😭')
-
+    console.log('🐳🐳🐳🐳🐳');
+    console.log('🤑🤑🤑', casting);
+    console.log(castingsArray, '😭😭😭😭😭😭');
   }, [castingsArray]);
 
   return (
     <div>
       <h1> 배역 등록 </h1>
 
-
       <form>
         {/*// 배역 이름 입력*/}
         <p>
           <label>배역 이름</label> :{' '}
-          <input type="text" name="name" value={casting.name} onChange={handleCastingChange} />
+          <input
+            type="text"
+            name="name"
+            value={casting.name}
+            maxLength={20}
+            onChange={handleCastingChange}
+          />
         </p>
 
         {/*// 배역 상세 입력*/}
@@ -184,66 +182,63 @@ function AnnouncementWriteCasting(props) {
             type="text"
             name="description"
             value={casting.description}
+            maxLength={20}
             onChange={handleCastingChange}
           />
         </p>
 
         {/*// 배역 headcount 입력*/}
         <p>
-        <label>배역 인원</label> :{' '}
-        <input
+          <label>배역 인원</label> :{' '}
+          <input
             type="number"
             value={casting.headcount}
             onChange={(e) => updateHeadcount(e.target.value)}
-            min='0'
-        />
+            min="0"
+          />
         </p>
-
 
         {/*키 입력*/}
 
         <p>
           <label>배역 키</label> :{' '}
-        <input
+          <input
             type="number"
             value={casting.minHeight}
             onChange={(e) => updateMinHeight(e.target.value)}
-            min='0'
-            max='210'
-        />
+            min="0"
+            max="210"
+          />
           ~
-        <input
+          <input
             type="number"
             value={casting.maxHeight}
             onChange={(e) => updateMaxHeight(e.target.value)}
-            min='0'
-            max='210'
-        />
+            min="0"
+            max="210"
+          />
         </p>
-
-
 
         {/*나이 입력*/}
 
         <p>
           <label>배역 나이</label> :{' '}
           <input
-              type="number"
-              value={casting.minAge}
-              onChange={(e) => updateMinAge(e.target.value)}
-              min='0'
-              max='100'
+            type="number"
+            value={casting.minAge}
+            onChange={(e) => updateMinAge(e.target.value)}
+            min="0"
+            max="100"
           />
           ~
           <input
-              type="number"
-              value={casting.maxAge}
-              onChange={(e) => updateMaxAge(e.target.value)}
-              min='0'
-              max='100'
+            type="number"
+            value={casting.maxAge}
+            onChange={(e) => updateMaxAge(e.target.value)}
+            min="0"
+            max="100"
           />
         </p>
-
 
         {/*성별 입력*/}
         <p>
@@ -254,8 +249,6 @@ function AnnouncementWriteCasting(props) {
             <option value="FEMALE">여성</option>
           </select>
         </p>
-
-
 
         {/*// 스타일 입력*/}
 
@@ -268,7 +261,7 @@ function AnnouncementWriteCasting(props) {
         </select>
         {selectedStyles.map((style) => (
           <div key={style}>
-            {styles[style-32].label}
+            {styles[style - 32].label}
             <button
               onClick={() =>
                 setSelectedStyles(selectedStyles.filter((selectedStyle) => selectedStyle !== style))
@@ -279,7 +272,6 @@ function AnnouncementWriteCasting(props) {
           </div>
         ))}
 
-
         {/*전역에서 들고 다닐 casting array 업데이트*/}
 
         <button type="button" onClick={addCasting}>
@@ -287,10 +279,9 @@ function AnnouncementWriteCasting(props) {
         </button>
         <ul>
           {castingsArray.map((casting, index) => (
-              <li key={index}>
-                {casting.name}역
-                <button onClick={() => deleteCasting(index)}>Delete</button>
-              </li>
+            <li key={index}>
+              {casting.name}역<button onClick={() => deleteCasting(index)}>Delete</button>
+            </li>
           ))}
         </ul>
       </form>

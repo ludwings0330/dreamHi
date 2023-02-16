@@ -2,11 +2,11 @@ package com.elephant.dreamhi.service;
 
 import com.elephant.dreamhi.exception.NotFoundException;
 import com.elephant.dreamhi.model.dto.AnnouncementDetailDto;
+import com.elephant.dreamhi.model.dto.AnnouncementNameDto;
 import com.elephant.dreamhi.model.dto.AnnouncementSaveDto;
 import com.elephant.dreamhi.model.dto.AnnouncementSearchCondition;
 import com.elephant.dreamhi.model.dto.AnnouncementSimpleDto;
 import com.elephant.dreamhi.model.dto.AnnouncementUpdateDto;
-import com.elephant.dreamhi.model.dto.AnnouncementNameDto;
 import com.elephant.dreamhi.model.dto.ProcessStageDto;
 import com.elephant.dreamhi.model.entity.Announcement;
 import com.elephant.dreamhi.model.entity.Process;
@@ -19,6 +19,7 @@ import com.elephant.dreamhi.repository.VolunteerRepository;
 import com.elephant.dreamhi.security.PrincipalDetails;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,7 +39,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class AnnouncementServiceImpl implements AnnouncementService {
 
     private final VolunteerRepository volunteerRepository;
-
     private final ProcessService processService;
     private final CastingService castingService;
     private final FollowRepository followRepository;
@@ -53,14 +54,21 @@ public class AnnouncementServiceImpl implements AnnouncementService {
      */
     @Override
     public Page<AnnouncementSimpleDto> findList(AnnouncementSearchCondition searchCondition, Pageable pageable, PrincipalDetails user) {
-        Page<AnnouncementSimpleDto> announcementSimpleDtos = announcementRepository.findAllByCondition(searchCondition, pageable, user.getId());
+        long totalCount = announcementRepository.findTotalCountByCondition(searchCondition, user.getId());
+        List<Long> announcementIds = announcementRepository.findAnnouncementIdsByCondition(searchCondition, pageable, user.getId());
 
+        if (announcementIds.isEmpty()) {
+            return PageableExecutionUtils.getPage(Collections.emptyList(), pageable, () -> totalCount);
+        }
+
+        List<AnnouncementSimpleDto> announcementSimpleDtos = announcementRepository.findAllByIds(announcementIds, searchCondition.getIsFollow());
+        Map<Long, ProcessStageDto> processStageDtosByAnnouncementId = processService.findProcessAndStages(announcementIds, user);
         announcementSimpleDtos.forEach(dto -> {
-            ProcessStageDto state = processService.findProcessAndStage(dto.getId(), user);
+            ProcessStageDto state = processStageDtosByAnnouncementId.get(dto.getId());
             dto.setState(state);
         });
 
-        if (!searchCondition.getIsFollow()) {
+        if (!user.isGuest() && !searchCondition.getIsFollow()) {
             Set<Long> followedAnnouncementIds = followRepository.findAnnouncementIdsByFollowerId(user.getId());
 
             announcementSimpleDtos.forEach(dto -> {
@@ -70,7 +78,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
             });
         }
 
-        return announcementSimpleDtos;
+        return PageableExecutionUtils.getPage(announcementSimpleDtos, pageable, () -> totalCount);
     }
 
     /**

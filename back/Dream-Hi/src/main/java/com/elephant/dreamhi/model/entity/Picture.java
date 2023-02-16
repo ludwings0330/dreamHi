@@ -1,6 +1,6 @@
 package com.elephant.dreamhi.model.entity;
 
-import com.elephant.dreamhi.model.dto.PictureDto;
+import com.elephant.dreamhi.model.dto.FileDto;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -32,10 +32,10 @@ public class Picture {
         this.url = pictureUrl;
     }
 
-    public void updatePicture(PictureDto pictureDto) {
-        this.url = pictureDto.getUrl();
-        this.savedName = pictureDto.getSavedName();
-        this.originName = pictureDto.getOriginName();
+    public void updatePicture(FileDto fileDto) {
+        this.url = fileDto.getUrl();
+        this.savedName = fileDto.getSavedName();
+        this.originName = fileDto.getOriginName();
     }
 
     @Override

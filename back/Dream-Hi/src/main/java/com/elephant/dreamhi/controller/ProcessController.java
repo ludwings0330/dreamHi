@@ -64,8 +64,8 @@ public class ProcessController {
             throw new IllegalArgumentException("Process의 state가 RECRUITING인 경우는 공고 생성 시 한 번만 저장될 수 있습니다.");
         }
 
-        processService.saveProcessWithoutRecruiting(processSaveDto);
-        return Response.create(HttpStatus.CREATED, "오디션의 다음 단계가 시작되었습니다.");
+        Long processId = processService.saveProcessWithoutRecruiting(processSaveDto);
+        return Response.create(HttpStatus.CREATED, "오디션의 다음 단계가 시작되었습니다.", processId);
     }
 
 }

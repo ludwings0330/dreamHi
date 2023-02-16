@@ -4,6 +4,7 @@ import com.elephant.dreamhi.model.entity.CastingStyleRelation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -11,6 +12,6 @@ public interface CastingStyleRelationRepository extends JpaRepository<CastingSty
 
     @Modifying
     @Query("DELETE FROM CastingStyleRelation csr WHERE csr.casting.id = :castingId")
-    void deleteAllByCastingId(Long castingId);
+    void deleteAllByCastingId(@Param("castingId") Long castingId);
 
 }

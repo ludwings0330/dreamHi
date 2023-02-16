@@ -33,7 +33,7 @@ public class FilmographyService {
     }
 
     @Transactional
-    public void addFilmography(FilmographyRequestDto requestDto) throws AccessDeniedException, NotFoundException {
+    public Long addFilmography(FilmographyRequestDto requestDto) throws AccessDeniedException, NotFoundException {
         Filmography filmography = new Filmography();
         filmography.updateInfo(requestDto);
 
@@ -48,6 +48,8 @@ public class FilmographyService {
         }
 
         filmographyRepository.save(filmography);
+
+        return filmography.getId();
     }
 
     @Transactional

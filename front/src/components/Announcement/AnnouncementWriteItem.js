@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { useRecoilValue } from '../../recoil';
+import { useRecoilValue } from 'recoil';
 import {
   announcementCrankPeriod,
   announcementDescription,
@@ -9,7 +9,7 @@ import {
   announcementPayment,
   announcementProducerId,
   announcementTitle,
-} from '../../recoil/announcement';
+} from 'recoil/announcement/announcement';
 import { useRecoilState } from 'recoil';
 
 function AnnouncementWriteItem(props) {
@@ -24,6 +24,7 @@ function AnnouncementWriteItem(props) {
   const [endDate, setEndDate] = useRecoilState(announcementEndDate);
 
   const handleDataTitle = (e) => {
+    // e.defaultPrevented
     setDataTitle(e.target.value);
   };
 
@@ -41,19 +42,21 @@ function AnnouncementWriteItem(props) {
 
   const formattedDate = dataEndDate.toISOString().substr(0, 10);
 
-  useEffect(() => {
-    return () => {
-      setEndDate(formattedDate);
-      console.log(22222, endDate)
-    };
-  }, [formattedDate]);
+  setEndDate(formattedDate)
 
-    useEffect(() => {
-        return () => {
-            setEndDate(formattedDate);
-            console.log(33333, endDate)
-        };
-    }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     setEndDate(formattedDate);
+  //     console.log(22222, endDate);
+  //   };
+  // }, [dataEndDate]);
+  //
+  // useEffect(() => {
+  //   return () => {
+  //     setEndDate(formattedDate);
+  //     console.log(33333, endDate);
+  //   };
+  // }, []);
 
   // setEndDate(formattedDate)
 
@@ -76,6 +79,7 @@ function AnnouncementWriteItem(props) {
           name="dataTitle"
           value={dataTitle}
           placeholder="작품명을 입력해주세요"
+          maxLength={20}
           onChange={handleDataTitle}
         />
       </p>
@@ -87,6 +91,7 @@ function AnnouncementWriteItem(props) {
           name="dataPayment"
           value={dataPayment}
           placeholder="급여를 입력해주세요"
+          maxLength={20}
           onChange={handleDataPayment}
         />
       </p>
@@ -98,6 +103,7 @@ function AnnouncementWriteItem(props) {
           name="dataCrankPeriod"
           value={dataCrankPeriod}
           placeholder="촬영 기간을 입력해주세요"
+          maxLength={20}
           onChange={handleDataCrankPeriod}
         />
       </p>

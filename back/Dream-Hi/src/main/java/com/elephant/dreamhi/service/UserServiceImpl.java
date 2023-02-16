@@ -1,9 +1,8 @@
 package com.elephant.dreamhi.service;
 
-import com.elephant.dreamhi.model.dto.PictureDto;
+import com.elephant.dreamhi.model.dto.FileDto;
 import com.elephant.dreamhi.model.dto.UserSimpleDto;
 import com.elephant.dreamhi.model.entity.User;
-import com.elephant.dreamhi.repository.ActorRepository;
 import com.elephant.dreamhi.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,10 +34,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void updateMainProfile(Long id, PictureDto pictureDto) throws UsernameNotFoundException {
+    public void updateMainProfile(Long id, FileDto fileDto) throws UsernameNotFoundException {
         User user = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException(id + "번은 존재하지 않는 유저입니다."));
 
-        user.setMainProfile(pictureDto);
+        user.setMainProfile(fileDto);
     }
 
 }

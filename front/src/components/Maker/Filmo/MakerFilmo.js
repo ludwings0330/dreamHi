@@ -1,71 +1,56 @@
 import React from 'react';
-import {} from './MakerFilmo.css'
+import { useRecoilState } from 'recoil';
 
+//import img upload
+import MakerFilmoUpload from './MakerFilmoUpload';
+import { makerFilmoLists } from 'recoil/maker/makerStore';
 
-const products = [
-  {
-    id: 1,
-    name: 'Basic Tee',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
-  },
-  {
-    id: 2,
-    name: 'Basic Tee',
-    imageSrc: 'https://i.ibb.co/FmTym4n/555.png',
-  },
-  {
-    id: 3,
-    name: 'Basic Tee',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
-  },
-  {
-    id: 4,
-    name: 'Basic Tee',
-    imageSrc: 'https://cdn.pixabay.com/photo/2022/10/16/13/17/road-7525092_640.jpg',
-  },
+const MakerFilmo = ({ makerInfo }) => {
+  const [makerFilmos, setMakerFilmos] = useRecoilState(makerFilmoLists);
 
-]
-const setSelected = (idx) => {
-  document.querySelector('.photo-main').innerHTML=`<img src=${products[idx].imageSrc} alt=${products[idx].imageAlt}/>`
+  const setSelected = (idx) => {
+    document.querySelector(
+      '.maker-filmo-main',
+    ).innerHTML = `<img src=${makerFilmos[idx].photoUrl} alt=${makerFilmos[idx]}/>`;
+  };
 
-};
-
-
-const MakerFilmo = () => {
   return (
-    <div className="bg-white">
+    <>
+      <div className="bg-white">
+        <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+          <h1>제작사 필모그래피</h1>
 
-      <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
-        <h1>필모그래피</h1>
+          {makerFilmos && makerFilmos.length > 0 ? (
+            <div className="list-container">
+              {/*메인이미지 부분*/}
+              <div className="maker-filmo-main">
+                <img src={makerFilmos[0].photoUrl} alt={makerFilmos[0].photoUrl} />
+                <p>
+                  필모 이름 : {makerFilmos[0].title}, 필모 설명 : {makerFilmos[0].description},
+                </p>
+              </div>
 
-        <div className="list-container">
-
-          {/*메인이미지 부분*/}
-          <div className='photo-main'>
-            <img src={products[0].imageSrc} alt={products[0].imageAlt}/>
-          </div>
-
-
-          <div className='photo-list'>
-            {products.map((product, idx) => (
-              idx === 0 ? null :
-                <div className='photo' key={product.id}>
+              {makerFilmos.map((makerFilmo, idx) => (
+                <div className="photo" key={idx} width={'200px'} height={'200px'}>
                   <img
-                    src={product.imageSrc}
-                    alt={product.imageAlt}
-                    width={"200px"}
-                    height={"200px"}
+                    src={makerFilmo.photoUrl}
+                    alt="image"
                     className="object-center"
                     onClick={() => setSelected(idx)}
                   />
+                  <p>
+                    필모 이름 : {makerFilmo.title}
+                    필모 설명 : {makerFilmo.description}
+                  </p>
                 </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : null}
 
+          <MakerFilmoUpload makerInfo={makerInfo} />
         </div>
-
       </div>
-    </div>
+    </>
   );
 };
 

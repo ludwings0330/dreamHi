@@ -6,11 +6,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @Builder
 @ToString
 public class AnnouncementSearchCondition {
@@ -29,9 +31,11 @@ public class AnnouncementSearchCondition {
 
     private Long[] styles;
 
-    private Boolean isFollow = Boolean.FALSE;
+    private Long producerId;
 
-    private Boolean isVolunteer = Boolean.FALSE;
+    private Boolean isFollow;
+
+    private Boolean isVolunteer;
 
     public Boolean getIsFollow() {
         return Objects.requireNonNullElse(this.isFollow, Boolean.FALSE);

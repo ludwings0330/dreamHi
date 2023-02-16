@@ -1,37 +1,89 @@
-.actor_container{
-    display:flex;
-    flex-direction: row;
-    flex-wrap : wrap;
-    width: 100%;
-    margin-top: 10%;
+@font-face {
+  font-family: 'LINESeedKR-Bd';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2')
+    format('woff2');
+  font-weight: 700;
+  font-style: normal;
 }
-.actor{
-    width:25%;
-    height: 100%;
-    margin-bottom : 4%;
-    margin-right: 4%;
-    margin-left: 4%;
-    border: 1px solid #D2E1FF;
-    border-radius: 20px;
+
+#actor-list-main {
+  font-family: 'LINESeedKR-Bd';
+  padding-top: 50px;
 }
-.actor_img{
-    max-width:95%;
-    max-height:100%;
-    text-align: center;
+
+.actor-body {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
 }
-.actor_title{
-    font-size : 1.3rem;
-    font-weight: 600;
-    margin : 4%;
-    text-align: center;
+.h-100 {
+  border: 1px solid #eee;
+  border-radius: 5px;
+  height: 350px;
+  margin-bottom: 0;
 }
-.actor_des{
-    font-size : 0.8rem;
-    margin : 2% 3% 2% 4%;
-    text-align: center;
+
+.card-title {
+  color: black;
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 40px;
 }
-.page_bar {
-    display: block;
-    text-align: center;
-    padding: 20%;
+
+.card-text p {
+  color: black;
+}
+
+.card-info {
+  margin-right: auto;
+  align-items: center;
+}
+
+.card-info span {
+  color: black;
+  display: flow-root;
+  margin-bottom: 5px;
+  font-size: 18px;
+}
+
+.card-info > span:nth-of-type(2n - 1) {
+  width: 60%;
+}
+
+.card-info > span:nth-of-type(2n) {
+  width: 40%;
+}
+
+.card-info p {
+  margin-bottom: 2px;
+}
+
+.card-info-style {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card-info-style span {
+  margin-right: 5px;
+}
+
+.actor-list-button {
+  background: rgba(68, 68, 68, 0.5);
+  color: white;
+  border: 2px solid white;
+  border-radius: 5px;
+  font-size: 20px;
+  transition: 0.5s ease;
+}
+
+.actor-list-button:hover {
+  transition: 0.5s ease;
+  border: 2px solid black;
+  background: transparent;
+  color: black;
+}
+.actor-insert-button {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 1250px;
 }

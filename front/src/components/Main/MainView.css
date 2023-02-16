@@ -1,18 +1,60 @@
-.main-body {
-    position: relative;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    margin-bottom: 15px;
+@font-face {
+  font-family: 'LINESeedKR-Bd';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2')
+    format('woff2');
+  font-weight: 1000;
+  font-style: normal;
 }
 
-.main-img {
-    width: 100%;
+#mainview-whole {
+  font-family: 'LINESeedKR-Bd';
 }
 
-.main-content {
-    display: flex;
-    justify-content: space-around;
-    margin: 40px;
-    margin-bottom: fill;
+.mainview-header {
+  background-image: url('https://images.pexels.com/photos/2510428/pexels-photo-2510428.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+  background-position: center;
+  background-size: cover;
+  height: 700px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mainview-header .mainview-title {
+  text-align: center;
+}
+.mainview-header .mainview-title img {
+  width: 100px;
+}
+.mainview-header .mainview-title h1 {
+  font-size: 40px;
+  color: white;
+  font-size: 60px;
+  letter-spacing: 0.2em;
+  margin-bottom: 0;
+}
+
+.mainview-header .mainview-title p {
+  margin-top: 0;
+  margin-bottom: 30px;
+  font-size: 30px;
+  letter-spacing: 0.15em;
+  color: white;
+}
+
+.mainview-header .mainview-title button {
+  background: black;
+  color: white;
+  border: 2px solid white;
+  border-radius: 5px;
+  padding: 10px 30px;
+  font-size: 20px;
+  transition: 0.5s ease;
+}
+
+.mainview-header .mainview-title button:hover {
+  transition: 0.5s ease;
+  border: 2px solid black;
+  background: transparent;
+  color: black;
 }

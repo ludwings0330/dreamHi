@@ -132,7 +132,7 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
      * @return 생성 후 User 객체
      */
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    User registerUser(OAuth2UserInfo userInfo) {
+    public User registerUser(OAuth2UserInfo userInfo) {
         log.info("[{}] {} 유저 신규 회원 가입 절차 진행", PrincipalOAuth2UserService.class.getName(), userInfo.getEmail());
         return userRepository.save(
                 User.builder()
@@ -152,7 +152,7 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
      * @return 생성 후 ActorProfile 객체
      */
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    ActorProfile registerActorProfile(User user) {
+    public ActorProfile registerActorProfile(User user) {
         return actorRepository.save(
                 ActorProfile.builder()
                         .user(user)
