@@ -81,7 +81,7 @@ function MainHeader() {
                 </DropdownToggle>
 
                 <DropdownMenu className="dropdown-navbar" end tag="ul">
-                  <Link to={'/actor/detail/:actorProfileId'} tag="li">
+                  <Link to={`/actor/detail/${userSimple.id}`} tag="li">
                     <DropdownItem className="nav-item">내 이력서</DropdownItem>
                   </Link>
 

@@ -24,6 +24,7 @@ import { styled } from '../../../node_modules/@mui/material/styles';
 import Box from '../../../node_modules/@mui/material/Box';
 import Grid from '../../../node_modules/@mui/material/Grid';
 import Chip from '../../../node_modules/@mui/material/Chip';
+import AnnouncementDescription from './AnnouncementDescription';
 
 function AnnouncementWrite(props) {
   const navigate = useNavigate();
@@ -61,23 +62,16 @@ function AnnouncementWrite(props) {
   };
 
   const postClick = () => {
-    jwtApi
-      .post('/api/announcements/', sendData)
-      .then((response) => {
-        console.log('😎😍😘🥰', response);
-        console.log('sendData', sendData);
-        alert('글 작성이 완료되었습니다.');
-        navigate('/announcement');
-      })
-      .catch((e) => {
-        console.log('sendData', sendData);
-        alert(e);
-      });
+    jwtApi.post('/api/announcements/', sendData).then((response) => {
+      console.log('😎😍😘🥰', response);
+      console.log('sendData', sendData);
+      alert('글 작성이 완료되었습니다.');
+      navigate('/announcement');
+    });
   };
 
   return (
     <>
-      <h1>공고 작성</h1>
       <Button
         title="뒤로 가기"
         onClick={() => {
@@ -95,33 +89,14 @@ function AnnouncementWrite(props) {
           </Grid>
         </Grid>
       </Grid>
+      <Grid id="announcement-write-full">
+        <AnnouncementWriteCasting />
+      </Grid>
+      <Grid id="announcement-write-full">
+        <AnnouncementDescription />
+      </Grid>
 
-      <AnnouncementWriteCasting />
-
-      <button onClick={postClick}>공고다공고</button>
-
-      {/*<Button*/}
-      {/*  title="공고 등록 하기"*/}
-      {/*  onClick={() => {*/}
-      {/*    postClick();*/}
-      {/*  }}*/}
-      {/*/>*/}
-
-      {/*<MultiSelect/>*/}
-
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
+      <Button onClick={postClick} title={'공고 등록하기'} />
       <br />
       <br />
       <br />

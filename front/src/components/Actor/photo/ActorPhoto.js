@@ -25,32 +25,33 @@ const ActorPhoto = ({ actorInfo }) => {
 
   return (
     <>
-      <div className="bg-white">
-        <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
-          <h1 className={'actor-photo-title'}>프로필사진</h1>
-          {actorPhotos && actorPhotos.length > 0 ? (
-            <div className={'actor-photo-whole'}>
-              {/*메인이미지 부분*/}
+      <div id={'actor-photo-whole'}>
+        <h1 className={'actor-photo-title'}>프로필사진</h1>
+        <div className={'actor-photo-list-main'}>
+          <div className={'actor-photo-list'}>
+            {/*메인이미지 부분*/}
+            {actorPhotos && actorPhotos.length > 0 ? (
               <div className="actor-photo-main">
                 <img src={actorPhotos[0].url} alt={actorPhotos[0].url} />
               </div>
-
-              {actorPhotos.map((actorPhoto, idx) => (
-                <div className="actor-photo-list" key={actorPhoto.id}>
+            ) : null}
+            {actorPhotos &&
+              actorPhotos.length > 0 &&
+              actorPhotos.map((actorPhoto, idx) => (
+                <div className="actor-photo" key={actorPhoto.id}>
                   <img
                     src={actorPhoto.url}
                     alt="image"
-                    object-fit={'contain'}
-                    className="object-center"
+                    className="actor-photo-list-item"
+                    loading={'lazy'}
                     onClick={() => setSelected(idx)}
                   />
                 </div>
               ))}
-            </div>
+          </div>
+          {userInfo && userInfo.id === actorInfo.userId ? (
+            <ActorPhotoUpload actorInfo={actorInfo} />
           ) : null}
-
-          {userInfo && userInfo.id === actorInfo.userId ? <ActorPhotoUpload actorInfo={actorInfo} /> : null}
-
         </div>
       </div>
     </>

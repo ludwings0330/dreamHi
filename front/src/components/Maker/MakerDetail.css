@@ -6,8 +6,29 @@
   font-style: normal;
 }
 
-#maker-announcement-whole {
+#maker-detail-whole {
   font-family: 'LINESeedKR-Bd';
   padding-left: 150px;
   padding-top: 50px;
+}
+
+.maker-detail-title {
+  font-size: 40px;
+}
+
+.maker-image-section {
+  font-size: 25px;
+}
+
+.maker-first-image {
+  width: 400px;
+  height: 400px;
+}
+
+.maker-name {
+  font-size: 25px;
+}
+
+.maker-description {
+  font-size: 25px;
 }

@@ -1,0 +1,33 @@
+@font-face {
+  font-family: 'LINESeedKR-Bd';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2')
+    format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+#maker-member-whole {
+  font-family: 'LINESeedKR-Bd';
+  padding-left: 150px;
+  padding-top: 50px;
+}
+
+.maker-member-list-container {
+  padding: 10px;
+  width: 100%;
+  height: 300px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+}
+
+.maker-member-main {
+}
+.maker-member-list-item {
+  width: 250px;
+  height: 250px;
+  margin: 0;
+}
+
+.maker-member-photo-list {
+  display: flex;
+}

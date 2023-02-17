@@ -10,6 +10,7 @@
   font-family: 'LINESeedKR-Bd';
   padding-left: 10rem;
   padding-top: 3rem;
+  padding-bottom: 2rem;
 }
 
 #announcement-write-img {
@@ -49,4 +50,13 @@
 .announcement-write-content {
   font-size: 45px;
   color: #7ea6f4;
+}
+
+.announcement-process-button {
+  float: right;
+  margin-right: 15rem;
+}
+
+.announcement-follow-chip {
+  float: right;
 }

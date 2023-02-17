@@ -54,7 +54,6 @@ function AnnouncementWriteItem(props) {
         <input
           type="text"
           name="dataTitle"
-          value={dataTitle}
           placeholder="작품명을 입력해주세요"
           maxLength={20}
           onChange={handleDataTitle}

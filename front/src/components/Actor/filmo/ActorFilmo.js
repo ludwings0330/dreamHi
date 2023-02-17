@@ -16,8 +16,8 @@ const ActorFilmo = ({ actorInfo }) => {
   };
 
   return (
-    <div className="bg-white">
-      <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+    <>
+      <div id={'actor-filmo-whole'}>
         <h1 className={'actor-filmo-title'}>필모그래피</h1>
         <div className="actor-filmo-list-main">
           <div className={'actor-filmo-list'}>
@@ -30,7 +30,8 @@ const ActorFilmo = ({ actorInfo }) => {
             {actorFilmos &&
               actorFilmos.length > 0 &&
               actorFilmos.map((filmography, idx) => (
-                <div className="actor-filmo" key={filmography.id}>
+                <div className="actor-filmo"
+                     key={filmography.id}>
                   <img
                     src={filmography.photoUrl}
                     alt="image"
@@ -41,10 +42,12 @@ const ActorFilmo = ({ actorInfo }) => {
                 </div>
               ))}
           </div>
-          {userInfo && userInfo.id === actorInfo.userId ? <ActorFilmoUpload actorInfo={actorInfo} /> : null}
+          {userInfo && userInfo.id === actorInfo.userId ? (
+            <ActorFilmoUpload actorInfo={actorInfo} />
+          ) : null}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

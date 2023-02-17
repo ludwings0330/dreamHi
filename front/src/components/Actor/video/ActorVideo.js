@@ -17,25 +17,35 @@ const ActorVideo = ({ actorInfo }) => {
 
   return (
     <>
-      <div className="bg-white">
-        <h1>연기영상</h1>
-
-        {/*연기영상 전체 틀*/}
-        {actorVideos && actorVideos.length > 0 ? (
-          <div className="actor-video-whole">
-            <div className="actor-video-main">
-              선택 메인 영상
-              <video src={actorVideos[0].url} alt={actorVideos[0].url} />
-            </div>
-            {actorVideos.map((actorVideo, idx) => (
-              <div className="actor-video-list" key={actorVideo.id}>
-                올린 영상들
-                <video src={actorVideo.url} alt="image" onClick={() => setSelected(idx)} />
+      <div id={'actor-video-whole'}>
+        <h1 className={'actor-video-title'}>연기영상</h1>
+        <div className="actor-video-list-main">
+          <div className={'actor-video-list'}>
+            {/*연기영상 전체 틀*/}
+            {actorVideos && actorVideos.length > 0 ? (
+              <div className={'actor-video-main'}>
+                <video src={actorVideos[0].url} alt={actorVideos[0].url} />
               </div>
-            ))}
+            ) : null}
+            {actorVideos &&
+              actorVideos.length > 0 &&
+              actorVideos.map((actorVideo, idx) => (
+                <div className="actor-video" key={actorVideo.id}>
+                  올린 영상들
+                  <video
+                    src={actorVideo.url}
+                    alt="image"
+                    className={'actor-video-list-item'}
+                    onClick={() => setSelected(idx)}
+                  />
+                </div>
+              ))}
           </div>
-        ) : null}
-        {userInfo && userInfo.id === actorInfo.userId ? <ActorVideoUpload actorInfo={actorInfo} /> : null}
+
+          {userInfo && userInfo.id === actorInfo.userId ? (
+            <ActorVideoUpload actorInfo={actorInfo} />
+          ) : null}
+        </div>
       </div>
     </>
   );

@@ -6,51 +6,72 @@
   font-style: normal;
 }
 
-.actor-photo-title {
+#actor-photo-whole {
+  display: flex;
   font-family: 'LINESeedKR-Bd';
+  margin-top: 50px;
+  margin-left: 50px;
+  margin-bottom: 50px;
+  flex-direction: column;
+}
+.actor-photo-list-main {
+  display: flex;
 }
 
-.actor-photo-whole {
-  padding: 30px;
+.actor-photo-list {
+  padding: 10px;
   width: 100%;
   height: 300px;
   display: flex;
+  border: 1px solid #eee;
+  border-radius: 5px;
 }
 
 .actor-photo-main > img {
   aspect-ratio: 1;
-  max-width: 250px;
-  max-height: 250px;
-  border: black solid 1px;
+  max-width: 300px;
+  max-height: 300px;
 }
 
-.actor-photo-list {
-  flex: 2;
+.actor-photo {
   display: inline-block;
-  border: black solid 1px;
+  border: 1px solid #eee;
+  border-radius: 5px;
 }
 
-.actor-photo-list img {
+.actor-photo img {
   border-radius: 10px;
   object-fit: contain;
-  width: 100px;
-  height: 100px;
-  border: black solid 1px;
 }
 
-.file-box {
-  display: inline-block;
+.actor-photo-list-item {
+  width: 250px;
+  height: 250px;
 }
 
-.file-box label {
+/*photo-upload 부분 css*/
+#photo-list-plus-section {
+  font-family: 'LINESeedKR-Bd';
+  padding-top: 238px;
 }
 
-.file-box input[type='file'] {
-  position: absolute;
-  width: 0;
-  height: 0;
-  padding: 0;
-  overflow: hidden;
-  border: 0;
-  display: none;
+.photo-plus-button {
+  width: 30px;
+  height: 30px;
+}
+
+.actor-photo-upload-button {
+  background: rgba(68, 68, 68, 0.5);
+  color: white;
+  border: 2px solid white;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: 0.5s ease;
+}
+
+.actor-photo-upload-button:hover {
+  transition: 0.5s ease;
+  border: 2px solid black;
+  background: transparent;
+  color: black;
 }

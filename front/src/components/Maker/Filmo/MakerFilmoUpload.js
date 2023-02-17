@@ -1,19 +1,19 @@
 /* eslint-disable jsx-a11y/alt-text */
-import {useState} from 'react';
-import {getDownloadURL, ref, uploadBytes} from 'firebase/storage';
-import {useRecoilState, useRecoilValue} from 'recoil';
+import { useState } from 'react';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
-import {storage} from '../../../imageup/firebase';
-import {v4} from 'uuid';
+import { storage } from '../../../imageup/firebase';
+import { v4 } from 'uuid';
 
 // import recoil
-import {makerFilmoLists, makerFilmoUrl} from 'recoil/maker/makerStore';
+import { makerFilmoLists, makerFilmoUrl } from 'recoil/maker/makerStore';
 
 // import css
 import '../../../components/Casting/Casting.css';
 import './MakerFilmo.css';
 import jwtApi from '../../../util/JwtApi';
-import {useParams} from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const MakerFilmoUpload = ({ makerInfo }) => {
   const { makerId } = useParams();
@@ -51,17 +51,11 @@ const MakerFilmoUpload = ({ makerInfo }) => {
   };
 
   return (
-    <div>
-      <div className="photo-list">
+    <>
+      <div id={'maker-list-plus-section'}>
         <div className="file-box">
           <label htmlFor="file-filmo">
-            <img
-              src="/img/plus.png"
-              width={'200px'}
-              height={'200px'}
-              object-fit={'cover'}
-              className="object-center"
-            />
+            <img src="/img/plus.png" object-fit={'cover'} className="maker-filmo-plus-button" />
           </label>
           <input
             type="file"
@@ -70,10 +64,12 @@ const MakerFilmoUpload = ({ makerInfo }) => {
               setMakerFilmoUploaded(e.target.files[0]);
             }}
           />
-          <button onClick={uploadFile}>사진 올리기</button>
+          <button className={'maker-filmo-upload-button'} onClick={uploadFile}>
+            사진 올리기
+          </button>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
