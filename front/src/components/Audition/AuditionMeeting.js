@@ -20,6 +20,10 @@ const AuditionMeeting = (props) => {
   let OV = null;
 
   useEffect(() => {
+    joinSession();
+  }, [])
+
+  useEffect(() => {
     window.addEventListener('beforeunload', onbeforeunload);
     return () => {
       window.removeEventListener('beforeunload', onbeforeunload);
@@ -266,6 +270,7 @@ const AuditionMeeting = (props) => {
                   alt="OpenVidu logo"
                 />
               </div>
+              gd
               <div id="join-dialog" className="jumbotron vertical-center">
                 <h1> Join a video session </h1>
                 <form className="form-group" onSubmit={joinSession}>
@@ -307,7 +312,7 @@ const AuditionMeeting = (props) => {
           {state.session !== undefined ? (
             <div id="session">
               <div id="session-header">
-                <h1 id="session-title">{state.mySessionId}</h1>
+                <h1 id="session-title">화상오디션</h1>
                 <input
                   className="btn btn-large btn-danger"
                   type="button"

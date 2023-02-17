@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import Button from '../Common/CommonComponent/Button';
 import AnnouncementDetailItem from './AnnouncementDetailItem';
 import { useRecoilValue, useRecoilState } from 'recoil';
@@ -44,6 +44,9 @@ function AnnouncementDetail(props) {
       <AnnouncementDetailItem announcement={announcement} />
 
       {/* <AnnouncementDetailButton key={announcementId} announcement={announcement} /> */}
+      <Link to="/casting" state={{ announcementId: announcement.id }}>
+        지원자 관리
+      </Link>
     </div>
   );
 }

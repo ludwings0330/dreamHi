@@ -17,7 +17,8 @@ export const totalVolunteerSelector = selectorFamily({
   get:
     () =>
     async ({ get }) => {
-      const processDetail = get(announcementProcessState);
+      // const processDetail = get(announcementProcessState);
+      const processDetail = {processId: 94597,}
       // const processId = 94586;
       const data = await jwtApi
         .get(`/api/announcements/process/${processDetail.processId}/volunteer-count`)

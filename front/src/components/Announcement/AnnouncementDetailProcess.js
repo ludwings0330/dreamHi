@@ -18,7 +18,7 @@ export default function AnnouncementDetailProcess(props) {
   console.log('🤑🤑', processData);
   const [testState, setTestState] = useRecoilState(announcementProcessState);
   setTestState(processData);
-  console.log('😁😁😁', testState.processState);
+  console.log('processState', testState.processState);
 
   return (
     <div>
